@@ -3,9 +3,6 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by ERIC_LAI on 2017-05-06.
- */
 public class MainWindow extends JFrame {
 
     public MainWindow() throws HeadlessException {

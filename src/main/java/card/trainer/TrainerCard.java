@@ -1,13 +1,17 @@
+/*
+ * description:  The abstract class of trainer card
+ * author(s):    Eric(Haotao) Lai
+ * reviewer(s):
+ * date:         2017-05-17
+ */
+
 package card.trainer;
 
 import card.Card;
 
-/**
- * Created by ERIC_LAI on 2017-05-06.
- */
 public class TrainerCard extends Card {
 
-    private enum TrainerType {}
+    private enum TrainerType {ITEM, SUPPORTER, STADIUM,}
 
     private TrainerType trainerType;
 

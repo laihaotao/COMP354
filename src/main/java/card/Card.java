@@ -1,8 +1,12 @@
+/*
+ * description:  The abstract class of the Card
+ * author(s):    Eric(Haotao) Lai
+ * reviewer(s):
+ * date:         2017-05-17
+ */
+
 package card;
 
-/**
- * Created by ERIC_LAI on 2017-05-06.
- */
 public abstract class Card {
 
     protected enum CardType{ENERGY, POKEMON, TRAINER,}

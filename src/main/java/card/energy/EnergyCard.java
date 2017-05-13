@@ -1,13 +1,17 @@
+/*
+ * description:  The abstract class of energy card
+ * author(s):    Eric(Haotao) Lai
+ * reviewer(s):
+ * date:         2017-05-17
+ */
+
 package card.energy;
 
 import card.Card;
 
-/**
- * Created by ERIC_LAI on 2017-05-06.
- */
 public class EnergyCard extends Card {
 
-    private enum EnergyType {}
+    private enum EnergyType {COLORLESS, WATER, LIGTNING,}
 
     private EnergyType energyType;
 

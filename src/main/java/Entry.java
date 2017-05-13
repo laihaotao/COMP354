@@ -1,8 +1,12 @@
+/*
+ * description:  The entry of the game
+ * author(s):    Eric(Haotao) Lai
+ * reviewer(s):
+ * date:         2017-05-17
+ */
+
 import ui.MainWindow;
 
-/**
- * Created by ERIC_LAI on 2017-05-06.
- */
 public class Entry {
 
     public static void main(String[] args) {
