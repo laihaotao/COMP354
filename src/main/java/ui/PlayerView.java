@@ -21,6 +21,8 @@ public class PlayerView extends BorderPane {
     //Pane that constains the active card. This is not an HBox since their can only be one active pokemon card
     private StackPane activeCard;
 
+    private Label deck;
+
     //TODO this needs to take a player object
     public PlayerView(){
 
@@ -34,8 +36,11 @@ public class PlayerView extends BorderPane {
         //Add them in "reverse" order for them to display from bottom to top
         centerCardArea.getChildren().addAll(activeCard, benchCards, handCards );
 
-        this.setCenter(centerCardArea);
+        deck = new Label("30");
+        deck.getStyleClass().add("Deck");
 
+        this.setCenter(centerCardArea);
+        this.setRight(deck);
         refreshView();
     }
 
