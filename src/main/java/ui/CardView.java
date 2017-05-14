@@ -2,6 +2,7 @@ package ui;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -10,19 +11,41 @@ import javafx.scene.layout.VBox;
 public class CardView extends BorderPane{
 
     //Info box that is visible on top of the card
-    private VBox topInfo;
+    private HBox topInfo;
+    private VBox topHealthInfo;
+
+    private Label healthLabel;
+    private Label damageLabel;
+
+    private VBox abilitiesInfo;
 
     //TODO A Card instance should be passed to this once it is properly implemented
     public CardView(){
 
         this.getStyleClass().add("Card");
 
-        topInfo = new VBox();
+        topInfo = new HBox();
+        topHealthInfo  = new VBox();
 
         //TODO display actual card info
 
-        topInfo.getChildren().add(new Label("A Card"));
+        //displays health and damage values
+        healthLabel = new Label("30");
+        damageLabel = new Label("10");
+
+        healthLabel.getStyleClass().add("Health");
+        damageLabel.getStyleClass().add("Damage");
+
+        topHealthInfo.getChildren().addAll(healthLabel, damageLabel);
+
+        topInfo.getChildren().addAll(new Label("A Card"), topHealthInfo);
+
+        //Display abilities
+        abilitiesInfo = new VBox();
+        abilitiesInfo.getChildren().add(new AbilityView());
+        abilitiesInfo.getChildren().add(new AbilityView());
 
         setTop(topInfo);
+        setCenter(abilitiesInfo);
     }
 }
