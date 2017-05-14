@@ -28,9 +28,13 @@ public class PlayerView extends BorderPane {
 
         //VBox that constians the hand, bench and active pokemon
         VBox centerCardArea = new VBox();
+        centerCardArea.getStyleClass().add("CardArea");
 
         handCards = new HBox();
+        handCards.getStyleClass().add("Hand");
+
         benchCards = new HBox();
+        benchCards.getStyleClass().add("Bench");
         activeCard = new StackPane();
 
         //Add them in "reverse" order for them to display from bottom to top
