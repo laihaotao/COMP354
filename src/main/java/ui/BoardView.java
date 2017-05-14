@@ -15,6 +15,11 @@ public class BoardView extends BorderPane {
 
     //TODO this needs to take the BoardGame as a param and display info about it
     public BoardView() {
+
+
+        //NOTE: This will crash if the resource folder isn't set up correctly
+        this.getStylesheets().add("style.css");
+
         //Create player array, we know it will always be two in a pokemon game
         playerViews = new PlayerView[2];
 
