@@ -14,7 +14,7 @@ Frederic Desgreniers | FredericDesgreniers@gmail.com | FredericDesgreniers
 Haotao(Eric) Lai | haotao.lai@gmail.com | LAIHAOTAO
 Kawsara Munkalls | Kawsara25@yahoo.com | kawsara25
 Martin Tseng | Martin.Tseng1988@gmail.com | martintseng
-Prashanth Reddy | prashanth.abc369@gmail.com
+Prashanth Reddy | prashanth.abc369@gmail.com | prashanth369
 Ruoshi wu | ruoshiwu1006@gmail.com
 Xiaoyi Li | Li.xiaoyi2121@gmail.com
 
