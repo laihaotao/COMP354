@@ -5,12 +5,12 @@ import ui.BoardView;
 import ui.StartPane;
 
 /**
- * Main application class, used to start the game and initialzie the gui
+ * Main application class, used to start the game and initialize the gui
  */
 public class GameApp extends Application {
 
     //TODO Pull out to config / constants class?
-    public static final int WINDOW_WIDTH = 650, WINDOW_HEIGHT = 400;
+    public static final int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 800;
 
     public static final String WINDOW_TITLE = "Pokemon";
 
