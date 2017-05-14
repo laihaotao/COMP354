@@ -10,7 +10,9 @@ package card.pokemon;
 import card.Card;
 
 public class PokemonCard extends Card {
-
+    int HP;
+    String Attack;
+    int Damage;
     public PokemonCard(String name) {
         this.name = name;
         this.cardType = CardType.POKEMON;
