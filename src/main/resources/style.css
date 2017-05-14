@@ -6,6 +6,10 @@
 
 }
 
+.Card:hover {
+    -fx-border-color: crimson;
+}
+
 .Card.Selected {
 
     -fx-border-color: red;
@@ -13,8 +17,35 @@
 }
 
 .Card Label {
-    -fx-padding: 4px 3px 4px 3px;
     -fx-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.Card .Health {
+    -fx-text-fill: Green;
+}
+
+.Card .Damage {
+    -fx-text-fill: Red;
+}
+
+.Ability .Name {
+    -fx-font-weight: bold;
+}
+
+.CardArea {
+    -fx-spacing: 10;
+}
+.CardArea .Label {
+    -fx-wrap-text: true;
+}
+
+.CardArea .Hand {
+    -fx-spacing: 10;
+}
+
+.CardArea .Bench {
+    -fx-spacing: 10;
 }
 
 .Deck {
