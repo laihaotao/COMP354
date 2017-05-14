@@ -1,6 +1,8 @@
 .Card {
 
     -fx-border-color: black;
+    -fx-alignment: center;
+    -fx-padding: 10px;
 
 }
 
@@ -11,7 +13,13 @@
 }
 
 .Card Label {
-
     -fx-padding: 4px 3px 4px 3px;
+    -fx-alignment: center;
+}
 
+.Deck {
+    -fx-border-color: black;
+    -fx-min-width: 30;
+    -fx-min-height: 50;
+    -fx-alignment: center;
 }
