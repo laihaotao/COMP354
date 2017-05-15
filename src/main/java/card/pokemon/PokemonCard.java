@@ -8,13 +8,25 @@
 package card.pokemon;
 
 import card.Card;
+import card.abilities.Ability;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PokemonCard extends Card {
-    int HP;
-    String Attack;
-    int Damage;
-    public PokemonCard(String name) {
+    
+    private int HP;
+    private String Attack;
+    private int Damage;
+    
+    private List<Ability> abilities = new ArrayList<>();
+    
+    public PokemonCard(String name, int hp) {
         this.name = name;
+        this.HP = hp;
         this.cardType = CardType.POKEMON;
+    }
+    
+    public List<Ability> getAbilities(){
+        return abilities;
     }
 }
