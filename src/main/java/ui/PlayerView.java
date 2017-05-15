@@ -1,11 +1,14 @@
 package ui;
 
 import game.Player;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import ui.events.PlayerViewListener;
 
 /**
  * Class used to display info about a player
@@ -25,6 +28,11 @@ public class PlayerView extends BorderPane {
     private StackPane activeCard;
 
     private Label deck;
+
+    /**
+     * List of registered listeners
+     */
+    private List<PlayerViewListener> registeredListeners = new ArrayList<>();
     
     public PlayerView(Player player){
         
@@ -63,7 +71,14 @@ public class PlayerView extends BorderPane {
 
         //For now, just add 5 cardViews to make sure it displays
         for(int i=0; i < 5; i++){
-            handCards.getChildren().add(new CardView());
+            
+            CardView cardView = new CardView();
+            
+            cardView.setOnMouseClicked((event -> {
+                registeredListeners.forEach(listener->listener.onHandCardClicked(player, null));
+            }));
+            
+            handCards.getChildren().add(cardView);
         }
 
 
@@ -73,13 +88,30 @@ public class PlayerView extends BorderPane {
 
         //For now, just add 3 cardViews to make sure it displays
         for(int i=0; i < 3; i++){
-            benchCards.getChildren().add(new CardView());
+            CardView cardView = new CardView();
+
+            cardView.setOnMouseClicked((event -> {
+                registeredListeners.forEach(listener->listener.onBenchCardClicked(player, null));
+            }));
+            
+            benchCards.getChildren().add(cardView);
         }
 
 
         //set the current active card
         activeCard.getChildren().clear();
-        activeCard.getChildren().add(new CardView());
+
+        CardView cardView = new CardView();
+
+        cardView.setOnMouseClicked((event -> {
+            registeredListeners.forEach(listener->listener.onActiveCardClicked(player, null));
+        }));
+        
+        activeCard.getChildren().add(cardView);
+    }
+    
+    public void registerListener(PlayerViewListener listener){
+        registeredListeners.add(listener);
     }
 
 }
