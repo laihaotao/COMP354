@@ -1,4 +1,6 @@
 
+import game.GameBoard;
+import game.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -35,8 +37,10 @@ public class GameApp extends Application {
 
         StartPane root = new StartPane();
 
+        GameBoard gameBoard = new GameBoard(new Player(), new Player());
+        
         //TODO board and players here and pass that to BoardView
-        BoardView boardView = new BoardView();
+        BoardView boardView = new BoardView(gameBoard);
 
         root.setCurrentView(boardView);
 
