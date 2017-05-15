@@ -1,5 +1,6 @@
 package ui;
 
+import game.GameBoard;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -13,10 +14,12 @@ public class BoardView extends BorderPane {
 
     private PlayerView[] playerViews;
 
-    //TODO this needs to take the BoardGame as a param and display info about it
-    public BoardView() {
+    private GameBoard gameBoard;
+    
+    public BoardView(GameBoard gameBoard) {
 
-
+        this.gameBoard = gameBoard;
+        
         //NOTE: This will crash if the resource folder isn't set up correctly
         this.getStylesheets().add("style.css");
 
@@ -25,10 +28,9 @@ public class BoardView extends BorderPane {
 
         //Initialzie player views
         //TODO Once we get a player class, we pass that to PlayerView
-        playerViews[0] = new PlayerView();
-        playerViews[1] = new PlayerView();
-
-
+        playerViews[0] = new PlayerView(gameBoard.getPlayer1());
+        playerViews[1] = new PlayerView(gameBoard.getPlayer2());
+        
         //create end game button
         Button endTurnBtn = new Button("End Turn");
         endTurnBtn.setOnAction((e) -> {
