@@ -1,3 +1,4 @@
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,13 +11,15 @@ import ui.StartPane;
  */
 public class GameApp extends Application {
 
+    static Logger log = Logger.getLogger(GameApp.class.getName());
+    
     //TODO Pull out to config / constants class?
     public static final int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 800;
 
     public static final String WINDOW_TITLE = "Pokemon";
 
     public static void main(String[] args) {
-        System.out.println("Starting Pokemon game");
+        log.info("Starting pokemon game!");
    
 
         launch(args);
