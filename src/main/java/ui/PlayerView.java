@@ -1,5 +1,6 @@
 package ui;
 
+import game.Player;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -12,6 +13,8 @@ import javafx.scene.layout.VBox;
  */
 public class PlayerView extends BorderPane {
 
+    private Player player;
+    
     //List that constains player hand cards
     private HBox handCards;
 
@@ -22,9 +25,10 @@ public class PlayerView extends BorderPane {
     private StackPane activeCard;
 
     private Label deck;
-
-    //TODO this needs to take a player object
-    public PlayerView(){
+    
+    public PlayerView(Player player){
+        
+        this.player = player;
 
         //VBox that constians the hand, bench and active pokemon
         VBox centerCardArea = new VBox();
