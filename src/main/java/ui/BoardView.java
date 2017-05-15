@@ -31,7 +31,7 @@ public class BoardView extends BorderPane {
 
         //create end game button
         Button endTurnBtn = new Button("End Turn");
-        endTurnBtn.setOnAction((e)->{
+        endTurnBtn.setOnAction((e) -> {
             //TODO Pass end game to boardgame class
         });
 
@@ -54,10 +54,10 @@ public class BoardView extends BorderPane {
         //We need to redo rotate every yupdate in case
         //player 2's pane changed dimensions
         PlayerView p2View = playerViews[1];
-        ObservableList<Transform> p2Transforms =  p2View.getTransforms();
+        ObservableList<Transform> p2Transforms = p2View.getTransforms();
         p2Transforms.clear();
         //The rotate should have the origin at the center of the player view
-        p2Transforms.add(new Rotate(180, p2View.getWidth()/2, p2View.getHeight()/2));
+        p2Transforms.add(new Rotate(180, p2View.getWidth() / 2, p2View.getHeight() / 2));
 
     }
 
