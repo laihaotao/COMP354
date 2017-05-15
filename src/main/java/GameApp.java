@@ -52,7 +52,7 @@ public class GameApp extends Application {
 
         //This needs to be called since primaryStage.show() changes dimensions of panes
         //This means that any transformatons need to be re-applied to the views
-        boardView.updateView();
+        boardView.refreshView();
 
     }
     
