@@ -3,6 +3,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ui.BoardView;
 import ui.StartPane;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.Normalizer;
 
 /**
  * Main application class, used to start the game and initialize the gui
@@ -28,7 +32,7 @@ public class GameApp extends Application {
 		FileReader opponentDeckFile = new FileReader("decks/deck1.ptcgo.txt");
 		
 		playerDeck = loadDeck(playerDeckFile);
-		opponentDeck = loadDeck(playerDeckFile);
+		opponentDeck = loadDeck(opponentDeckFile);
 
 		//Print out the whole deck for testing
 		for (int i=0; i<opponentDeck.length;i++){
