@@ -63,3 +63,5 @@ In order to make the code clean, clear and easy to read, the whole team should f
 
 ps:*strongerly suggest you guys use the most intelligent IDE which is Intellij instead of Eclipse, trust me you will love it when you begin to use it!*
 
+This is the pokemon rulebook if you want to check it.
+http://assets.pokemon.com//assets/cms2/pdf/trading-card-game/rulebook/sm2_rulebook_en.pdf
