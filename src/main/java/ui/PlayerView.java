@@ -32,7 +32,7 @@ public class PlayerView extends BorderPane {
     /**
      * List of registered listeners
      */
-    private List<PlayerViewListener> registeredListeners = new ArrayList<>();
+    private List<PlayerViewListener> registeredListeners = new ArrayList<PlayerViewListener>();
     
     public PlayerView(Player player){
         
