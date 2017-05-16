@@ -1,0 +1,11 @@
+// creator: Haotao(Eric) Lai
+// modifiers:
+
+class Player
+- deck: Deck
+- prizeCardList: List<Card>
+- bench: List<Card>
+- activePokemon: PokemonCard
+- discardPile: List<Card>
+
++ endTurn(): void
