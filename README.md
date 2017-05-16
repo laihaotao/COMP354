@@ -1,21 +1,24 @@
 # COMP 354 Pokemon Go Back
 
-## Annoucement
+## Announcement
 
-*Always keep the new annoucement in the top*
+*Always keep the new announcement in the top*
 
+- UML text format files add to the project under directory 'document/uml';
+- wiki page will be updated regularly;
+- use case is ongoing in the google doc, [link](https://docs.google.com/.../11o6333sEWp.../edit...);
 - here is something I think maybe useful for our project, anyone can add material into this `README.md` file. ---by Eric
 
 ## Team Information
 
-Name | Email address | Github UserName
+Name | Email address | GitHub UserName
 -----|---------------|--------------
 Frederic Desgreniers | FredericDesgreniers@gmail.com | FredericDesgreniers
-Haotao(Eric) Lai | haotao.lai@gmail.com | LAIHAOTAO
+Haotao(Eric) Lai | haotao.lai@gmail.com | laihaotao
 Kawsara Munkalls | Kawsara25@yahoo.com | kawsara25
 Martin Tseng | Martin.Tseng1988@gmail.com | martintseng
 Prashanth Reddy | prashanth.abc369@gmail.com | prashanth369
-Ruoshi wu | ruoshiwu1006@gmail.com
+Ruoshi wu | ruoshiwu1006@gmail.com | oliviawu
 Xiaoyi Li | Li.xiaoyi2121@gmail.com
 
 ps: *the order here only follow by the first character of the first name.*
