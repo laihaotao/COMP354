@@ -62,4 +62,5 @@ When the tester or reviewer find a bug in the code, please use the issue system 
 In order to make the code clean, clear and easy to read, the whole team should follow only one code style. I suggest that we can use the [Google Java Code Style](https://google.github.io/styleguide/javaguide.html).
 
 ps:*strongerly suggest you guys use the most intelligent IDE which is Intellij instead of Eclipse, trust me you will love it when you begin to use it!*
-
+this is the pokemon rulebook if you want to check it.
+http://assets.pokemon.com//assets/cms2/pdf/trading-card-game/rulebook/sm2_rulebook_en.pdf
