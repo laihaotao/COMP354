@@ -5,7 +5,7 @@
 Since we want to make the UML file available on the GitHub, here we are going to use text file instead 
 of diagram. Before we use the text file, we need to set up some rules that make the file easily to read.
 
-1. all the class name should be bold;
+1. ~all the class name should be bold;~
 2. the enum class should with the `enum` before its name;
 3. the interface should with the `interface` before its name;
 4. use `implement` to indicate the interface this class will implement;
