@@ -18,14 +18,16 @@ public class PokemonCard extends Card {
     private String Attack;
     private int Damage;
     private String type;
+    private String AttackName;
     
     private List<Ability> abilities = new ArrayList<>();
     
-    public PokemonCard(String name, int hp, int Damage, String type) {
+    public PokemonCard(String name, int hp, int Damage, String type, String AttackName) {
         this.name = name;
         this.HP = hp;
         this.Damage= Damage;
         this.type= type;
+        this.AttackName= AttackName;
         this.cardType = CardType.POKEMON;
     }
     
