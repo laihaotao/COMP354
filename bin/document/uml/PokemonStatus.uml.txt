@@ -1,0 +1,9 @@
+// creator: Haotao(Eric) Lai
+// modifiers:
+
+enum class PokemonStatus
+- Paralyzed
+- Asleep
+- Stuck
+- poisoned
+- normal

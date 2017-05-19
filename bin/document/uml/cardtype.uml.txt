@@ -1,0 +1,26 @@
+// creator: Haotao(Eric) Lai
+// modifiers:
+
+enum class CardType
+- Energy
+- Pokemon
+- Trainer
+
+
+enum class EnergyType
+- Colorless
+- Water
+- Lightning
+
+
+enum class PokemonType
+- Basic
+- Stage-one
+- Psychic
+- Fighting
+
+
+enum class TrainerType
+- Item
+- Supporter
+- Stadium

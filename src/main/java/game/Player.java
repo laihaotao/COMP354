@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.text.Normalizer;
 
 import card.Card;
-import card.pokemon.PikachuDemo;
 import card.pokemon.PokemonCard;
 
 /**
@@ -14,11 +13,7 @@ import card.pokemon.PokemonCard;
  */
 public class Player {
 	
-	
-	
 	private Card [] playerDeck = new Card[60];
-	
-	
 	
     //Will take the txt.file, read through it, and create the decks
     public void createDeck() throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException{
@@ -40,7 +35,6 @@ public class Player {
     
     public Card[] loadDeck(FileReader file) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException{
     	
-    	PikachuDemo pika = new PikachuDemo();
     	
     	
     	//Create Scanner to read deck.txt files
@@ -157,12 +151,12 @@ public class Player {
 					
 					for (int i=0; i < numberOfCards;i++){//Create the number of Cards indicated in the line read
 						
-						
-						Class<?> cls = Class.forName("card.pokemon."+className);//must use fully qualified name
-						Object clsInstance = cls.newInstance();
-						deck[deckIndex] = (Card) clsInstance;
-						deckIndex +=1;
-						
+						//will need pokemonCardFactory
+						//(String pokemonStage, String name, int hp , String pokemonType, int[] retreatEnergyCost)
+						PokemonCard pokemonCard = new PokemonCard("Basic", "PikachuDemo", 90, "lightning", 1,2,3,4,5,6,7,8,9,10,11);
+							deck[deckIndex] = pokemonCard;
+							deckIndex +=1;
+
 
 					}// end of for loop
 				}
@@ -181,8 +175,6 @@ public class Player {
 		
 	}
 	
-	
-	
 	//This method is used to clean the line to make it easier to read the string and to convert it to a className
 	public String convertLineToClassName (String string){
 		string = string.replaceAll("\\*", "");
@@ -195,8 +187,7 @@ public class Player {
 		return string;
 		
 	}
-	
-	
+
 	public void printDeck(){
 		//Good for testing
 		

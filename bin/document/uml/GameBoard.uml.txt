@@ -1,0 +1,8 @@
+// creator: Haotao(Eric) Lai
+// modifiers:
+
+class GameBoard
+- turnFlag: boolean
+- status: TurnStatus
+- players: Player[2]
+- currentPlayer: Player

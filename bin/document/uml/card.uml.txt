@@ -1,0 +1,23 @@
+// creator: Haotao(Eric) Lai
+// modifiers:
+
+abstract class Card
+- name: String
+- cardType: CardType
+
+
+class EnergyCard extend Card
+- energyType: EnergyType
+
+
+class TrainerCard extend Card
+- trainerType: TrainerType
+- description: String
+
+
+class PokemonCard extend Card
+- pokemonType: PokemonType
+- stage: PokemonStage
+- hp: int
+- evolveFrom: PokemonCard
+
