@@ -244,11 +244,8 @@ public class Player {
 		//Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
 		for(int i = 0 ; i<7; i++)
 		{
-			putCardInHAnd();
+			putCardInHand();
 		}
-		chooseActivePokemon();
-		putCardOnBench();
-		putCardOnBench();
 
 		//chooseActivePokemon();
 	}
@@ -264,7 +261,7 @@ public class Player {
 
 	}
 	//Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
-	public void putCardInHAnd()
+	public void putCardInHand()
 	{
 		hand.add(deck.remove(0));
 		if(hand.get(hand.size()-1).getCardType() == "POKEMON")
@@ -414,7 +411,7 @@ public class Player {
 	{
 		for(int i = 0 ; i<6; i++)
 		{
-			putCardInHAnd();
+			putCardInHand();
 		}
 
 	}
@@ -445,6 +442,26 @@ public class Player {
 	public void attackOpponent(Card opponent)
 	{
 
+	}
+
+	public List<Card> getDeck(){
+		return deck;
+	}
+
+	public List<Card> getHand(){
+		return hand;
+	}
+
+	public List<Card> getBench(){
+		return bench;
+	}
+
+	public Card getActivePokemon(){
+		return activePokemon;
+	}
+
+	public void setActivePokemon(Card card){
+		activePokemon = card;
 	}
 
 }
