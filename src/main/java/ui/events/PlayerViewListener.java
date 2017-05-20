@@ -8,6 +8,10 @@ import game.Player;
  */
 public interface PlayerViewListener {
   void onHandCardClicked(Player player, Card card);
+
   void onBenchCardClicked(Player player, Card card);
+
   void onActiveCardClicked(Player player, Card card);
+
+
 }
