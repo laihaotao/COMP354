@@ -15,6 +15,7 @@ public abstract class Card {
     protected CardType cardType;
     protected String type;
 
+    private boolean isSelected = false;
 
     public String getCardName()
     {
@@ -23,5 +24,13 @@ public abstract class Card {
     public String getCardType()
     {
         return type;
+    }
+
+    public void setSelected(boolean selected){
+        isSelected = selected;
+    }
+
+    public boolean getSelected(){
+        return isSelected;
     }
 }
