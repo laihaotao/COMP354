@@ -25,6 +25,10 @@ public class CardView extends BorderPane{
 
         this.getStyleClass().add("Card");
 
+        if(card.getSelected()){
+            this.getStyleClass().add("Selected");
+        }
+
         topInfo = new HBox();
         topHealthInfo  = new VBox();
 
