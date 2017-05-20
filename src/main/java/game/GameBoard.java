@@ -88,7 +88,7 @@ public class GameBoard {
     //TODO process AI turn
 
     //finish AI turn
-    nextTurn();
+  //  nextTurn();
   }
 
   public void nextTurn(){

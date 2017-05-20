@@ -52,7 +52,7 @@ public class PlayerView extends BorderPane {
         //Add them in "reverse" order for them to display from bottom to top
         centerCardArea.getChildren().addAll(activeCard, benchCards, handCards );
 
-        deck = new Label("30");
+        deck = new Label("");
         deck.getStyleClass().add("Deck");
 
         this.setCenter(centerCardArea);
@@ -62,7 +62,7 @@ public class PlayerView extends BorderPane {
 
     public void refreshView(){
 
-        //TODO display actual player card info
+        deck.setText(String.valueOf(player.getDeck().size()));
 
         //Add hand cards
         handCards.getChildren().clear();
