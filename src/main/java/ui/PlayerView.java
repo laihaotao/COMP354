@@ -25,7 +25,7 @@ public class PlayerView extends BorderPane {
     private HBox benchCards;
 
     //Pane that constains the active card. This is not an HBox since their can only be one active pokemon card
-    private StackPane activeCard;
+    private HBox activeCard;
 
     private Label deck;
 
@@ -47,7 +47,7 @@ public class PlayerView extends BorderPane {
 
         benchCards = new HBox();
         benchCards.getStyleClass().add("Bench");
-        activeCard = new StackPane();
+        activeCard = new HBox();
 
         //Add them in "reverse" order for them to display from bottom to top
         centerCardArea.getChildren().addAll(activeCard, benchCards, handCards );
@@ -67,47 +67,62 @@ public class PlayerView extends BorderPane {
         //Add hand cards
         handCards.getChildren().clear();
 
-        handCards.getChildren().add(new Label("Hand"));
+        Label handLabel = new Label("Hand");
+        handLabel.setOnMouseClicked(event->registeredListeners.forEach(listener->listener.onHandCardClicked(player, null)));
+
+        handCards.getChildren().add(handLabel);
 
         //For now, just add 5 cardViews to make sure it displays
-        for(int i=0; i < 5; i++){
-            
-            CardView cardView = new CardView();
-            
+
+        player.getHand().forEach((card)->{
+            CardView cardView = new CardView(card);
+
             cardView.setOnMouseClicked((event -> {
-                registeredListeners.forEach(listener->listener.onHandCardClicked(player, null));
+                registeredListeners.forEach(listener->listener.onHandCardClicked(player, card));
             }));
-            
+
             handCards.getChildren().add(cardView);
-        }
+        });
 
 
         //Add bench cards
         benchCards.getChildren().clear();
-        benchCards.getChildren().add(new Label("Bench"));
 
-        //For now, just add 3 cardViews to make sure it displays
-        for(int i=0; i < 3; i++){
-            CardView cardView = new CardView();
+        Label benchLabel = new Label("Bench");
+        benchLabel.setOnMouseClicked(event -> registeredListeners.forEach(listener->listener.onBenchCardClicked(player, null)));
+
+        benchCards.getChildren().add(benchLabel);
+
+        player.getBench().forEach((card)->{
+            CardView cardView = new CardView(card);
 
             cardView.setOnMouseClicked((event -> {
-                registeredListeners.forEach(listener->listener.onBenchCardClicked(player, null));
+                registeredListeners.forEach(listener->listener.onBenchCardClicked(player, card));
             }));
-            
+
             benchCards.getChildren().add(cardView);
-        }
+        });
 
 
         //set the current active card
         activeCard.getChildren().clear();
 
-        CardView cardView = new CardView();
+        Label activeLabel = new Label("Active");
+        activeLabel.setOnMouseClicked(event->registeredListeners.forEach(listener->listener.onActiveCardClicked(player, null)));
 
-        cardView.setOnMouseClicked((event -> {
-            registeredListeners.forEach(listener->listener.onActiveCardClicked(player, null));
-        }));
-        
-        activeCard.getChildren().add(cardView);
+        activeCard.getChildren().add(activeLabel);
+
+        if(player.getActivePokemon() != null){
+
+            CardView cardView = new CardView(player.getActivePokemon());
+
+            cardView.setOnMouseClicked((event -> {
+                registeredListeners.forEach(listener->listener.onActiveCardClicked(player, player.getActivePokemon()));
+            }));
+
+            activeCard.getChildren().add(cardView);
+        }
+
     }
     
     public void registerListener(PlayerViewListener listener){
