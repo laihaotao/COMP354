@@ -1,5 +1,6 @@
 package ui;
 
+import card.Card;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -20,7 +21,7 @@ public class CardView extends BorderPane{
     private VBox abilitiesInfo;
 
     //TODO A Card instance should be passed to this once it is properly implemented
-    public CardView(){
+    public CardView(Card card){
 
         this.getStyleClass().add("Card");
 
@@ -36,9 +37,9 @@ public class CardView extends BorderPane{
         healthLabel.getStyleClass().add("Health");
         damageLabel.getStyleClass().add("Damage");
 
-        topHealthInfo.getChildren().addAll(healthLabel, damageLabel);
+        //topHealthInfo.getChildren().addAll(healthLabel, damageLabel);
 
-        topInfo.getChildren().addAll(new Label("A Card"), topHealthInfo);
+        topInfo.getChildren().addAll(new Label(card.getCardName()), topHealthInfo);
 
         //Display abilities
         abilitiesInfo = new VBox();
