@@ -45,7 +45,8 @@ public class BoardView extends BorderPane implements PlayerViewListener{
         //create end game button
         Button endTurnBtn = new Button("End Turn");
         endTurnBtn.setOnAction((e) -> {
-            //TODO Pass end game to boardgame class
+            gameBoard.onEndTurnButtonClicked();
+            refreshView();
         });
 
 
@@ -75,6 +76,8 @@ public class BoardView extends BorderPane implements PlayerViewListener{
         p2Transforms.add(new Rotate(180, p2View.getWidth() / 2, p2View.getHeight() / 2));
 
     }
+
+
 
     @Override
     public void onHandCardClicked(Player player, Card card) {        
