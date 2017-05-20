@@ -13,4 +13,15 @@ public abstract class Card {
 
     protected String name;
     protected CardType cardType;
+    protected String type;
+
+
+    public String getCardName()
+    {
+        return name;
+    }
+    public String getCardType()
+    {
+        return type;
+    }
 }

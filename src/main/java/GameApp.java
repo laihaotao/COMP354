@@ -10,10 +10,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.Normalizer;
 
+import java.util.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import card.Card;
+import card.energy.EnergyCard;
+import card.pokemon.PokemonCard;
+import card.trainer.TrainerCard;
 import ui.BoardView;
 import ui.StartPane;
 
@@ -44,11 +49,27 @@ public class GameApp extends Application {
         log.error("error");
         
         launch(args);
-        
 
-        Player player = new Player();
-        Player opponent = new Player();
-        try {
+        Card [] cards = new Card[60];
+         int [] retreatEnergyCost = new int [11];
+
+        for(int i = 0 ; i<retreatEnergyCost.length; i++)
+        {
+            retreatEnergyCost[i] = i*5;
+        }
+        for(int i = 0 ; i<60; i++)
+        {
+           cards[i] = new PokemonCard("pok"+i , "name"+i , i*6,  "type"+i , retreatEnergyCost  );
+
+        }
+        ArrayList<Card> deck = new ArrayList() ;
+        for(int i = 0 ; i<60; i++)
+        {
+            deck.add(cards[i]);
+        }
+        Player player = new Player(deck);
+        Player opponent = new Player(deck);
+        /*try {
 			player.createDeck();
 			opponent.createDeck();
 		} catch (InstantiationException e) {
@@ -67,11 +88,11 @@ public class GameApp extends Application {
 			// TODO Auto-generated catch block
 			System.out.println("IOException!!");
 			e.printStackTrace();
-		}
+		}*/
         System.out.println("Player's Deck:");
-        player.printDeck();
+        player.printCardOnDeck();
         System.out.println("Opponent's Deck:");
-        opponent.printDeck();
+        opponent.printCardOnDeck();
         
         
         
@@ -82,9 +103,26 @@ public class GameApp extends Application {
     	primaryStage.setTitle(WINDOW_TITLE);
 
         StartPane root = new StartPane();
+        Card [] cards = new Card[60];
+        int [] retreatEnergyCost = new int [11];
 
-        GameBoard gameBoard = new GameBoard(new Player(), new Player());
-        
+        for(int i = 0 ; i<retreatEnergyCost.length; i++)
+        {
+            retreatEnergyCost[i] = i*5;
+        }
+        for(int i = 0 ; i<60; i++)
+        {
+            cards[i] = new PokemonCard("pok"+i , "name"+i , i*6,  "type"+i , retreatEnergyCost  );
+
+        }
+        ArrayList<Card> deck = new ArrayList() ;
+        for(int i = 0 ; i<60; i++)
+        {
+            deck.add(cards[i]);
+        }
+        GameBoard gameBoard;
+        gameBoard = new GameBoard(new Player(deck), new Player(deck));
+
         //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
 
