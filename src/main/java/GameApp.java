@@ -49,7 +49,11 @@ public class GameApp extends Application {
         log.error("error");
         
         launch(args);
-
+ /*
+         these cards i added are just for testing the code will change need to be changed to the real
+                cards after the deck has been sent to its class
+        also need to add the logic from player to app
+         */
         Card [] cards = new Card[60];
          int [] retreatEnergyCost = new int [11];
 
@@ -103,6 +107,12 @@ public class GameApp extends Application {
     	primaryStage.setTitle(WINDOW_TITLE);
 
         StartPane root = new StartPane();
+
+        /*
+         these cards i added are just for testing the code will change need to be changed to the real
+                cards after the deck has been sent to its class
+
+         */
         Card [] cards = new Card[60];
         int [] retreatEnergyCost = new int [11];
 
