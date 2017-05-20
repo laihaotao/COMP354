@@ -12,7 +12,9 @@ import card.pokemon.PokemonCard;
  * Created by frede on 2017-05-15.
  */
 public class Player {
-	
+
+	//function
+
 	private Card [] playerDeck = new Card[60];
 	
     //Will take the txt.file, read through it, and create the decks
@@ -69,7 +71,7 @@ public class Player {
 				lineParts = line.split(" ");
 				
 				//Checking which category
-				if (lineParts[0].equals("##Pokémon")){
+				if (lineParts[0].equals("##Pokï¿½mon")){
 					isPokemonCard = true;
 					//isTrainerCard = false;
 					//isEnergyCard = false;
