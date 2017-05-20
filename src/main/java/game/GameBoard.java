@@ -53,6 +53,8 @@ public class GameBoard {
 
     //Player is trying to place pokemon card on bench
     if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard){
+
+      //remove selected card from player's hand and put it on the player's bench
       if(player.getHand().remove(selectedCard)){
         player.getBench().add(selectedCard);
         setSelectedCard(null, null);
@@ -70,6 +72,7 @@ public class GameBoard {
     //player is trying to place pokemon on active slot
     if(player.getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard){
 
+      //remove selected card from player's hand and put it as active
       if(player.getHand().remove(selectedCard)) {
         player.setActivePokemon(selectedCard);
         setSelectedCard(null, null);
@@ -81,15 +84,23 @@ public class GameBoard {
 
   public void onEndTurnButtonClicked(){
     nextTurn();
+
+    //TODO process AI turn
+
+    //finish AI turn
+    nextTurn();
   }
 
   public void nextTurn(){
-    Player currentPlayer = getCurrentTurnPlayer();
-    currentPlayer.putCardInHand();
-
+    //This will cycle between 0 and 1
     currentTurn = (currentTurn + 1)%2;
 
-    //TODO process AI turn
+    Player currentPlayer = getCurrentTurnPlayer();
+
+    //add card to players hand
+    currentPlayer.putCardInHand();
+
+
   }
   
   public Player[] getPlayers(){
