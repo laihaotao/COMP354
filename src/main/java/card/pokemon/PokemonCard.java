@@ -28,26 +28,30 @@ public class PokemonCard extends Card {
     // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
     private int [] retreatEnergyCost = new int [11];
     
-    private String pokemonType;
+    
+    //SKIPPING POKEMONTYPES
+    //private enum PokemonType{
+    //	NORMAL, FIGHTING, FLYING, POISON, GROUND, ROCK, BUG, GHOST, STEEL, FIRE, WATER, GRASS, ELECTRIC, PSYCHIC, ICE, DRAGON, DARK, FAIRY;
+    //}
+    
     private String status;
+    
     private String evolvesFrom;
     
     
     
     
     
-    public PokemonCard(String pokemonStage, String name, int hp , String pokemonType, ArrayList<Ability> abilities, int[] retreatEnergyCost) {
+    public PokemonCard(String pokemonStage, String name, int hp, ArrayList<Ability> abilities, int[] retreatEnergyCost) {
     	this.pokemonStage = pokemonStage;
     	this.name = name;
         this.hp = hp;
-        this.pokemonType= pokemonType; 
         this.retreatEnergyCost  = retreatEnergyCost;
         this.abilities = abilities;
         this.damage = 0;
         this.defense = 0;
         this.attackCounter = 0;
         this.status = "";
-        
         this.cardType = CardType.POKEMON;
         
     }
@@ -211,7 +215,7 @@ public class PokemonCard extends Card {
 	}
 
 
-
+/* SKIPPING POKEMONTYPE
 	public String getType() {
 		return pokemonType;
 	}
@@ -220,7 +224,7 @@ public class PokemonCard extends Card {
 	public void setType(String type) {
 		this.pokemonType = pokemonType;
 	}
-
+*/
 
 	public String getStatus() {
 		return status;
