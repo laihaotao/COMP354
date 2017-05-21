@@ -24,7 +24,7 @@ public class PokemonCard extends Card {
     
     private int damage;
     private int defense;
-    private int [] attackEnergyCost = new int [11];
+    private int [] energyAttached = new int [11];
     // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
     private int [] retreatEnergyCost = new int [11];
     
@@ -36,60 +36,23 @@ public class PokemonCard extends Card {
     
     
     
-    public PokemonCard(String pokemonStage, String name, int hp , String pokemonType, int[] retreatEnergyCost) {
+    public PokemonCard(String pokemonStage, String name, int hp , String pokemonType, ArrayList<Ability> abilities, int[] retreatEnergyCost) {
     	this.pokemonStage = pokemonStage;
     	this.name = name;
         this.hp = hp;
         this.pokemonType= pokemonType; 
         this.retreatEnergyCost  = retreatEnergyCost;
-        this.cardType = CardType.POKEMON;
-        
-        
+        this.abilities = abilities;
         this.damage = 0;
         this.defense = 0;
         this.attackCounter = 0;
         this.status = "";
         
-    }
-    
-    
-    public PokemonCard(String pokemonStage, String name, int hp , String pokemonType, int colorless, int fire, int water, int lightning, int psychic, int grass, int darkness, int metal, int fairy, int fighting, int dragon) {
-    	this.pokemonStage = pokemonStage;
-    	this.name = name;
-        this.hp = hp;
-        this.pokemonType= pokemonType; 
-        this.retreatEnergyCost  = retreatEnergyCost;
         this.cardType = CardType.POKEMON;
         
-        
-        this.damage = 0;
-        this.defense = 0;
-        this.attackCounter = 0;
-        this.status = "";
-        
-        
-        
-        
-	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
-		this.attackEnergyCost[0] = colorless;
-		this.attackEnergyCost[1] = fire;
-		this.attackEnergyCost[2] = water;
-		this.attackEnergyCost[3] = lightning;
-		this.attackEnergyCost[4] = psychic;
-		this.attackEnergyCost[5] = grass;
-		this.attackEnergyCost[6] = darkness;
-		this.attackEnergyCost[7] = metal;
-		this.attackEnergyCost[8] = fairy;
-		this.attackEnergyCost[9] = fighting;
-		this.attackEnergyCost[10] = dragon;
-        
     }
-    
-    
     
 
-    
-    
     
     
     public String getPokemonStage() {
@@ -142,51 +105,41 @@ public class PokemonCard extends Card {
 	}
 
 
-	public int[] getRetreatEnergyInt() {
+	public int[] getRetreatEnergyCost() {
 		return retreatEnergyCost;
 	}
 
 
-	public void setAttackEnergyCost(int colorless, int fire, int water, int lightning, int psychic, int grass, int darkness, int metal, int fairy, int fighting, int dragon) {
+	public void setEnergyAttached(int colorless, int fire, int water, int lightning, int psychic, int grass, int darkness, int metal, int fairy, int fighting, int dragon) {
 	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
-		this.attackEnergyCost[0] = colorless;
-		this.attackEnergyCost[1] = fire;
-		this.attackEnergyCost[2] = water;
-		this.attackEnergyCost[3] = lightning;
-		this.attackEnergyCost[4] = psychic;
-		this.attackEnergyCost[5] = grass;
-		this.attackEnergyCost[6] = darkness;
-		this.attackEnergyCost[7] = metal;
-		this.attackEnergyCost[8] = fairy;
-		this.attackEnergyCost[9] = fighting;
-		this.attackEnergyCost[10] = dragon;
+		this.energyAttached[0] = colorless;
+		this.energyAttached[1] = fire;
+		this.energyAttached[2] = water;
+		this.energyAttached[3] = lightning;
+		this.energyAttached[4] = psychic;
+		this.energyAttached[5] = grass;
+		this.energyAttached[6] = darkness;
+		this.energyAttached[7] = metal;
+		this.energyAttached[8] = fairy;
+		this.energyAttached[9] = fighting;
+		this.energyAttached[10] = dragon;
 	}
 	
 	
-	public int[] returnAttackCostArray(int colorless, int fire, int water, int lightning, int psychic, int grass, int darkness, int metal, int fairy, int fighting, int dragon) {
-	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
-		int [] attackEnergyCost = new int[11];
-		attackEnergyCost[0] = colorless;
-		attackEnergyCost[1] = fire;
-		attackEnergyCost[2] = water;
-		attackEnergyCost[3] = lightning;
-		attackEnergyCost[4] = psychic;
-		attackEnergyCost[5] = grass;
-		attackEnergyCost[6] = darkness;
-		attackEnergyCost[7] = metal;
-		attackEnergyCost[8] = fairy;
-		attackEnergyCost[9] = fighting;
-		attackEnergyCost[10] = dragon;
-		return attackEnergyCost;
-	}
-	
-	
-	public void setAttackEnergyCost(int []attackEnergyCost) {
+	public void setEnergyAttached(int []energyAttached) {
 	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
 		
-		for (int i = 0; i< this.attackEnergyCost.length; i++){
-			this.attackEnergyCost[i] = attackEnergyCost[i];
+		for (int i = 0; i< this.energyAttached.length; i++){
+			this.energyAttached[i] = energyAttached[i];
 		}
+
+	}
+	
+	
+	public int[] getEnergyAttached() {
+	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
+		
+		return this.energyAttached;
 
 	}
 	
@@ -204,6 +157,29 @@ public class PokemonCard extends Card {
 		this.retreatEnergyCost[8] = fairy;
 		this.retreatEnergyCost[9] = fighting;
 		this.retreatEnergyCost[10] = dragon;
+	}
+	
+	
+	//keep it static so we can use this Class function without instantiating
+	public static int[] setAndReturnEnergyArray(int colorless, int fire, int water, int lightning, int psychic, int grass, int darkness, int metal, int fairy, int fighting, int dragon) {
+	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
+		
+		int[] energyArray = new int [11];
+		
+		
+		energyArray[0] = colorless;
+		energyArray[1] = fire;
+		energyArray[2] = water;
+		energyArray[3] = lightning;
+		energyArray[4] = psychic;
+		energyArray[5] = grass;
+		energyArray[6] = darkness;
+		energyArray[7] = metal;
+		energyArray[8] = fairy;
+		energyArray[9] = fighting;
+		energyArray[10] = dragon;
+		
+		return energyArray;
 	}
 	
 	
