@@ -146,7 +146,8 @@ public class LanguageTokenizer {
           break;
           
         case '*':
-          addToken(tokens, createTokenFromString(location, currentTokenString), lastArithmeticTokenType);
+          if(currentTokenString.length() > 0)
+            addToken(tokens, createTokenFromString(location, currentTokenString), lastArithmeticTokenType);
           lastArithmeticTokenType = ArithmeticType.MULTIPLICATION;
           currentTokenString = "";
           break;
@@ -161,6 +162,7 @@ public class LanguageTokenizer {
             scope.tokens = tokens;
             return scope;
           }
+          
           currentTokenString += c;
       }
     }
