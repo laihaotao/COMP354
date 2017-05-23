@@ -48,7 +48,7 @@ public class LanguageParser {
    */
   private TokenScope parseLine(String line) {
     System.out.println("Parsing: " + line);
-    TokenScope scope = processScope(line, 0);
+    TokenScope scope = processScope(line, 0, '\n');
     printScope(scope, 0);
     
     return scope;
@@ -86,7 +86,7 @@ public class LanguageParser {
    * @param start Where this scope starts
    * @return
    */
-  private TokenScope processScope(String line, int start) {
+  private TokenScope processScope(String line, int start, char endChar) {
     List<Token> tokens = new ArrayList<>();
     String currentTokenString = "";
 
@@ -115,23 +115,31 @@ public class LanguageParser {
           
         //start of scope
         case '(':
-          TokenScope tScope = processScope(line, location+1);
+          TokenScope tScope = processScope(line, location+1, ')');
           tokens.add(tScope);
           location = tScope.endLocation;
           tScope.prefix = currentTokenString;
           currentTokenString = "";
           break;
           
-        //end of scope
-        case ')':
-          tokens.add(new TokenString(location, currentTokenString));
-          
-          TokenScope scope = new TokenScope(location);
-          scope.tokens = tokens;
-          return scope;
+        case '[':
+          TokenScope tScope2 = processScope(line, location+1, ']');
+          tokens.add(tScope2);
+          location = tScope2.endLocation;
+          tScope2.prefix = currentTokenString;
+          currentTokenString = "";
+          break;
+
           
         //add character to token string
         default:
+          if(c == endChar){
+            tokens.add(new TokenString(location, currentTokenString));
+
+            TokenScope scope = new TokenScope(location);
+            scope.tokens = tokens;
+            return scope;
+          }
           currentTokenString += c;
       }
     }
