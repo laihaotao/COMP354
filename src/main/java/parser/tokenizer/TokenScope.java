@@ -1,4 +1,4 @@
-package parser.abilities.inter;
+package parser.tokenizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +10,19 @@ public class TokenScope extends Token {
 
   public List<Token> tokens;
   public String prefix;
+  
   public TokenScope(int endLocation) {
-    super(endLocation);
+    super(TokenType.SCOPE, endLocation);
     
     tokens = new ArrayList<>();
+  }
+  
+  public String toString(){
+    String s = super.toString()+"Scope -> ";
+    for(Token t : tokens){
+      s += t.toString() + ",  ";
+    }
+    
+    return s;
   }
 }

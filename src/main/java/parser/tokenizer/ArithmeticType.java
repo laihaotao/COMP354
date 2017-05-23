@@ -1,4 +1,4 @@
-package parser.abilities.inter;
+package parser.tokenizer;
 
 /**
  * Created by frede on 2017-05-22.

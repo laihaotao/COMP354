@@ -1,4 +1,4 @@
-package parser.abilities.inter;
+package parser.tokenizer;
 
 /**
  * Created by frede on 2017-05-22.
@@ -6,7 +6,7 @@ package parser.abilities.inter;
 public class TokenSeparator extends Token{
 
   public TokenSeparator(int endLocation) {
-    super(endLocation);
+    super(TokenType.SEPERATOR, endLocation);
   }
   
   public String toString(){

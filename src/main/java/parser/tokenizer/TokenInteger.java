@@ -1,4 +1,4 @@
-package parser.abilities.inter;
+package parser.tokenizer;
 
 /**
  * Token that holds an integer 
@@ -7,7 +7,7 @@ public class TokenInteger extends Token{
   public final int value;
   
   public TokenInteger(int endLocation, int value) {
-    super(endLocation);
+    super(TokenType.INTEGER, endLocation);
     this.value = value;
   }
   

@@ -1,4 +1,4 @@
-package parser.abilities.inter;
+package parser.tokenizer;
 
 /**
  * This symbolizes a token in the language
@@ -6,8 +6,10 @@ package parser.abilities.inter;
 public abstract class Token {
   
   public final int endLocation;
+  public final TokenType type;
   
-  public Token(int endLocation){
+  public Token(TokenType type, int endLocation){
+    this.type = type;
     this.endLocation = endLocation;
   }
   

@@ -1,4 +1,4 @@
-package parser.abilities.inter;
+package parser.tokenizer;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -11,17 +11,18 @@ import java.util.List;
 /**
  * Parses a file for the language the teacher defined in the text files
  */
-public class LanguageParser {
+public class LanguageTokenizer {
 
-  public LanguageParser() {
-
+  private String fileName;
+  
+  public LanguageTokenizer(String fileName) {
+      this.fileName = fileName;
   }
 
   /**
    * Parse and print output of file
-   * @param fileName resource file
    */
-  public List<TokenScope> parse(String fileName) {
+  public List<TokenScope> tokenize() {
     Path path1 = null;
     try {
       path1 = Paths.get(ClassLoader.getSystemResource(fileName).toURI());
@@ -43,13 +44,13 @@ public class LanguageParser {
   }
 
   /**
-   * Will parse a file line, each line is isolated
+   * Will tokenize a file line, each line is isolated
    * @param line
    */
   private TokenScope parseLine(String line) {
-    System.out.println("Parsing: " + line);
+    //System.out.println("Parsing: " + line);
     TokenScope scope = processScope(line, 0, '\n');
-    printScope(scope, 0);
+    //printScope(scope, 0);
     
     return scope;
     

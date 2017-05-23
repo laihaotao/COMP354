@@ -1,4 +1,4 @@
-package parser.abilities.inter;
+package parser.tokenizer;
 
 /**
  * Used to delimit arithmetics
@@ -8,7 +8,7 @@ public class TokenArithmetic extends Token{
   public final ArithmeticType type;
   
   public TokenArithmetic(int endLocation, ArithmeticType type) {
-    super(endLocation);
+    super(TokenType.ARITHMETIC, endLocation);
     this.type = type;
   }
   
