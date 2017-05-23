@@ -18,11 +18,11 @@ public class TokenScope extends Token {
   }
   
   public String toString(){
-    String s = super.toString()+"Scope -> ";
+    String s = super.toString()+"Scope -> "+prefix + "( ";
     for(Token t : tokens){
       s += t.toString() + ",  ";
     }
-    
+    s += " )";
     return s;
   }
 }
