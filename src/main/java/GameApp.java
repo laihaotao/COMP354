@@ -19,6 +19,7 @@ import card.Card;
 import card.energy.EnergyCard;
 import card.pokemon.PokemonCard;
 import card.trainer.TrainerCard;
+import parser.abilities.inter.LanguageParser;
 import ui.BoardView;
 import ui.StartPane;
 
@@ -47,6 +48,9 @@ public class GameApp extends Application {
     public static void main(String[] args) {
         log.info("Starting pokemon game!");
         log.error("error");
+
+        LanguageParser languageParser = new LanguageParser();
+        languageParser.parse("abilities.txt");
         
         launch(args);
  /*
