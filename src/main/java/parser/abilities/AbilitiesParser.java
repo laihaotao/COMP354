@@ -2,6 +2,14 @@ package parser.abilities;
 
 import java.lang.annotation.Target;
 import java.util.List;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javax.swing.plaf.nimbus.State;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import parser.commons.DestinationPart;
@@ -13,6 +21,7 @@ import parser.tokenizer.TokenScope;
 import parser.tokenizer.TokenStream;
 import parser.tokenizer.TokenString;
 import parser.tokenizer.TokenType;
+import parser.ui.TokenPane;
 
 /**
  * Created by frede on 2017-05-23.
@@ -29,6 +38,14 @@ public class AbilitiesParser {
   
   public void parse() {
     List<TokenScope> scopes = tokenizer.tokenize();
+
+    TreeItem root = new TokenPane(scopes.toArray(new Token[0]));
+    Stage stage = new Stage();
+    stage.setTitle("Parser");
+    TreeView view = new TreeView<>(root);
+    stage.setScene(new Scene(view, 800,800));
+    stage.show();
+    
     scopes.forEach((scope)->{
         parseNullScope(scope);
     });
