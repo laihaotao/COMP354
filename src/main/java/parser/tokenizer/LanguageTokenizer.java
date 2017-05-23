@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class LanguageTokenizer {
 
+  /**
+   * File name to load text from
+   */
   private String fileName;
   
   public LanguageTokenizer(String fileName) {
@@ -23,6 +26,7 @@ public class LanguageTokenizer {
    * Parse and print output of file
    */
   public List<TokenScope> tokenize() {
+    //get the path to the filename. This assumes the file is in resources
     Path path1 = null;
     try {
       path1 = Paths.get(ClassLoader.getSystemResource(fileName).toURI());
@@ -30,8 +34,10 @@ public class LanguageTokenizer {
       e.printStackTrace();
     }
     
+    //Each line is a "Scope". This means TokenScope is always the parent token
     List<TokenScope> lineScopes = new ArrayList<>();
     
+    //read each line in the file and add it to lineScopes, which will be returned
     try {
       Files.lines(path1).forEach((line) -> {
         lineScopes.add(parseLine(line));
@@ -82,6 +88,12 @@ public class LanguageTokenizer {
     }
   }
 
+  /**
+   * Creates a token from a string. Creates integer if possible and otherwise creates a string token.
+   * @param location
+   * @param s
+   * @return
+   */
   private Token createTokenFromString(int location, String s){
     try {
       int value = Integer.parseInt(s);
@@ -98,9 +110,17 @@ public class LanguageTokenizer {
    * @return
    */
   private TokenScope processScope(String line, int start, char endChar) {
+    //contains all the tokens in this scope
     List<Token> tokens = new ArrayList<>();
+    
+    //Used to build token by adding characters as we scam them
     String currentTokenString = "";
+    
+    //Remebers if an arithmetic operation was present
+    //TODO This needs to be changed if we need to implement precedence of operations, ie Multiplication having higher priority than addition
     ArithmeticType lastArithmeticTokenType = null;
+    
+    //scan through every character from the scope start
     for (int location = start; location < line.length(); location++) {
       char c = line.charAt(location);
 
@@ -135,7 +155,7 @@ public class LanguageTokenizer {
           tScope.prefix = currentTokenString;
           currentTokenString = "";
           break;
-          
+        //alternate scope start
         case '[':
           TokenScope tScope2 = processScope(line, location+1, ']');
           addToken(tokens, tScope2, lastArithmeticTokenType);
@@ -144,16 +164,20 @@ public class LanguageTokenizer {
           tScope2.prefix = currentTokenString;
           currentTokenString = "";;
           break;
-          
+        
+        //multiplication operator
         case '*':
+          //create a new token if necessary 
           if(currentTokenString.length() > 0)
             addToken(tokens, createTokenFromString(location, currentTokenString), lastArithmeticTokenType);
+          
+          //remember that the operator was there
           lastArithmeticTokenType = ArithmeticType.MULTIPLICATION;
           currentTokenString = "";
           break;
-          
-        //add character to token string
+        
         default:
+          //If character signals end of scope, add last tokena nd then return the scope
           if(endChar != '\n')
           if(c == endChar){
             addToken(tokens, createTokenFromString(location, currentTokenString), lastArithmeticTokenType);
@@ -166,29 +190,47 @@ public class LanguageTokenizer {
           currentTokenString += c;
       }
     }
+    
+    //If the program gets here, this means the line is at the end, which end the scope
+    
+    //add last token
     addToken(tokens, createTokenFromString(line.length(), currentTokenString), lastArithmeticTokenType);
     lastArithmeticTokenType = null;
+    
+    //create a return scope
     TokenScope scope = new TokenScope(line.length());
     scope.tokens = tokens;
     
     return scope;
   }
-  
+
+  /**
+   * This checks if the last two tokens need to be replaced by an Arithmetic token
+   * @param lastArithmeticTokenType
+   * @param tokens
+   */
   private void checkArithmetics(ArithmeticType lastArithmeticTokenType, List<Token> tokens){
       if(lastArithmeticTokenType != null && lastArithmeticTokenType != ArithmeticType.NULL){
+        
+        //get and remove last two tokens
         Token left = tokens.get(tokens.size()-2);
         Token right = tokens.get(tokens.size()-1);
         tokens.remove(tokens.size()-1);
         tokens.remove(tokens.size()-1);
+        
         ArithmeticType type = lastArithmeticTokenType;
         lastArithmeticTokenType = null;
         
         addToken(tokens, new TokenArithmetic(right.endLocation, type, left, right), lastArithmeticTokenType);
-        
-        
       }
   }
-  
+
+  /**
+   * Add token and then check for arithmetic operations
+   * @param tokens Where to add the token
+   * @param token Token to add
+   * @param arithmeticType arithmetic type to check
+   */
   private void addToken(List<Token> tokens, Token token, ArithmeticType arithmeticType){
       tokens.add(token);
       checkArithmetics(arithmeticType, tokens);
