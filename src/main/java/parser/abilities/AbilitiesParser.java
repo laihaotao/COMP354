@@ -1,26 +1,23 @@
 package parser.abilities;
 
-import java.lang.annotation.Target;
+import java.util.ArrayList;
 import java.util.List;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javax.swing.plaf.nimbus.State;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import parser.commons.DestinationPart;
-import parser.commons.Formatting;
-import parser.commons.TargetPart;
+import parser.commons.DestinationProperty;
+import parser.commons.TargetProperty;
 import parser.tokenizer.LanguageTokenizer;
 import parser.tokenizer.Token;
 import parser.tokenizer.TokenScope;
 import parser.tokenizer.TokenStream;
 import parser.tokenizer.TokenString;
 import parser.tokenizer.TokenType;
+import parser.ui.AbilityTemplatePane;
 import parser.ui.TokenPane;
 
 /**
@@ -36,32 +33,53 @@ public class AbilitiesParser {
     tokenizer = new LanguageTokenizer(fileName);
   }
   
-  public void parse() {
+  public List<AbilityTemplate> parse() {
     List<TokenScope> scopes = tokenizer.tokenize();
-
-    TreeItem root = new TokenPane(scopes.toArray(new Token[0]));
-    Stage stage = new Stage();
-    stage.setTitle("Parser");
-    TreeView view = new TreeView<>(root);
-    stage.setScene(new Scene(view, 800,800));
-    stage.show();
+    
+    List<AbilityTemplate> templates = new ArrayList<>();
     
     scopes.forEach((scope)->{
-        parseNullScope(scope);
+        templates.add(parseNullScope(scope));
     });
+
+    Stage stage = new Stage();
+    stage.setTitle("Parser");
+    
+    BorderPane mainView = new BorderPane();
+    
+    TreeItem tokenItemPane = new TokenPane(scopes.toArray(new Token[0]));
+    
+    TreeView tokenView = new TreeView<>(tokenItemPane);
+    tokenView.setMinWidth(400);
+    mainView.setLeft(tokenView);
+    
+    TreeItem abilityItemPane = new AbilityTemplatePane((templates.toArray(new AbilityTemplate[0])));
+    TreeView abilityView = new TreeView(abilityItemPane);
+    abilityView.setMinWidth(400);
+    mainView.setRight(abilityView);
+    
+    
+    stage.setScene(new Scene(mainView, 800,800));
+    stage.show();
+    
+    
+    
+    return templates;
   }
   
-  private void parseNullScope(TokenScope scope){
+  private AbilityTemplate parseNullScope(TokenScope scope){
 
     TokenStream tokenStream = new TokenStream(scope.tokens);
     
     String name = tokenStream.validateTokenString().value;
     if(name == null){
       log.error("Name token needs to be a string: " + tokenStream.getNextToken());
-      return;
+      return null;
     }
     
-    log.debug(" " + name+ " ");
+    AbilityTemplate template = new AbilityTemplate(name);
+    
+    //log.debug(" " + name+ " ");
     
     Token token = null;
     while((token = tokenStream.getNextToken()) != null) {
@@ -69,10 +87,10 @@ public class AbilitiesParser {
           TokenString tokenString = (TokenString)token;
           switch(tokenString.value){
             case "deck":
-              parsePartDeck(tokenStream);
+              template.parts.add(parsePartDeck(tokenStream));
               break;
             case  "dam":
-              parseDamPart(tokenStream);
+              template.parts.add(parseDamPart(tokenStream));
               break;
             default:
               waitUntil(tokenStream, TokenType.SEPERATOR);
@@ -81,6 +99,7 @@ public class AbilitiesParser {
         }
     }
     
+    return template;
   }
   
   private void waitUntil(TokenStream stream, TokenType type){
@@ -92,37 +111,38 @@ public class AbilitiesParser {
     }
   }
   
-  private boolean parsePartDeck(TokenStream tokenStream){
+  private AbilityPart parsePartDeck(TokenStream tokenStream){
     
-      log.debug("---Deck---");
+      //log.debug("---Deck---");
 
-      TargetPart targetPart = TargetPart.read(tokenStream);
+      TargetProperty targetPart = TargetProperty.read(tokenStream);
     
-      DestinationPart destinationPart = DestinationPart.read(tokenStream);
+      DestinationProperty destinationPart = DestinationProperty.read(tokenStream);
       
       TokenString choice = null;
       if(tokenStream.validateTokenString("choice") != null){
         choice = tokenStream.validateTokenString();
       }
       
+      Token amount = tokenStream.getNextToken();
 
-      log.debug(targetPart);
-      log.debug(destinationPart);
-      log.debug("Choice: "+Formatting.toSafeString(choice));
-      return true;
+      //log.debug(targetPart);
+      //log.debug(destinationPart);
+      //log.debug("Choice: "+Formatting.toSafeString(choice));
+      return new AbilityPartDeck(targetPart, destinationPart, choice, amount);
   }
   
-  private boolean parseDamPart(TokenStream tokenStream){
-    log.debug("---Dam---");
+  private AbilityPart parseDamPart(TokenStream tokenStream){
+    //log.debug("---Dam---");
 
-    TargetPart targetPart = TargetPart.read(tokenStream);
+    TargetProperty targetPart = TargetProperty.read(tokenStream);
     
     Token amount = tokenStream.getNextToken();
     
-    log.debug(targetPart);
-    log.debug("Amount: " + amount);
+    //log.debug(targetPart);
+    //log.debug("Amount: " + amount);
     
-    return true;
+    return new AbilityPartDam(targetPart, amount);
   }
   
 
