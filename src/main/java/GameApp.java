@@ -5,29 +5,17 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.Normalizer;
-
 import java.util.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import card.Card;
-import card.energy.EnergyCard;
 import card.pokemon.PokemonCard;
-import card.trainer.TrainerCard;
-import parser.abilities.inter.LanguageParser;
+import parser.abilities.AbilitiesParser;
+import parser.tokenizer.LanguageTokenizer;
 import ui.BoardView;
 import ui.StartPane;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.Normalizer;
-import java.io.FileNotFoundException;
 
 
 /**
@@ -49,8 +37,8 @@ public class GameApp extends Application {
         log.info("Starting pokemon game!");
         log.error("error");
 
-        LanguageParser languageParser = new LanguageParser();
-        languageParser.parse("abilities.txt");
+        AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
+        abilitiesParser.parse();
         
         launch(args);
  /*
