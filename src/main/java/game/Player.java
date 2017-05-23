@@ -177,7 +177,7 @@ public class Player {
 						
 						int[] retreatEnergyCost = PokemonCard.setAndReturnEnergyArray(1,2,3,4,5,6,7,8,9,10,11);
 						
-						PokemonCard pokemonCard = new PokemonCard("Basic", "PikachuDemo", 90, "lightning",null, retreatEnergyCost);
+						//PokemonCard pokemonCard = new PokemonCard("Basic", "PikachuDemo", 90, "lightning",null, retreatEnergyCost);
 						//deck[deckIndex] = pokemonCard;
 						//deckIndex +=1;
 

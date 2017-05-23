@@ -38,7 +38,9 @@ public class PokemonCard extends Card {
     
     private String evolvesFrom;
     
-    
+    public PokemonCard(){
+    	abilities = new ArrayList<>();
+		}
     
     
     

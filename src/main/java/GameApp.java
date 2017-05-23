@@ -63,7 +63,7 @@ public class GameApp extends Application {
         }
         for(int i = 0 ; i<60; i++)
         {
-           cards[i] = new PokemonCard("pok"+i , "name"+i , i*6,  "type"+i , null, retreatEnergyCost  );
+           //cards[i] = new PokemonCard("pok"+i , "name"+i , i*6,  "type"+i , null, retreatEnergyCost  );
 
         }
         ArrayList<Card> deck = new ArrayList() ;
@@ -122,7 +122,7 @@ public class GameApp extends Application {
         }
         for(int i = 0 ; i<60; i++)
         {
-            cards[i] = new PokemonCard("pok"+i , "name"+i , i*6,  "type"+i ,null, retreatEnergyCost  );
+            cards[i] = new PokemonCard( );
 
         }
         ArrayList<Card> deck = new ArrayList() ;
