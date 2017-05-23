@@ -48,6 +48,7 @@ public class LanguageTokenizer {
    * @param line
    */
   private TokenScope parseLine(String line) {
+    
     //System.out.println("Parsing: " + line);
     TokenScope scope = processScope(line, 0, '\n');
     //printScope(scope, 0);
@@ -99,7 +100,7 @@ public class LanguageTokenizer {
   private TokenScope processScope(String line, int start, char endChar) {
     List<Token> tokens = new ArrayList<>();
     String currentTokenString = "";
-
+    ArithmeticType lastArithmeticTokenType = null;
     for (int location = start; location < line.length(); location++) {
       char c = line.charAt(location);
 
@@ -112,21 +113,24 @@ public class LanguageTokenizer {
           
         //separator for ability parts
         case ',':
-          tokens.add(createTokenFromString(location, currentTokenString));
+          addToken(tokens, createTokenFromString(location, currentTokenString), lastArithmeticTokenType);
+          lastArithmeticTokenType = null;
           currentTokenString = "";
           tokens.add(new TokenSeparator(location));
           break;
         
         //separates ability parameters
         case ':':
-          tokens.add(createTokenFromString(location, currentTokenString));
+          addToken(tokens, createTokenFromString(location, currentTokenString), lastArithmeticTokenType);
+          lastArithmeticTokenType = null;
           currentTokenString = "";
           break;
           
         //start of scope
         case '(':
           TokenScope tScope = processScope(line, location+1, ')');
-          tokens.add(tScope);
+          addToken(tokens, tScope, lastArithmeticTokenType);
+          lastArithmeticTokenType = null;
           location = tScope.endLocation;
           tScope.prefix = currentTokenString;
           currentTokenString = "";
@@ -134,16 +138,16 @@ public class LanguageTokenizer {
           
         case '[':
           TokenScope tScope2 = processScope(line, location+1, ']');
-          tokens.add(tScope2);
+          addToken(tokens, tScope2, lastArithmeticTokenType);
+          lastArithmeticTokenType = null;
           location = tScope2.endLocation;
           tScope2.prefix = currentTokenString;
-          currentTokenString = "";
+          currentTokenString = "";;
           break;
           
         case '*':
-          tokens.add(createTokenFromString(location, currentTokenString));
-          TokenArithmetic tArith = new TokenArithmetic(location, ArithmeticType.MULTIPLICATION);
-          tokens.add(tArith);
+          addToken(tokens, createTokenFromString(location, currentTokenString), lastArithmeticTokenType);
+          lastArithmeticTokenType = ArithmeticType.MULTIPLICATION;
           currentTokenString = "";
           break;
           
@@ -151,8 +155,8 @@ public class LanguageTokenizer {
         default:
           if(endChar != '\n')
           if(c == endChar){
-            tokens.add(createTokenFromString(location, currentTokenString));
-
+            addToken(tokens, createTokenFromString(location, currentTokenString), lastArithmeticTokenType);
+            lastArithmeticTokenType = null;
             TokenScope scope = new TokenScope(location);
             scope.tokens = tokens;
             return scope;
@@ -160,9 +164,31 @@ public class LanguageTokenizer {
           currentTokenString += c;
       }
     }
-    tokens.add(createTokenFromString(line.length(), currentTokenString));
+    addToken(tokens, createTokenFromString(line.length(), currentTokenString), lastArithmeticTokenType);
+    lastArithmeticTokenType = null;
     TokenScope scope = new TokenScope(line.length());
     scope.tokens = tokens;
+    
     return scope;
+  }
+  
+  private void checkArithmetics(ArithmeticType lastArithmeticTokenType, List<Token> tokens){
+      if(lastArithmeticTokenType != null && lastArithmeticTokenType != ArithmeticType.NULL){
+        Token left = tokens.get(tokens.size()-2);
+        Token right = tokens.get(tokens.size()-1);
+        tokens.remove(tokens.size()-1);
+        tokens.remove(tokens.size()-1);
+        ArithmeticType type = lastArithmeticTokenType;
+        lastArithmeticTokenType = null;
+        
+        addToken(tokens, new TokenArithmetic(right.endLocation, type, left, right), lastArithmeticTokenType);
+        
+        
+      }
+  }
+  
+  private void addToken(List<Token> tokens, Token token, ArithmeticType arithmeticType){
+      tokens.add(token);
+      checkArithmetics(arithmeticType, tokens);
   }
 }
