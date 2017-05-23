@@ -44,19 +44,23 @@ public class AbilitiesParser {
       return;
     }
     
-    System.out.println("Name: " + name);
+    log.debug("____ " + name+ " ____");
     
-    TokenString token = null;
-    while((token = tokenStream.validateTokenString()) != null) {
-        switch(token.value){
-          case "deck":
-            parsePartDeck(tokenStream);
-            break;
-          case  "dam":
-            parseDamPart(tokenStream);
-            break;
-          default:
-            waitUntil(tokenStream, TokenType.SEPERATOR);
+    Token token = null;
+    while((token = tokenStream.getNextToken()) != null) {
+        if(token instanceof TokenString){
+          TokenString tokenString = (TokenString)token;
+          switch(tokenString.value){
+            case "deck":
+              parsePartDeck(tokenStream);
+              break;
+            case  "dam":
+              parseDamPart(tokenStream);
+              break;
+            default:
+              waitUntil(tokenStream, TokenType.SEPERATOR);
+        }
+        
         }
     }
     
@@ -64,8 +68,10 @@ public class AbilitiesParser {
   
   private void waitUntil(TokenStream stream, TokenType type){
     Token token = null;  
-    while((token = stream.getNextToken()) != null && token.type != type){
-      
+    while((token = stream.getNextToken()) != null){
+        if(token.type == type){
+          break;
+        }
     }
   }
   
