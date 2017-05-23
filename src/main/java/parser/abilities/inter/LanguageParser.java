@@ -129,7 +129,13 @@ public class LanguageParser {
           tScope2.prefix = currentTokenString;
           currentTokenString = "";
           break;
-
+          
+        case '*':
+          tokens.add(new TokenString(location, currentTokenString));
+          TokenArithmetic tArith = new TokenArithmetic(location, ArithmeticType.MULTIPLICATION);
+          tokens.add(tArith);
+          currentTokenString = "";
+          break;
           
         //add character to token string
         default:
