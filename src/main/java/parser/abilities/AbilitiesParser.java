@@ -1,8 +1,12 @@
 package parser.abilities;
 
+import java.lang.annotation.Target;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import parser.commons.DestinationPart;
+import parser.commons.Formatting;
+import parser.commons.TargetPart;
 import parser.tokenizer.LanguageTokenizer;
 import parser.tokenizer.Token;
 import parser.tokenizer.TokenScope;
@@ -69,74 +73,35 @@ public class AbilitiesParser {
     
       log.debug("---Deck---");
 
-    TokenString target = null;
-    TokenString targetModifier = null;
-      
-      if(tokenStream.validateTokenString("target") != null){
-        if((target = tokenStream.validateTokenString("choice")) != null){
-
-          if((targetModifier = tokenStream.validateTokenString()) == null){
-
-          }
-
-        }else if((target = tokenStream.validateTokenString()) == null){
-
-        }
-      }
+      TargetPart targetPart = TargetPart.read(tokenStream);
     
-      if(tokenStream.validateTokenString("destination") == null){
-        log.error("Expected destination token not present");
-        return false;
-      }
-      TokenString destination = tokenStream.validateTokenString();
-      Token destinationModifier = tokenStream.getNextToken();
-
+      DestinationPart destinationPart = DestinationPart.read(tokenStream);
+      
       TokenString choice = null;
       if(tokenStream.validateTokenString("choice") != null){
         choice = tokenStream.validateTokenString();
       }
       
 
-      log.debug("Target: " + toSafeString(target) + " "+toSafeString(targetModifier));
-      log.debug("Destination: " + destination.value + " " + destinationModifier);
-      log.debug("Choice: "+toSafeString(choice));
+      log.debug(targetPart);
+      log.debug(destinationPart);
+      log.debug("Choice: "+Formatting.toSafeString(choice));
       return true;
   }
   
   private boolean parseDamPart(TokenStream tokenStream){
     log.debug("---Dam---");
-    
-    if(tokenStream.validateTokenString("target") == null){
-      log.error("Expected target token not present!");
-      return false;
-    }
 
-    TokenString target = null;
-    TokenString targetModifier = null;
-    if((target = tokenStream.validateTokenString("choice")) != null){
-
-      if((targetModifier = tokenStream.validateTokenString()) == null){
-        log.error("Expected target modifier as string");
-      }
-
-    }else if((target = tokenStream.validateTokenString()) == null){
-      log.error("Expected token identifier token as string");
-      return false;
-    }
+    TargetPart targetPart = TargetPart.read(tokenStream);
     
     Token amount = tokenStream.getNextToken();
     
-    log.debug("Target: " + target.value + " "+toSafeString(targetModifier));
+    log.debug(targetPart);
     log.debug("Amount: " + amount);
     
     return true;
   }
   
-  private String toSafeString(TokenString tokenString){
-    if(tokenString == null){
-      return "_";
-    }
-    return tokenString.value;
-  }
+
   
 }
