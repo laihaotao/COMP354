@@ -17,6 +17,8 @@ public class TokenPane extends TreeItem{
     Token[] tokens;
   
     public TokenPane(Token[] tokens){
+        super("Tokens");
+      
         this.tokens = tokens;
       
         setExpanded(true);
