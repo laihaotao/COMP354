@@ -80,6 +80,15 @@ public class LanguageParser {
     }
   }
 
+  private Token createTokenFromString(int location, String s){
+    try {
+      int value = Integer.parseInt(s);
+      return new TokenInteger(location, value);
+    }catch(Exception e){
+      return new TokenString(location, s);
+    }
+  }
+  
   /**
    * Parse / process a scope, will create scopes recursively
    * @param line Current line that is getting parsed
@@ -102,14 +111,14 @@ public class LanguageParser {
           
         //separator for ability parts
         case ',':
-          tokens.add(new TokenString(location, currentTokenString));
+          tokens.add(createTokenFromString(location, currentTokenString));
           currentTokenString = "";
           tokens.add(new TokenSeparator(location));
           break;
         
         //separates ability parameters
         case ':':
-          tokens.add(new TokenString(location, currentTokenString));
+          tokens.add(createTokenFromString(location, currentTokenString));
           currentTokenString = "";
           break;
           
@@ -131,7 +140,7 @@ public class LanguageParser {
           break;
           
         case '*':
-          tokens.add(new TokenString(location, currentTokenString));
+          tokens.add(createTokenFromString(location, currentTokenString));
           TokenArithmetic tArith = new TokenArithmetic(location, ArithmeticType.MULTIPLICATION);
           tokens.add(tArith);
           currentTokenString = "";
@@ -141,7 +150,7 @@ public class LanguageParser {
         default:
           if(endChar != '\n')
           if(c == endChar){
-            tokens.add(new TokenString(location, currentTokenString));
+            tokens.add(createTokenFromString(location, currentTokenString));
 
             TokenScope scope = new TokenScope(location);
             scope.tokens = tokens;
@@ -150,7 +159,7 @@ public class LanguageParser {
           currentTokenString += c;
       }
     }
-    tokens.add(new TokenString(line.length(), currentTokenString));
+    tokens.add(createTokenFromString(line.length(), currentTokenString));
     TokenScope scope = new TokenScope(line.length());
     scope.tokens = tokens;
     return scope;
