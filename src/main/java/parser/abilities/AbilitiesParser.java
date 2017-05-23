@@ -61,7 +61,7 @@ public class AbilitiesParser {
       return;
     }
     
-    log.debug("____ " + name+ " ____");
+    log.debug(" " + name+ " ");
     
     Token token = null;
     while((token = tokenStream.getNextToken()) != null) {
