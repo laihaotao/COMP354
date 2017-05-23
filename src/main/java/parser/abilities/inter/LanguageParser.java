@@ -133,6 +133,7 @@ public class LanguageParser {
           
         //add character to token string
         default:
+          if(endChar != '\n')
           if(c == endChar){
             tokens.add(new TokenString(location, currentTokenString));
 
@@ -143,6 +144,7 @@ public class LanguageParser {
           currentTokenString += c;
       }
     }
+    tokens.add(new TokenString(line.length(), currentTokenString));
     TokenScope scope = new TokenScope(line.length());
     scope.tokens = tokens;
     return scope;
