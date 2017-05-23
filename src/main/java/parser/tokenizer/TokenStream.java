@@ -40,7 +40,7 @@ public class TokenStream {
       }
     }
     
-    currentToken--;
+    backtrack();
     return null;
   }
 
@@ -53,8 +53,11 @@ public class TokenStream {
       if(token instanceof TokenString){
           return (TokenString)token;
       }
-      currentToken--;
+      backtrack();
       return null;
   }
   
+  public void backtrack(){
+      currentToken--;
+  }
 }
