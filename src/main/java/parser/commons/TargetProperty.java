@@ -6,16 +6,17 @@ import parser.tokenizer.TokenString;
 /**
  * Created by frede on 2017-05-23.
  */
-public class TargetPart extends Part{
+public class TargetProperty extends Property {
 
   public final TokenString target, modifier;
 
-  public TargetPart(TokenString target, TokenString modifier) {
+  public TargetProperty(TokenString target, TokenString modifier) {
+    super("Target");
     this.target = target;
     this.modifier = modifier;
   }
 
-  public static TargetPart read(TokenStream tokenStream){
+  public static TargetProperty read(TokenStream tokenStream){
     TokenString target = null;
     TokenString targetModifier = null;
 
@@ -29,7 +30,7 @@ public class TargetPart extends Part{
       }
     }
 
-    return new TargetPart(target, targetModifier);
+    return new TargetProperty(target, targetModifier);
   }
   
   public String toString(){

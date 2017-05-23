@@ -7,17 +7,18 @@ import parser.tokenizer.TokenString;
 /**
  * Created by frede on 2017-05-23.
  */
-public class DestinationPart extends Part{
+public class DestinationProperty extends Property {
   
   public final TokenString destination;
   public final Token modifier;
   
-  public DestinationPart(TokenString destination, Token modifier){
+  public DestinationProperty(TokenString destination, Token modifier){
+    super("Destination");
       this.destination = destination;
       this.modifier = modifier;
   }
 
-  public static DestinationPart read(TokenStream tokenStream){
+  public static DestinationProperty read(TokenStream tokenStream){
     TokenString destination = null;
     Token destinationModifier = null;
     if(tokenStream.validateTokenString("destination") != null){
@@ -25,7 +26,7 @@ public class DestinationPart extends Part{
       destinationModifier = tokenStream.getNextToken();
     }
     
-    return new DestinationPart(destination, destinationModifier);
+    return new DestinationProperty(destination, destinationModifier);
   }
 
   public String toString(){
