@@ -37,8 +37,7 @@ public class GameApp extends Application {
         log.info("Starting pokemon game!");
         log.error("error");
 
-        AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
-        abilitiesParser.parse();
+
         
         launch(args);
  /*
@@ -96,6 +95,9 @@ public class GameApp extends Application {
 
     public void start(Stage primaryStage) throws Exception {
 
+        AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
+        abilitiesParser.parse();
+        
     	primaryStage.setTitle(WINDOW_TITLE);
 
         StartPane root = new StartPane();
