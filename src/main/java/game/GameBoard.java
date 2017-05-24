@@ -41,7 +41,7 @@ public class GameBoard {
     int playerNum = (player == players[0])?1:2;
     logger.debug("Player"+playerNum+" has clicked a card in it's hand");
 
-    if(card != null) {
+    if(card != null && (playerNum-1) == currentTurn) {
       setSelectedCard(card, CardLocation.HAND);
     }
 
