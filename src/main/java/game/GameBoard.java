@@ -52,7 +52,7 @@ public class GameBoard {
     logger.debug("Player"+playerNum+" has clicked a card in it's bench");
 
     //Player is trying to place pokemon card on bench
-    if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard){
+    if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
 
       //remove selected card from player's hand and put it on the player's bench
       if(player.getHand().remove(selectedCard)){
@@ -70,7 +70,7 @@ public class GameBoard {
     logger.debug("Player"+playerNum+" has clicked the active pokemon");
 
     //player is trying to place pokemon on active slot
-    if(player.getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard){
+    if(player.getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
 
       //remove selected card from player's hand and put it as active
       if(player.getHand().remove(selectedCard)) {
