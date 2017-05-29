@@ -54,7 +54,7 @@ public class PokemonCard extends Card {
     }
     
     
-    public PokemonCard(String pokemonStage, String name, String pokemonType , int hp, String [] abilityName, int[][] abilityCost, int[] retreatEnergyCost) {
+    public PokemonCard(String name, String pokemonStage, String pokemonType , int hp, int[] retreatEnergyCost, ArrayList<String> abilityName, ArrayList<int[]> abilityCost) {
     	
     	this.pokemonStage = pokemonStage;
     	this.name = name;
@@ -63,9 +63,9 @@ public class PokemonCard extends Card {
         this.retreatEnergyCost  = retreatEnergyCost;
         
         
-        for (int i = 0; i<abilityName.length; i++){
-        	this.abilityName.add(abilityName[i]);
-        	this.abilityCost.add(abilityCost[i]);
+        for (int i = 0; i<abilityName.size(); i++){
+        	this.abilityName.add(abilityName.get(i));
+        	this.abilityCost.add(abilityCost.get(i));
         }
 
         
@@ -199,7 +199,7 @@ public class PokemonCard extends Card {
 	
 	
 	//keep it static so we can use this Class function without instantiating
-	public static int[] convertAndReturnEnergyArray(int colorless, int fire, int water, int lightning, int psychic, int grass, int darkness, int metal, int fairy, int fighting, int dragon) {
+	public int[] convertAndReturnEnergyArray(int colorless, int fire, int water, int lightning, int psychic, int grass, int darkness, int metal, int fairy, int fighting, int dragon) {
 	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
 		
 		int[] energyArray = new int [11];
@@ -221,19 +221,54 @@ public class PokemonCard extends Card {
 	}
 	
 	
-	//Use this function when reading the cards.txt file. Pass in an array of Strings to convert it into an array to represent the energy cost.
+	/* Function convertAndReturnEnergyArray
+	 * 
+	 * Use this function when reading the cards.txt file. Pass in an array of Strings to convert it into an array to represent the energy cost.
+	 * 
+	 * Example of an argument that should be passed in this form:
+	 * Array:	{"colorless", "5", "water", "1"};
+	 * 	This function will then return an array that represents the energy cost of 5 colorless and 1 water
+	 */
 	public static int[] convertAndReturnEnergyArray(String [] energyTypeAndAmount) {
 	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
 		int[] energyArray = new int [11];
-		
-			
-		
 		for (int i=0; i< energyTypeAndAmount.length; i+=2){
 			
 			String energyType = energyTypeAndAmount[i];
 			energyType.toLowerCase();
 			//energyTypeAndAmount[i] should be the the energyType, energyTypeAndAmount[i+1] should be the amount
 			int energyAmount = Integer.parseInt(energyTypeAndAmount[i+1]);
+			
+			switch (energyType){
+			case "colorless": energyArray[0] = energyAmount;
+			case "fire": energyArray[1] = energyAmount;
+			case "water": energyArray[2] = energyAmount;
+			case "lightning": energyArray[3] = energyAmount;
+			case "psychic": energyArray[4] = energyAmount;
+			case "grass": energyArray[5] = energyAmount;
+			case "darkness": energyArray[6] = energyAmount;
+			case "metal": energyArray[7] = energyAmount;
+			case "fairy": energyArray[8] = energyAmount;
+			case "fighting": energyArray[9] = energyAmount;
+			case "dragon": energyArray[10] = energyAmount;
+			}
+			
+			
+		}
+
+	return energyArray;
+	}
+	
+	
+	public static int[] convertAndReturnEnergyArray(ArrayList <String> energyTypeAndAmount) {
+	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
+		int[] energyArray = new int [11];
+		for (int i=0; i< energyTypeAndAmount.size(); i+=2){
+			
+			String energyType = energyTypeAndAmount.get(i);
+			energyType.toLowerCase();
+			//energyTypeAndAmount[i] should be the the energyType, energyTypeAndAmount[i+1] should be the amount
+			int energyAmount = Integer.parseInt(energyTypeAndAmount.get(i+1));
 			
 			switch (energyType){
 			case "colorless": energyArray[0] = energyAmount;
@@ -316,43 +351,6 @@ public class PokemonCard extends Card {
 		return evolvesFrom;
 	}
 	
-	public String getAbilityNameInFileAt(int lineID) throws IOException{
-		
-		String abilityName = "";
-		
-		
-		FileReader abilities = new FileReader("src/main/java/decks/abilities.txt");
-		//Create Scanner to read deck.txt files
-		BufferedReader reader = new BufferedReader(abilities);
-		
-		String line = "";
-		
-		//Will split the line so that we have the abilityName on the first part, and the rest in the second part.
-		String [] lineParts = new String [2];
-		
-		
-		//int lineCount = 0;
-		//lineCount++;
-		
-		//the Reader will keep reading the file until we find the line that we are looking for which is identified as the lineID.
-		for (int i=0; i<lineID;i++){
-			line = reader.readLine();
-		
-			
-			if (line == null){
-				System.out.println("Line ID is not found");
-				break;
-			}
-			
-		}
-		
-		lineParts = line.split(":");
-		abilityName = lineParts[0];
-		
-		
-		return abilityName;
-		
-	}
 	
 	
     public String getAbilityName(int index) {

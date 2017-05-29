@@ -12,12 +12,18 @@ import card.Card;
 public class TrainerCard extends Card {
 
     private enum TrainerType {ITEM, SUPPORTER, STADIUM,}
-
+    private String abilityName;
     private TrainerType trainerType;
 
-    public TrainerCard(String name, TrainerType type) {
+    public TrainerCard(String name, TrainerType type, String abilityName) {
         this.name = name;
         this.cardType = CardType.TRAINER;
         this.trainerType = type;
+        this.abilityName = abilityName;
+    }
+    
+    public void setTrainerType (String type){
+    	
+    	
     }
 }

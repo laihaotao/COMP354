@@ -12,11 +12,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import card.Card;
+
 import card.pokemon.PokemonCard;
 import parser.abilities.AbilitiesParser;
 import parser.tokenizer.LanguageTokenizer;
 import ui.BoardView;
 import ui.StartPane;
+
+import card.CardFactory;
+
 
 
 /**
@@ -38,7 +42,7 @@ public class GameApp extends Application {
         log.info("Starting pokemon game!");
         log.error("error");
         
-        
+
         launch(args);
  /*
          these cards i added are just for testing the code will change need to be changed to the real
