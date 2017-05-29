@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import card.Card;
 import card.pokemon.PokemonCard;
 import parser.abilities.AbilitiesParser;
+import parser.abilities.AbilityTemplate;
 import parser.tokenizer.LanguageTokenizer;
 import ui.BoardView;
 import ui.StartPane;
@@ -100,7 +101,7 @@ public class GameApp extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
-        abilitiesParser.parse();
+        AbilityTemplate[] abilities = abilitiesParser.parse();
         
     	primaryStage.setTitle(WINDOW_TITLE);
 
