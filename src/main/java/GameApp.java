@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 
 import org.apache.logging.log4j.LogManager;
@@ -33,11 +34,10 @@ public class GameApp extends Application {
 
     public static final String WINDOW_TITLE = "Pokemon";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         log.info("Starting pokemon game!");
         log.error("error");
-
-
+        
         
         launch(args);
  /*
@@ -88,6 +88,10 @@ public class GameApp extends Application {
         player.printCardOnDeck();
         System.out.println("Opponent's Deck:");
         opponent.printCardOnDeck();
+        
+
+        
+        
         
         
         

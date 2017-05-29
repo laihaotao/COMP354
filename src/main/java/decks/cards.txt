@@ -1,0 +1,59 @@
+Glameow:pokemon:cat:basic:cat:colorless:60:retreat:cat:colorless:2:attacks:cat:colorless:1:1,cat:colorless:2:2
+Pikachu Libre:pokemon:cat:basic:cat:lightning:80:retreat:cat:colorless:1:attacks:cat:colorless:2:3,cat:colorless:2,cat:lightning:1:4
+Pikachu:pokemon:cat:basic:cat:lightning:60:retreat:cat:colorless:1:attacks:cat:colorless:1:5,cat:colorless:2:6
+Raichu:pokemon:cat:stage-one:Pikachu:cat:lightning:90:attacks:cat:colorless:2:7,cat:colorless:1,cat:lightning:2:8
+Shellder:pokemon:cat:basic:cat:water:60:retreat:cat:colorless:1:attacks:cat:colorless:1,cat:water:1:9
+Seaking:pokemon:cat:stage-one:Goldeen:cat:water:90:attacks:cat:water:1:10,cat:colorless:1:11
+Goldeen:pokemon:cat:basic:cat:water:60:retreat:cat:colorless:1:attacks:cat:colorless:1:12
+Frogadier:pokemon:cat:stage-one:Froakie:cat:water:70:attacks:cat:colorless:2:13
+Froakie:pokemon:cat:basic:cat:water:50:retreat:cat:colorless:1:attacks:cat:colorless:1:14
+Cloyster:pokemon:cat:stage-one:Shellder:cat:water:100:retreat:cat:colorless:3:attacks:cat:colorless:1,cat:water:1:15,cat:colorless:1,cat:water:2:16
+Suicune:pokemon:cat:basic:cat:water:100:retreat:cat:colorless:1:attacks:cat:colorless:1,cat:water:1:17,cat:colorless:1,cat:water:2:18
+Swanna:pokemon:cat:stage-one:Ducklett:cat:water:80:attacks:cat:colorless:1:19,cat:colorless:3:20
+Ducklett:pokemon:cat:basic:cat:water:60:retreat:cat:colorless:1:attacks:cat:colorless:1:21
+Purugly:pokemon:cat:stage-one:Glameow:cat:colorless:100:retreat:cat:colorless:2:attacks:cat:colorless:2:22,cat:colorless:3:23
+Manectric:pokemon:cat:stage-one:Electrike:cat:lightning:90:retreat:cat:colorless:1:attacks:cat:lightning:1:24,cat:colorless:2:25
+Electrike:pokemon:cat:basic:cat:lightning:60:retreat:cat:colorless:1:attacks:cat:colorless:1:26
+Electivire:pokemon:cat:stage-one:Electabuzz:cat:lightning:110:retreat:cat:colorless:3:attacks:cat:colorless:2:27,cat:colorless:1,cat:lightning:2:28
+Electabuzz:pokemon:cat:basic:cat:lightning:70:retreat:cat:colorless:2:attacks:cat:colorless:2:29
+Helioptile:pokemon:cat:basic:cat:lightning:60:retreat:cat:colorless:1:attacks:cat:lightning:1:14,cat:colorless:1,cat:lightning:1:30
+Tierno:trainer:cat:supporter:31
+Potion:trainer:cat:item:32
+Misty's Determination:trainer:cat:supporter:33
+Pokémon Center Lady:trainer:cat:supporter:34
+Clemont:trainer:cat:supporter:35
+Lightning:energy:cat:lightning
+Water:energy:cat:water
+#
+Meowstic:pokemon:cat:stage-one:Espurr:cat:psychic:90:retreat:cat:colorless:1:attacks:cat:psychic:1:36,cat:psychic:3:37
+Jynx:pokemon:cat:basic:cat:psychic:70:retreat:cat:colorless:1:attacks:cat:colorless:2,cat:psychic:1:38
+Jirachi:pokemon:cat:basic:cat:psychic:70:retreat:cat:colorless:1:attacks:cat:psychic:1:39,cat:colorless:2,cat:psychic:1:40
+Meowth:pokemon:cat:basic:cat:colorless:60:retreat:cat:colorless:1:attacks:cat:colorless:1:41
+Meowth:pokemon:cat:basic:cat:colorless:60:retreat:cat:colorless:1:attacks:cat:colorless:1:42
+Machop:pokemon:cat:basic:cat:fight:70:retreat:cat:colorless:2:attacks:cat:fight:1:43
+Doduo:pokemon:cat:basic:cat:colorless:60:retreat:cat:colorless:1:attacks:cat:colorless:1:44,cat:colorless:1:45
+Dodrio:pokemon:cat:stage-one:Doduo:cat:colorless:90:retreat:cat:colorless:1:attacks:cat:colorless:3:46
+Geodude:pokemon:cat:basic:cat:fight:60:retreat:cat:colorless:2:attacks:cat:fight:1:47,cat:colorless:2:48
+Zubat:pokemon:cat:basic:cat:psychic:50:retreat:cat:colorless:1:attacks:cat:colorless:1:49
+Haunter:pokemon:cat:stage-one:Gastly:cat:psychic:70:retreat:cat:colorless:1:attacks:cat:colorless:1,cat:psychic:1:50
+Gastly:pokemon:cat:basic:cat:psychic:50:retreat:cat:colorless:1:attacks:cat:psychic:1:51
+Diglett:pokemon:cat:basic:cat:fight:50:retreat:cat:colorless:1:attacks:cat:fight:1:52,cat:colorless:1,cat:fight:1:53
+Dugtrio:pokemon:cat:stage-one:Diglett:cat:fight:90:retreat:cat:colorless:1:attacks:cat:fight:1:54,cat:colorless:2,cat:fight:1:55
+#
+Slowpoke:pokemon:cat:basic:cat:psychic:50:retreat:cat:colorless:1:attacks:cat:colorless:1:57,cat:psychic:2:58
+Hitmonlee:pokemon:cat:basic:cat:fight:90:retreat:cat:colorless:1:attacks:cat:fight:1:59,cat:fight:2:60
+Hitmonchan:pokemon:cat:basic:cat:fight:90:retreat:cat:colorless:1:attacks:cat:colorless:2:61,cat:colorless:2,cat:fight:1:62
+Machoke:pokemon:cat:stage-one:Machop:cat:fight:90:retreat:cat:colorless:2:attacks:cat:fight:2:63
+Espurr:pokemon:cat:basic:cat:psychic:50:retreat:cat:colorless:1:attacks:cat:colorless:1:64
+Persian:pokemon:cat:stage-one:Meowth:cat:colorless:90:retreat:cat:colorless:1:attacks:cat:colorless:1:65,cat:colorless:2:66
+Floral Crown:trainer:cat:item:67
+Poké Ball:trainer:cat:item:68
+Shauna:trainer:cat:supporter:69
+Pokémon Fan Club:trainer:cat:supporter:70
+Switch:trainer:cat:item:71
+Energy Switch:trainer:cat:item:72
+Red Card:trainer:cat:item:73
+Wally:trainer:cat:supporter:74
+Fight:energy:cat:fight
+Psychic:energy:cat:psychic
+
