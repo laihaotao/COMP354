@@ -1,14 +1,18 @@
 package card.abilities;
 
+import parser.abilities.AbilityTemplate;
+
 /**
  * This class contains logic for abilities
  */
 public class Ability {
   
-  private String name;
+  private AbilityTemplate template;
+  private int[] cost;
   
-  public Ability(String name) {
-    this.name = name;
+  public Ability(AbilityTemplate template, int[] cost) {
+        this.template = template;
+        this.cost = cost;
   }
   
 }
