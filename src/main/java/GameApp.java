@@ -1,21 +1,28 @@
 
+import game.Ai_Player;
 import game.GameBoard;
 import game.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import card.Card;
+
 import card.pokemon.PokemonCard;
 import parser.abilities.AbilitiesParser;
+import parser.abilities.AbilityTemplate;
 import parser.tokenizer.LanguageTokenizer;
 import ui.BoardView;
 import ui.StartPane;
+
+import card.CardFactory;
+
 
 
 /**
@@ -33,12 +40,11 @@ public class GameApp extends Application {
 
     public static final String WINDOW_TITLE = "Pokemon";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         log.info("Starting pokemon game!");
         log.error("error");
-
-
         
+
         launch(args);
  /*
          these cards i added are just for testing the code will change need to be changed to the real
@@ -89,15 +95,17 @@ public class GameApp extends Application {
         System.out.println("Opponent's Deck:");
         opponent.printCardOnDeck();
         
+
+        
+        
+        
         
         
     }
 
     public void start(Stage primaryStage) throws Exception {
 
-        AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
-        abilitiesParser.parse();
-        
+
     	primaryStage.setTitle(WINDOW_TITLE);
 
         StartPane root = new StartPane();
@@ -125,7 +133,7 @@ public class GameApp extends Application {
             deck.add(cards[i]);
         }
         GameBoard gameBoard;
-        gameBoard = new GameBoard(new Player(deck), new Player(deck));
+        gameBoard = new GameBoard(new Player(deck), new Ai_Player(deck));
 
         //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
@@ -141,6 +149,10 @@ public class GameApp extends Application {
         //This needs to be called since primaryStage.show() changes dimensions of panes
         //This means that any transformatons need to be re-applied to the views
         boardView.refreshView();
+
+
+        AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
+        AbilityTemplate[] abilities = abilitiesParser.parse();
 
     }
     

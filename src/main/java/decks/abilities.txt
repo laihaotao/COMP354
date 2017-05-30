@@ -1,0 +1,74 @@
+Act Cute:deck:target:them:destination:deck:bottom:choice:target:1
+Scratch:dam:target:opponent-active:20
+Quick Attack:dam:target:opponent-active:10,cond:flip:dam:target:opponent-active:30
+Flying Elekick:dam:target:opponent-active:50
+Nuzzle:cond:flip:applystat:status:paralyzed:opponent-active
+Quick Attack:dam:target:opponent-active:20,cond:flip:dam:target:opponent-active:10
+Circle Circuit:dam:target:opponent-active:20,dam:target:opponent-active:20*count[target:your-bench]
+Thunderbolt:dam:target:opponent-active:100,deenergize:target:your-active:count[target:your-active:energy]
+Rain Splash:dam:target:opponent-active:20
+Soaking Horn:dam:target:opponent-active:10,cond:healed:target:your-active:dam:target:opponent-active:80
+Reckless Charge:dam:target:opponent-active:40,dam:target:your-active:10
+Reckless Charge:dam:target:opponent-active:20,dam:target:your-active:10
+Cut:dam:target:opponent-active:30
+Pound:dam:target:opponent-active:10
+Clamp Crush:dam:target:opponent-active:30,cond:flip:deenergize:target:opponent-active:1,applystat:status:paralyzed:opponent-active
+Spike Cannon:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30
+Spiral Drain:dam:target:opponent-active:20,heal:target:your-active:20
+Aurora Beam:dam:target:opponent-active:80
+Wing Attack:dam:target:opponent-active:20
+Brave Bird:dam:target:opponent-active:80,dam:target:your-active:20
+Lunge:cond:flip:dam:target:opponent-active:20
+Slash:dam:target:opponent-active:30
+Nyan Press:dam:target:opponent-active:40,cond:flip:dam:target:opponent-active:40:else:applystat:status:paralyzed:opponent-active
+Random Spark:dam:target:choice:opponent:30
+Bite:dam:target:opponent-active:40
+Bite:dam:target:opponent-active:10
+Knuckle Punch:dam:target:opponent-active:30
+Electroslug:dam:target:opponent-active:90
+Knuckle Punch:dam:target:opponent-active:20
+Destructive Beam:cond:flip:deenergize:target:opponent-active:1
+Tierno:draw:3
+Potion:heal:target:your:30
+Misty's Determination:cond:ability:deck:destination:discard:target:choice:you:1:(search:target:you:source:deck:filter:top:8:1,shuffle:target:you)
+Pokémon Center Lady:heal:target:your:60,destat:target:last
+Clemont:search:target:you:source:deck:filter:type:energy:4
+Ear Influence:redamage:target:opponent:target:opponent:count(target:last:source:damage)
+Psychic:dam:target:opponent-active:60,dam:target:opponent-active:count(target:opponent-active:energy)*10
+Hug:dam:target:opponent-active:30,applystat:status:stuck:opponent-active
+Wish:search:target:you:source:deck:1
+Heart Sign:dam:target:opponent-active:50
+Act Tough:dam:target:opponent-active:10,cond:count(target:your-active:energy:psychic)>0:dam:target:opponent-active:20
+Exhausted Tackle:cond:flip:dam:target:opponent-active:30:else:dam:target:your-active:30
+Knuckle Punch:dam:target:opponent-active:10
+Double Stab:cond:flip:dam:target:opponent-active:10,cond:flip:dam:target:opponent-active:10
+Doduo Delivery:draw:2
+Fury Attack:dam:target:opponent-active:40,cond:flip:dam:target:opponent-active:40,cond:flip:dam:target:opponent-active:40,cond:flip:dam:target:opponent-active:40
+Rollout:dam:target:opponent-active:10
+Flail:dam:target:opponent-active:count(target:your-active:damage)*10
+Skill Dive:dam:target:opponent:10
+Poison Ring:applystat:status:stuck:opponent-active,applystat:status:poisoned:opponent-active
+Sleep Poison:cond:flip:(applystat:status:asleep:opponent-active,applystat:status:poisoned:opponent-active)
+Mine:search:target:opponent:source:deck:filter:top:1:0,cond:choice:shuffle:target:opponent
+Mud Slap:dam:target:opponent-active:20
+Earthquake:dam:target:opponent-active:60,dam:target:your-bench:10
+Rock Tumble:dam:target:opponent-active:60
+Scratch:dam:target:opponent-active:10
+Spacing Out:cond:flip:heal:target:your-active:10
+Scavenge:cond:ability:deenergize:target:your-active:1:(search:target:you:source:discard:filter:cat:item:1)
+Stretch Kick:dam:target:choice:opponent-bench:30
+Spiral Kick:dam:target:opponent-active:30
+Bullet Punch:dam:target:opponent-active:20,cond:flip:dam:target:opponent-active:20,cond:flip:dam:target:opponent-active:20
+Mach Cross:dam:target:opponent-active:60
+Beatdown:dam:target:opponent-active:40
+Twinkle:applystat:status:asleep:opponent-active
+Fake Out:dam:target:opponent-active:30,cond:flip:applystat:status:paralyzed:opponent-active
+Ambush:dam:target:opponent-active:40,cond:flip:dam:target:opponent-active:30
+Floral Crown:add:target:your:trigger:opponent:turn-end:(heal:target:self:20)
+Poké Ball:cond:flip:search:target:you:source:deck:filter:pokemon:1
+Shauna:deck:destination:deck:count(your:hand),shuffle:target:you,draw:5
+Pokémon Fan Club:search:target:you:source:deck:filter:pokemon:cat:basic:2,shuffle:target:you
+Switch:swap:your-active:your:choice:bench
+Energy Switch:reenergize:target:your:choice:target:your:choice
+Red Card:deck:target:opponent:destination:deck:count(opponent:hand),shuffle:target:you,draw:opponent:4
+Wally:search:target:your:choice:filter:pokemon:cat:basic:source:deck:filter:evolves-from:target:last:1,shuffle:target:you

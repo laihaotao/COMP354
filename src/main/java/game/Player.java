@@ -175,7 +175,7 @@ public class Player {
 						//(String pokemonStage, String name, int hp , String pokemonType, ArrayList<Ability> abilities, int[] retreatEnergyCost)
 						//will delete this soon..
 						
-						int[] retreatEnergyCost = PokemonCard.setAndReturnEnergyArray(1,2,3,4,5,6,7,8,9,10,11);
+						//int[] retreatEnergyCost = PokemonCard.setAndReturnEnergyArray(1,2,3,4,5,6,7,8,9,10,11);
 						
 						//PokemonCard pokemonCard = new PokemonCard("Basic", "PikachuDemo", 90, "lightning",null, retreatEnergyCost);
 						//deck[deckIndex] = pokemonCard;
@@ -227,15 +227,14 @@ public class Player {
 
 
 	//private  ArrayList<Card> listOfAllCards;
-	private  ArrayList<Card> deck;// = new Card[60];
-	private  ArrayList<Card> prizes = new ArrayList()  ;//= new Card[6];
-	private  ArrayList<Card> hand = new ArrayList() ;
-	private   ArrayList<Card>bench  = new ArrayList()  ;//= new Card[5];;
-	private  ArrayList<Card> discardPile  = new ArrayList() ;
-	private ArrayList<Card> onTable;
-	private Card activePokemon;
-	private  ArrayList<Card>  pokemonCards  = new ArrayList() ;
-	private ArrayList<Card>  energyCards  = new ArrayList() ;
+	protected   ArrayList<Card> deck;// = new Card[60];
+    protected ArrayList<Card> prizes = new ArrayList()  ;//= new Card[6];
+    protected ArrayList<Card> hand = new ArrayList() ;
+    protected ArrayList<Card>bench  = new ArrayList()  ;//= new Card[5];;
+    protected ArrayList<Card> discardPile  = new ArrayList() ;
+    protected Card activePokemon;
+    protected ArrayList<Card>  pokemonCards  = new ArrayList() ;
+    protected ArrayList<Card>  energyCards  = new ArrayList() ;
 	private  ArrayList<Card> trainerCards  = new ArrayList() ;
 	Scanner kb = new Scanner(System.in);
 	Random rand = new Random();
@@ -246,7 +245,7 @@ public class Player {
 		//Each player gets 7 cards drawn randomly at the beginning of the game
 		deck = playerDeck;
 
-		putprizes();  //lack of better name
+		putPrizes();  //lack of better name
 		//Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
 		for(int i = 0 ; i<7; i++)
 		{
@@ -256,7 +255,7 @@ public class Player {
 		//chooseActivePokemon();
 	}
 	//Each player gets 7 cards drawn randomly at the beginning of the game
-	public void putprizes()
+	public void putPrizes()
 	{
 		for(int i = 0 ; i<7; i++)
 		{
@@ -272,6 +271,15 @@ public class Player {
 		hand.add(deck.remove(0));
 		if(hand.get(hand.size()-1).getCardType() == "POKEMON")
 			pokemonCards.add(hand.get(hand.size()-1));
+		if(pokemonCards.size() == 0)
+		{
+			int handSize = hand.size();
+			for(int i = 0 ; i<handSize; i++)
+			{
+				//deck.add(hand.remove(0));  // change when deck is updated
+			}
+			//putCardInHand(); // this takes care of Mulligans // change when deck is updated
+		}
 
 	}
 
@@ -311,8 +319,10 @@ public class Player {
 				System.out.println("Enter the number between 1 and " + hand.size());
 				pokNum  = kb.nextInt();
 			}while(pokNum <1 || pokNum > hand.size());
-
-			bench.add(hand.remove(pokNum-1));
+            if(bench.size()<5)
+			    bench.add(hand.remove(pokNum-1));
+            else
+                System.out.println(" bench is full");
 
 		}
 
@@ -339,6 +349,14 @@ public class Player {
 		}
 
 	}
+    public void drawTopSixCard()
+    {
+        for(int i = 0 ; i<6; i++)
+        {
+            putCardInHand();
+        }
+
+    }
 	public void printPrizeCards()
 	{
 		if (prizes.size() >0)
@@ -413,14 +431,7 @@ public class Player {
 		else
 			System.out.println(" there are no pokemon in your hand");
 	}
-	public void drawTopSixCard()
-	{
-		for(int i = 0 ; i<6; i++)
-		{
-			putCardInHand();
-		}
 
-	}
 	/*
 	 * done when we want to change our active pokemon to another
 	 */

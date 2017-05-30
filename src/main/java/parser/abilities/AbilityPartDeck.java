@@ -1,5 +1,7 @@
 package parser.abilities;
 
+import game.GameBoard;
+import game.Player;
 import parser.commons.DestinationProperty;
 import parser.commons.TargetProperty;
 import parser.commons.TokenProperty;
@@ -7,7 +9,7 @@ import parser.tokenizer.Token;
 import parser.tokenizer.TokenString;
 
 /**
- * Created by frede on 2017-05-23.
+ * 
  */
 public class AbilityPartDeck extends AbilityPart{
   
@@ -28,5 +30,10 @@ public class AbilityPartDeck extends AbilityPart{
     properties.add(destination);
     properties.add(new TokenProperty("Choice", choice));
     properties.add(new TokenProperty("Amount", amount));
+  }
+
+  @Override
+  public void use(GameBoard targetBoard, Player owner) {
+    
   }
 }
