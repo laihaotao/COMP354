@@ -1,5 +1,7 @@
 package ui;
 
+import card.abilities.Ability;
+import java.util.Arrays;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
@@ -9,15 +11,15 @@ import javafx.scene.layout.BorderPane;
 public class AbilityView extends BorderPane{
 
     //TODO pass ability object
-    public AbilityView(){
+    public AbilityView(Ability ability){
 
         this.getStyleClass().add("Ability");
 
-        Label name = new Label("Ability");
+        Label name = new Label(ability.getTemplate().name);
         name.getStyleClass().add("Name");
 
         setLeft(name);
-        setCenter(new Label("Description is going to go here"));
+        setCenter(new Label(Arrays.toString(ability.getCost())));
     }
 
 }
