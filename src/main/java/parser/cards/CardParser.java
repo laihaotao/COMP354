@@ -7,6 +7,7 @@
 
 package parser.cards;
 
+import card.abilities.Ability;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import card.Card;
 import card.energy.EnergyCard;
 import card.pokemon.PokemonCard;
 import card.trainer.TrainerCard;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import parser.abilities.AbilitiesParser;
@@ -175,10 +177,9 @@ public class CardParser {
             //split the ability cost
             String[] energyCostParts;
             ArrayList<String> energyCost = new ArrayList<>();
-            ArrayList<int[]> abilityCost = new ArrayList<>();
-            ArrayList<AbilityTemplate> abilityTemplates = new ArrayList<>();
-
-
+            
+            List<Ability> abilities = new ArrayList<>();
+            
             for (int i = 0; i < attacksLineList.length; i++) {
 
                 energyCostParts = attacksLineList[i].split(":");
@@ -197,16 +198,17 @@ public class CardParser {
                     }
 
                     int position = Integer.parseInt(energyCostParts[2]);
-                    abilityTemplates.add(abilityReferences[position]);
-                    abilityCost.add(PokemonCard.convertAndReturnEnergyArray(energyCost));
+                    
+                    abilities.add(new Ability(abilityReferences[position], PokemonCard.convertAndReturnEnergyArray(energyCost)));
+               
                 }
 
             }
 
             if (line.contains(":basic")) {
-                card = new PokemonCard(name, pokemonStage, pokemonType, hp, retreatEnergyCost, abilityTemplates, abilityCost);
+                card = new PokemonCard(name, pokemonStage, pokemonType, hp, retreatEnergyCost, abilities);
             } else {
-                card = new PokemonCard(name, pokemonStage, pokemonType, hp, abilityTemplates, abilityCost);
+                card = new PokemonCard(name, pokemonStage, pokemonType, hp, abilities);
             }
         }//end of if line contains ":pokemon:"
 

@@ -30,9 +30,10 @@ public class PokemonCard extends Card {
     
     //note: Abilities will contain special abilities, but also basic attacks
     //Each ability has a cost, therefore abilityName[i] will refer to abilityCost[i];
-    private ArrayList<AbilityTemplate> abilityTemplates = new ArrayList<>();
+    /**private ArrayList<AbilityTemplate> abilityTemplates = new ArrayList<>();
     private ArrayList<int[]> abilityCost = new ArrayList<>();
-    
+    **/
+    private List<Ability> abilities;
     
     private int damage;
     private int defense;
@@ -55,7 +56,7 @@ public class PokemonCard extends Card {
     }
     
     
-    public PokemonCard(String name, String basic, String pokemonType , int hp, int[] retreatEnergyCost, ArrayList<AbilityTemplate> abilityTemplates, ArrayList<int[]> abilityCost) {
+    public PokemonCard(String name, String basic, String pokemonType , int hp, int[] retreatEnergyCost, List<Ability> abilities) {
     	
     	this.pokemonStage = basic;
     	this.name = name;
@@ -64,10 +65,7 @@ public class PokemonCard extends Card {
         this.retreatEnergyCost  = retreatEnergyCost;
         
         
-        for (int i = 0; i<abilityTemplates.size(); i++){
-        	this.abilityTemplates.add(abilityTemplates.get(i));
-        	this.abilityCost.add(abilityCost.get(i));
-        }
+        this.abilities = abilities;
 
         
         this.damage = 0;
@@ -81,7 +79,7 @@ public class PokemonCard extends Card {
     
     
     
-    public PokemonCard(String name, String pokemonStage, String pokemonType , int hp, ArrayList<AbilityTemplate> abilityTemplates, ArrayList<int[]> abilityCost) {
+    public PokemonCard(String name, String pokemonStage, String pokemonType , int hp, List<Ability> abilities) {
     	
     	this.pokemonStage = pokemonStage;
     	this.name = name;
@@ -89,10 +87,7 @@ public class PokemonCard extends Card {
         this.hp = hp;
         
         
-        for (int i = 0; i<abilityTemplates.size(); i++){
-        	this.abilityTemplates.add(abilityTemplates.get(i));
-        	this.abilityCost.add(abilityCost.get(i));
-        }
+        this.abilities = abilities;
 
         
         this.damage = 0;
@@ -396,15 +391,10 @@ public class PokemonCard extends Card {
 	}
 	
 	
+	public Ability getAbility(int index) {
+		return abilities.get(index);
+	}
 	
-    public AbilityTemplate getAbilityTemplate(int index) {
-		return abilityTemplates.get(index);
-	}
-
-
-	public int[] getAbilityCost(int index) {
-		return abilityCost.get(index);
-	}
 
 	
 }
