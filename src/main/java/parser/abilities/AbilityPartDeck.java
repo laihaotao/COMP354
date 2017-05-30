@@ -9,7 +9,7 @@ import parser.tokenizer.Token;
 import parser.tokenizer.TokenString;
 
 /**
- * Created by frede on 2017-05-23.
+ * 
  */
 public class AbilityPartDeck extends AbilityPart{
   

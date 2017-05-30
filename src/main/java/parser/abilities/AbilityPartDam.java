@@ -9,7 +9,7 @@ import parser.tokenizer.Token;
 import ui.selections.TargetSelector;
 
 /**
- * Created by frede on 2017-05-23.
+ * Used to apply damage on a target
  */
 public class AbilityPartDam extends AbilityPart{
   

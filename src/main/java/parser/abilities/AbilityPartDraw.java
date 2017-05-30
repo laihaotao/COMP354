@@ -7,7 +7,7 @@ import parser.commons.TokenProperty;
 import parser.tokenizer.Token;
 
 /**
- * Created by frede on 2017-05-23.
+ * Draw an amount of cards for a player
  */
 public class AbilityPartDraw extends AbilityPart{
 
