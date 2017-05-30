@@ -24,7 +24,7 @@ public class AbilityPartDraw extends AbilityPart{
   }
 
   @Override
-  public void onUse(GameBoard targetBoard, Player owner) {
+  public void use(GameBoard targetBoard, Player owner) {
     
   }
 }

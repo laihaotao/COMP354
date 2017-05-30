@@ -26,7 +26,7 @@ public class AbilityPartDam extends AbilityPart{
   }
 
   @Override
-  public void onUse(GameBoard targetBoard, Player owner) {
+  public void use(GameBoard targetBoard, Player owner) {
     Card targetToDamage;    
     switch(target.target.value){
       case "opponent-active":{

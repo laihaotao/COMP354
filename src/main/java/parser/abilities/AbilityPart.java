@@ -22,5 +22,5 @@ public abstract class AbilityPart {
       return name;
     }
     
-    public abstract void onUse(GameBoard targetBoard, Player owner);
+    public abstract void use(GameBoard targetBoard, Player owner);
 }
