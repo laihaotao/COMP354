@@ -19,7 +19,7 @@ public class AbilityTemplate {
     
     public void use(GameBoard board, Player player){
         for(AbilityPart part : parts){
-            part.onUse(board, player);
+            part.use(board, player);
         }
     }
 }

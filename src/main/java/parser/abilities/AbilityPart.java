@@ -7,7 +7,7 @@ import java.util.List;
 import parser.commons.Property;
 
 /**
- * Created by frede on 2017-05-23.
+ * AbilityPart defines behavior for an an ability
  */
 public abstract class AbilityPart {
     public String name;
@@ -21,6 +21,11 @@ public abstract class AbilityPart {
     public String toString(){
       return name;
     }
-    
-    public abstract void use(GameBoard targetBoard, Player owner);
+
+  /**
+   * Use the ability on a board
+   * @param targetBoard GameBoard to use ability on
+   * @param owner The player owner of the ability
+   */
+  public abstract void use(GameBoard targetBoard, Player owner);
 }
