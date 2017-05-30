@@ -54,9 +54,9 @@ public class PokemonCard extends Card {
     }
     
     
-    public PokemonCard(String name, String pokemonStage, String pokemonType , int hp, int[] retreatEnergyCost, ArrayList<String> abilityName, ArrayList<int[]> abilityCost) {
+    public PokemonCard(String name, String basic, String pokemonType , int hp, int[] retreatEnergyCost, ArrayList<String> abilityName, ArrayList<int[]> abilityCost) {
     	
-    	this.pokemonStage = pokemonStage;
+    	this.pokemonStage = basic;
     	this.name = name;
     	this.pokemonType = pokemonType;
         this.hp = hp;
@@ -76,6 +76,32 @@ public class PokemonCard extends Card {
         this.cardType = CardType.POKEMON;
         
     }
+    
+    
+    
+    
+    public PokemonCard(String name, String pokemonStage, String pokemonType , int hp, ArrayList<String> abilityName, ArrayList<int[]> abilityCost) {
+    	
+    	this.pokemonStage = pokemonStage;
+    	this.name = name;
+    	this.pokemonType = pokemonType;
+        this.hp = hp;
+        
+        
+        for (int i = 0; i<abilityName.size(); i++){
+        	this.abilityName.add(abilityName.get(i));
+        	this.abilityCost.add(abilityCost.get(i));
+        }
+
+        
+        this.damage = 0;
+        this.defense = 0;
+        this.attackCounter = 0;
+        this.status = "";
+        this.cardType = CardType.POKEMON;
+        
+    }
+    
     
     
     

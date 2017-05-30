@@ -23,9 +23,12 @@ public class DeckParser {
     }
     
     public void createAndReturnDeck() throws IOException{
-    	/*
-    	ArrayList<String>
+    	
+    	ArrayList<String> cardsList = new ArrayList<>();
     	ArrayList<Card> deck = new ArrayList<>();
+    	
+    	FileReader cardsTextFile = new FileReader("src/main/resources/cards.txt");
+    	
     	
     	
     	String fileName = "deck1";
@@ -46,7 +49,7 @@ public class DeckParser {
 			
 			
 			
-			*/
+		
 
 		
 
