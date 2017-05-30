@@ -255,37 +255,7 @@ public class PokemonCard extends Card {
 	 * Array:	{"colorless", "5", "water", "1"};
 	 * 	This function will then return an array that represents the energy cost of 5 colorless and 1 water
 	 */
-	public static int[] convertAndReturnEnergyArray(String [] energyTypeAndAmount) {
-	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
-		int[] energyArray = new int [11];
-		for (int i=0; i< energyTypeAndAmount.length; i+=2){
-			
-			String energyType = energyTypeAndAmount[i];
-			energyType.toLowerCase();
-			//energyTypeAndAmount[i] should be the the energyType, energyTypeAndAmount[i+1] should be the amount
-			int energyAmount = Integer.parseInt(energyTypeAndAmount[i+1]);
-			
-			switch (energyType){
-			case "colorless": energyArray[0] = energyAmount;
-			case "fire": energyArray[1] = energyAmount;
-			case "water": energyArray[2] = energyAmount;
-			case "lightning": energyArray[3] = energyAmount;
-			case "psychic": energyArray[4] = energyAmount;
-			case "grass": energyArray[5] = energyAmount;
-			case "darkness": energyArray[6] = energyAmount;
-			case "metal": energyArray[7] = energyAmount;
-			case "fairy": energyArray[8] = energyAmount;
-			case "fighting": energyArray[9] = energyAmount;
-			case "dragon": energyArray[10] = energyAmount;
-			}
-			
-			
-		}
 
-	return energyArray;
-	}
-	
-	
 	public static int[] convertAndReturnEnergyArray(ArrayList <String> energyTypeAndAmount) {
 	    // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
 		int[] energyArray = new int [11];
@@ -294,20 +264,45 @@ public class PokemonCard extends Card {
 			String energyType = energyTypeAndAmount.get(i);
 			energyType.toLowerCase();
 			//energyTypeAndAmount[i] should be the the energyType, energyTypeAndAmount[i+1] should be the amount
-			int energyAmount = Integer.parseInt(energyTypeAndAmount.get(i+1));
+			
+			int energyAmount =0;
+			
+			energyAmount = Integer.parseInt(energyTypeAndAmount.get(i+1));
 			
 			switch (energyType){
-			case "colorless": energyArray[0] = energyAmount;
-			case "fire": energyArray[1] = energyAmount;
-			case "water": energyArray[2] = energyAmount;
-			case "lightning": energyArray[3] = energyAmount;
-			case "psychic": energyArray[4] = energyAmount;
-			case "grass": energyArray[5] = energyAmount;
-			case "darkness": energyArray[6] = energyAmount;
-			case "metal": energyArray[7] = energyAmount;
-			case "fairy": energyArray[8] = energyAmount;
-			case "fighting": energyArray[9] = energyAmount;
-			case "dragon": energyArray[10] = energyAmount;
+			case "colorless": 
+				energyArray[0] = energyAmount;
+				break;
+			case "fire":
+				energyArray[1] = energyAmount;
+				break;
+			case "water": 
+				energyArray[2] = energyAmount;
+				break;
+			case "lightning": 
+				energyArray[3] = energyAmount;
+				break;
+			case "psychic": 
+				energyArray[4] = energyAmount;
+				break;
+			case "grass": 
+				energyArray[5] = energyAmount;
+				break;
+			case "darkness": 
+				energyArray[6] = energyAmount;
+				break;
+			case "metal": 
+				energyArray[7] = energyAmount;
+				break;
+			case "fairy": 
+				energyArray[8] = energyAmount;
+				break;
+			case "fighting": 
+				energyArray[9] = energyAmount;
+				break;
+			case "dragon": 
+				energyArray[10] = energyAmount;
+				break;
 			}
 			
 			
@@ -348,6 +343,28 @@ public class PokemonCard extends Card {
 			this.retreatEnergyCost[i] = retreatEnergyCost[i];
 		}
 
+	}
+	
+	
+	public void printRetreatCost(){
+		
+		
+		
+		System.out.println("colorless: " + this.retreatEnergyCost[0]);
+		System.out.println("Fire: " + this.retreatEnergyCost[1]);
+		System.out.println("Water: " + this.retreatEnergyCost[2]);
+		System.out.println("Lightning: " + this.retreatEnergyCost[3]);
+		System.out.println("Psychic: " + this.retreatEnergyCost[4]);
+		System.out.println("Grass: " + this.retreatEnergyCost[5]);
+		System.out.println("Darkness: " + this.retreatEnergyCost[6]);
+		System.out.println("Metal: " + this.retreatEnergyCost[7]);
+		System.out.println("Fairy: " + this.retreatEnergyCost[8]);
+		System.out.println("Fightning: " + this.retreatEnergyCost[9]);
+		System.out.println("Dragon: " + this.retreatEnergyCost[10]);
+		
+		
+
+		
 	}
 
 

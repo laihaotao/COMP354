@@ -26,6 +26,11 @@ public class CardParser {
     public Card createCard(String line) throws IOException{
     	
     	
+    	
+    	if (line.equals("#")){
+    		return null;
+    	}
+    	
     	Card card = null;
     	
     	String cleanLine = line.replaceAll("é", "e");
@@ -107,10 +112,12 @@ public class CardParser {
 
     		
     		
-
+    		
+    		
     		String [] retreatCostLineList;
     		String [] retreatCostParts;
     		ArrayList <String> retreatCostList = new ArrayList<>();;
+    		
     		
     		
     		if (line.contains(":basic:")){
@@ -133,20 +140,37 @@ public class CardParser {
 	    			
 	    		} else {
 	    			
+	    			
+	    			
+	    			
+	    			
 	    			retreatCostParts = retreatCostLine.split(":");
 	    			
 	    			for (int j = 0; j< retreatCostParts.length; j++){
+	    				
+	    				
 	    				retreatCostList.add(retreatCostParts[j]);
 	    				
 	    			}
 	    			
 	    			
 	    		}
-	    		
+
+	    		//only for testing purposes
+	    		for (int i = 0; i< retreatCostList.size(); i++){
+	    			//System.out.println(retreatCostList.get(i));
+	    		}
+	    	
 	    		retreatEnergyCost = PokemonCard.convertAndReturnEnergyArray(retreatCostList);
 	    		
     		}
     		
+    		
+    		
+    		
+    		
+    		
+
     		
     		
     		
@@ -235,8 +259,8 @@ public class CardParser {
     		//parameters: enum EnergyType, EnergyType energyType;
     		
     		String[] lineParts = cleanLine.split(":");
-
-    		card = new EnergyCard(lineParts[0]);
+    		String type = lineParts[0].toUpperCase();
+    		card = new EnergyCard(type);
 
     		
     	}

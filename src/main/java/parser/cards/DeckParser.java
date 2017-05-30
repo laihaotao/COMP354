@@ -13,47 +13,60 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import card.Card;
+import card.pokemon.PokemonCard;
 
 public class DeckParser {
 
 
     public DeckParser()  {
-    
     	
     }
     
-    public void createAndReturnDeck() throws IOException{
+    public ArrayList<Card> createAndReturnDeck() throws IOException{
     	
     	ArrayList<String> cardsList = new ArrayList<>();
     	ArrayList<Card> deck = new ArrayList<>();
     	
     	FileReader cardsTextFile = new FileReader("src/main/resources/cards.txt");
-    	
-    	
-    	
-    	String fileName = "deck1";
-    	//will be in the arguments
-		FileReader file = new FileReader("src/main/resources/" + fileName + ".txt");
-		
-		//Create Scanner to read deck.txt files
-		BufferedReader reader = new BufferedReader(file);
+    	BufferedReader reader = new BufferedReader(cardsTextFile);
 		String line = "";
 		
-		//Read the first line first
 		line = reader.readLine();
-		
-		String pointerLine;
 		while(line !=null){
 			
+			if(line.contains("#") || line.equals("") ){
+				line = reader.readLine();
+			} else{
+				cardsList.add(line);
+				line = reader.readLine();
+			}
 		}
-			
-			
-			
 		
+		
+		CardParser cardParser = new CardParser();
+		
+		
+		System.out.println(cardsList.get(0));
 
 		
+		for (int i = 0; i<cardsList.size(); i++){
+			
+			
+			deck.add(cardParser.createCard(cardsList.get(i)));
+
+		}
+		
+		
+    
+		reader.close();
+		
+		return deck;
 
     }
+		
+		
+	
+
     
 
    

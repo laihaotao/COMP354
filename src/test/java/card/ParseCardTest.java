@@ -27,7 +27,13 @@ public class ParseCardTest {
         try {
             while (null != (line = br.readLine())) {
                 if (!line.isEmpty()) {
-                    cards.add(cardParser.createCard(line));
+                	if(line.contains("#") || line.equals("")){
+                		
+                		line = br.readLine();
+                	}else{
+                		cards.add(cardParser.createCard(line));
+                	}
+                    
                 }
             }
 
@@ -35,10 +41,11 @@ public class ParseCardTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
         // print out the card's name
         for (Card card : cards) {
             System.out.println(card.getCardName());
         }
+        
     }
 }

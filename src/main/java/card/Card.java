@@ -113,7 +113,7 @@ public abstract class Card {
 		lineParts = line.split(":");
 		abilityName = lineParts[0];
 		
-		
+		reader.close();
 		return abilityName;
 		
 	}
