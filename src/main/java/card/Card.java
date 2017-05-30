@@ -37,17 +37,17 @@ public abstract class Card implements Serializable{
         return isSelected;
     }
 
-	public Object deepClone() throws IOException, ClassNotFoundException {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(bos);
-
-		oos.writeObject(this);
-
-		ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-		ObjectInputStream ois = new ObjectInputStream(bis);
-
-		return ois.readObject();
-	}
+//	public Object deepClone() throws IOException, ClassNotFoundException {
+//		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//		ObjectOutputStream oos = new ObjectOutputStream(bos);
+//
+//		oos.writeObject(this);
+//
+//		ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+//		ObjectInputStream ois = new ObjectInputStream(bis);
+//
+//		return ois.readObject();
+//	}
 	
 	public abstract Card copy();
     

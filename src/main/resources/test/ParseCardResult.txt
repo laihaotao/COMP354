@@ -20,7 +20,7 @@ Helioptile
 Tierno
 Potion
 Misty's Determination
-Pokémon Center Lady
+Pokemon Center Lady
 Clemont
 Lightning
 Water
@@ -45,9 +45,9 @@ Machoke
 Espurr
 Persian
 Floral Crown
-Poké Ball
+Poke Ball
 Shauna
-Pokémon Fan Club
+Pokemon Fan Club
 Switch
 Energy Switch
 Red Card

@@ -19,15 +19,32 @@ import static junit.framework.TestCase.assertEquals;
  */
 public class ParseDeckTest {
 
-    final static Logger logger = LogManager.getLogger(ParseDeckTest.class.getName());;
+    static Logger logger = LogManager.getLogger(ParseDeckTest.class.getName());;
 
     @Before
     public void before() {
-//        logger.(Level.ERROR);
+//        logger. (Level.ERROR);
     }
 
     @Test
-    public void parseDeckTest() throws IOException, ClassNotFoundException {
+    public void parseTwoDeckTest() throws IOException, ClassNotFoundException {
+        CardParser cardParser = new CardParser("cards.txt");
+        DeckParser deckParser1 = new DeckParser("deck1.txt", cardParser);
+        DeckParser deckParser2 = new DeckParser("deck2.txt", cardParser);
+
+        ArrayList<Card> deck1 = (ArrayList<Card>) deckParser1.getDeck();
+        ArrayList<Card> deck2 = (ArrayList<Card>) deckParser2.getDeck();
+
+        System.out.println(deck1.get(1));
+        System.out.println(deck1.get(43));
+
+        System.out.println(deck2.get(1));
+        System.out.println(deck2.get(20));
+
+    }
+
+    @Test
+    public void parseSingleDeckTest() throws IOException, ClassNotFoundException {
 
         ArrayList<String> expected = TestResultHelper.readResultFile("ParseDeck1Result.txt");
 
