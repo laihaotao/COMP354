@@ -1,0 +1,494 @@
+Index: src/main/java/GameApp.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/GameApp.java	(revision f1a5d726e79ab94ad2a4105cf5e61caa07e1c91b)
++++ src/main/java/GameApp.java	(revision )
+@@ -1,4 +1,5 @@
+ 
++import game.Ai_Player;
+ import game.GameBoard;
+ import game.Player;
+ import javafx.application.Application;
+@@ -125,7 +126,7 @@
+             deck.add(cards[i]);
+         }
+         GameBoard gameBoard;
+-        gameBoard = new GameBoard(new Player(deck), new Player(deck));
++        gameBoard = new GameBoard(new Player(deck), new Ai_Player(deck));
+ 
+         //TODO board and players here and pass that to BoardView
+         BoardView boardView = new BoardView(gameBoard);
+Index: src/main/java/game/Player.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/game/Player.java	(revision f1a5d726e79ab94ad2a4105cf5e61caa07e1c91b)
++++ src/main/java/game/Player.java	(revision )
+@@ -227,15 +227,14 @@
+ 
+ 
+ 	//private  ArrayList<Card> listOfAllCards;
+-	private  ArrayList<Card> deck;// = new Card[60];
+-	private  ArrayList<Card> prizes = new ArrayList()  ;//= new Card[6];
+-	private  ArrayList<Card> hand = new ArrayList() ;
+-	private   ArrayList<Card>bench  = new ArrayList()  ;//= new Card[5];;
+-	private  ArrayList<Card> discardPile  = new ArrayList() ;
+-	private ArrayList<Card> onTable;
+-	private Card activePokemon;
+-	private  ArrayList<Card>  pokemonCards  = new ArrayList() ;
+-	private ArrayList<Card>  energyCards  = new ArrayList() ;
++	protected   ArrayList<Card> deck;// = new Card[60];
++    protected ArrayList<Card> prizes = new ArrayList()  ;//= new Card[6];
++    protected ArrayList<Card> hand = new ArrayList() ;
++    protected ArrayList<Card>bench  = new ArrayList()  ;//= new Card[5];;
++    protected ArrayList<Card> discardPile  = new ArrayList() ;
++    protected Card activePokemon;
++    protected ArrayList<Card>  pokemonCards  = new ArrayList() ;
++    protected ArrayList<Card>  energyCards  = new ArrayList() ;
+ 	private  ArrayList<Card> trainerCards  = new ArrayList() ;
+ 	Scanner kb = new Scanner(System.in);
+ 	Random rand = new Random();
+@@ -246,7 +245,7 @@
+ 		//Each player gets 7 cards drawn randomly at the beginning of the game
+ 		deck = playerDeck;
+ 
+-		putprizes();  //lack of better name
++		putPrizes();  //lack of better name
+ 		//Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
+ 		for(int i = 0 ; i<7; i++)
+ 		{
+@@ -256,7 +255,7 @@
+ 		//chooseActivePokemon();
+ 	}
+ 	//Each player gets 7 cards drawn randomly at the beginning of the game
+-	public void putprizes()
++	public void putPrizes()
+ 	{
+ 		for(int i = 0 ; i<7; i++)
+ 		{
+@@ -272,6 +271,15 @@
+ 		hand.add(deck.remove(0));
+ 		if(hand.get(hand.size()-1).getCardType() == "POKEMON")
+ 			pokemonCards.add(hand.get(hand.size()-1));
++		if(pokemonCards.size() == 0)
++		{
++			int handSize = hand.size();
++			for(int i = 0 ; i<handSize; i++)
++			{
++				//deck.add(hand.remove(0));  // change when deck is updated
++			}
++			//putCardInHand(); // this takes care of Mulligans // change when deck is updated
++		}
+ 
+ 	}
+ 
+@@ -311,8 +319,10 @@
+ 				System.out.println("Enter the number between 1 and " + hand.size());
+ 				pokNum  = kb.nextInt();
+ 			}while(pokNum <1 || pokNum > hand.size());
+-
+-			bench.add(hand.remove(pokNum-1));
++            if(bench.size()<5)
++			    bench.add(hand.remove(pokNum-1));
++            else
++                System.out.println(" bench is full");
+ 
+ 		}
+ 
+@@ -339,6 +349,14 @@
+ 		}
+ 
+ 	}
++    public void drawTopSixCard()
++    {
++        for(int i = 0 ; i<6; i++)
++        {
++            putCardInHand();
++        }
++
++    }
+ 	public void printPrizeCards()
+ 	{
+ 		if (prizes.size() >0)
+@@ -413,14 +431,7 @@
+ 		else
+ 			System.out.println(" there are no pokemon in your hand");
+ 	}
+-	public void drawTopSixCard()
+-	{
+-		for(int i = 0 ; i<6; i++)
+-		{
+-			putCardInHand();
+-		}
+ 
+-	}
+ 	/*
+ 	 * done when we want to change our active pokemon to another
+ 	 */
+Index: src/main/java/game/Ai_Player.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/game/Ai_Player.java	(revision f1a5d726e79ab94ad2a4105cf5e61caa07e1c91b)
++++ src/main/java/game/Ai_Player.java	(revision )
+@@ -1,7 +1,7 @@
+ package game;
+ 
+-/**
+- * Created by kawsa on 5/20/2017.
++/*
++  Created by kawsa on 5/20/2017.
+  */
+ 
+ import card.Card;
+@@ -24,236 +24,69 @@
+  * modified by kawsara 2017-05-16
+  *in progress
+  */
+-public class Ai_Player {
+-    //private  ArrayList<Card> listOfAllCards;
+-    private ArrayList<Card> deck;// = new Card[60];
+-    private  ArrayList<Card> prizes = new ArrayList()  ;//= new Card[6];
+-    private  ArrayList<Card> hand = new ArrayList() ;
+-    private   ArrayList<Card>bench  = new ArrayList()  ;//= new Card[5];;
+-    private  ArrayList<Card> discardPile  = new ArrayList() ;
+-    private ArrayList<Card> onTable;
+-    private Card activePokemon;
+-    private  ArrayList<Card>  pokemonCards  = new ArrayList() ;
+-    private ArrayList<Card>  energyCards  = new ArrayList() ;
+-    private  ArrayList<Card> trainerCards  = new ArrayList() ;
+-    Scanner kb = new Scanner(System.in);
+-    Random rand = new Random();
++public class Ai_Player  extends  Player{
+ 
+ 
+     public Ai_Player(ArrayList<Card> playerDeck)
+     {
+-        //Each player gets 7 cards drawn randomly at the beginning of the game
+-        deck = playerDeck;
++        super(playerDeck);
++
++    }
++    //Each player gets 7 cards drawn randomly at the beginning of the game
+ 
+-        putprizes();  //lack of better name
+-        //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
+-        for(int i = 0 ; i<7; i++)
+-        {
+-            putCardInHAnd();
+-        }
+-        chooseActivePokemon();
+-        putCardOnBench();
+-        putCardOnBench();
+-
+-        //chooseActivePokemon();
+-    }
+-    //Each player gets 7 cards drawn randomly at the beginning of the game
+-    public void putprizes()
+-    {
+-        for(int i = 0 ; i<7; i++)
+-        {
+-            int  n = rand.nextInt(deck.size());
+-            prizes.add(deck.remove(n));
+-        }
+-
+-
+-    }
+     //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
+-    public void putCardInHAnd()
+-    {
+-        hand.add(deck.remove(0));
+-        if(hand.get(hand.size()-1).getCardType() == "POKEMON")
+-            pokemonCards.add(hand.get(hand.size()-1));
+-
+-    }
+ 
+     /*
+      * this is done only at the begining
+      */
++    @Override
+     public void chooseActivePokemon()
+     {
+-        //printPokemonCards();
++
+         if (pokemonCards.size() >0)
+         {
+-            //System.out.println("chose which card you want to use ");
+             int pokNum ;
+-           // do
+-            //{
+-              //  System.out.println("chose which card you want to use as your active pokemon ");
+-              //  System.out.println("Enter the number");
+-                pokNum  = rand.nextInt(pokemonCards.size());
+-            //}while(pokNum <1 || pokNum > pokemonCards.size());
++            pokNum  = rand.nextInt(pokemonCards.size());
+             activePokemon = pokemonCards.get(pokNum);
+-            System.out.println(" your active pokemon is: " + activePokemon.getCardName());
+         }
+         else
+             System.out.println(" you dont have pokemon in hand");
+ 
+ 
+     }
+-
+-
++    @Override
+     public void putCardOnBench()
+     {
+-     //   printCardInHand();
++        //printCardInHand();
+         if (hand.size() >0)
+         {
+             //System.out.println("chose which card you want to add t your bench");
+-            int cardNum ;
+-            //do
+-            //{
+-              //  System.out.println("chose which card you want to add t your bench ");
+-                //System.out.println("Enter the number between 1 and " + hand.size());
+-                cardNum  = rand.nextInt(hand.size());
+-          //  }while(pokNum <1 || pokNum > hand.size());
+-
+-            bench.add(hand.remove(cardNum));
+-
+-        }
+-        else
+-            System.out.println(" you dont have card in hand");
++            int pokNum ;
++            pokNum  = rand.nextInt(5);
++            if(bench.size()<5)
++                bench.add(hand.remove(pokNum));
++            else
++                System.out.println(" bench is full");
+ 
+-    }
++        }
+ 
+-
+-    public void pickFromPrizeCard()
+-    {
+-       // printPrizeCards();
+-        // pick a card and then add it to hand
+-        if (prizes.size() >0)
+-        {
+-
+-            int cardNum ;
+-
+-          //  do
+-          //  {
+-          //      System.out.println("chose which card you want to add t your bench ");
+-            //    System.out.println("Enter a number between 1 and " + prizes.size());
+-                cardNum  = rand.nextInt(prizes.size());;
+-           // }while(pokNum <1 || pokNum > prizes.size());
+-            hand.add(prizes.remove(cardNum));
+-
+-        }
+-        else
+-            System.out.println(" you dont have pokemon in hand");
++    }
+ 
+-    }
+-    public void printPrizeCards()
+-    {
+-        if (prizes.size() >0)
+-        {
+-            System.out.println("these are the Cards you have as prizes");
+-        }
+-        else
+-            System.out.println(" you have no cards as prizes");
+-
+-    }
+-    public void printCardInBench()
+-    {
+-        if (bench.size() >0)
+-        {
+-            System.out.println("these are the Cards you have in bench");
+-
+-            for(int i = 0 ; i<bench.size(); i++)
+-            {
+-                System.out.println(i+1 +": "+bench.get(i).getCardName());
+-            }//end for loop
+-
+-        }
+-        else
+-            System.out.println(" there are no card on your bench");
+-
+-
+-    }
+-    public void printCardInHand()
+-    {
+-        if (hand.size() >0)
+-        {
+-            System.out.println("these are the Cards you have in hand");
+-
+-            for(int i = 0 ; i<hand.size(); i++)
+-            {
+-                System.out.println(i+1 +": "+hand.get(i).getCardName());
+-            }//end for loop
+-
+-        }
+-        else
+-            System.out.println(" there are no card in your hand");
+-
+-    }
+-    public void printCardOnDeck()
+-    {
+-
+-        if (deck.size() >0)
+-        {
+-            System.out.println("these are the Cards you have in your deck");
+-
+-            for(int i = 0 ; i<deck.size(); i++)
+-            {
+-                System.out.println(i+1 +": "+deck.get(i).getCardName());
+-            }//end for loop
+-
+-        }
+-        else
+-            System.out.println(" there are no card in your deck");
+-
+-    }
+-    public void printPokemonCards()
+-    {
+-        if (pokemonCards.size() >0)
+-        {
+-            System.out.println("these are the pokemon you have in hand");
+-
+-            for(int i = 0 ; i<pokemonCards.size(); i++)
+-            {
+-                System.out.println(i+1 +": "+pokemonCards.get(i).getCardName());
+-            }//end for loop
+-        }
+-        else
+-            System.out.println(" there are no pokemon in your hand");
+-    }
+-    public void drawTopSixCard()
+-    {
+-        for(int i = 0 ; i<6; i++)
+-        {
+-            putCardInHAnd();
+-        }
+-
+-    }
+     /*
+      * done when we want to change our active pokemon to another
+      */
++    @Override
+     public void swapAcTivePokemon()
+     {
+-       // printPokemonCards();
++
+         if (pokemonCards.size() >0)
+         {
+-
+-            //System.out.println("chose which card you want to use ");
+             int pokNum ;
+-           // do
+-            //{
+-              //  System.out.println("chose which card you want to use as your active pokemon ");
+-                //System.out.println("Enter the number");
+-                pokNum  = rand.nextInt(pokemonCards.size());
+-            //}while(pokNum <1 || pokNum > pokemonCards.size());
++            pokNum  = rand.nextInt(pokemonCards.size());
+             activePokemon = pokemonCards.get(pokNum-1);
+-            //System.out.println(" your active pokemon is: " + activePokemon.getCardName());
+         }
+         else
+             System.out.println(" you dont have pokemon in hand");
+-
+-
+     }
+ 
+     public void attackOpponent(Card opponent)
+Index: src/main/java/game/GameBoard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/game/GameBoard.java	(revision f1a5d726e79ab94ad2a4105cf5e61caa07e1c91b)
++++ src/main/java/game/GameBoard.java	(revision )
+@@ -4,6 +4,7 @@
+ import card.pokemon.PokemonCard;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
++import java.util.*;
+ 
+ /**
+  * Created by frede on 2017-05-15.
+@@ -18,7 +19,7 @@
+ 
+   private Card selectedCard = null;
+   private CardLocation selectedCardLocation = null;
+-
++  Random rand = new Random();
+   public GameBoard(Player p1, Player p2) {
+       players = new Player[2];
+       players[0] = p1;
+@@ -55,8 +56,8 @@
+     if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard){
+ 
+       //remove selected card from player's hand and put it on the player's bench
+-      if(player.getHand().remove(selectedCard)){
+-        player.getBench().add(selectedCard);
++      if(players[0].getHand().remove(selectedCard)){
++        players[0].getBench().add(selectedCard);
+         setSelectedCard(null, null);
+       }
+ 
+@@ -70,11 +71,11 @@
+     logger.debug("Player"+playerNum+" has clicked the active pokemon");
+ 
+     //player is trying to place pokemon on active slot
+-    if(player.getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard){
++    if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard){
+ 
+       //remove selected card from player's hand and put it as active
+-      if(player.getHand().remove(selectedCard)) {
+-        player.setActivePokemon(selectedCard);
++      if(players[0].getHand().remove(selectedCard)) {
++        players[0].setActivePokemon(selectedCard);
+         setSelectedCard(null, null);
+       }
+ 
+@@ -83,6 +84,7 @@
+   }
+ 
+   public void onEndTurnButtonClicked(){
++    checkWinLoose();
+     nextTurn();
+ 
+     //TODO process AI turn
+@@ -100,10 +102,28 @@
+     //add card to players hand
+     currentPlayer.putCardInHand();
+ 
++    if(currentTurn == 1)
++        aiTurn();
++
++  }
++  public void aiTurn(){
++
++    int cardTOAddToBench = rand.nextInt(5);
++      if(players[1].activePokemon == null)
++          players[1].chooseActivePokemon();
++      for(int i = 0 ; i<(5- cardTOAddToBench); i++)
++      {
++          players[1].putCardOnBench();
++      }
++      //players[1].putCardOnBench();
++      //players[1].activePokemon  this is suppose to attack
++      nextTurn();
++  }
++  public void checkWinLoose(){
+ 
+   }
+-  
+-  public Player[] getPlayers(){
++
++    public Player[] getPlayers(){
+     return players;
+   }
+   

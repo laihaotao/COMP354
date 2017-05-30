@@ -4,6 +4,7 @@ import card.Card;
 import card.pokemon.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.*;
 
 /**
  * Created by frede on 2017-05-15.
@@ -18,7 +19,7 @@ public class GameBoard {
 
   private Card selectedCard = null;
   private CardLocation selectedCardLocation = null;
-
+  Random rand = new Random();
   public GameBoard(Player p1, Player p2) {
       players = new Player[2];
       players[0] = p1;
@@ -55,8 +56,8 @@ public class GameBoard {
     if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard){
 
       //remove selected card from player's hand and put it on the player's bench
-      if(player.getHand().remove(selectedCard)){
-        player.getBench().add(selectedCard);
+      if(players[0].getHand().remove(selectedCard)){
+        players[0].getBench().add(selectedCard);
         setSelectedCard(null, null);
       }
 
@@ -70,11 +71,11 @@ public class GameBoard {
     logger.debug("Player"+playerNum+" has clicked the active pokemon");
 
     //player is trying to place pokemon on active slot
-    if(player.getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard){
+    if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard){
 
       //remove selected card from player's hand and put it as active
-      if(player.getHand().remove(selectedCard)) {
-        player.setActivePokemon(selectedCard);
+      if(players[0].getHand().remove(selectedCard)) {
+        players[0].setActivePokemon(selectedCard);
         setSelectedCard(null, null);
       }
 
@@ -83,6 +84,7 @@ public class GameBoard {
   }
 
   public void onEndTurnButtonClicked(){
+    checkWinLoose();
     nextTurn();
 
     //TODO process AI turn
@@ -100,10 +102,28 @@ public class GameBoard {
     //add card to players hand
     currentPlayer.putCardInHand();
 
+    if(currentTurn == 1)
+        aiTurn();
 
   }
-  
-  public Player[] getPlayers(){
+  public void aiTurn(){
+
+    int cardTOAddToBench = rand.nextInt(5);
+      if(players[1].activePokemon == null)
+          players[1].chooseActivePokemon();
+      for(int i = 0 ; i<(5- cardTOAddToBench); i++)
+      {
+          players[1].putCardOnBench();
+      }
+      //players[1].putCardOnBench();
+      //players[1].activePokemon  this is suppose to attack
+      nextTurn();
+  }
+  public void checkWinLoose(){
+
+  }
+
+    public Player[] getPlayers(){
     return players;
   }
   

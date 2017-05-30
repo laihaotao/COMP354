@@ -1,4 +1,5 @@
 
+import game.Ai_Player;
 import game.GameBoard;
 import game.Player;
 import javafx.application.Application;
@@ -125,7 +126,7 @@ public class GameApp extends Application {
             deck.add(cards[i]);
         }
         GameBoard gameBoard;
-        gameBoard = new GameBoard(new Player(deck), new Player(deck));
+        gameBoard = new GameBoard(new Player(deck), new Ai_Player(deck));
 
         //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
