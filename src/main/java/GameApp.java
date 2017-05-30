@@ -18,6 +18,7 @@ import card.pokemon.PokemonCard;
 import parser.abilities.AbilitiesParser;
 import parser.abilities.AbilityTemplate;
 
+import parser.debug.CardDebugParser;
 import parser.tokenizer.LanguageTokenizer;
 import ui.BoardView;
 import ui.StartPane;
@@ -107,8 +108,11 @@ public class GameApp extends Application {
         boardView.refreshView();
 
 
-        AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
-        AbilityTemplate[] abilities = abilitiesParser.parse();
+        //AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
+        //AbilityTemplate[] abilities = abilitiesParser.parse();
+
+        CardDebugParser cardDebugParser = new CardDebugParser("cards.txt");
+        cardDebugParser.parse();
 
     }
     
