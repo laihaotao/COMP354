@@ -1,32 +1,29 @@
 /*
- * description:  The abstract class of the Card
- * author(s):    Eric(Haotao) Lai
+ * description:  Parse Cards from a String line
+ * author(s):    Martin Tseng
  * reviewer(s):
- * date:         2017-05-17
+ * date:         2017-05-29
  */
 
-package card;
-
-
-
+package parser.cards;
 import java.io.IOException;
 import java.util.ArrayList;
+import card.Card;
 import card.energy.EnergyCard;
 import card.pokemon.PokemonCard;
 import card.trainer.TrainerCard;
 
 
-public class CardFactory {
+public class CardParser {
 
 
-    public CardFactory()
+    public CardParser()
     {
-    
     }
     
     
     
-    public Card createCard(String line) throws IOException{
+    public void createCard(String line) throws IOException{
     	
     	
     	Card card = null;
@@ -200,7 +197,7 @@ public class CardFactory {
     	}
     	
     	
-    	return card;
+    	//return card;
      
     }
     
