@@ -1,5 +1,7 @@
 package card;
 
+import card.abilities.Ability;
+import card.pokemon.PokemonCard;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,11 +37,18 @@ public class ParseDeckTest {
         ArrayList<Card> deck1 = (ArrayList<Card>) deckParser1.getDeck();
         ArrayList<Card> deck2 = (ArrayList<Card>) deckParser2.getDeck();
 
-        System.out.println(deck1.get(1));
-        System.out.println(deck1.get(43));
-
-        System.out.println(deck2.get(1));
-        System.out.println(deck2.get(20));
+        System.out.println("------------");
+        for (Card card : deck1) {
+            if (card instanceof PokemonCard) {
+                System.out.print(card.getCardName() + ":");
+                ArrayList<Ability> abilities = (ArrayList<Ability>) ((PokemonCard) card).getAbilities();
+                for (Ability a : abilities) {
+                    System.out.print(" " + a.getTemplate().name + ";");
+                }
+                System.out.println();
+            }
+        }
+        System.out.println("------------");
 
     }
 
@@ -57,4 +66,5 @@ public class ParseDeckTest {
             assertEquals(expected.get(i), deck.get(i).getCardName());
         }
     }
+
 }

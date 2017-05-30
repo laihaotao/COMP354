@@ -293,9 +293,9 @@ public class PokemonCard extends Card {
 			case "fairy": 
 				energyArray[8] = energyAmount;
 				break;
-				
-				case "fight":
-			case "fighting": 
+
+			case "fight":
+			case "fighting":
 				energyArray[9] = energyAmount;
 				break;
 			case "dragon": 
@@ -364,6 +364,8 @@ public class PokemonCard extends Card {
 
 		
 	}
+
+
 
 
 	public String getType() {
