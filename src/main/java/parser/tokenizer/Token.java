@@ -16,4 +16,8 @@ public abstract class Token {
   public String toString(){
     return "@"+endLocation + " token:";
   }
+
+  public int evaluateAsExpression(){
+    return 0;
+  }
 }

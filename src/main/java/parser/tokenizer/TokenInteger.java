@@ -14,4 +14,8 @@ public class TokenInteger extends Token{
   public String toString(){
     return super.toString()+"Integer -> "+value;
   }
+  
+  public int evaluateAsExpression(){
+      return value;
+  }
 }

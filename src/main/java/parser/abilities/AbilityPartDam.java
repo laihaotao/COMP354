@@ -1,11 +1,13 @@
 package parser.abilities;
 
 import card.Card;
+import card.pokemon.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import parser.commons.TargetProperty;
 import parser.commons.TokenProperty;
 import parser.tokenizer.Token;
+import parser.tokenizer.TokenInteger;
 import ui.selections.TargetSelector;
 
 /**
@@ -31,6 +33,10 @@ public class AbilityPartDam extends AbilityPart{
     switch(target.target.value){
       case "opponent-active":{
         targetToDamage = targetBoard.getOtherPlayer(owner).getActivePokemon();
+        if(targetToDamage != null && targetToDamage instanceof PokemonCard){
+          PokemonCard pokemonCard = (PokemonCard)targetToDamage;
+          pokemonCard.setDamage(pokemonCard.getDamage()+ammount.evaluateAsExpression();
+        }
       }break;
     }
     
