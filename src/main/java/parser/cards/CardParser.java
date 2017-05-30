@@ -199,7 +199,7 @@ public class CardParser {
                     }
 
                     int position = Integer.parseInt(energyCostParts[2]);
-                    logger.debug(abilityReferences[position-1].name + " : " +Arrays.toString(PokemonCard.convertAndReturnEnergyArray(energyCost)));
+                    logger.debug(abilityReferences[position-1].name + " : " +Arrays.toString(PokemonCard.convertAndReturnEnergyArray(energyCost)) + " : "+energyCost);
                     
                     abilities.add(new Ability(abilityReferences[position-1], PokemonCard.convertAndReturnEnergyArray(energyCost)));
                
