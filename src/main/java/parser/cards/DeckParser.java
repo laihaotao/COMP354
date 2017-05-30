@@ -46,7 +46,7 @@ public class DeckParser {
                 int lineNum = Integer.parseInt(line);
 
                 Card originalCard = cardMap.get(lineNum);
-                Card copiedCard = (Card) originalCard.deepClone();
+                Card copiedCard = originalCard.copy();
 
                 deck.add(copiedCard);
             }
