@@ -53,7 +53,7 @@ public class GameBoard {
     logger.debug("Player"+playerNum+" has clicked a card in it's bench");
 
     //Player is trying to place pokemon card on bench
-    if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard){
+    if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
 
       //remove selected card from player's hand and put it on the player's bench
       if(players[0].getHand().remove(selectedCard)){
@@ -71,7 +71,11 @@ public class GameBoard {
     logger.debug("Player"+playerNum+" has clicked the active pokemon");
 
     //player is trying to place pokemon on active slot
-    if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard){
+//<<<<<<< HEAD
+    //if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard){
+//=======
+    if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
+//>>>>>>> 30e72620b6e97b2f1c008e59a5ffc4682234ad82
 
       //remove selected card from player's hand and put it as active
       if(players[0].getHand().remove(selectedCard)) {
@@ -86,11 +90,11 @@ public class GameBoard {
   public void onEndTurnButtonClicked(){
     checkWinLoose();
     nextTurn();
-
+    
     //TODO process AI turn
 
     //finish AI turn
-  //  nextTurn();
+    nextTurn();
   }
 
   public void nextTurn(){
@@ -141,5 +145,13 @@ public class GameBoard {
 
   public Player getOppositeTurnPlayer(){
     return players[(currentTurn+1)%2];
+  }
+  
+  public Player getOtherPlayer(Player player){
+    if(player == players[0]) {
+      return players[1];
+    }
+    
+    return players[2];
   }
 }

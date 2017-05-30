@@ -1,11 +1,15 @@
 package parser.abilities;
 
+import card.Card;
+import game.GameBoard;
+import game.Player;
 import parser.commons.TargetProperty;
 import parser.commons.TokenProperty;
 import parser.tokenizer.Token;
+import ui.selections.TargetSelector;
 
 /**
- * Created by frede on 2017-05-23.
+ * Used to apply damage on a target
  */
 public class AbilityPartDam extends AbilityPart{
   
@@ -19,5 +23,18 @@ public class AbilityPartDam extends AbilityPart{
     
     properties.add(target);
     properties.add(new TokenProperty("Ammount", ammount));
+  }
+
+  @Override
+  public void use(GameBoard targetBoard, Player owner) {
+    Card targetToDamage;    
+    switch(target.target.value){
+      case "opponent-active":{
+        targetToDamage = targetBoard.getOtherPlayer(owner).getActivePokemon();
+      }break;
+    }
+    
+    //damage target card
+        
   }
 }

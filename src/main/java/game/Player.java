@@ -175,7 +175,7 @@ public class Player {
 						//(String pokemonStage, String name, int hp , String pokemonType, ArrayList<Ability> abilities, int[] retreatEnergyCost)
 						//will delete this soon..
 						
-						int[] retreatEnergyCost = PokemonCard.setAndReturnEnergyArray(1,2,3,4,5,6,7,8,9,10,11);
+						//int[] retreatEnergyCost = PokemonCard.setAndReturnEnergyArray(1,2,3,4,5,6,7,8,9,10,11);
 						
 						//PokemonCard pokemonCard = new PokemonCard("Basic", "PikachuDemo", 90, "lightning",null, retreatEnergyCost);
 						//deck[deckIndex] = pokemonCard;
