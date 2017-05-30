@@ -7,11 +7,10 @@
 
 package card;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.BitSet;
 
-public abstract class Card {
+public abstract class Card implements Serializable{
 
     protected enum CardType{ENERGY, POKEMON, TRAINER,}
 
@@ -37,9 +36,19 @@ public abstract class Card {
     public boolean getSelected(){
         return isSelected;
     }
-    
-    
-    
+
+	public Object deepClone() throws IOException, ClassNotFoundException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(bos);
+
+		oos.writeObject(this);
+
+		ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+		ObjectInputStream ois = new ObjectInputStream(bis);
+
+		return ois.readObject();
+	}
+
 	public static String getAbilityNameInFileAt(int lineID) throws IOException{
 		
 		String abilityName = "";

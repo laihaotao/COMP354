@@ -7,68 +7,50 @@
 
 package parser.cards;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import card.Card;
 import card.pokemon.PokemonCard;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
+import util.ResourceReader;
 
 public class DeckParser {
 
+    private List<Card> deck;
+    private BufferedReader br;
+    private HashMap<Integer, Card> cardMap;
 
-    public DeckParser()  {
-    	
+    public DeckParser(String deckFilePath, CardParser cardParser) throws IOException, ClassNotFoundException {
+        deck = new ArrayList<>();
+        this.cardMap = cardParser.getCardMap();
+        File file = ResourceReader.readFile(deckFilePath);
+        br = new BufferedReader(new FileReader(file));
+        buildDeck();
     }
-    
-    
-    //ArrayList<Card>
-    public void createAndReturnDeck() throws IOException{
-    	
-    	ArrayList<String> cardsList = new ArrayList<>();
-    	ArrayList<Card> deck = new ArrayList<>();
-    	
-    	FileReader cardsTextFile = new FileReader("src/main/resources/cards.txt");
-    	BufferedReader reader = new BufferedReader(cardsTextFile);
-		String line = "";
-		
-		line = reader.readLine();
-		while(line !=null){
-			
-			if(line.contains("#") || line.equals("") ){
-				line = reader.readLine();
-			} else{
-				cardsList.add(line);
-				line = reader.readLine();
-			}
-		}
-		
-		
-		CardParser cardParser = new CardParser();
-		
-		for (int i = 0; i<cardsList.size(); i++){
-			//System.out.println(cardsList.get(i));
-			//System.out.println(cardParser.createCard(cardsList.get(i)));
-			deck.add(cardParser.createCard(cardsList.get(i)));
 
-		}
-		
-		
-    
-		reader.close();
-		
-		//return deck;
-
+    public List<Card> getDeck() {
+        if (!deck.isEmpty()) {
+            return deck;
+        }
+        return null;
     }
-		
-		
-	
 
-    
+    private void buildDeck() throws IOException, ClassNotFoundException {
+        String line;
+        while ((line = br.readLine()) != null) {
+            if (!line.isEmpty()) {
+                int lineNum = Integer.parseInt(line);
 
-   
-    
-    
+                Card originalCard = cardMap.get(lineNum);
+                Card copiedCard = (Card) originalCard.deepClone();
+
+                deck.add(copiedCard);
+            }
+        }
+    }
 
 }

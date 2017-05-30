@@ -44,7 +44,7 @@ public class GameApp extends Application {
     public static void main(String[] args) throws IOException {
         log.info("Starting pokemon game!");
         log.error("error");
-       
+
 
         launch(args);
 

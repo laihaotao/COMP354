@@ -11,20 +11,18 @@ import card.Card;
 
 
 public class EnergyCard extends Card {
-	 // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
-    private enum EnergyType {COLORLESS, FIRE, WATER, LIGHTNING, PSYCHIC, GRASS, DARKNESS, METAL, FAIRY, FIGHT, DRAGON}
+	 // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fight-Dragon
+    private enum EnergyType {Colorless, Fire, Water, Lightning, Psychic, Grass, Darkness, Metal, Fairy, Fight, Dragon;}
 
     private EnergyType energyType;
 
     public EnergyCard(String type) {
-    	type.toUpperCase();
-    	if (type.equals("FIGHTING")){
-    		type = "FIGHT";    		
-    	}
-    	
-    	this.energyType = EnergyType.valueOf(type);
+		this.energyType = Enum.valueOf(EnergyType.class, type);
         this.cardType = CardType.ENERGY;
     }
-    
-    
+
+    @Override
+    public String getCardName() {
+        return this.energyType.toString();
+    }
 }

@@ -18,9 +18,8 @@ public class TrainerCard extends Card {
     public TrainerCard(String name, String type, String abilityName) {
         this.name = name;
         this.cardType = CardType.TRAINER;
-        this.trainerType = TrainerType.valueOf(type);
+        this.trainerType = Enum.valueOf(TrainerType.class, type);
         this.abilityName = abilityName;
     }
-    
 
 }
