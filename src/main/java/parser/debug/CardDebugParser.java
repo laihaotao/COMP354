@@ -64,17 +64,27 @@ public class CardDebugParser {
       }
       
       String stage = tokenStream.validateTokenString().value;
-      
+    log.debug(name+" {");
       switch(stage){
         case "basic":
           parseBasicPokemon(name, tokenStream);
           break;
+        case "stage-one":
+          parseStageOnePokemon(name, tokenStream);
+          
       }
+    log.debug("}");
       
   }
   
+  private void parseStageOnePokemon(String name, TokenStream tokenStream){
+      String pokemonLink = tokenStream.validateTokenString().value;
+      log.debug("\tlink: "+pokemonLink);
+      parseBasicPokemon(name, tokenStream);
+  }
+  
   private void parseBasicPokemon(String name, TokenStream tokenStream){
-      log.debug(name+" {");
+      
     
       if(tokenStream.validateTokenString("cat") == null){
           log.error(name + " No cat");
@@ -122,7 +132,7 @@ public class CardDebugParser {
         }
         log.debug("\t}");
       }
-      log.debug("}");
+      
   }
 
 }
