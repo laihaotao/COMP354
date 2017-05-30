@@ -17,6 +17,8 @@ import card.pokemon.PokemonCard;
 import card.trainer.TrainerCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import parser.abilities.AbilitiesParser;
+import parser.abilities.AbilityTemplate;
 import util.ResourceReader;
 
 
@@ -41,8 +43,12 @@ public class CardParser {
     private void buildCardMap() throws IOException {
         int lineNum = 1;
         String line;
+
+        AbilitiesParser aParser = new AbilitiesParser("abilities.txt");
+        AbilityTemplate[] abilities = aParser.parse();
+        
         while((line = br.readLine()) != null) {
-            Card card = createCard(line);
+            Card card = createCard(line, abilities);
             if (null != card) {
                 cardMap.put(lineNum, card);
                 logger.debug(lineNum + ": " + card.getCardName());
@@ -52,7 +58,7 @@ public class CardParser {
 
     }
 
-    private Card createCard(String line) throws IOException {
+    private Card createCard(String line, AbilityTemplate[] abilityReferences) throws IOException {
 
         if ("#".equals(line) || line.isEmpty()) return null;
 
@@ -170,7 +176,7 @@ public class CardParser {
             String[] energyCostParts;
             ArrayList<String> energyCost = new ArrayList<>();
             ArrayList<int[]> abilityCost = new ArrayList<>();
-            ArrayList<String> abilityName = new ArrayList<>();
+            ArrayList<AbilityTemplate> abilityTemplates = new ArrayList<>();
 
 
             for (int i = 0; i < attacksLineList.length; i++) {
@@ -191,16 +197,16 @@ public class CardParser {
                     }
 
                     int position = Integer.parseInt(energyCostParts[2]);
-                    abilityName.add(Card.getAbilityNameInFileAt(position));
+                    abilityTemplates.add(abilityReferences[position]);
                     abilityCost.add(PokemonCard.convertAndReturnEnergyArray(energyCost));
                 }
 
             }
 
             if (line.contains(":basic")) {
-                card = new PokemonCard(name, pokemonStage, pokemonType, hp, retreatEnergyCost, abilityName, abilityCost);
+                card = new PokemonCard(name, pokemonStage, pokemonType, hp, retreatEnergyCost, abilityTemplates, abilityCost);
             } else {
-                card = new PokemonCard(name, pokemonStage, pokemonType, hp, abilityName, abilityCost);
+                card = new PokemonCard(name, pokemonStage, pokemonType, hp, abilityTemplates, abilityCost);
             }
         }//end of if line contains ":pokemon:"
 

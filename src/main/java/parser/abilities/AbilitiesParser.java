@@ -56,9 +56,11 @@ public class AbilitiesParser {
     scopes.forEach((scope)->{
         templates.add(parseNullScope(scope));
     });
-
+    
+/**
     Stage stage = new Stage();
     stage.setTitle("Parser");
+    
     
     BorderPane mainView = new BorderPane();
     
@@ -76,7 +78,7 @@ public class AbilitiesParser {
     
     stage.setScene(new Scene(mainView, 1200,800));
     stage.show();
-    
+    **/
     
     
     return templates.toArray(new AbilityTemplate[0]);
