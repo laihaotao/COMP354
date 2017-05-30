@@ -15,4 +15,12 @@ public class Ability {
         this.cost = cost;
   }
   
+  public AbilityTemplate getTemplate(){
+    return template;
+  }
+  
+  public int[] getCost(){
+    return cost;
+  }
+  
 }
