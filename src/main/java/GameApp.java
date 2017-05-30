@@ -79,8 +79,17 @@ public class GameApp extends Application {
         {
             deck.add(cards[i]);
         }
+        
+        
+        DeckParser deckParser = new DeckParser("deck1.txt", new CardParser("cards.txt"));
+        
+        List<Card> player1Deck = deckParser.getDeck();
+
+        deckParser = new DeckParser("deck1.txt", new CardParser("cards.txt"));
+        List<Card> player2Deck = deckParser.getDeck();
+        
         GameBoard gameBoard;
-        gameBoard = new GameBoard(new Player(deck), new Ai_Player(deck));
+        gameBoard = new GameBoard(new Player(player1Deck), new Ai_Player(player2Deck));
 
         //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
