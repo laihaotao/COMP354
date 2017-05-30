@@ -10,6 +10,7 @@ package parser.cards;
 import card.abilities.Ability;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import card.Card;
@@ -198,6 +199,7 @@ public class CardParser {
                     }
 
                     int position = Integer.parseInt(energyCostParts[2]);
+                    logger.debug(abilityReferences[position-1].name + " : " +Arrays.toString(PokemonCard.convertAndReturnEnergyArray(energyCost)));
                     
                     abilities.add(new Ability(abilityReferences[position-1], PokemonCard.convertAndReturnEnergyArray(energyCost)));
                

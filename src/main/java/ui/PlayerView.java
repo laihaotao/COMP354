@@ -4,6 +4,7 @@ import game.Player;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -44,13 +45,19 @@ public class PlayerView extends BorderPane {
 
         handCards = new HBox();
         handCards.getStyleClass().add("Hand");
+        
+        ScrollPane handScroll = new ScrollPane(handCards);
 
+        
+        
+        
+        
         benchCards = new HBox();
         benchCards.getStyleClass().add("Bench");
         activeCard = new HBox();
 
         //Add them in "reverse" order for them to display from bottom to top
-        centerCardArea.getChildren().addAll(activeCard, benchCards, handCards );
+        centerCardArea.getChildren().addAll(activeCard, benchCards, handScroll );
 
         deck = new Label("");
         deck.getStyleClass().add("Deck");
