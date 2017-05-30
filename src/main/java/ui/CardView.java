@@ -51,7 +51,11 @@ public class CardView extends BorderPane{
         if(card instanceof PokemonCard){
             PokemonCard pokemonCard = (PokemonCard)card;
             pokemonCard.getAbilities().forEach((ability -> {
-                abilitiesInfo.getChildren().add(new AbilityView(ability));
+                AbilityView abilityView = new AbilityView(ability);
+                abilityView.setOnMouseClicked((event -> {
+                        
+                }));
+                abilitiesInfo.getChildren().add(abilityView);
             }));
         }
 
