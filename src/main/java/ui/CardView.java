@@ -1,6 +1,7 @@
 package ui;
 
 import card.Card;
+import card.pokemon.PokemonCard;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -47,8 +48,12 @@ public class CardView extends BorderPane{
 
         //Display abilities
         abilitiesInfo = new VBox();
-        abilitiesInfo.getChildren().add(new AbilityView());
-        abilitiesInfo.getChildren().add(new AbilityView());
+        if(card instanceof PokemonCard){
+            PokemonCard pokemonCard = (PokemonCard)card;
+            pokemonCard.getAbilities().forEach((ability -> {
+                abilitiesInfo.getChildren().add(new AbilityView(ability));
+            }));
+        }
 
         setTop(topInfo);
         setCenter(abilitiesInfo);
