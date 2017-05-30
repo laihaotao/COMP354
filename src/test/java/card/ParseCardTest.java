@@ -2,10 +2,8 @@ package card;
 
 import org.junit.Test;
 import parser.cards.CardParser;
-import util.ResourceReader;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.IOException;
 
 /**
  * Created by ERIC_LAI on 2017-05-29.
