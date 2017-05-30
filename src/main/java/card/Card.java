@@ -47,6 +47,8 @@ public abstract class Card implements Serializable{
 		ObjectInputStream ois = new ObjectInputStream(bis);
 
 		return ois.readObject();
-	}    
+	}
+	
+	public abstract Card copy();
     
 }

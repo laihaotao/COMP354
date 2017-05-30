@@ -17,12 +17,20 @@ public class EnergyCard extends Card {
     private EnergyType energyType;
 
     public EnergyCard(String type) {
-		this.energyType = Enum.valueOf(EnergyType.class, type);
-        this.cardType = CardType.ENERGY;
+        this(Enum.valueOf(EnergyType.class, type));
     }
 
+    public EnergyCard(EnergyType type){
+        this.energyType = type;
+        this.cardType = CardType.ENERGY;
+    }
+    
     @Override
     public String getCardName() {
         return this.energyType.toString();
+    }
+    
+    public EnergyCard copy(){
+        return new EnergyCard(energyType);
     }
 }

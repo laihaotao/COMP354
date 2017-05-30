@@ -23,5 +23,9 @@ public class TrainerCard extends Card {
         this.trainerType = Enum.valueOf(TrainerType.class, type);
         this.ability = ability;
     }
+    
+    public TrainerCard copy(){
+        return new TrainerCard(name, trainerType.toString(), ability);
+    }
 
 }

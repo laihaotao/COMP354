@@ -395,6 +395,8 @@ public class PokemonCard extends Card {
 		return abilities.get(index);
 	}
 	
-
+	public PokemonCard copy(){
+			return new PokemonCard(name, getPokemonStage(), getPokemonType(), getHp(), getRetreatEnergyCost(), abilities);
+	}
 	
 }
