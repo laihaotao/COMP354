@@ -22,7 +22,9 @@ public class DeckParser {
     	
     }
     
-    public ArrayList<Card> createAndReturnDeck() throws IOException{
+    
+    //ArrayList<Card>
+    public void createAndReturnDeck() throws IOException{
     	
     	ArrayList<String> cardsList = new ArrayList<>();
     	ArrayList<Card> deck = new ArrayList<>();
@@ -45,13 +47,9 @@ public class DeckParser {
 		
 		CardParser cardParser = new CardParser();
 		
-		
-		System.out.println(cardsList.get(0));
-
-		
 		for (int i = 0; i<cardsList.size(); i++){
-			
-			
+			//System.out.println(cardsList.get(i));
+			//System.out.println(cardParser.createCard(cardsList.get(i)));
 			deck.add(cardParser.createCard(cardsList.get(i)));
 
 		}
@@ -60,7 +58,7 @@ public class DeckParser {
     
 		reader.close();
 		
-		return deck;
+		//return deck;
 
     }
 		

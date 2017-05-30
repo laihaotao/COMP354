@@ -46,6 +46,7 @@ public class GameApp extends Application {
         log.error("error");
        
 
+        launch(args);
 
     }
 

@@ -1,6 +1,6 @@
 Glameow:pokemon:cat:basic:cat:colorless:60:retreat:cat:colorless:2:attacks:cat:colorless:1:1,cat:colorless:2:2
 Pikachu Libre:pokemon:cat:basic:cat:lightning:80:retreat:cat:colorless:1:attacks:cat:colorless:2:3,cat:colorless:2,cat:lightning:1:4
-Pikachu:pokemon:cat:basic:cat:lightning:60:retreat:cat:colorless:1:attacks:cat:colorless:1:5,cat:colorless:2:2:6
+Pikachu:pokemon:cat:basic:cat:lightning:60:retreat:cat:colorless:1:attacks:cat:colorless:1:5,cat:colorless:2:6
 Raichu:pokemon:cat:stage-one:Pikachu:cat:lightning:90:attacks:cat:colorless:2:7,cat:colorless:1,cat:lightning:2:8
 Shellder:pokemon:cat:basic:cat:water:60:retreat:cat:colorless:1:attacks:cat:colorless:1,cat:water:1:9
 Seaking:pokemon:cat:stage-one:Goldeen:cat:water:90:attacks:cat:water:1:10,cat:colorless:1:11
@@ -37,7 +37,7 @@ Geodude:pokemon:cat:basic:cat:fight:60:retreat:cat:colorless:2:attacks:cat:fight
 Zubat:pokemon:cat:basic:cat:psychic:50:retreat:cat:colorless:1:attacks:cat:colorless:1:49
 Haunter:pokemon:cat:stage-one:Gastly:cat:psychic:70:retreat:cat:colorless:1:attacks:cat:colorless:1,cat:psychic:1:50
 Gastly:pokemon:cat:basic:cat:psychic:50:retreat:cat:colorless:1:attacks:cat:psychic:1:51
-Diglett:pokemon:cat:basic:cat:fight:50:retreat:cat:colorless:1:attacks:cat:fight:1:52,cat:colorless:1,cat:fight:1:2:53
+Diglett:pokemon:cat:basic:cat:fight:50:retreat:cat:colorless:1:attacks:cat:fight:1:52,cat:colorless:1,cat:fight:1:53
 Dugtrio:pokemon:cat:stage-one:Diglett:cat:fight:90:retreat:cat:colorless:1:attacks:cat:fight:1:54,cat:colorless:2,cat:fight:1:55
 #
 Slowpoke:pokemon:cat:basic:cat:psychic:50:retreat:cat:colorless:1:attacks:cat:colorless:1:57,cat:psychic:2:58
@@ -56,4 +56,3 @@ Red Card:trainer:cat:item:73
 Wally:trainer:cat:supporter:74
 Fight:energy:cat:fight
 Psychic:energy:cat:psychic
-
