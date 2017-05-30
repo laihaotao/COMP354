@@ -22,8 +22,8 @@ public class TrainerCard extends Card {
         this.abilityName = abilityName;
     }
     
-    public void setTrainerType (String type){
-    	
-    	
+    public static TrainerType returnTrainerType (String type){
+    	TrainerType trainerType = TrainerType.valueOf(type);
+    	return trainerType;
     }
 }

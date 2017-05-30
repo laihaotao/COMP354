@@ -9,9 +9,10 @@ package card.energy;
 
 import card.Card;
 
-public class EnergyCard extends Card {
 
-    private enum EnergyType {COLORLESS, WATER, LIGTNING,}
+public class EnergyCard extends Card {
+	 // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
+    private enum EnergyType {COLORLESS, FIRE, WATER, LIGTNING, PSYCHIC, GRASS, DARKNESS, METAL, FAIRY, FIGHTING, DRAGON}
 
     private EnergyType energyType;
 
@@ -19,4 +20,10 @@ public class EnergyCard extends Card {
         this.energyType = type;
         this.cardType = CardType.ENERGY;
     }
+    
+    public static EnergyType returnEnergyType (String type){
+    	EnergyType energyType = EnergyType.valueOf(type);
+    	return energyType;
+    }
+    
 }

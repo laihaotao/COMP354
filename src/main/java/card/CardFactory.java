@@ -11,11 +11,6 @@ package card;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.sound.sampled.Line;
-
-
-
 import card.energy.EnergyCard;
 import card.pokemon.PokemonCard;
 import card.trainer.TrainerCard;
@@ -24,9 +19,6 @@ import card.trainer.TrainerCard;
 public class CardFactory {
 
 
-	private enum TrainerType {ITEM, SUPPORTER, STADIUM,}
-	
-	
     public CardFactory()
     {
     
@@ -34,10 +26,10 @@ public class CardFactory {
     
     
     
-    public void createCard(String line) throws IOException{
+    public Card createCard(String line) throws IOException{
     	
     	
-    	
+    	Card card = null;
     	
     	String cleanLine = line.replaceAll("é", "e");
     	cleanLine = cleanLine.replaceAll("cat:", "");
@@ -71,8 +63,8 @@ public class CardFactory {
     		String [] typeAndHP_Parts = typeAndHPLine.split(":");
     		
     		String pokemonStage;
-       		String evolvesFrom;
     		String pokemonType;
+    		String evolvesFrom = "";
     		int hp;
    
     		//get PokemonStage, pokemonType, and hp information for PokemonCard parameters
@@ -128,17 +120,6 @@ public class CardFactory {
     			
     		}
     		
-    		
-    		
-
-    		
-    		
-    		
-    		
-
-    		
-    		
-    		
     		int[] retreatEnergyCost = PokemonCard.convertAndReturnEnergyArray(retreatCostList);
     		
     		
@@ -183,14 +164,7 @@ public class CardFactory {
     		
     		
     		
-    		PokemonCard pokemonCard = new PokemonCard(name, pokemonStage, pokemonType , hp, retreatEnergyCost, abilityName, abilityCost);
-    		//return null;
-    		//System.out.println(card.getPokemonStage());
-    			
-    			
-    		
-    		
-    		
+    		card = new PokemonCard(name, pokemonStage, pokemonType , hp, retreatEnergyCost, abilityName, abilityCost);  		
     		
     	}//end of if line contains ":pokemon:"
     	
@@ -198,40 +172,35 @@ public class CardFactory {
     	
     	
     	//It is a PokemonCard
-    	if (line.contains(":trainer:")){
+    	else if (line.contains(":trainer:")){
     		//TrainerCard Parameters: String name, TrainerType type
-    		
-    		/*
-    		//Floral Crown:trainer:cat:item:67
     		String[] lineParts = cleanLine.split(":");
     		
     		String name = lineParts[0];
-    		TrainerType type = TrainerType.valueOf(lineParts[2]);
+    		
+    		//TrainerType type = TrainerType.valueOf(lineParts[2]);
     		String abilityName = Card.getAbilityNameInFileAt(lineParts[3]);
-    		*/
-    		
-    		
-    		//TrainerCard trainerCard = new TrainerCard(name, type, abilityName);
-    		
-    		
+    		card = new TrainerCard(name, TrainerCard.returnTrainerType(lineParts[2]), abilityName);
     		//System.out.println(lineParts);
+    		
+
+    		
     	}
     	
     	
     	//It is a energy
-    	if (line.contains(":energy:")){
+    	else if (line.contains(":energy:")){
+    		//parameters: enum EnergyType, EnergyType energyType;
     		
+    		String[] lineParts = cleanLine.split(":");
+
+    		card = new EnergyCard(EnergyCard.returnEnergyType(lineParts[0]));
+
     		
     	}
     	
     	
-    	//System.out.println(line);
-    	
-    	
-    	
-    	//return card;
-    	
-    	//return null;.
+    	return card;
      
     }
     
