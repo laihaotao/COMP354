@@ -1,5 +1,7 @@
 package parser.abilities;
 
+import game.GameBoard;
+import game.Player;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,5 +15,11 @@ public class AbilityTemplate {
     
     public AbilityTemplate(String name){
         this.name = name;
+    }
+    
+    public void use(GameBoard board, Player player){
+        for(AbilityPart part : parts){
+            part.onUse(board, player);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package parser.abilities;
 
+import game.GameBoard;
+import game.Player;
 import parser.commons.TargetProperty;
 import parser.commons.TokenProperty;
 import parser.tokenizer.Token;
@@ -19,5 +21,10 @@ public class AbilityPartDraw extends AbilityPart{
     
     properties.add(target);
     properties.add(new TokenProperty("Amount", amount));
+  }
+
+  @Override
+  public void onUse(GameBoard targetBoard, Player owner) {
+    
   }
 }

@@ -1,5 +1,7 @@
 package parser.abilities;
 
+import game.GameBoard;
+import game.Player;
 import java.util.ArrayList;
 import java.util.List;
 import parser.commons.Property;
@@ -7,7 +9,7 @@ import parser.commons.Property;
 /**
  * Created by frede on 2017-05-23.
  */
-public class AbilityPart {
+public abstract class AbilityPart {
     public String name;
     
     public List<AbilityPart> subParts = new ArrayList<>();
@@ -19,4 +21,6 @@ public class AbilityPart {
     public String toString(){
       return name;
     }
+    
+    public abstract void onUse(GameBoard targetBoard, Player owner);
 }
