@@ -100,9 +100,7 @@ public class GameApp extends Application {
 
     public void start(Stage primaryStage) throws Exception {
 
-        AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
-        AbilityTemplate[] abilities = abilitiesParser.parse();
-        
+
     	primaryStage.setTitle(WINDOW_TITLE);
 
         StartPane root = new StartPane();
@@ -146,6 +144,10 @@ public class GameApp extends Application {
         //This needs to be called since primaryStage.show() changes dimensions of panes
         //This means that any transformatons need to be re-applied to the views
         boardView.refreshView();
+
+
+        AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
+        AbilityTemplate[] abilities = abilitiesParser.parse();
 
     }
     
