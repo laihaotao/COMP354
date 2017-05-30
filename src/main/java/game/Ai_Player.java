@@ -27,7 +27,7 @@ import java.util.*;
 public class Ai_Player  extends  Player{
 
 
-    public Ai_Player(ArrayList<Card> playerDeck)
+    public Ai_Player(List<Card> playerDeck)
     {
         super(playerDeck);
 

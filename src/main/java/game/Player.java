@@ -227,20 +227,20 @@ public class Player {
 
 
 	//private  ArrayList<Card> listOfAllCards;
-	protected   ArrayList<Card> deck;// = new Card[60];
-    protected ArrayList<Card> prizes = new ArrayList()  ;//= new Card[6];
-    protected ArrayList<Card> hand = new ArrayList() ;
-    protected ArrayList<Card>bench  = new ArrayList()  ;//= new Card[5];;
-    protected ArrayList<Card> discardPile  = new ArrayList() ;
+	protected   List<Card> deck;// = new Card[60];
+    protected List<Card> prizes = new ArrayList()  ;//= new Card[6];
+    protected List<Card> hand = new ArrayList() ;
+    protected List<Card>bench  = new ArrayList()  ;//= new Card[5];;
+    protected List<Card> discardPile  = new ArrayList() ;
     protected Card activePokemon;
-    protected ArrayList<Card>  pokemonCards  = new ArrayList() ;
-    protected ArrayList<Card>  energyCards  = new ArrayList() ;
-	private  ArrayList<Card> trainerCards  = new ArrayList() ;
+    protected List<Card>  pokemonCards  = new ArrayList() ;
+    protected List<Card>  energyCards  = new ArrayList() ;
+	private  List<Card> trainerCards  = new ArrayList() ;
 	Scanner kb = new Scanner(System.in);
 	Random rand = new Random();
 
 
-	public Player(ArrayList<Card> playerDeck)
+	public Player(List<Card> playerDeck)
 	{
 		//Each player gets 7 cards drawn randomly at the beginning of the game
 		deck = playerDeck;
