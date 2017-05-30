@@ -27,6 +27,14 @@ public class AbilityPartDam extends AbilityPart{
 
   @Override
   public void onUse(GameBoard targetBoard, Player owner) {
-        Card card = TargetSelector.getTarget(targetBoard, owner, target);
+    Card targetToDamage;    
+    switch(target.target.value){
+      case "opponent-active":{
+        targetToDamage = targetBoard.getOtherPlayer(owner).getActivePokemon();
+      }break;
+    }
+    
+    //damage target card
+        
   }
 }
