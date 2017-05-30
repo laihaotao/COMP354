@@ -45,15 +45,7 @@ public class GameApp extends Application {
         log.info("Starting pokemon game!");
         log.error("error");
        
-CardParser cardParser = new CardParser();
-cardParser.createCard("Glameow:pokemon:cat:basic:cat:colorless:60:retreat:cat:colorless:2:attacks:cat:colorless:1:1,cat:colorless:2:2");
 
-
-
-//PokemonCard pokemonCard = new PokemonCard();
-//pokemonCard =(PokemonCard) cardParser.createCard("Diglett:pokemon:cat:basic:cat:fight:50:retreat:cat:colorless:1:attacks:cat:fight:1:52,cat:colorless:1,cat:fight:1:53");
-        //DeckParser deckParser = new DeckParser();
-        //deckParser.createAndReturnDeck();
 
     }
 
