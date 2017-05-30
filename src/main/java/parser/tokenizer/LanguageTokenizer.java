@@ -1,5 +1,7 @@
 package parser.tokenizer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -7,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import util.ResourceReader;
 
 /**
  * Parses a file for the language the teacher defined in the text files
@@ -27,10 +30,11 @@ public class LanguageTokenizer {
    */
   public List<TokenScope> tokenize() {
     //get the path to the filename. This assumes the file is in resources
-    Path path1 = null;
+    File file = null;
     try {
-      path1 = Paths.get(ClassLoader.getSystemResource(fileName).toURI());
-    } catch (URISyntaxException e) {
+      file = ResourceReader.readFile(fileName);
+      
+    } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
     
@@ -39,7 +43,7 @@ public class LanguageTokenizer {
     
     //read each line in the file and add it to lineScopes, which will be returned
     try {
-      Files.lines(path1).forEach((line) -> {
+      Files.lines(file.toPath()).forEach((line) -> {
         lineScopes.add(parseLine(line));
       });
     } catch (IOException e) {
