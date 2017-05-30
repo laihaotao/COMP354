@@ -16,14 +16,10 @@ public class EnergyCard extends Card {
 
     private EnergyType energyType;
 
-    public EnergyCard(EnergyType type) {
-        this.energyType = type;
+    public EnergyCard(String type) {
+        this.energyType = EnergyType.valueOf(type);
         this.cardType = CardType.ENERGY;
     }
     
-    public static EnergyType returnEnergyType (String type){
-    	EnergyType energyType = EnergyType.valueOf(type);
-    	return energyType;
-    }
     
 }

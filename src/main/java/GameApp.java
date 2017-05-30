@@ -45,11 +45,8 @@ public class GameApp extends Application {
         log.info("Starting pokemon game!");
         log.error("error");
         
-        CardParser cardParser = new CardParser();
-        cardParser.createCard("Glameow:pokemon:cat:basic:cat:colorless:60:retreat:cat:colorless:2:attacks:cat:colorless:1:1,cat:colorless:2:2");
         
-        //deckParser.createAndReturnDeck();
-
+        
         launch(args);
 
 

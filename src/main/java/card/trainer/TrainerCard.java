@@ -15,15 +15,12 @@ public class TrainerCard extends Card {
     private String abilityName;
     private TrainerType trainerType;
 
-    public TrainerCard(String name, TrainerType type, String abilityName) {
+    public TrainerCard(String name, String type, String abilityName) {
         this.name = name;
         this.cardType = CardType.TRAINER;
-        this.trainerType = type;
+        this.trainerType = TrainerType.valueOf(type);
         this.abilityName = abilityName;
     }
     
-    public static TrainerType returnTrainerType (String type){
-    	TrainerType trainerType = TrainerType.valueOf(type);
-    	return trainerType;
-    }
+
 }

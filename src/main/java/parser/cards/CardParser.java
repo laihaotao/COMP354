@@ -31,43 +31,48 @@ public class CardParser {
     	String cleanLine = line.replaceAll("é", "e");
     	cleanLine = cleanLine.replaceAll("cat:", "");
     	
+    	String name;
+    	String rest;
+    	String typeAndHPLine;
+    	String retreatCostLine = "";
+    	String attacksLine;
+		String pokemonStage;
+		String pokemonType;
+		int hp;
+		int[] retreatEnergyCost = {0,0,0,0,0,0,0,0,0,0,0};
+    	
        	//It is a PokemonCard
     	if (line.contains(":pokemon:")){
     		
     		//PokemonCard parameters: String name, String pokemonStage, String pokemonType , int hp, int[] retreatEnergyCost, ArrayList<String> abilityName, ArrayList<int[]> abilityCost) {
         	
  
-    		//Extract pokename name from string
-    		String name = cleanLine.split(":pokemon:")[0];
-    		
-    		//use the rest of the line to get the other information
-    		String rest = cleanLine.split(":pokemon:")[1];
-    		
-    		//get all the information before retreat
-    		String typeAndHPLine = rest.split(":retreat:")[0];
-    		
-    		//Rest of the information after retreat
-    		rest =  rest.split(":retreat:")[1];
-    		
-    		//Extract Retreat Cost
-    		String retreatCostLine = rest.split(":attacks:")[0];
-    		
-    		//Rest of the information after attacks:
-    		rest =  rest.split(":attacks:")[1];
-    		String attacksLine = rest;
-    		
-    		
-    		String [] typeAndHP_Parts = typeAndHPLine.split(":");
-    		
-    		String pokemonStage;
-    		String pokemonType;
-    		String evolvesFrom = "";
-    		int hp;
+
    
+    		
+    		String evolvesFrom = "";
     		//get PokemonStage, pokemonType, and hp information for PokemonCard parameters
+   
+    //Shellder:pokemon:cat:basic:cat:water:60:retreat:cat:colorless:1:attacks:cat:colorless:1,cat:water:1:9
+   //Seaking:pokemon:cat:stage-one:Goldeen:cat:water:90:attacks:cat:water:1:10,cat:colorless:1:11
     		
     		//if it is a stage-one or stage-two
-    		if (typeAndHPLine.contains("stage")){
+    		if (line.contains(":stage")){
+    			
+        		//Extract pokename name from string
+        		name = cleanLine.split(":pokemon:")[0];
+        		//use the rest of the line to get the other information
+        		rest = cleanLine.split(":pokemon:")[1];
+        		//get all the information before retreat
+        		typeAndHPLine = rest.split(":attacks:")[0];
+        		//Rest of the information after retreat
+        		rest =  rest.split(":attacks:")[1];
+        		attacksLine = rest;
+        		
+        		
+        		String [] typeAndHP_Parts = typeAndHPLine.split(":");
+        		
+
     			
         		pokemonStage = typeAndHP_Parts[0];
         		evolvesFrom = typeAndHP_Parts[1];
@@ -76,6 +81,25 @@ public class CardParser {
     		}
     		//else it is a basic pokemon
     		else{
+    			
+        		//Extract pokename name from string
+        		name = cleanLine.split(":pokemon:")[0];
+        		//use the rest of the line to get the other information
+        		rest = cleanLine.split(":pokemon:")[1];
+        		//get all the information before retreat
+        		typeAndHPLine = rest.split(":retreat:")[0];
+        		//Rest of the information after retreat
+        		rest =  rest.split(":retreat:")[1];
+        		//Extract Retreat Cost
+        		retreatCostLine = rest.split(":attacks:")[0];
+        		//Rest of the information after attacks:
+        		rest =  rest.split(":attacks:")[1];
+        		attacksLine = rest;
+        		
+        		
+        		String [] typeAndHP_Parts = typeAndHPLine.split(":");
+        		
+    			
         		pokemonStage = typeAndHP_Parts[0];
         		pokemonType = typeAndHP_Parts[1];
         		hp = Integer.parseInt(typeAndHP_Parts[2]);
@@ -88,36 +112,40 @@ public class CardParser {
     		String [] retreatCostParts;
     		ArrayList <String> retreatCostList = new ArrayList<>();;
     		
-    		//If there is multiple color to retreat
-    		if (retreatCostLine.contains(",")){
-    			retreatCostLineList = retreatCostLine.split(",");
-    			
-    			
-        		for (int i = 0; i< retreatCostLineList.length; i++){
-        			
-        			retreatCostParts = retreatCostLineList[i].split(":");
-        			
-        			for (int j = 0; j< retreatCostParts.length; j++){
-        				retreatCostList.add(retreatCostParts[j]);
-        				
-        			}
-        			
-        		}
-    			
-    			
-    		} else {
-    			
-    			retreatCostParts = retreatCostLine.split(":");
-    			
-    			for (int j = 0; j< retreatCostParts.length; j++){
-    				retreatCostList.add(retreatCostParts[j]);
-    				
-    			}
-    			
-    			
-    		}
     		
-    		int[] retreatEnergyCost = PokemonCard.convertAndReturnEnergyArray(retreatCostList);
+    		if (line.contains(":basic:")){
+	    		//If there is multiple color to retreat
+	    		if (retreatCostLine.contains(",")){
+	    			retreatCostLineList = retreatCostLine.split(",");
+	    			
+	    			
+	        		for (int i = 0; i< retreatCostLineList.length; i++){
+	        			
+	        			retreatCostParts = retreatCostLineList[i].split(":");
+	        			
+	        			for (int j = 0; j< retreatCostParts.length; j++){
+	        				retreatCostList.add(retreatCostParts[j]);
+	        				
+	        			}
+	        			
+	        		}
+	    			
+	    			
+	    		} else {
+	    			
+	    			retreatCostParts = retreatCostLine.split(":");
+	    			
+	    			for (int j = 0; j< retreatCostParts.length; j++){
+	    				retreatCostList.add(retreatCostParts[j]);
+	    				
+	    			}
+	    			
+	    			
+	    		}
+	    		
+	    		retreatEnergyCost = PokemonCard.convertAndReturnEnergyArray(retreatCostList);
+	    		
+    		}
     		
     		
     		
@@ -160,8 +188,15 @@ public class CardParser {
     		}
     		
     		
+    		if (line.contains(":basic")){
+    			card = new PokemonCard(name, pokemonStage, pokemonType , hp, retreatEnergyCost, abilityName, abilityCost);
+    		}
+    		else {
+    			card = new PokemonCard(name, pokemonStage, pokemonType , hp, abilityName, abilityCost);  	
+    		}
+    			
     		
-    		card = new PokemonCard(name, pokemonStage, pokemonType , hp, retreatEnergyCost, abilityName, abilityCost);  		
+    		
     		
     	}//end of if line contains ":pokemon:"
     	
@@ -170,16 +205,26 @@ public class CardParser {
     	
     	//It is a PokemonCard
     	else if (line.contains(":trainer:")){
+    		
+    		
     		//TrainerCard Parameters: String name, TrainerType type
+    		//example: Misty's Determination:trainer:cat:supporter:33
     		String[] lineParts = cleanLine.split(":");
     		
-    		String name = lineParts[0];
+    		name = lineParts[0];
+    		
     		
     		//TrainerType type = TrainerType.valueOf(lineParts[2]);
-    		String abilityName = Card.getAbilityNameInFileAt(lineParts[3]);
-    		card = new TrainerCard(name, TrainerCard.returnTrainerType(lineParts[2]), abilityName);
-    		//System.out.println(lineParts);
     		
+    		String type = lineParts[2].toUpperCase();
+    		
+    		String abilityName = Card.getAbilityNameInFileAt(lineParts[3]);
+    		card = new TrainerCard("hi", "SUPPORTER", "anything");
+    		
+    		card = new TrainerCard(name, type, abilityName);
+    		
+
+    		return card;
 
     		
     	}
@@ -191,7 +236,7 @@ public class CardParser {
     		
     		String[] lineParts = cleanLine.split(":");
 
-    		card = new EnergyCard(EnergyCard.returnEnergyType(lineParts[0]));
+    		card = new EnergyCard(lineParts[0]);
 
     		
     	}
