@@ -10,14 +10,14 @@ import java.util.ArrayList;
 /**
  * Created by ERIC_LAI on 2017-05-29.
  */
-public class ParseCard {
+public class ParseCardTest {
 
     @Test
     public void parseCard() throws FileNotFoundException {
         File file;
         BufferedReader br;
 
-        file = ResourceReader.readFile("card.txt");
+        file = ResourceReader.readFile("cards.txt");
         br = new BufferedReader(new FileReader(file));
 
         ArrayList<Card> cards = new ArrayList<>();
