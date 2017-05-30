@@ -1,11 +1,10 @@
 package card;
 
 import org.junit.Test;
+import parser.cards.CardParser;
+import util.ResourceReader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -14,22 +13,28 @@ import java.util.ArrayList;
 public class ParseCard {
 
     @Test
-    public void parseCard() throws IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        BufferedReader br = null;
-        File file = new File(classLoader.getResource("cards.txt").getFile());
+    public void parseCard() throws FileNotFoundException {
+        File file;
+        BufferedReader br;
+
+        file = ResourceReader.readFile("card.txt");
         br = new BufferedReader(new FileReader(file));
 
-        CardFactory cardFactory = new CardFactory();
         ArrayList<Card> cards = new ArrayList<>();
-        String line;
-        while ((line = br.readLine()) != null) {
-            if (!line.isEmpty()) {
-                cards.add(cardFactory.createCard(line));
-            }
-        }
+        CardParser cardParser = new CardParser();
 
-        br.close();
+        String line;
+        try {
+            while (null != (line = br.readLine())) {
+                if (!line.isEmpty()) {
+                    cards.add(cardParser.createCard(line));
+                }
+            }
+
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // print out the card's name
         for (Card card : cards) {

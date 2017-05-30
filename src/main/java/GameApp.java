@@ -17,12 +17,13 @@ import card.Card;
 import card.pokemon.PokemonCard;
 import parser.abilities.AbilitiesParser;
 import parser.abilities.AbilityTemplate;
+
 import parser.tokenizer.LanguageTokenizer;
 import ui.BoardView;
 import ui.StartPane;
 
-import card.CardFactory;
-
+import parser.cards.CardParser;
+import parser.cards.DeckParser;
 
 
 /**
@@ -44,61 +45,14 @@ public class GameApp extends Application {
         log.info("Starting pokemon game!");
         log.error("error");
         
+        CardParser cardParser = new CardParser();
+        cardParser.createCard("Glameow:pokemon:cat:basic:cat:colorless:60:retreat:cat:colorless:2:attacks:cat:colorless:1:1,cat:colorless:2:2");
+        
+        //deckParser.createAndReturnDeck();
 
         launch(args);
- /*
-         these cards i added are just for testing the code will change need to be changed to the real
-                cards after the deck has been sent to its class
-        also need to add the logic from player to app
-         */
-        Card [] cards = new Card[60];
-         int [] retreatEnergyCost = new int [11];
 
-        for(int i = 0 ; i<retreatEnergyCost.length; i++)
-        {
-            retreatEnergyCost[i] = i*5;
-        }
-        for(int i = 0 ; i<60; i++)
-        {
-           //cards[i] = new PokemonCard("pok"+i , "name"+i , i*6,  "type"+i , null, retreatEnergyCost  );
 
-        }
-        ArrayList<Card> deck = new ArrayList() ;
-        for(int i = 0 ; i<60; i++)
-        {
-            deck.add(cards[i]);
-        }
-        Player player = new Player(deck);
-        Player opponent = new Player(deck);
-        /*try {
-			player.createDeck();
-			opponent.createDeck();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			System.out.println("InstantiationException!!");
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			System.out.println("IllegalAccessException!!");
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("ClassNotFoundException!!");
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("IOException!!");
-			e.printStackTrace();
-		}*/
-        System.out.println("Player's Deck:");
-        player.printCardOnDeck();
-        System.out.println("Opponent's Deck:");
-        opponent.printCardOnDeck();
-        
-
-        
-        
-        
         
         
     }
