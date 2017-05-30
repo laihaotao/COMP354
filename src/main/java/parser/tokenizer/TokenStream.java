@@ -57,6 +57,24 @@ public class TokenStream {
       return null;
   }
   
+  public TokenInteger validateTokenInteger(){
+      Token token = getNextToken();
+      if(token instanceof TokenInteger){
+          return (TokenInteger)token;
+      }
+      backtrack();
+      return null;
+  }
+  
+  public TokenSeparator validateTokenSeparator(){
+    Token token = getNextToken();
+    if(token instanceof TokenSeparator){
+      return (TokenSeparator)token;
+    }
+    backtrack();
+    return null;
+  }
+  
   public void backtrack(){
       currentToken--;
   }
