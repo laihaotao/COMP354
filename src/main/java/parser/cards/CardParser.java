@@ -199,7 +199,7 @@ public class CardParser {
 
                     int position = Integer.parseInt(energyCostParts[2]);
                     
-                    abilities.add(new Ability(abilityReferences[position], PokemonCard.convertAndReturnEnergyArray(energyCost)));
+                    abilities.add(new Ability(abilityReferences[position-1], PokemonCard.convertAndReturnEnergyArray(energyCost)));
                
                 }
 
@@ -223,11 +223,9 @@ public class CardParser {
             //TrainerType type = TrainerType.valueOf(lineParts[2]);
 
             String type = lineParts[2].toUpperCase();
+            
 
-            String abilityName = Card.getAbilityNameInFileAt(lineParts[3]);
-//            card = new TrainerCard("hi", "SUPPORTER", "anything");
-
-            card = new TrainerCard(name, type, abilityName);
+            card = new TrainerCard(name, type, new Ability(abilityReferences[Integer.parseInt(lineParts[3])-1], new int[0]));
 
             return card;
         }
