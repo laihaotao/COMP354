@@ -44,7 +44,7 @@ public class AbilitiesParser {
    * Parse a file into a series of abilities
    * @return List of all abilities parsed
    */
-  public List<AbilityTemplate> parse() {
+  public AbilityTemplate[] parse() {
     //Get a list of all tokens in the file using the tokenizer
     List<TokenScope> scopes = tokenizer.tokenize();
     
@@ -52,6 +52,7 @@ public class AbilitiesParser {
     List<AbilityTemplate> templates = new ArrayList<>();
     
     //For each "Scope" token, process it as a null / parent scope
+    int i = 0;
     scopes.forEach((scope)->{
         templates.add(parseNullScope(scope));
     });
@@ -78,7 +79,7 @@ public class AbilitiesParser {
     
     
     
-    return templates;
+    return templates.toArray(new AbilityTemplate[0]);
   }
 
   /**

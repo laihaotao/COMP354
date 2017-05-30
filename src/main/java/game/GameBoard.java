@@ -122,4 +122,12 @@ public class GameBoard {
   public Player getOppositeTurnPlayer(){
     return players[(currentTurn+1)%2];
   }
+  
+  public Player getOtherPlayer(Player player){
+    if(player == players[0]) {
+      return players[1];
+    }
+    
+    return players[2];
+  }
 }
