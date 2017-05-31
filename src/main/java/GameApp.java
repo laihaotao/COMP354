@@ -47,9 +47,7 @@ public class GameApp extends Application {
         log.error("error");
 
 
-        CardParser cardParser = new CardParser("cards.txt");
-        //cardParser.createCard();
-        
+
         launch(args);
 
     }
@@ -68,7 +66,7 @@ public class GameApp extends Application {
 
          */
         
-        /*
+        
         Card [] cards = new Card[60];
         int [] retreatEnergyCost = new int [11];
 
@@ -121,7 +119,7 @@ public class GameApp extends Application {
         cardDebugParser.parse();
         
         
-        */
+        
         
 
     }

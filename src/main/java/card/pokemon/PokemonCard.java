@@ -153,7 +153,7 @@ public class PokemonCard extends Card {
 
 	}
 	
-	/* Function convertAndReturnEnergyArray
+	/* Function convertAndReturnEnergyCost
 	 * 
 	 * Use this function when reading the cards.txt file. Pass in an array of Strings to convert it into an array to represent the energy cost.
 	 * 
