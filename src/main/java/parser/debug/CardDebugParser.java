@@ -21,7 +21,7 @@ public class CardDebugParser {
   LanguageTokenizer tokenizer;
   AbilityTemplate[] abilityTemplates;
 
-  static Logger log = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
+  final static Logger log = LogManager.getLogger(CardDebugParser.class.getName());
   
   public CardDebugParser(String fileName){
       tokenizer = new LanguageTokenizer(fileName);
