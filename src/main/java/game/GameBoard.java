@@ -1,7 +1,7 @@
 package game;
 
 import card.Card;
-//import card.abilities.Ability;
+import card.abilities.Ability;
 import card.pokemon.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -88,11 +88,11 @@ public class GameBoard {
     }
   }
   
-//  public void onActiveAbilityClicked(Player player, Card card, Ability ability){
-  //  int playerNum = (player == players[0])?1:2;
-    //logger.debug("Player " + playerNum + " has clicked "+ability.getTemplate().name + " on "+card.getCardName());
-      //ability.getTemplate().use(this, player);
-  //}
+ public void onActiveAbilityClicked(Player player, Card card, Ability ability){
+    int playerNum = (player == players[0])?1:2;
+    logger.debug("Player " + playerNum + " has clicked "+ability.getTemplate().name + " on "+card.getCardName());
+    ability.getTemplate().use(this, player);
+ }
 
   public void onEndTurnButtonClicked(){
     checkWinLoose();
