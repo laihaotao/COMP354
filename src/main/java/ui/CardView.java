@@ -43,14 +43,7 @@ public class CardView extends BorderPane{
 
         //TODO display actual card info
 
-        //displays health and damage values
-        healthLabel = new Label("30");
-        damageLabel = new Label("10");
-
-        healthLabel.getStyleClass().add("Health");
-        damageLabel.getStyleClass().add("Damage");
-
-        //topHealthInfo.getChildren().addAll(healthLabel, damageLabel);
+       
 
         topInfo.getChildren().addAll(new Label(card.getCardName()), topHealthInfo);
 
@@ -58,6 +51,17 @@ public class CardView extends BorderPane{
         abilitiesInfo = new VBox();
         if(card instanceof PokemonCard){
             PokemonCard pokemonCard = (PokemonCard)card;
+            
+            //displays health and damage values
+            healthLabel = new Label(String.valueOf(pokemonCard.getHp()));
+            damageLabel = new Label(String.valueOf(pokemonCard.getDamage()));
+
+            healthLabel.getStyleClass().add("Health");
+            damageLabel.getStyleClass().add("Damage");
+
+            topHealthInfo.getChildren().addAll(healthLabel, damageLabel);
+            
+            
             pokemonCard.getAbilities().forEach((ability -> {
                 AbilityView abilityView = new AbilityView(ability);
                 abilityView.setOnMouseClicked((event -> {
