@@ -1,6 +1,7 @@
 package card.abilities;
 
 import parser.abilities.AbilityTemplate;
+import parser.cards.EnergyCost;
 
 /**
  * This class contains logic for abilities
@@ -8,19 +9,19 @@ import parser.abilities.AbilityTemplate;
 public class Ability {
   
   private AbilityTemplate template;
-  private int[] cost;
+  private EnergyCost energyCost;
   
-  public Ability(AbilityTemplate template, int[] cost) {
+  public Ability(AbilityTemplate template, EnergyCost energyCost) {
         this.template = template;
-        this.cost = cost;
+        this.energyCost = energyCost;
   }
   
   public AbilityTemplate getTemplate(){
     return template;
   }
   
-  public int[] getCost(){
-    return cost;
+  public EnergyCost getEnergyCost(){
+    return this.energyCost;
   }
   
 }

@@ -21,6 +21,8 @@ import util.ResourceReader;
 public class DeckParser {
 
     private List<Card> deck;
+
+    
     private BufferedReader br;
     private HashMap<Integer, Card> cardMap;
 
@@ -30,6 +32,7 @@ public class DeckParser {
         File file = ResourceReader.readFile(deckFilePath);
         br = new BufferedReader(new FileReader(file));
         buildDeck();
+        br.close();
     }
 
     public List<Card> getDeck() {
@@ -39,6 +42,8 @@ public class DeckParser {
         return null;
     }
 
+    
+    
     private void buildDeck() throws IOException, ClassNotFoundException {
         String line;
         while ((line = br.readLine()) != null) {

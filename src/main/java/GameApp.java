@@ -47,12 +47,16 @@ public class GameApp extends Application {
         log.error("error");
 
 
+        CardParser cardParser = new CardParser("cards.txt");
+        //cardParser.createCard();
+        
         launch(args);
 
     }
 
     public void start(Stage primaryStage) throws Exception {
 
+    	
 
     	primaryStage.setTitle(WINDOW_TITLE);
 
@@ -63,6 +67,8 @@ public class GameApp extends Application {
                 cards after the deck has been sent to its class
 
          */
+        
+        /*
         Card [] cards = new Card[60];
         int [] retreatEnergyCost = new int [11];
 
@@ -113,6 +119,10 @@ public class GameApp extends Application {
 
         CardDebugParser cardDebugParser = new CardDebugParser("cards.txt");
         cardDebugParser.parse();
+        
+        
+        */
+        
 
     }
     

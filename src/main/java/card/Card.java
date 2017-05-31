@@ -24,9 +24,13 @@ public abstract class Card implements Serializable{
     {
         return name;
     }
-    public String getCardType()
+    public CardType getCardType()
     {
-        return type;
+        return cardType;
+    }
+    
+    public String getType(){
+    	return cardType.name();
     }
 
     public void setSelected(boolean selected){

@@ -4,6 +4,7 @@ import card.abilities.Ability;
 import card.pokemon.PokemonCard;
 import org.junit.Test;
 import parser.cards.CardParser;
+import parser.cards.EnergyCost;
 import util.TestResultHelper;
 
 import java.io.BufferedWriter;
@@ -54,14 +55,14 @@ public class ParseCardTest {
 
                 bw.write(pcd.getCardName() + " {" + '\n');
                 for (Ability a : abilities) {
-                    int[] cost = a.getCost();
+                    EnergyCost cost = a.getEnergyCost();
                     String name = a.getTemplate().name;
-                    bw.write(name + ": " + Arrays.toString(cost) + '\n');
+                    bw.write(name + ": " + cost.toString() + '\n');
                 }
                 bw.write(";" + '\n');
 
-                int[] retreatEnergyCost = pcd.getRetreatEnergyCost();
-                bw.write("retreat: " + Arrays.toString(retreatEnergyCost) + '\n');
+                EnergyCost retreatEnergyCost = pcd.getRetreatEnergyCost();
+                bw.write("retreat: " + retreatEnergyCost.toString() + '\n');
                 bw.write("};" + '\n');
 
             }
