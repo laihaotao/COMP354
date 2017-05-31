@@ -2,10 +2,14 @@ package ui;
 
 import card.Card;
 import card.pokemon.PokemonCard;
+import game.Player;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import ui.events.PlayerViewListener;
 
 /**
  * Displays info about a card
@@ -20,10 +24,14 @@ public class CardView extends BorderPane{
     private Label damageLabel;
 
     private VBox abilitiesInfo;
+    
+    private Player player;
+    
+    private List<PlayerViewListener> registeredListeners;
 
     //TODO A Card instance should be passed to this once it is properly implemented
-    public CardView(Card card){
-
+    public CardView(Player player, Card card){
+        this.player = player;
         this.getStyleClass().add("Card");
 
         if(card.getSelected()){
@@ -53,7 +61,9 @@ public class CardView extends BorderPane{
             pokemonCard.getAbilities().forEach((ability -> {
                 AbilityView abilityView = new AbilityView(ability);
                 abilityView.setOnMouseClicked((event -> {
-                        
+                        registeredListeners.forEach((listener -> {
+                            listener.onActiveAbilityClicked(player, card, ability);
+                        }));
                 }));
                 abilitiesInfo.getChildren().add(abilityView);
             }));
@@ -61,5 +71,11 @@ public class CardView extends BorderPane{
 
         setTop(topInfo);
         setCenter(abilitiesInfo);
+
+        registeredListeners = new ArrayList<>();
+    }
+    
+    public void registerListener(PlayerViewListener listener){
+        registeredListeners.add(listener);
     }
 }

@@ -82,7 +82,7 @@ public class PlayerView extends BorderPane {
         //For now, just add 5 cardViews to make sure it displays
 
         player.getHand().forEach((card)->{
-            CardView cardView = new CardView(card);
+            CardView cardView = new CardView(player, card);
 
             cardView.setOnMouseClicked((event -> {
                 registeredListeners.forEach(listener->listener.onHandCardClicked(player, card));
@@ -101,7 +101,7 @@ public class PlayerView extends BorderPane {
         benchCards.getChildren().add(benchLabel);
 
         player.getBench().forEach((card)->{
-            CardView cardView = new CardView(card);
+            CardView cardView = new CardView(player, card);
 
             cardView.setOnMouseClicked((event -> {
                 registeredListeners.forEach(listener->listener.onBenchCardClicked(player, card));
@@ -121,12 +121,13 @@ public class PlayerView extends BorderPane {
 
         if(player.getActivePokemon() != null){
 
-            CardView cardView = new CardView(player.getActivePokemon());
+            CardView cardView = new CardView(player, player.getActivePokemon());
 
             cardView.setOnMouseClicked((event -> {
-                registeredListeners.forEach(listener->listener.onActiveCardClicked(player, player.getActivePokemon()));
+                //registeredListeners.forEach(listener->listener.onActiveCardClicked(player, player.getActivePokemon()));
             }));
-
+            registeredListeners.forEach(listner->cardView.registerListener(listner));
+            
             activeCard.getChildren().add(cardView);
         }
 

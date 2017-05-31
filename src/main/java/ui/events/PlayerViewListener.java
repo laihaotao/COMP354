@@ -1,6 +1,7 @@
 package ui.events;
 
 import card.Card;
+import card.abilities.Ability;
 import game.Player;
 
 /**
@@ -13,5 +14,6 @@ public interface PlayerViewListener {
 
   void onActiveCardClicked(Player player, Card card);
 
+  void onActiveAbilityClicked(Player player, Card card, Ability ability);
 
 }

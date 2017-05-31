@@ -1,6 +1,7 @@
 package ui;
 
 import card.Card;
+import card.abilities.Ability;
 import game.GameBoard;
 import game.Player;
 import javafx.collections.ObservableList;
@@ -94,6 +95,12 @@ public class BoardView extends BorderPane implements PlayerViewListener{
     @Override
     public void onActiveCardClicked(Player player, Card card) {
         gameBoard.onActiveCardClicked(player, card);
+        refreshView();
+    }
+
+    @Override
+    public void onActiveAbilityClicked(Player player, Card card, Ability ability) {
+        gameBoard.onActiveAbilityClicked(player, card, ability);
         refreshView();
     }
 }
