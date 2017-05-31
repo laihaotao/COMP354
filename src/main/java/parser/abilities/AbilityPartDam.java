@@ -31,6 +31,14 @@ public class AbilityPartDam extends AbilityPart{
   public void use(GameBoard targetBoard, Player owner) {
     Card targetToDamage;    
     switch(target.target.value){
+      case "choice":{
+          Card targetCard = TargetSelector.getTarget(targetBoard, owner, target);
+          if(targetCard instanceof PokemonCard){
+            PokemonCard pokemonCard = (PokemonCard)targetCard;
+            pokemonCard.setDamage(pokemonCard.getDamage()+ammount.evaluateAsExpression());
+          }
+      }
+      
       case "opponent-active":{
         targetToDamage = targetBoard.getOtherPlayer(owner).getActivePokemon();
         if(targetToDamage != null && targetToDamage instanceof PokemonCard){
