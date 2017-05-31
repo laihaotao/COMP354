@@ -52,6 +52,7 @@ public class CardParser {
         
 
         
+        
         while((line = br.readLine()) != null) {
            
         	
@@ -240,10 +241,11 @@ public class CardParser {
                     int position = Integer.parseInt(energyCostParts[2]);
                     
                     //*********How to fix toString in this case? **************************
-                    //logger.debug(abilityReferences[position-1].name + " : " +Arrays.toString(PokemonCard.convertAndReturnEnergyCost(energyCost)) + " : " + energyCost);
+                    
+                    logger.debug(abilityReferences[position-1].name  + " : " + energyCost);
                     
                     abilities.add(new Ability(abilityReferences[position-1], PokemonCard.convertAndReturnEnergyCost(energyCost)));
-               
+                    energyCost.clear();
                 }
 
             }

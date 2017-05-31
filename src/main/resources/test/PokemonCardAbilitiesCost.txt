@@ -1,24 +1,24 @@
 Glameow {
 Act Cute: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
-Scratch: EnergyCost{colorless=3, water=0, lightning=0, psychic=0, fight=0}
+Scratch: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 };
 Pikachu Libre {
 Quick Attack: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
-Flying Elekick: EnergyCost{colorless=4, water=0, lightning=1, psychic=0, fight=0}
+Flying Elekick: EnergyCost{colorless=2, water=0, lightning=1, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Pikachu {
 Nuzzle: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
-Quick Attack: EnergyCost{colorless=3, water=0, lightning=0, psychic=0, fight=0}
+Quick Attack: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Raichu {
 Circle Circuit: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
-Thunderbolt: EnergyCost{colorless=3, water=0, lightning=2, psychic=0, fight=0}
+Thunderbolt: EnergyCost{colorless=1, water=0, lightning=2, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=-1, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -29,7 +29,7 @@ retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Seaking {
 Soaking Horn: EnergyCost{colorless=0, water=1, lightning=0, psychic=0, fight=0}
-Reckless Charge: EnergyCost{colorless=1, water=1, lightning=0, psychic=0, fight=0}
+Reckless Charge: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=-1, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -50,19 +50,19 @@ retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Cloyster {
 Clamp Crush: EnergyCost{colorless=1, water=1, lightning=0, psychic=0, fight=0}
-Spike Cannon: EnergyCost{colorless=2, water=3, lightning=0, psychic=0, fight=0}
+Spike Cannon: EnergyCost{colorless=1, water=2, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=3, water=0, lightning=0, psychic=0, fight=0}
 };
 Suicune {
 Spiral Drain: EnergyCost{colorless=1, water=1, lightning=0, psychic=0, fight=0}
-Aurora Beam: EnergyCost{colorless=2, water=3, lightning=0, psychic=0, fight=0}
+Aurora Beam: EnergyCost{colorless=1, water=2, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Swanna {
 Wing Attack: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
-Brave Bird: EnergyCost{colorless=4, water=0, lightning=0, psychic=0, fight=0}
+Brave Bird: EnergyCost{colorless=3, water=0, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=-1, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -73,13 +73,13 @@ retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Purugly {
 Slash: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
-Nyan Press: EnergyCost{colorless=5, water=0, lightning=0, psychic=0, fight=0}
+Nyan Press: EnergyCost{colorless=3, water=0, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 };
 Manectric {
 Random Spark: EnergyCost{colorless=0, water=0, lightning=1, psychic=0, fight=0}
-Bite: EnergyCost{colorless=2, water=0, lightning=1, psychic=0, fight=0}
+Bite: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -90,7 +90,7 @@ retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Electivire {
 Knuckle Punch: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
-Electroslug: EnergyCost{colorless=3, water=0, lightning=2, psychic=0, fight=0}
+Electroslug: EnergyCost{colorless=1, water=0, lightning=2, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=3, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -101,13 +101,13 @@ retreat: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 };
 Helioptile {
 Pound: EnergyCost{colorless=0, water=0, lightning=1, psychic=0, fight=0}
-Destructive Beam: EnergyCost{colorless=1, water=0, lightning=2, psychic=0, fight=0}
+Destructive Beam: EnergyCost{colorless=1, water=0, lightning=1, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Meowstic {
 Ear Influence: EnergyCost{colorless=0, water=0, lightning=0, psychic=1, fight=0}
-Psychic: EnergyCost{colorless=0, water=0, lightning=0, psychic=4, fight=0}
+Psychic: EnergyCost{colorless=0, water=0, lightning=0, psychic=3, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -118,7 +118,7 @@ retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Jirachi {
 Wish: EnergyCost{colorless=0, water=0, lightning=0, psychic=1, fight=0}
-Heart Sign: EnergyCost{colorless=2, water=0, lightning=0, psychic=2, fight=0}
+Heart Sign: EnergyCost{colorless=2, water=0, lightning=0, psychic=1, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -139,7 +139,7 @@ retreat: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 };
 Doduo {
 Double Stab: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
-Doduo Delivery: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
+Doduo Delivery: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -150,7 +150,7 @@ retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Geodude {
 Rollout: EnergyCost{colorless=0, water=0, lightning=0, psychic=0, fight=1}
-Flail: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=1}
+Flail: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -171,31 +171,31 @@ retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Diglett {
 Mine: EnergyCost{colorless=0, water=0, lightning=0, psychic=0, fight=1}
-Mud Slap: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=2}
+Mud Slap: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=1}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Dugtrio {
 Earthquake: EnergyCost{colorless=0, water=0, lightning=0, psychic=0, fight=1}
-Rock Tumble: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=2}
+Rock Tumble: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=1}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Slowpoke {
 Spacing Out: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
-Scavenge: EnergyCost{colorless=1, water=0, lightning=0, psychic=2, fight=0}
+Scavenge: EnergyCost{colorless=0, water=0, lightning=0, psychic=2, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Hitmonlee {
 Stretch Kick: EnergyCost{colorless=0, water=0, lightning=0, psychic=0, fight=1}
-Spiral Kick: EnergyCost{colorless=0, water=0, lightning=0, psychic=0, fight=3}
+Spiral Kick: EnergyCost{colorless=0, water=0, lightning=0, psychic=0, fight=2}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Hitmonchan {
 Bullet Punch: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
-Mach Cross: EnergyCost{colorless=4, water=0, lightning=0, psychic=0, fight=1}
+Mach Cross: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=1}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
@@ -211,7 +211,7 @@ retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };
 Persian {
 Fake Out: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
-Ambush: EnergyCost{colorless=3, water=0, lightning=0, psychic=0, fight=0}
+Ambush: EnergyCost{colorless=2, water=0, lightning=0, psychic=0, fight=0}
 ;
 retreat: EnergyCost{colorless=1, water=0, lightning=0, psychic=0, fight=0}
 };

@@ -214,7 +214,7 @@ public class PokemonCard extends Card {
 	
 	
 	public void printRetreatCost(){
-		this.retreatEnergyCost.printEnergyCost();
+		System.out.println(this.retreatEnergyCost);
 		
 	}
 

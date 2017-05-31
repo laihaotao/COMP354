@@ -46,8 +46,7 @@ public class GameApp extends Application {
         log.info("Starting pokemon game!");
         log.error("error");
 
-
-
+      
         launch(args);
 
     }
@@ -65,6 +64,8 @@ public class GameApp extends Application {
                 cards after the deck has been sent to its class
 
          */
+        
+        
         
         
         Card [] cards = new Card[60];

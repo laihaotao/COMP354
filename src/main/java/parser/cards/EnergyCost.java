@@ -87,21 +87,6 @@ public class EnergyCost {
       }
   }
   
-  public void printEnergyCost(){
-	// colorless-fire-water-lightning-psychic-grass-darkness-metal-fairy-fight-dragon
-	  System.out.println("colorless: " + this.colorless);
-	  System.out.println("fire: " + this.fire);
-	  System.out.println("water: " + this.water);
-	  System.out.println("lightning: " + this.lightning);
-	  System.out.println("psychic: " + this.psychic);
-	  System.out.println("grass: " + this.grass);
-	  System.out.println("darkness: " + this.darkness);
-	  System.out.println("metal: " + this.metal);
-	  System.out.println("fairy: " + this.fairy);
-	  System.out.println("fight: " + this.fight);
-	  System.out.println("dragon: " + this.dragon);
-	  
-  }
   
   
 
