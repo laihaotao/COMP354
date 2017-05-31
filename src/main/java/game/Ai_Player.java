@@ -65,8 +65,8 @@ public class Ai_Player  extends  Player{
             pokNum  = rand.nextInt(4);
             if(bench.size()<5)
                 bench.add(hand.remove(pokNum));
-            else
-                System.out.println(" bench is full");
+           // else
+               // System.out.println(" bench is full");
 
         }
 

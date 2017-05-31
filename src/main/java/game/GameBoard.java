@@ -132,9 +132,25 @@ public class GameBoard {
   }
   public void checkWinLoose(){
 
-  }
+      List<Card>  pCards  = new ArrayList() ;
+      if(getCurrentTurnPlayer().prizes.size() ==0 || players[((currentTurn + 1)%2)].deck.size()==0)
+      {
+          for(Card c : players[((currentTurn + 1)%2)].getBench())
+              if( c instanceof  PokemonCard)//  .getType().equals("POKEMON"))
+                pCards.add(c);
+          if(pCards.size() == 0)
+          {
+              win();
+          }
 
-    public Player[] getPlayers(){
+
+      }
+  }
+  public void win(){
+      System.out.println("player "+ currentTurn + "has won the game");
+      System.exit(0);
+  }
+  public Player[] getPlayers(){
     return players;
   }
   
