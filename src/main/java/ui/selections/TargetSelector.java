@@ -32,6 +32,18 @@ public class TargetSelector {
       alert.getButtonTypes().clear();
       
       switch(target.target.value){
+        case "choice":{
+            switch(target.modifier.value){
+              case "opponent-bench":{
+                Player otherPlayer = board.getOtherPlayer(callingPlayer);
+                otherPlayer.getBench().forEach((card)->{
+                  ButtonType buttonType = new ButtonType(card.getCardName());
+                  alert.getButtonTypes().add(buttonType);
+                  possibleResults.put(buttonType, card);
+                });
+              }
+            }
+        }break;
         default:
         {
             Player otherPlayer = board.getOtherPlayer(callingPlayer);
