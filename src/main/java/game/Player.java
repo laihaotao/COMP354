@@ -269,7 +269,7 @@ public class Player {
 	public void putCardInHand()
 	{
 		hand.add(deck.remove(0));
-		if(hand.get(hand.size()-1).getCardType() == "POKEMON")
+		if(hand.get(hand.size()-1).getType().equals("POKEMON"))
 			pokemonCards.add(hand.get(hand.size()-1));
 		if(pokemonCards.size() == 0)
 		{

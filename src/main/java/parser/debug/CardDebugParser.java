@@ -8,6 +8,7 @@ import parser.abilities.AbilitiesParser;
 import parser.abilities.AbilityPart;
 import parser.abilities.AbilityTemplate;
 import parser.cards.CardParser;
+import parser.cards.EnergyCost;
 import parser.tokenizer.LanguageTokenizer;
 import parser.tokenizer.TokenScope;
 import parser.tokenizer.TokenStream;

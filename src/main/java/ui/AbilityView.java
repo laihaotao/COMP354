@@ -19,7 +19,7 @@ public class AbilityView extends BorderPane{
         name.getStyleClass().add("Name");
 
         setLeft(name);
-        setCenter(new Label(Arrays.toString(ability.getCost())));
+        // need to fix: *****************setCenter(new Label(Arrays.toString(ability.getCost())));
     }
 
 }
