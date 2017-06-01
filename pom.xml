@@ -28,7 +28,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>GameApp</mainClass>
+                            <mainClass>entry.GameApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
