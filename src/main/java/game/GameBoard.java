@@ -71,12 +71,8 @@ public class GameBoard {
     int playerNum = (player == players[0])?1:2;
     logger.debug("Player"+playerNum+" has clicked the active pokemon");
 
-    //player is trying to place pokemon on active slot
-//<<<<<<< HEAD
-    //if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard){
-//=======
+
     if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
-//>>>>>>> 30e72620b6e97b2f1c008e59a5ffc4682234ad82
 
       //remove selected card from player's hand and put it as active
       if(players[0].getHand().remove(selectedCard)) {

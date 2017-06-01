@@ -243,12 +243,31 @@ public class Player {
 
 		putPrizes();  //lack of better name
 		//Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
+
+		put7CardInHand();
+
+			//chooseActivePokemon();
+	}
+	public void put7CardInHand() {
+
 		for(int i = 0 ; i<7; i++)
 		{
 			putCardInHand();
 		}
+		checkForPokemon();
+	}
 
-		//chooseActivePokemon();
+	public  void checkForPokemon() {
+
+		if(pokemonCards.size() == 0) {
+			int handSize = hand.size();
+			while (handSize > 0) {
+				deck.add(hand.remove(0));
+				handSize--;
+			}
+
+			put7CardInHand(); // this takes care of Mulligans // change when deck is updated
+		}
 	}
 	//Each player gets 7 cards drawn randomly at the beginning of the game
 	public void putPrizes()
@@ -262,22 +281,10 @@ public class Player {
 
 	}
 	//Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
-	public void putCardInHand()
-	{
+	public void putCardInHand() {
 		hand.add(deck.remove(0));
 		if(hand.get(hand.size()-1) instanceof  PokemonCard)//  .getType().equals("POKEMON"))
 			pokemonCards.add(hand.get(hand.size()-1));
-		if(pokemonCards.size() == 0)
-		{
-			int handSize = hand.size();
-			while (handSize > 0)
-			{
-				deck.add(hand.remove(0));
-				handSize--;
-			}
-
-			putCardInHand(); // this takes care of Mulligans // change when deck is updated
-		}
 
 	}
 
