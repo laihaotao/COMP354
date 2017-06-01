@@ -1,7 +1,9 @@
 package ui;
 
 import card.Card;
+import card.EnergyCard;
 import card.PokemonCard;
+import card.TrainerCard;
 import game.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class CardView extends BorderPane{
        
 
         topInfo.getChildren().addAll(new Label(card.getCardName()), topHealthInfo);
-
+        
         //Display abilities
         abilitiesInfo = new VBox();
         if(card instanceof PokemonCard){
@@ -71,11 +73,16 @@ public class CardView extends BorderPane{
                 }));
                 abilitiesInfo.getChildren().add(abilityView);
             }));
+        }else if (card instanceof TrainerCard){
+            TrainerCard trainerCard = (TrainerCard)card;
+            abilitiesInfo.getChildren().add(new AbilityView(trainerCard.getAbility()));
+        }else if (card instanceof EnergyCard){
+            
         }
 
         setTop(topInfo);
         setCenter(abilitiesInfo);
-
+        setBottom(new Label(card.getType()));
         registeredListeners = new ArrayList<>();
     }
     
