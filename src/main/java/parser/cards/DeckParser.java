@@ -18,14 +18,12 @@ import util.ResourceReader;
 public class DeckParser {
 
     private List<Card> deck;
-
-    
     private BufferedReader br;
-    private HashMap<Integer, Card> cardMap;
+    private CardParser cardParser;
 
     public DeckParser(String deckFilePath, CardParser cardParser) throws IOException, ClassNotFoundException {
         deck = new ArrayList<>();
-        this.cardMap = cardParser.getCardMap();
+        this.cardParser = cardParser;
         File file = ResourceReader.readFile(deckFilePath);
         br = new BufferedReader(new FileReader(file));
         buildDeck();
@@ -47,7 +45,7 @@ public class DeckParser {
             if (!line.isEmpty()) {
                 int lineNum = Integer.parseInt(line);
 
-                Card originalCard = cardMap.get(lineNum);
+                Card originalCard = cardParser.getCardMap().get(lineNum);
                 Card copiedCard = originalCard.copy();
 
                 deck.add(copiedCard);
