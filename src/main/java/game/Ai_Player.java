@@ -64,9 +64,21 @@ public class Ai_Player  extends  Player{
         {
             //System.out.println("chose which card you want to add t your bench");
             int pokNum ;
-            pokNum  = rand.nextInt(4);
+            pokNum  = rand.nextInt(hand.size());
             if(bench.size()<5)
-                bench.add(hand.remove(pokNum));
+                if(hand.get(pokNum) instanceof PokemonCard) {
+                    bench.add(hand.remove(pokNum));
+                }else{
+                    boolean hasPokemon = false;
+                    for (Card card : hand) {
+                        if(card instanceof PokemonCard){
+                            hasPokemon = true;
+                        }
+                    }
+                    if(hasPokemon) {
+                        putCardOnBench();
+                    }
+                }
            // else
                // System.out.println(" bench is full");
 
