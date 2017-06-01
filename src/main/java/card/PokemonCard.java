@@ -31,7 +31,7 @@ public class PokemonCard extends Card {
     private int damage;
     private int defense;
 
-    private EnergyCost energyAttached;
+    private EnergyCost energyAttached = new EnergyCost();
 
     // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
     private EnergyCost retreatEnergyCost;
@@ -59,6 +59,8 @@ public class PokemonCard extends Card {
         this.attackCounter = 0;
         this.status = "";
         this.cardType = CardType.POKEMON;
+        
+        
 
     }
 

@@ -5,43 +5,28 @@ package parser.cards;
  */
 public class EnergyCost {
   public int colorless;
-  public int fire;
   public int water;
   public int lightning;
   public int psychic;
-  public int grass;
-  public int darkness;
-  public int metal;
-  public int fairy;
   public int fight;
-  public int dragon;
 
   public EnergyCost(){
     
   }
 //Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
-  public EnergyCost(int colorless, int fire, int water, int lightning, int psychic, int grass, int darkness, int metal, int fairy, int fight, int dragon) {
+  public EnergyCost(int colorless, int water, int lightning, int psychic, int fight) {
     this.colorless = colorless;
-    this.fire = fire;
     this.water = water;
     this.lightning = lightning;
     this.psychic = psychic;
-    this.grass = grass;
-    this.darkness = darkness;
-    this.metal = metal;
-    this.fairy = fairy;
     this.fight = fight;
-    this.dragon = dragon;
   }
   
   public void addEnergy(String name, int num){
-      switch(name){
+      switch(name.toLowerCase()){
         case "colorless":
           colorless += num;
           break;
-        case "fire":
-        	fire += num;
-            break; 
         case "water":
           water += num;
           break;
@@ -51,23 +36,8 @@ public class EnergyCost {
         case "psychic":
           psychic += num;
           break;
-        case "grass":
-        	grass += num;
-            break;
-        case "darkness":
-        	darkness += num;
-            break;
-        case "metal":
-        	metal += num;
-            break;
-        case "fairy":
-        	fairy += num;
-            break;
         case "fight":
         	fight += num;
-            break;
-        case "dragon":
-        	dragon += num;
             break;
         default:
           System.out.println("ENERGY NAME ERROR "+name);  
