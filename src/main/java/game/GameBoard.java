@@ -153,7 +153,7 @@ public class GameBoard {
     //TODO process AI turn
 
     //finish AI turn
-    nextTurn();
+   // nextTurn();
   }
 
   public void nextTurn(){
@@ -178,6 +178,7 @@ public class GameBoard {
       {
           players[1].putCardOnBench();
       }
+
       //players[1].putCardOnBench();
       //players[1].activePokemon  this is suppose to attack
       nextTurn();
