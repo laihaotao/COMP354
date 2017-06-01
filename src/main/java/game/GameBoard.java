@@ -7,7 +7,6 @@ import card.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.*;
-import ui.GameOutcomePopup;
 
 /**
  * Created by frede on 2017-05-15.
@@ -20,8 +19,6 @@ public class GameBoard {
 
   private int currentTurn = 0;
 
-  private int turnNum = 0;
-  
   private Card selectedCard = null;
   private CardLocation selectedCardLocation = null;
   Random rand = new Random();
@@ -98,7 +95,7 @@ public class GameBoard {
 
       //remove selected card from player's hand and put it as active
       if(players[0].getHand().remove(selectedCard)) {
-        players[0].setActivePokemon(selectedCard);
+        players[0].setActivePokemon((PokemonCard)selectedCard);
         setSelectedCard(null, null);
       }
 
@@ -146,19 +143,7 @@ public class GameBoard {
  }
  
  public void onCardDead(Player owner){
-      Player otherPlayer = getOtherPlayer(owner);
-      otherPlayer.choseRewardCard();
-      int playerNum = (otherPlayer == players[0])?1:2;
-      if(otherPlayer.getPrizes().size() == 0){
-        
-        GameOutcomePopup.display("player" + playerNum, true);
-      }
-      
-      if(turnNum > 2){
-          if(owner.getActivePokemon() == null && owner.getBench().isEmpty()){
-            GameOutcomePopup.display("player" + playerNum, true);
-          }
-      }
+      getOtherPlayer(owner).choseRewardCard();
  }
 
   public void onEndTurnButtonClicked(){
@@ -168,21 +153,15 @@ public class GameBoard {
     //TODO process AI turn
 
     //finish AI turn
-    nextTurn();
+   // nextTurn();
   }
 
   public void nextTurn(){
     //This will cycle between 0 and 1
     currentTurn = (currentTurn + 1)%2;
-    turnNum++;
+
     Player currentPlayer = getCurrentTurnPlayer();
-    
-    if(currentPlayer.getDeck().isEmpty()){
-      Player otherPlayer = getOtherPlayer(currentPlayer);
-      int playerNum = (otherPlayer == players[0])?1:2;
-      GameOutcomePopup.display("player" + playerNum, true);
-    }
-    
+
     //add card to players hand
     currentPlayer.putCardInHand();
 
@@ -199,6 +178,10 @@ public class GameBoard {
       {
           players[1].putCardOnBench();
       }
+
+      if(players[1].activePokemon != null)
+          players[1].attachEnergyCard();
+
       //players[1].putCardOnBench();
       //players[1].activePokemon  this is suppose to attack
       nextTurn();
@@ -250,4 +233,7 @@ public class GameBoard {
     
     return players[0];
   }
+    public void onRetreatButtonClicked(Player player){
+
+    }
 }
