@@ -9,7 +9,7 @@ package card;
 
 public abstract class Card{
 
-    protected enum CardType{ENERGY, POKEMON, TRAINER,}
+    public enum CardType{ENERGY, POKEMON, TRAINER,}
 
     protected String name;
     protected CardType cardType;

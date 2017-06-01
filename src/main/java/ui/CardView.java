@@ -82,7 +82,7 @@ public class CardView extends BorderPane{
 
         setTop(topInfo);
         setCenter(abilitiesInfo);
-        setBottom(new Label(card.getType()));
+        setBottom(new Label(card.getCardType().toString()));
         registeredListeners = new ArrayList<>();
     }
     
