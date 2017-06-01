@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.Normalizer;
+import ui.selections.RewardSelector;
 
 /**
  * Created by frede on 2017-05-15.
@@ -488,5 +489,13 @@ public class Player {
 
 	public List<Card> getPrizes() {
 		return prizes;
+	}
+	
+	public void choseRewardCard(){
+				Card selectedPrize = RewardSelector.getReward(this);
+				if(selectedPrize != null){
+						prizes.remove(selectedPrize);
+						hand.add(selectedPrize);
+				}
 	}
 }
