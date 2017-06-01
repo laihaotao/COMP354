@@ -481,4 +481,7 @@ public class Player {
 		activePokemon = card;
 	}
 
+	public List<Card> getPrizes() {
+		return prizes;
+	}
 }

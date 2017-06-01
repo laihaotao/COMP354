@@ -31,77 +31,29 @@ import parser.cards.DeckParser;
  * Main application class, used to start the game and initialize the gui
  */
 public class GameApp extends Application {
-	
-	
-	
-	
-    static Logger log = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
-    
+
+
+    private static Logger log = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
+
     //TODO Pull out to config / constants class?
     public static final int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 800;
 
-    public static final String WINDOW_TITLE = "Pokemon";
+    private static final String WINDOW_TITLE = "Pokemon";
 
     public static void main(String[] args) throws IOException {
         log.info("Starting pokemon game!");
-        log.error("error");
-
-      
         launch(args);
-
     }
 
     public void start(Stage primaryStage) throws Exception {
-
-    	
-
-    	primaryStage.setTitle(WINDOW_TITLE);
-
+        primaryStage.setTitle(WINDOW_TITLE);
         StartPane root = new StartPane();
 
-        /*
-         these cards i added are just for testing the code will change need to be changed to the real
-                cards after the deck has been sent to its class
-
-         */
-        
-        
-        
-        
-        Card [] cards = new Card[60];
-        int [] retreatEnergyCost = new int [11];
-
-        for(int i = 0 ; i<retreatEnergyCost.length; i++)
-        {
-            retreatEnergyCost[i] = i*5;
-        }
-        for(int i = 0 ; i<60; i++)
-        {
-            cards[i] = new PokemonCard( );
-
-        }
-        ArrayList<Card> deck = new ArrayList() ;
-        for(int i = 0 ; i<60; i++)
-        {
-            deck.add(cards[i]);
-        }
-        
-        
-        DeckParser deckParser = new DeckParser("deck1.txt", new CardParser("cards.txt"));
-        
-        List<Card> player1Deck = deckParser.getDeck();
-
-        deckParser = new DeckParser("deck1.txt", new CardParser("cards.txt"));
-        List<Card> player2Deck = deckParser.getDeck();
-        
-        GameBoard gameBoard;
-        gameBoard = new GameBoard(new Player(player1Deck), new Ai_Player(player2Deck));
+        GameBoard gameBoard = startGame("deck1.txt", "deck2.txt");
 
         //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
-
         root.setCurrentView(boardView);
-
         primaryStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
         primaryStage.show();
 
@@ -112,25 +64,24 @@ public class GameApp extends Application {
         //This means that any transformatons need to be re-applied to the views
         boardView.refreshView();
 
-
         //AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
         //AbilityTemplate[] abilities = abilitiesParser.parse();
 
-        CardDebugParser cardDebugParser = new CardDebugParser("cards.txt");
-        cardDebugParser.parse();
-        
-        
-        
-        
-
+//        CardDebugParser cardDebugParser = new CardDebugParser("cards.txt");
+//        cardDebugParser.parse();
     }
-    
-    
-    
 
-    
+    private GameBoard startGame(String deck1FileNm, String deck2FileNm)
+            throws IOException, ClassNotFoundException {
+        CardParser cardParser = new CardParser("cards.txt");
+        DeckParser deck1Parser = new DeckParser(deck1FileNm, cardParser);
+        DeckParser deck2Parser = new DeckParser(deck2FileNm, cardParser);
 
-    
-    
-    
+        List<Card> player1Deck = deck1Parser.getDeck();
+        List<Card> player2Deck = deck2Parser.getDeck();
+
+        return new GameBoard(new Player(player1Deck), new Ai_Player(player2Deck));
+    }
+
+
 }

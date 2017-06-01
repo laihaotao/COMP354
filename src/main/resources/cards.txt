@@ -20,7 +20,7 @@ Helioptile:pokemon:cat:basic:cat:lightning:60:retreat:cat:colorless:1:attacks:ca
 Tierno:trainer:cat:supporter:31
 Potion:trainer:cat:item:32
 Misty's Determination:trainer:cat:supporter:33
-Pokémon Center Lady:trainer:cat:supporter:34
+Pokemon Center Lady:trainer:cat:supporter:34
 Clemont:trainer:cat:supporter:35
 Lightning:energy:cat:lightning
 Water:energy:cat:water
@@ -47,9 +47,9 @@ Machoke:pokemon:cat:stage-one:Machop:cat:fight:90:retreat:cat:colorless:2:attack
 Espurr:pokemon:cat:basic:cat:psychic:50:retreat:cat:colorless:1:attacks:cat:colorless:1:64
 Persian:pokemon:cat:stage-one:Meowth:cat:colorless:90:retreat:cat:colorless:1:attacks:cat:colorless:1:65,cat:colorless:2:66
 Floral Crown:trainer:cat:item:67
-Poké Ball:trainer:cat:item:68
+Poke Ball:trainer:cat:item:68
 Shauna:trainer:cat:supporter:69
-Pokémon Fan Club:trainer:cat:supporter:70
+Pokemon Fan Club:trainer:cat:supporter:70
 Switch:trainer:cat:item:71
 Energy Switch:trainer:cat:item:72
 Red Card:trainer:cat:item:73
