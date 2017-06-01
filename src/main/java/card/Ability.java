@@ -1,4 +1,4 @@
-package card.abilities;
+package card;
 
 import parser.abilities.AbilityTemplate;
 import parser.cards.EnergyCost;

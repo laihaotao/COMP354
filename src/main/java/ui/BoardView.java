@@ -1,14 +1,11 @@
 package ui;
 
 import card.Card;
-import card.abilities.Ability;
+import card.Ability;
 import game.GameBoard;
 import game.Player;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Transform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ui.events.PlayerViewListener;
@@ -67,7 +64,7 @@ public class BoardView extends BorderPane implements PlayerViewListener{
         for (PlayerView playerView : playerViews) {
             playerView.refreshView();
         }
-        
+        /**
         //We need to redo rotate every yupdate in case
         //player 2's pane changed dimensions
         PlayerView p2View = playerViews[1];
@@ -75,6 +72,7 @@ public class BoardView extends BorderPane implements PlayerViewListener{
         p2Transforms.clear();
         //The rotate should have the origin at the center of the player view
         p2Transforms.add(new Rotate(180, p2View.getWidth() / 2, p2View.getHeight() / 2));
+         **/
 
     }
 

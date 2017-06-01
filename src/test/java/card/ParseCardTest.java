@@ -1,7 +1,5 @@
 package card;
 
-import card.abilities.Ability;
-import card.pokemon.PokemonCard;
 import org.junit.Test;
 import parser.cards.CardParser;
 import parser.cards.EnergyCost;

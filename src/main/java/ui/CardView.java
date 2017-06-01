@@ -1,7 +1,7 @@
 package ui;
 
 import card.Card;
-import card.pokemon.PokemonCard;
+import card.PokemonCard;
 import game.Player;
 import java.util.ArrayList;
 import java.util.List;

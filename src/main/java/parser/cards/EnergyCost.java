@@ -4,19 +4,6 @@ package parser.cards;
  * Created by frede on 2017-05-30.
  */
 public class EnergyCost {
-  
-  
-
-  @Override
-  public String toString() {
-    return "EnergyCost{" +
-        "colorless=" + colorless +
-        ", water=" + water +
-        ", lightning=" + lightning +
-        ", psychic=" + psychic +
-        ", fight=" + fight +
-        '}';
-  }
   public int colorless;
   public int fire;
   public int water;
@@ -85,6 +72,39 @@ public class EnergyCost {
         default:
           System.out.println("ENERGY NAME ERROR "+name);  
       }
+  }
+
+
+  @Override
+  public String toString() {
+    return "EnergyCost{" +
+        "colorless=" + colorless +
+        ", water=" + water +
+        ", lightning=" + lightning +
+        ", psychic=" + psychic +
+        ", fight=" + fight +
+        '}';
+  }
+  
+  public String toCondensedString(){
+      String string = "[ ";
+      if(colorless > 0){
+          string += "C: "+colorless + " ";
+      }
+      if(water > 0){
+          string += "W: "+water + " ";
+      }
+      if(lightning > 0){
+          string += "L: "+lightning+" ";
+      }
+      if(psychic > 0){
+          string += "P: "+psychic+" ";
+      }
+      if(fight > 0){
+          string += "F: "+fight;
+      }
+      string += "]";
+      return string;
   }
   
   

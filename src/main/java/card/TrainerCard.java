@@ -5,11 +5,7 @@
  * date:         2017-05-17
  */
 
-package card.trainer;
-
-import card.Card;
-import card.abilities.Ability;
-import parser.abilities.AbilityPart;
+package card;
 
 public class TrainerCard extends Card {
 

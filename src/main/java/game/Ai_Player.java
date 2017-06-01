@@ -6,13 +6,6 @@ package game;
 
 import card.Card;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-
-
-import card.Card;
-import card.pokemon.PokemonCard;
 
 import java.util.*;
 
