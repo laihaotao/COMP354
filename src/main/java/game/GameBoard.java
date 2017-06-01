@@ -2,6 +2,7 @@ package game;
 
 import card.Card;
 import card.Ability;
+import card.EnergyCard;
 import card.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,6 +54,16 @@ public class GameBoard {
     int playerNum = (player == players[0])?1:2;
     logger.debug("Player"+playerNum+" has clicked a card in it's bench");
 
+    if(card != null && player == getCurrentTurnPlayer() && selectedCard != null && selectedCard instanceof EnergyCard){
+        if(card instanceof PokemonCard){
+            PokemonCard pokemonCard = (PokemonCard)card;
+            EnergyCard energyCard = (EnergyCard)selectedCard; 
+            pokemonCard.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
+            player.getHand().remove(energyCard);
+            selectedCard = null;
+        }
+    }
+    
     //Player is trying to place pokemon card on bench
     if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
 
@@ -72,6 +83,14 @@ public class GameBoard {
     logger.debug("Player"+playerNum+" has clicked the active pokemon");
 
 
+    if(card != null && player == getCurrentTurnPlayer() && selectedCard != null && selectedCard instanceof EnergyCard){
+      PokemonCard pokemonCard = (PokemonCard)card;
+      EnergyCard energyCard = (EnergyCard)selectedCard;
+      pokemonCard.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
+      player.getHand().remove(energyCard);
+      selectedCard = null;
+    }
+    
     if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
 
       //remove selected card from player's hand and put it as active
