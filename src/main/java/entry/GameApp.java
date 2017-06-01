@@ -1,3 +1,4 @@
+package entry;
 
 import game.Ai_Player;
 import game.GameBoard;
@@ -14,12 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 import card.Card;
 
-import card.pokemon.PokemonCard;
-import parser.abilities.AbilitiesParser;
-import parser.abilities.AbilityTemplate;
-
-import parser.debug.CardDebugParser;
-import parser.tokenizer.LanguageTokenizer;
 import ui.BoardView;
 import ui.StartPane;
 

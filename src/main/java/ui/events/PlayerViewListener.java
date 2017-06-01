@@ -1,7 +1,7 @@
 package ui.events;
 
 import card.Card;
-import card.abilities.Ability;
+import card.Ability;
 import game.Player;
 
 /**

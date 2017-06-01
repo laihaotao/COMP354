@@ -5,9 +5,7 @@
  * date:         2017-05-17
  */
 
-package card.energy;
-
-import card.Card;
+package card;
 
 
 public class EnergyCard extends Card {

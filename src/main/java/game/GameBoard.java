@@ -1,8 +1,8 @@
 package game;
 
 import card.Card;
-import card.abilities.Ability;
-import card.pokemon.PokemonCard;
+import card.Ability;
+import card.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.*;

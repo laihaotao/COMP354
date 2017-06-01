@@ -1,14 +1,11 @@
 package ui;
 
 import card.Card;
-import card.abilities.Ability;
+import card.Ability;
 import game.GameBoard;
 import game.Player;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Transform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ui.events.PlayerViewListener;

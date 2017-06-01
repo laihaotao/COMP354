@@ -8,14 +8,11 @@
 package parser.cards;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import card.Card;
-import card.pokemon.PokemonCard;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import util.ResourceReader;
 
 public class DeckParser {

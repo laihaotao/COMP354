@@ -2,8 +2,7 @@ package game;
 
 
 import card.Card;
-import card.abilities.Ability;
-import card.pokemon.PokemonCard;
+import card.PokemonCard;
 
 import java.util.*;
 
@@ -21,9 +20,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.Normalizer;
-
-import card.Card;
-import card.pokemon.PokemonCard;
 
 /**
  * Created by frede on 2017-05-15.

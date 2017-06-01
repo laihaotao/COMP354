@@ -7,10 +7,7 @@
 
 package card;
 
-import java.io.*;
-import java.util.BitSet;
-
-public abstract class Card implements Serializable{
+public abstract class Card{
 
     protected enum CardType{ENERGY, POKEMON, TRAINER,}
 

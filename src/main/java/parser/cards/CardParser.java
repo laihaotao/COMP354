@@ -7,16 +7,15 @@
 
 package parser.cards;
 
-import card.abilities.Ability;
+import card.Ability;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import card.Card;
-import card.energy.EnergyCard;
-import card.pokemon.PokemonCard;
-import card.trainer.TrainerCard;
+import card.EnergyCard;
+import card.PokemonCard;
+import card.TrainerCard;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

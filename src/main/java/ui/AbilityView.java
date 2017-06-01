@@ -1,7 +1,6 @@
 package ui;
 
-import card.abilities.Ability;
-import java.util.Arrays;
+import card.Ability;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
