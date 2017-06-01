@@ -47,7 +47,15 @@ public class Ai_Player  extends  Player{
         {
             int pokNum ;
             pokNum  = rand.nextInt(pokemonCards.size());
-            activePokemon = pokemonCards.get(pokNum);
+
+            for (int i=0; i<bench.size();i++) {
+                if (bench.get(i) instanceof PokemonCard) {
+                    activePokemon = bench.get(i);
+                    bench.remove(i);
+                    break;
+
+                }
+            }
         }
         else
             System.out.println(" you dont have pokemon in hand");
@@ -83,7 +91,15 @@ public class Ai_Player  extends  Player{
         {
             int pokNum ;
             pokNum  = rand.nextInt(pokemonCards.size());
-            activePokemon = pokemonCards.get(pokNum-1);
+            bench.add(activePokemon);
+            for (int i=0; i<bench.size();i++) {
+                if (bench.get(i) instanceof PokemonCard) {
+                    activePokemon = bench.get(i);
+                    bench.remove(i);
+                    break;
+
+                }
+            }
         }
         else
             System.out.println(" you dont have pokemon in hand");
