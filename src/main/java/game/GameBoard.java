@@ -95,7 +95,7 @@ public class GameBoard {
 
       //remove selected card from player's hand and put it as active
       if(players[0].getHand().remove(selectedCard)) {
-        players[0].setActivePokemon(selectedCard);
+        players[0].setActivePokemon((PokemonCard)selectedCard);
         setSelectedCard(null, null);
       }
 
@@ -178,6 +178,9 @@ public class GameBoard {
       {
           players[1].putCardOnBench();
       }
+
+      if(players[1].activePokemon != null)
+          players[1].attachEnergyCard();
 
       //players[1].putCardOnBench();
       //players[1].activePokemon  this is suppose to attack

@@ -5,6 +5,7 @@ package game;
  */
 
 import card.Card;
+import card.EnergyCard;
 import card.PokemonCard;
 
 
@@ -44,7 +45,7 @@ public class Ai_Player  extends  Player{
 
             for (int i=0; i<bench.size();i++) {
                 if (bench.get(i) instanceof PokemonCard ) {
-                    activePokemon = bench.get(i);
+                    activePokemon =(PokemonCard) bench.get(i);
                     bench.remove(i);
                     break;
 
@@ -86,6 +87,40 @@ public class Ai_Player  extends  Player{
 
     }
 
+    public void attachEnergyCardToActivePokemon( ){
+        for(Card c:hand){
+            if(c instanceof EnergyCard ){
+                //activePokemon.setEnergyAttached((PokemonCard)c);
+                activePokemon.getEnergyAttached().addEnergy(((EnergyCard) c).getEnergyType().toString(),1);
+                getHand().remove(c);
+                break;
+            }
+
+        }
+    }
+    @Override
+    public void attachEnergyCard( ){
+
+
+        for(Card card: bench){
+            if(card instanceof PokemonCard ){
+
+                for(Card c:hand){
+                    if(c instanceof EnergyCard ){
+                        //activePokemon.setEnergyAttached((PokemonCard)c);
+                        ((PokemonCard) card).getEnergyAttached().addEnergy(((EnergyCard) c).getEnergyType().toString(),1);
+                        getHand().remove(c);
+                        break;
+                    }
+
+                }
+                break;
+            }
+        }
+
+
+    }
+
     /*
      * done when we want to change our active pokemon to another
      */
@@ -100,7 +135,7 @@ public class Ai_Player  extends  Player{
             bench.add(activePokemon);
             for (int i=0; i<bench.size();i++) {
                 if (bench.get(i) instanceof PokemonCard) {
-                    activePokemon = bench.get(i);
+                    activePokemon = (PokemonCard) bench.get(i);
                     bench.remove(i);
                     break;
 

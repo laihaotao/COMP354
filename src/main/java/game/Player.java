@@ -229,8 +229,8 @@ public class Player {
     protected List<Card> hand = new ArrayList() ;
     protected List<Card>bench  = new ArrayList()  ;//= new Card[5];;
     protected List<Card> discardPile  = new ArrayList() ;
-    protected Card activePokemon;
-    protected List<Card>  pokemonCards  = new ArrayList() ;
+    protected PokemonCard activePokemon;
+    protected List<PokemonCard>  pokemonCards  = new ArrayList() ;
     protected List<Card>  energyCards  = new ArrayList() ;
 	private  List<Card> trainerCards  = new ArrayList() ;
 	Scanner kb = new Scanner(System.in);
@@ -285,7 +285,7 @@ public class Player {
 	public void putCardInHand() {
 		hand.add(deck.remove(0));
 		if(hand.get(hand.size()-1) instanceof  PokemonCard)//  .getType().equals("POKEMON"))
-			pokemonCards.add(hand.get(hand.size()-1));
+			pokemonCards.add((PokemonCard) hand.get(hand.size()-1));
 
 	}
 
@@ -462,10 +462,9 @@ public class Player {
 
 	}
 
-	public void attackOpponent(Card opponent)
-	{
-
-	}
+	public void attackOpponent(Card opponent) {	}
+	public void attachEnergyCard( ){}
+	public void attachEnergyCardToActivePokemon( ){}
 
 	public List<Card> getDeck(){
 		return deck;
@@ -483,7 +482,7 @@ public class Player {
 		return activePokemon;
 	}
 
-	public void setActivePokemon(Card card){
+	public void setActivePokemon(PokemonCard card){
 		activePokemon = card;
 	}
 
