@@ -272,7 +272,7 @@ public class Player {
 	//Each player gets 7 cards drawn randomly at the beginning of the game
 	public void putPrizes()
 	{
-		for(int i = 0 ; i<7; i++)
+		for(int i = 0 ; i<6; i++)
 		{
 			int  n = rand.nextInt(deck.size());
 			prizes.add(deck.remove(n));
