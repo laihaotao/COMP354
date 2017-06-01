@@ -233,4 +233,7 @@ public class GameBoard {
     
     return players[0];
   }
+    public void onRetreatButtonClicked(Player player){
+
+    }
 }
