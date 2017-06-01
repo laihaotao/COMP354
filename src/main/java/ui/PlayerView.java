@@ -3,6 +3,7 @@ package ui;
 import game.Player;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -131,7 +132,12 @@ public class PlayerView extends BorderPane {
             }));
             registeredListeners.forEach(listner->cardView.registerListener(listner));
             
-            activeCard.getChildren().add(cardView);
+            Button retreatButton = new Button("Retreat");
+            retreatButton.setOnAction(event -> {
+                    registeredListeners.forEach(listener -> listener.onRetreatButtonClicked(player));
+            });
+            
+            activeCard.getChildren().addAll(retreatButton, cardView);
         }
 
     }
