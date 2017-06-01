@@ -7,20 +7,20 @@
 
 package util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.InputStream;
 
 /**
  * Created by ERIC_LAI on 2017-05-30.
  */
 public class ResourceReader {
 
-    public static File readFile(String path) throws FileNotFoundException {
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
-        try {
-            return new File(cl.getResource(path).getFile());
-        } catch (NullPointerException e) {
-            throw new FileNotFoundException(path);
-        }
+    private final static Logger logger = LogManager.getLogger(ResourceReader.class.getName());
+
+
+    public static InputStream readFile(String path) {
+        return ClassLoader.getSystemClassLoader().getResourceAsStream(path);
     }
 }

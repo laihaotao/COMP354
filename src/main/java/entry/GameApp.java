@@ -44,6 +44,7 @@ public class GameApp extends Application {
         primaryStage.setTitle(WINDOW_TITLE);
         StartPane root = new StartPane();
 
+
         GameBoard gameBoard = startGame("deck1.txt", "deck2.txt");
 
         //TODO board and players here and pass that to BoardView

@@ -38,9 +38,9 @@ public class TestResultHelper {
 
     public static ArrayList<String> readResultFile(String path) throws IOException {
         ArrayList<String> list = new ArrayList<>();
-        File resultFile = ResourceReader.readFile("test/" + path);
+        InputStream is = ResourceReader.readFile("test/" + path);
 
-        BufferedReader br = new BufferedReader(new FileReader(resultFile));
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line;
 
         while ((line = br.readLine()) != null) {

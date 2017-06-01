@@ -36,8 +36,8 @@ public class CardParser {
     }
 
     public CardParser(String path) throws IOException {
-        File file = ResourceReader.readFile(path);
-        br = new BufferedReader(new FileReader(file));
+        InputStream is = ResourceReader.readFile(path);
+        br = new BufferedReader(new InputStreamReader(is));
         cardMap = new HashMap<>();
         buildCardMap();
     }
