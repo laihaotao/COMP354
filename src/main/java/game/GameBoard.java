@@ -61,6 +61,7 @@ public class GameBoard {
             pokemonCard.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
             player.getHand().remove(energyCard);
             selectedCard = null;
+            return;
         }
     }
     
@@ -68,14 +69,18 @@ public class GameBoard {
     if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
 
       //remove selected card from player's hand and put it on the player's bench
-      if(players[0].getHand().remove(selectedCard)){
-        players[0].getBench().add(selectedCard);
+      if(player.getHand().remove(selectedCard)){
+        player.getBench().add(selectedCard);
         setSelectedCard(null, null);
       }
 
       return;
     }
-
+    
+    if(player == getCurrentTurnPlayer() && card != null){
+        setSelectedCard(card, CardLocation.BENCH);
+    }
+    
   }
 
   public void onActiveCardClicked(Player player, Card card){
@@ -91,16 +96,26 @@ public class GameBoard {
       selectedCard = null;
     }
     
-    if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
+    if(player.getActivePokemon() == null && selectedCard != null && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
 
       //remove selected card from player's hand and put it as active
-      if(players[0].getHand().remove(selectedCard)) {
-        players[0].setActivePokemon((PokemonCard)selectedCard);
+      if(removeSelected()) {
+        player.setActivePokemon((PokemonCard)selectedCard);
         setSelectedCard(null, null);
       }
 
       return;
     }
+  }
+  
+  public boolean removeSelected(){
+      switch(selectedCardLocation){
+        case HAND:
+          return getCurrentTurnPlayer().hand.remove(selectedCard);
+        case BENCH:
+          return getCurrentTurnPlayer().getBench().remove(selectedCard);
+      }
+      return false;
   }
   
  public void onActiveAbilityClicked(Player player, Card card, Ability ability){
@@ -141,6 +156,8 @@ public class GameBoard {
        }));
    }
  }
+ 
+ 
  
  public void onCardDead(Player owner){
       getOtherPlayer(owner).choseRewardCard();
