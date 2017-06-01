@@ -56,27 +56,39 @@ public class GameBoard {
   public void onBenchCardClicked(Player player, Card card){
     int playerNum = (player == players[0])?1:2;
     logger.debug("Player"+playerNum+" has clicked a card in it's bench");
-
-    if(card != null && player == getCurrentTurnPlayer() && selectedCard != null && selectedCard instanceof EnergyCard){
-        if(card instanceof PokemonCard){
-            PokemonCard pokemonCard = (PokemonCard)card;
-            EnergyCard energyCard = (EnergyCard)selectedCard; 
-            pokemonCard.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
-            player.getHand().remove(energyCard);
-            selectedCard = null;
+    if(selectedCard != null) {
+      if (card != null && player == getCurrentTurnPlayer() 
+          && selectedCard instanceof EnergyCard) {
+        if (card instanceof PokemonCard) {
+          PokemonCard pokemonCard = (PokemonCard) card;
+          EnergyCard energyCard = (EnergyCard) selectedCard;
+          pokemonCard.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
+          player.getHand().remove(energyCard);
+          selectedCard = null;
         }
-    }
-    
-    //Player is trying to place pokemon card on bench
-    if(selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
-
-      //remove selected card from player's hand and put it on the player's bench
-      if(players[0].getHand().remove(selectedCard)){
-        players[0].getBench().add(selectedCard);
-        setSelectedCard(null, null);
       }
 
-      return;
+      //Player is trying to place pokemon card on bench
+      if (selectedCardLocation == CardLocation.HAND
+          && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()) {
+        PokemonCard selectedPokemon = (PokemonCard) selectedCard;
+
+        if (selectedPokemon.getPokemonStage() == "stage-one") {
+          if (selectedPokemon.getEvolvesFrom() == card.getCardName()) {
+            player.setActivePokemon(selectedPokemon);
+            player.getHand().remove(selectedPokemon);
+          }
+        } else {
+          //remove selected card from player's hand and put it on the player's bench
+          if (players[0].getHand().remove(selectedCard)) {
+            players[0].getBench().add(selectedCard);
+            setSelectedCard(null, null);
+          }
+        }
+        return;
+      }
+    }else{
+        setSelectedCard(card, CardLocation.BENCH);
     }
 
   }
@@ -84,26 +96,49 @@ public class GameBoard {
   public void onActiveCardClicked(Player player, Card card){
     int playerNum = (player == players[0])?1:2;
     logger.debug("Player"+playerNum+" has clicked the active pokemon");
-
+    
+    PokemonCard pokemonCard = (PokemonCard)card;
 
     if(card != null && player == getCurrentTurnPlayer() && selectedCard != null && selectedCard instanceof EnergyCard){
-      PokemonCard pokemonCard = (PokemonCard)card;
       EnergyCard energyCard = (EnergyCard)selectedCard;
       pokemonCard.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
       player.getHand().remove(energyCard);
       selectedCard = null;
     }
     
-    if(players[0].getActivePokemon() == null && selectedCard != null && selectedCardLocation== CardLocation.HAND && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
-
-      //remove selected card from player's hand and put it as active
-      if(players[0].getHand().remove(selectedCard)) {
-        players[0].setActivePokemon(selectedCard);
-        setSelectedCard(null, null);
+    if(player.getActivePokemon() != null){
+        if(selectedCard instanceof PokemonCard){
+            PokemonCard selectedPokemon = (PokemonCard)selectedCard;
+            if(selectedPokemon.getPokemonStage() == "stage-one"){
+                if(selectedPokemon.getEvolvesFrom() == pokemonCard.getCardName()){
+                    player.setActivePokemon(selectedPokemon);
+                    player.getHand().remove(selectedPokemon);
+                }
+            }
+        }
+    }else{
+      if(selectedCard != null && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()){
+        PokemonCard selectedPokemon = (PokemonCard)selectedCard;
+        if(selectedPokemon.getPokemonStage().equalsIgnoreCase("basic")) {
+          //remove selected card from player's hand and put it as active
+          if (removeSelectedCard()) {
+            player.setActivePokemon(selectedCard);
+            setSelectedCard(null, null);
+          }
+        }
       }
-
-      return;
     }
+    
+  }
+  
+  public boolean removeSelectedCard(){
+      switch(selectedCardLocation){
+        case HAND:
+          return getCurrentTurnPlayer().getHand().remove(selectedCard);
+        case BENCH:
+          return getCurrentTurnPlayer().getBench().remove(selectedCard);
+      }
+      return false;
   }
   
  public void onActiveAbilityClicked(Player player, Card card, Ability ability){
