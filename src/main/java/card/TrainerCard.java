@@ -24,4 +24,7 @@ public class TrainerCard extends Card {
         return new TrainerCard(name, trainerType.toString(), ability);
     }
 
+    public Ability getAbility(){
+        return ability;
+    }
 }
