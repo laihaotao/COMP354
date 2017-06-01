@@ -157,7 +157,7 @@ public class CardParser {
                 attacksLine = rest;
                 
                 
-                retreatEnergyCost.addEnergy("colorless", -1);
+                retreatEnergyCost.addEnergy("colorless", 0);
                 
                 if (line.contains(":stage")){
                     String[] typeAndHP_Parts = typeAndHPLine.split(":");
