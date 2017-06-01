@@ -87,7 +87,9 @@ public class GameBoard {
  public void onActiveAbilityClicked(Player player, Card card, Ability ability){
     int playerNum = (player == players[0])?1:2;
     logger.debug("Player " + playerNum + " has clicked "+ability.getTemplate().name + " on "+card.getCardName());
-    ability.getTemplate().use(this, player);
+    if(player == getCurrentTurnPlayer()) {
+      ability.getTemplate().use(this, player);
+    }
  }
 
   public void onEndTurnButtonClicked(){
