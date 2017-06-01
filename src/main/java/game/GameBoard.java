@@ -7,6 +7,7 @@ import card.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.*;
+import ui.GameOutcomePopup;
 
 /**
  * Created by frede on 2017-05-15.
@@ -19,6 +20,8 @@ public class GameBoard {
 
   private int currentTurn = 0;
 
+  private int turnNum = 0;
+  
   private Card selectedCard = null;
   private CardLocation selectedCardLocation = null;
   Random rand = new Random();
@@ -143,7 +146,19 @@ public class GameBoard {
  }
  
  public void onCardDead(Player owner){
-      getOtherPlayer(owner).choseRewardCard();
+      Player otherPlayer = getOtherPlayer(owner);
+      otherPlayer.choseRewardCard();
+      int playerNum = (otherPlayer == players[0])?1:2;
+      if(otherPlayer.getPrizes().size() == 0){
+        
+        GameOutcomePopup.display("player" + playerNum, true);
+      }
+      
+      if(turnNum > 2){
+          if(owner.getActivePokemon() == null && owner.getBench().isEmpty()){
+            GameOutcomePopup.display("player" + playerNum, true);
+          }
+      }
  }
 
   public void onEndTurnButtonClicked(){
@@ -159,9 +174,15 @@ public class GameBoard {
   public void nextTurn(){
     //This will cycle between 0 and 1
     currentTurn = (currentTurn + 1)%2;
-
+    turnNum++;
     Player currentPlayer = getCurrentTurnPlayer();
-
+    
+    if(currentPlayer.getDeck().isEmpty()){
+      Player otherPlayer = getOtherPlayer(currentPlayer);
+      int playerNum = (otherPlayer == players[0])?1:2;
+      GameOutcomePopup.display("player" + playerNum, true);
+    }
+    
     //add card to players hand
     currentPlayer.putCardInHand();
 
