@@ -35,7 +35,7 @@ public class PlayerView extends BorderPane {
      */
     private List<PlayerViewListener> registeredListeners = new ArrayList<PlayerViewListener>();
     
-    public PlayerView(Player player){
+    public PlayerView(Player player, boolean directionUp){
         
         this.player = player;
 
@@ -57,8 +57,11 @@ public class PlayerView extends BorderPane {
         activeCard = new HBox();
 
         //Add them in "reverse" order for them to display from bottom to top
-        centerCardArea.getChildren().addAll(activeCard, benchCards, handScroll );
-
+        if(directionUp) {
+            centerCardArea.getChildren().addAll(activeCard, benchCards, handScroll);
+        }else{
+            centerCardArea.getChildren().addAll(handScroll, benchCards, activeCard);
+        }
         deck = new Label("");
         deck.getStyleClass().add("Deck");
 

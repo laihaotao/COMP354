@@ -33,8 +33,8 @@ public class BoardView extends BorderPane implements PlayerViewListener{
 
         //Initialzie player views
         //TODO Once we get a player class, we pass that to PlayerView
-        playerViews[0] = new PlayerView(gameBoard.getPlayer1());
-        playerViews[1] = new PlayerView(gameBoard.getPlayer2());
+        playerViews[0] = new PlayerView(gameBoard.getPlayer1(), true);
+        playerViews[1] = new PlayerView(gameBoard.getPlayer2(), false);
 
         for (PlayerView playerView : playerViews) {
             playerView.registerListener(this);
