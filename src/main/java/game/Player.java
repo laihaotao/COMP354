@@ -269,16 +269,18 @@ public class Player {
 	public void putCardInHand()
 	{
 		hand.add(deck.remove(0));
-		if(hand.get(hand.size()-1).getType().equals("POKEMON"))
+		if(hand.get(hand.size()-1) instanceof  PokemonCard)//  .getType().equals("POKEMON"))
 			pokemonCards.add(hand.get(hand.size()-1));
 		if(pokemonCards.size() == 0)
 		{
 			int handSize = hand.size();
-			for(int i = 0 ; i<handSize; i++)
+			while (handSize > 0)
 			{
-				//deck.add(hand.remove(0));  // change when deck is updated
+				deck.add(hand.remove(0));
+				handSize--;
 			}
-			//putCardInHand(); // this takes care of Mulligans // change when deck is updated
+
+			putCardInHand(); // this takes care of Mulligans // change when deck is updated
 		}
 
 	}

@@ -62,11 +62,11 @@ public class Ai_Player  extends  Player{
         {
             //System.out.println("chose which card you want to add t your bench");
             int pokNum ;
-            pokNum  = rand.nextInt(5);
+            pokNum  = rand.nextInt(4);
             if(bench.size()<5)
                 bench.add(hand.remove(pokNum));
-            else
-                System.out.println(" bench is full");
+           // else
+               // System.out.println(" bench is full");
 
         }
 
