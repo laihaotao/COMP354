@@ -89,7 +89,42 @@ public class GameBoard {
     logger.debug("Player " + playerNum + " has clicked "+ability.getTemplate().name + " on "+card.getCardName());
     if(player == getCurrentTurnPlayer()) {
       ability.getTemplate().use(this, player);
+      checkPokemons();
     }
+ }
+ 
+ public void checkPokemons(){
+   for (Player player : players) {
+        if(player.getActivePokemon() != null){
+            PokemonCard pokemonCard = (PokemonCard)player.getActivePokemon();
+            if(pokemonCard.getDamage() >= pokemonCard.getHp()){
+                player.setActivePokemon(null);
+                onCardDead(player);
+            }
+        }
+        player.getBench().forEach((card -> {
+            if(card instanceof PokemonCard) {
+              PokemonCard pokemonCard = (PokemonCard) card;
+              if (pokemonCard.getDamage() >= pokemonCard.getHp()) {
+                player.getBench().remove(card);
+                onCardDead(player);
+              }
+            }
+        }));
+       player.getHand().forEach((card -> {
+         if(card instanceof PokemonCard) {
+           PokemonCard pokemonCard = (PokemonCard) card;
+           if (pokemonCard.getDamage() >= pokemonCard.getHp()) {
+             player.getHand().remove(card);
+             onCardDead(player);
+           }
+         }
+       }));
+   }
+ }
+ 
+ public void onCardDead(Player owner){
+      getOtherPlayer(owner).choseRewardCard();
  }
 
   public void onEndTurnButtonClicked(){
@@ -173,6 +208,6 @@ public class GameBoard {
       return players[1];
     }
     
-    return players[2];
+    return players[0];
   }
 }
