@@ -20,7 +20,9 @@ public class BoardView extends BorderPane implements PlayerViewListener{
     private PlayerView[] playerViews;
 
     private GameBoard gameBoard;
-    
+
+    public BoardView() {}
+
     public BoardView(GameBoard gameBoard) {
 
         this.gameBoard = gameBoard;
