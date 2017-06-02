@@ -16,4 +16,5 @@ public interface PlayerViewListener {
 
   void onActiveAbilityClicked(Player player, Card card, Ability ability);
 
+  void onRetreatButtonClicked(Player player);
 }
