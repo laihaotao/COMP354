@@ -92,6 +92,7 @@ public class GameBoard {
             PokemonCard pokemonCard = (PokemonCard)card;
             EnergyCard energyCard = (EnergyCard)selectedCard;
             pokemonCard.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
+            player.getDiscardPile().add(energyCard);
             player.getHand().remove(energyCard);
             selectedCard = null;
         }
@@ -132,6 +133,7 @@ public class GameBoard {
             if(player.getActivePokemon() != null){
                 PokemonCard pokemonCard = (PokemonCard)player.getActivePokemon();
                 if(pokemonCard.getDamage() >= pokemonCard.getHp()){
+                    player.getDiscardPile().add(player.getActivePokemon());
                     player.setActivePokemon(null);
                     onCardDead(player);
                 }
@@ -141,6 +143,7 @@ public class GameBoard {
                     PokemonCard pokemonCard = (PokemonCard) card;
                     if (pokemonCard.getDamage() >= pokemonCard.getHp()) {
                         player.getBench().remove(card);
+                        player.getDiscardPile().add(card);
                         onCardDead(player);
                     }
                 }
@@ -150,6 +153,7 @@ public class GameBoard {
                     PokemonCard pokemonCard = (PokemonCard) card;
                     if (pokemonCard.getDamage() >= pokemonCard.getHp()) {
                         player.getHand().remove(card);
+                        player.getDiscardPile().add(card);
                         onCardDead(player);
                     }
                 }

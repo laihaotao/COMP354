@@ -32,6 +32,10 @@ public class PlayerView extends BorderPane {
 
     private Label deck;
 
+    private CardView discardPile;
+
+    private VBox pileBox;
+
     /**
      * List of registered listeners
      */
@@ -49,8 +53,6 @@ public class PlayerView extends BorderPane {
         handCards.getStyleClass().add("Hand");
         
         ScrollPane handScroll = new ScrollPane(handCards);
-
-        
         
         
         
@@ -67,8 +69,12 @@ public class PlayerView extends BorderPane {
         deck = new Label("");
         deck.getStyleClass().add("Deck");
 
+        pileBox = new VBox();
+
+        pileBox.getChildren().add(deck);
+
         this.setCenter(centerCardArea);
-        this.setRight(deck);
+        this.setRight(pileBox);
         refreshView();
     }
 
@@ -141,6 +147,14 @@ public class PlayerView extends BorderPane {
             });
             
             activeCard.getChildren().addAll(retreatButton, cardView);
+        }
+
+        pileBox.getChildren().clear();
+        pileBox.getChildren().add(new Label("Deck: "));
+        pileBox.getChildren().add(deck);
+        pileBox.getChildren().add(new Label("Discard("+player.getDiscardPile().size()+"): "));
+        if(player.getDiscardPile().size() > 0) {
+            pileBox.getChildren().add(new CardView(player, player.getDiscardPile().get(player.getDiscardPile().size() - 1)));
         }
 
     }

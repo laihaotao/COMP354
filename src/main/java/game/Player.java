@@ -277,4 +277,8 @@ public class Player {
             hand.add(selectedPrize);
         }
     }
+
+    public List<Card> getDiscardPile(){
+        return discardPile;
+    }
 }
