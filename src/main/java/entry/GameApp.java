@@ -36,15 +36,15 @@ import parser.cards.DeckParser;
 public class GameApp extends Application {
 
 
-    private static Logger log = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
+    private static Logger logger = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
 
     //TODO Pull out to config / constants class?
     public static final int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 800;
 
-    private static final String WINDOW_TITLE = "Pokemon";
+    private static final String WINDOW_TITLE = "Pokemon Go Back";
 
     public static void main(String[] args) throws IOException {
-        log.info("Starting pokemon game!");
+        logger.info("Starting pokemon game!");
         launch(args);
     }
 
@@ -55,7 +55,8 @@ public class GameApp extends Application {
 
     private void selectDeck(Stage primaryStage) {
         GridPane root = new GridPane();
-        String f1 = "deck1.txt", f2 = "deck2.txt";
+        String f1 = Config.PATH_FILE_DECK1_TXT;
+        String f2 = Config.PATH_FILE_DECK2_TXT;
 
         ObservableList<String> player1List = getOptionList();
         ObservableList<String> player2List = getOptionList();
@@ -69,8 +70,8 @@ public class GameApp extends Application {
         startBtn.setText("Start Game");
         startBtn.setOnAction(event -> {
             try {
-                System.out.println(comboBox1.getValue());
-                System.out.println(comboBox2.getValue());
+                logger.debug(comboBox1.getValue());
+                logger.debug(comboBox2.getValue());
 
                 startGame(primaryStage, comboBox1.getValue(), comboBox2.getValue());
             } catch (Exception e) {
@@ -94,21 +95,11 @@ public class GameApp extends Application {
         primaryStage.show();
     }
 
-    private ObservableList<String> getOptionList() {
-        File[] files = getDirectoryFiles();
-        ObservableList<String> options = FXCollections.observableArrayList();
-        for (File f : files) {
-            options.add(f.getName());
-        }
-        return options;
-    }
-
     private void startGame(Stage primaryStage, String fileNm1, String fileNm2) throws Exception {
         primaryStage.setTitle(WINDOW_TITLE);
         StartPane root = new StartPane();
 
-
-        GameBoard gameBoard = startGame(fileNm1, fileNm2);
+        GameBoard gameBoard = getGameBoard(fileNm1, fileNm2);
 
         //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
@@ -130,9 +121,9 @@ public class GameApp extends Application {
 //        cardDebugParser.parse();
     }
 
-    private GameBoard startGame(String deck1FileNm, String deck2FileNm)
+    private GameBoard getGameBoard(String deck1FileNm, String deck2FileNm)
             throws IOException, ClassNotFoundException {
-        CardParser cardParser = new CardParser("cards.txt");
+        CardParser cardParser = new CardParser(Config.FILE_PATH_CARDS_TXT);
         DeckParser deck1Parser = new DeckParser(deck1FileNm, cardParser);
         DeckParser deck2Parser = new DeckParser(deck2FileNm, cardParser);
 
@@ -142,18 +133,24 @@ public class GameApp extends Application {
         return new GameBoard(new Player(player1Deck), new Ai_Player(player2Deck));
     }
 
+    private ObservableList<String> getOptionList() {
+        File[] files = getDirectoryFiles();
+        ObservableList<String> options = FXCollections.observableArrayList();
+        for (File f : files) {
+            options.add(f.getName());
+        }
+        return options;
+    }
+
     private File[] getDirectoryFiles() {
         String resRoot = getClass().getResource("/").getPath();
         return getFile(resRoot);
     }
 
     private static File[] getFile(String path) {
-        return new File(path).listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                // return all file whose name contains "deck"
-                return pathname.getName().contains("deck");
-            }
+        return new File(path).listFiles(pathname -> {
+            // return all file whose name contains "deck"
+            return pathname.getName().contains("deck");
         });
     }
 

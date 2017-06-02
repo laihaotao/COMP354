@@ -1,7 +1,10 @@
 package card;
 
+import entry.Config;
+import entry.GameApp;
 import org.junit.Test;
 import parser.cards.CardParser;
+import parser.cards.DeckParser;
 import parser.cards.EnergyCost;
 import util.TestResultHelper;
 
@@ -35,7 +38,7 @@ public class ParseCardTest {
         File file = new File(path);
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
-        CardParser cardParser = new CardParser("cards.txt");
+        CardParser cardParser = new CardParser(Config.FILE_PATH_CARDS_TXT);
         HashMap<Integer, Card> map = cardParser.getCardMap();
 
         for (int i = 1; i <= map.size(); i++) {
@@ -60,5 +63,23 @@ public class ParseCardTest {
             }
         }
         bw.close();
+    }
+
+    private void generateNoPokemonDeckFile() {
+        String path = "src/main/resources/deck_no_pokemon.txt";
+        File file = new File(path);
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+            int i = 0;
+            // card index 25 refer to an energy card
+            while (i++ < 60) {
+                bw.write("25" + '\n');
+            }
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
