@@ -1,5 +1,6 @@
 package ui;
 
+import card.PokemonCard;
 import game.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,8 +132,10 @@ public class PlayerView extends BorderPane {
                 //registeredListeners.forEach(listener->listener.onActiveCardClicked(player, player.getActivePokemon()));
             }));
             registeredListeners.forEach(listner->cardView.registerListener(listner));
+
+            PokemonCard pokemonCard = (PokemonCard)player.getActivePokemon(); 
             
-            Button retreatButton = new Button("Retreat");
+            Button retreatButton = new Button("Retreat " + pokemonCard.getRetreatEnergyCost().toCondensedString());
             retreatButton.setOnAction(event -> {
                     registeredListeners.forEach(listener -> listener.onRetreatButtonClicked(player));
             });

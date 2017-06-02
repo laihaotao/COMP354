@@ -251,6 +251,10 @@ public class GameBoard {
         return players[0];
     }
     public void onRetreatButtonClicked(Player player){
-
+        if(player.getActivePokemon() != null){
+            Card card = player.getActivePokemon();
+            player.setActivePokemon(null);
+            player.getBench().add(card);
+        }
     }
 }

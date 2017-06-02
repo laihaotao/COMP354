@@ -107,5 +107,6 @@ public class BoardView extends BorderPane implements PlayerViewListener{
     @Override
     public void onRetreatButtonClicked(Player player){
         gameBoard.onRetreatButtonClicked(player);
+        refreshView();
     }
 }
