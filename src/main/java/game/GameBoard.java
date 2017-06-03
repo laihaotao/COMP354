@@ -6,6 +6,8 @@ import card.EnergyCard;
 import card.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ui.GameOutcomePopup;
+
 import java.util.*;
 
 /**
@@ -165,6 +167,9 @@ public class GameBoard {
 
     public void onCardDead(Player owner){
         getOtherPlayer(owner).choseRewardCard();
+        if(getOtherPlayer(owner).getPrizes().size() == 0){
+            GameOutcomePopup.display("Player", true);
+        }
     }
 
     public void onEndTurnButtonClicked(){
