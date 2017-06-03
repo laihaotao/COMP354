@@ -1,5 +1,6 @@
 package entry;
 
+import entry.Config;
 import game.Ai_Player;
 import game.GameBoard;
 import game.Player;
@@ -13,10 +14,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +29,7 @@ import ui.StartPane;
 
 import parser.cards.CardParser;
 import parser.cards.DeckParser;
+import util.ResourceReader;
 
 
 /**
@@ -134,7 +136,7 @@ public class GameApp extends Application {
     }
 
     private ObservableList<String> getOptionList() {
-        File[] files = getDirectoryFiles();
+        ArrayList<File> files = getDirectoryFiles();
         ObservableList<String> options = FXCollections.observableArrayList();
         for (File f : files) {
             options.add(f.getName());
@@ -142,16 +144,30 @@ public class GameApp extends Application {
         return options;
     }
 
-    private File[] getDirectoryFiles() {
-        String resRoot = getClass().getResource("/").getPath();
-        return getFile(resRoot);
+    private ArrayList<File> getDirectoryFiles() {
+        InputStream is = ResourceReader.readFile("deck_description.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+        ArrayList<File> list = new ArrayList<>();
+        String line;
+
+        try {
+            while ((line = br.readLine()) != null) {
+                list.add(new File(line));
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
-    private static File[] getFile(String path) {
-        return new File(path).listFiles(pathname -> {
-            // return all file whose name contains "deck"
-            return pathname.getName().contains("deck");
-        });
-    }
+//    private File[] getFile(String path) {
+//        return new File(path).listFiles(pathname -> {
+//            // return all file whose name contains "deck"
+//            logger.debug("getFile: " + pathname.getName());
+//            return pathname.getName().contains("deck");
+//        });
+//    }
 
 }

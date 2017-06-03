@@ -1,14 +1,15 @@
 package card;
 
 import entry.Config;
-import entry.GameApp;
 import org.junit.Test;
 import parser.cards.CardParser;
-import parser.cards.DeckParser;
 import parser.cards.EnergyCost;
 import util.TestResultHelper;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
