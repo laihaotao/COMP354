@@ -1,6 +1,6 @@
 package entry;
 
-import entry.Config;
+import card.Card;
 import game.Ai_Player;
 import game.GameBoard;
 import game.Player;
@@ -13,23 +13,17 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
-import java.io.*;
-import java.util.*;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import card.Card;
-
-import ui.BoardView;
-import ui.StartPane;
-
 import parser.cards.CardParser;
 import parser.cards.DeckParser;
+import ui.BoardView;
+import ui.StartPane;
 import util.ResourceReader;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

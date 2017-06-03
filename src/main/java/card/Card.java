@@ -1,5 +1,5 @@
 /*
- * description:  The abstract class of the Card
+ * description:  The class of the Card
  * author(s):    Eric(Haotao) Lai
  * reviewer(s):
  * date:         2017-05-17

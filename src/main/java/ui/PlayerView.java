@@ -1,9 +1,19 @@
+/*
+ * description:  Class used to display info about a player
+ *               including current deck, hand, bench
+ * author(s):    frede
+ * reviewer(s):
+ * date:         2017-05-17
+ */
+
 package ui;
 
 import card.PokemonCard;
 import game.Player;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -13,21 +23,18 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import ui.events.PlayerViewListener;
 
-/**
- * Class used to display info about a player
- * including current deck, hand, bench, ...
- */
 public class PlayerView extends BorderPane {
 
     private Player player;
-    
+
     //List that constains player hand cards
     private HBox handCards;
 
     //List that contains player bench cards
     private HBox benchCards;
 
-    //Pane that constains the active card. This is not an HBox since their can only be one active pokemon card
+    //Pane that constains the active card. This is not an HBox since their can only be one active
+    // pokemon card
     private HBox activeCard;
 
     private Label deck;
@@ -40,9 +47,9 @@ public class PlayerView extends BorderPane {
      * List of registered listeners
      */
     private List<PlayerViewListener> registeredListeners = new ArrayList<PlayerViewListener>();
-    
-    public PlayerView(Player player, boolean directionUp){
-        
+
+    public PlayerView(Player player, boolean directionUp) {
+
         this.player = player;
 
         //VBox that constians the hand, bench and active pokemon
@@ -51,19 +58,18 @@ public class PlayerView extends BorderPane {
 
         handCards = new HBox();
         handCards.getStyleClass().add("Hand");
-        
+
         ScrollPane handScroll = new ScrollPane(handCards);
-        
-        
-        
+
+
         benchCards = new HBox();
         benchCards.getStyleClass().add("Bench");
         activeCard = new HBox();
 
         //Add them in "reverse" order for them to display from bottom to top
-        if(directionUp) {
+        if (directionUp) {
             centerCardArea.getChildren().addAll(activeCard, benchCards, handScroll);
-        }else{
+        } else {
             centerCardArea.getChildren().addAll(handScroll, benchCards, activeCard);
         }
         deck = new Label("");
@@ -78,7 +84,7 @@ public class PlayerView extends BorderPane {
         refreshView();
     }
 
-    public void refreshView(){
+    public void refreshView() {
 
         deck.setText(String.valueOf(player.getDeck().size()));
 
@@ -86,17 +92,18 @@ public class PlayerView extends BorderPane {
         handCards.getChildren().clear();
 
         Label handLabel = new Label("Hand");
-        handLabel.setOnMouseClicked(event->registeredListeners.forEach(listener->listener.onHandCardClicked(player, null)));
+        handLabel.setOnMouseClicked(event -> registeredListeners.forEach(listener -> listener
+                .onHandCardClicked(player, null)));
 
         handCards.getChildren().add(handLabel);
 
         //For now, just add 5 cardViews to make sure it displays
 
-        player.getHand().forEach((card)->{
+        player.getHand().forEach((card) -> {
             CardView cardView = new CardView(player, card);
 
             cardView.setOnMouseClicked((event -> {
-                registeredListeners.forEach(listener->listener.onHandCardClicked(player, card));
+                registeredListeners.forEach(listener -> listener.onHandCardClicked(player, card));
             }));
 
             handCards.getChildren().add(cardView);
@@ -107,15 +114,16 @@ public class PlayerView extends BorderPane {
         benchCards.getChildren().clear();
 
         Label benchLabel = new Label("Bench");
-        benchLabel.setOnMouseClicked(event -> registeredListeners.forEach(listener->listener.onBenchCardClicked(player, null)));
+        benchLabel.setOnMouseClicked(event -> registeredListeners.forEach(listener -> listener
+                .onBenchCardClicked(player, null)));
 
         benchCards.getChildren().add(benchLabel);
 
-        player.getBench().forEach((card)->{
+        player.getBench().forEach((card) -> {
             CardView cardView = new CardView(player, card);
 
             cardView.setOnMouseClicked((event -> {
-                registeredListeners.forEach(listener->listener.onBenchCardClicked(player, card));
+                registeredListeners.forEach(listener -> listener.onBenchCardClicked(player, card));
             }));
 
             benchCards.getChildren().add(cardView);
@@ -126,40 +134,44 @@ public class PlayerView extends BorderPane {
         activeCard.getChildren().clear();
 
         Label activeLabel = new Label("Active");
-        activeLabel.setOnMouseClicked(event->registeredListeners.forEach(listener->listener.onActiveCardClicked(player, null)));
+        activeLabel.setOnMouseClicked(event -> registeredListeners.forEach(listener -> listener
+                .onActiveCardClicked(player, null)));
 
         activeCard.getChildren().add(activeLabel);
 
-        if(player.getActivePokemon() != null){
+        if (player.getActivePokemon() != null) {
 
             CardView cardView = new CardView(player, player.getActivePokemon());
 
             cardView.setOnMouseClicked((event -> {
-                //registeredListeners.forEach(listener->listener.onActiveCardClicked(player, player.getActivePokemon()));
+                //registeredListeners.forEach(listener->listener.onActiveCardClicked(player,
+                // player.getActivePokemon()));
             }));
-            registeredListeners.forEach(listner->cardView.registerListener(listner));
+            registeredListeners.forEach(listner -> cardView.registerListener(listner));
 
-            PokemonCard pokemonCard = (PokemonCard)player.getActivePokemon(); 
-            
-            Button retreatButton = new Button("Retreat " + pokemonCard.getRetreatEnergyCost().toCondensedString());
+            PokemonCard pokemonCard = (PokemonCard) player.getActivePokemon();
+
+            Button retreatButton = new Button("Retreat " + pokemonCard.getRetreatEnergyCost()
+                    .toCondensedString());
             retreatButton.setOnAction(event -> {
-                    registeredListeners.forEach(listener -> listener.onRetreatButtonClicked(player));
+                registeredListeners.forEach(listener -> listener.onRetreatButtonClicked(player));
             });
-            
+
             activeCard.getChildren().addAll(retreatButton, cardView);
         }
 
         pileBox.getChildren().clear();
         pileBox.getChildren().add(new Label("Deck: "));
         pileBox.getChildren().add(deck);
-        pileBox.getChildren().add(new Label("Discard("+player.getDiscardPile().size()+"): "));
-        if(player.getDiscardPile().size() > 0) {
-            pileBox.getChildren().add(new CardView(player, player.getDiscardPile().get(player.getDiscardPile().size() - 1)));
+        pileBox.getChildren().add(new Label("Discard(" + player.getDiscardPile().size() + "): "));
+        if (player.getDiscardPile().size() > 0) {
+            pileBox.getChildren().add(new CardView(player, player.getDiscardPile().get(player
+                    .getDiscardPile().size() - 1)));
         }
 
     }
-    
-    public void registerListener(PlayerViewListener listener){
+
+    public void registerListener(PlayerViewListener listener) {
         registeredListeners.add(listener);
     }
 

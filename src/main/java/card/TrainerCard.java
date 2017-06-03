@@ -1,5 +1,5 @@
 /*
- * description:  The abstract class of trainer card
+ * description:  The class of trainer card
  * author(s):    Eric(Haotao) Lai
  * reviewer(s):
  * date:         2017-05-17

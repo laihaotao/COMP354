@@ -1,35 +1,24 @@
+/*
+ * description:  The class of player
+ * author(s):    frede
+ * reviewer(s):  kawsara
+ * date:         2017-05-15
+ */
+
 package game;
 
 
 import card.Card;
 import card.PokemonCard;
-
-import java.util.*;
-
-//import javax.sound.midi.SysexMessage;
-
-//import Card.CardType;
-/**
- * Created by frede on 2017-05-15.
- * modified by kawsara 2017-05-16
- *in progress
- */
-
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.Normalizer;
-
 import ui.selections.RewardSelector;
 
-/**
- * Created by frede on 2017-05-15.
- */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
 public class Player {
 
-    //function
-    //private  ArrayList<Card> listOfAllCards;
     protected List<Card> deck;// = new Card[60];
     protected List<Card> prizes = new ArrayList<>();//= new Card[6];
     protected List<Card> hand = new ArrayList<>();
@@ -278,7 +267,7 @@ public class Player {
         }
     }
 
-    public List<Card> getDiscardPile(){
+    public List<Card> getDiscardPile() {
         return discardPile;
     }
 }

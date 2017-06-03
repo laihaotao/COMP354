@@ -1,5 +1,5 @@
 /*
- * description:  The abstract class of pokemon card
+ * description:  The class of pokemon card
  * author(s):    Eric(Haotao) Lai
  * reviewer(s):
  * date:         2017-05-17

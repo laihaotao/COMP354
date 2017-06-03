@@ -1,8 +1,12 @@
+/*
+ * description:  The global constant variable class
+ * author(s):    Eric(Haotao) Lai
+ * reviewer(s):
+ * date:         2017-06-02
+ */
+
 package entry;
 
-/**
- * Created by ERIC_LAI on 2017-06-02.
- */
 public class Config {
 
 

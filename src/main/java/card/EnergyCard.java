@@ -1,5 +1,5 @@
 /*
- * description:  The abstract class of energy card
+ * description:  The class of energy card
  * author(s):    Eric(Haotao) Lai
  * reviewer(s):
  * date:         2017-05-17

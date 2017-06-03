@@ -1,29 +1,22 @@
-package game;
-
 /*
-  Created by kawsa on 5/20/2017.
+ * description:  The class AI player
+ * author(s):    frede
+ * reviewer(s):  kawsara
+ * date:         2017-05-20
  */
+
+package game;
 
 import card.Card;
 import card.EnergyCard;
 import card.PokemonCard;
 
+import java.util.List;
 
-import java.util.*;
-
-//import javax.sound.midi.SysexMessage;
-
-//import Card.CardType;
-/**
- * Created by frede on 2017-05-15.
- * modified by kawsara 2017-05-16
- *in progress
- */
-public class Ai_Player  extends  Player{
+public class Ai_Player extends Player {
 
 
-    public Ai_Player(List<Card> playerDeck)
-    {
+    public Ai_Player(List<Card> playerDeck) {
         super(playerDeck);
 
     }
@@ -35,80 +28,79 @@ public class Ai_Player  extends  Player{
      * this is done only at the begining
      */
     @Override
-    public void chooseActivePokemon()
-    {
+    public void chooseActivePokemon() {
 
-        if (pokemonCards.size() >0)
-        {
-            int pokNum ;
-            pokNum  = rand.nextInt(pokemonCards.size());
+        if (pokemonCards.size() > 0) {
+            int pokNum;
+            pokNum = rand.nextInt(pokemonCards.size());
 
-            for (int i=0; i<bench.size();i++) {
-                if (bench.get(i) instanceof PokemonCard ) {
-                    activePokemon =(PokemonCard) bench.get(i);
+            for (int i = 0; i < bench.size(); i++) {
+                if (bench.get(i) instanceof PokemonCard) {
+                    activePokemon = (PokemonCard) bench.get(i);
                     bench.remove(i);
                     break;
 
                 }
             }
-        }
-        else
+        } else
             System.out.println(" you dont have pokemon in hand");
 
 
     }
+
     @Override
-    public void putCardOnBench()
-    {
+    public void putCardOnBench() {
         //printCardInHand();
-        if (hand.size() >0)
-        {
+        if (hand.size() > 0) {
             //System.out.println("chose which card you want to add t your bench");
-            int pokNum ;
-            pokNum  = rand.nextInt(hand.size());
-            if(bench.size()<5)
-                if(hand.get(pokNum) instanceof PokemonCard) {
+            int pokNum;
+            pokNum = rand.nextInt(hand.size());
+            if (bench.size() < 5)
+                if (hand.get(pokNum) instanceof PokemonCard) {
                     bench.add(hand.remove(pokNum));
-                }else{
+                } else {
                     boolean hasPokemon = false;
                     for (Card card : hand) {
-                        if(card instanceof PokemonCard){
+                        if (card instanceof PokemonCard) {
                             hasPokemon = true;
                         }
                     }
-                    if(hasPokemon) {
+                    if (hasPokemon) {
                         putCardOnBench();
                     }
                 }
-           // else
-               // System.out.println(" bench is full");
+            // else
+            // System.out.println(" bench is full");
 
         }
 
     }
 
-    public void attachEnergyCardToActivePokemon( ){
-        for(Card c:hand){
-            if(c instanceof EnergyCard ){
+    public void attachEnergyCardToActivePokemon() {
+        for (Card c : hand) {
+            if (c instanceof EnergyCard) {
                 //activePokemon.setEnergyAttached((PokemonCard)c);
-                activePokemon.getEnergyAttached().addEnergy(((EnergyCard) c).getEnergyType().toString(),1);
+                activePokemon.getEnergyAttached().addEnergy(((EnergyCard) c).getEnergyType()
+                        .toString(), 1);
                 getHand().remove(c);
                 break;
             }
 
         }
     }
+
     @Override
-    public void attachEnergyCard( ){
+    public void attachEnergyCard() {
 
 
-        for(Card card: bench){
-            if(card instanceof PokemonCard ){
+        for (Card card : bench) {
+            if (card instanceof PokemonCard) {
 
-                for(Card c:hand){
-                    if(c instanceof EnergyCard ){
+                for (Card c : hand) {
+                    if (c instanceof EnergyCard) {
                         //activePokemon.setEnergyAttached((PokemonCard)c);
-                        ((PokemonCard) card).getEnergyAttached().addEnergy(((EnergyCard) c).getEnergyType().toString(),1);
+                        ((PokemonCard) card).getEnergyAttached().addEnergy(((EnergyCard) c)
+                                .getEnergyType().toString(), 1);
                         getHand().remove(c);
                         break;
                     }
@@ -125,15 +117,13 @@ public class Ai_Player  extends  Player{
      * done when we want to change our active pokemon to another
      */
     @Override
-    public void swapAcTivePokemon()
-    {
+    public void swapAcTivePokemon() {
 
-        if (pokemonCards.size() >0)
-        {
-            int pokNum ;
-            pokNum  = rand.nextInt(pokemonCards.size());
+        if (pokemonCards.size() > 0) {
+            int pokNum;
+            pokNum = rand.nextInt(pokemonCards.size());
             bench.add(activePokemon);
-            for (int i=0; i<bench.size();i++) {
+            for (int i = 0; i < bench.size(); i++) {
                 if (bench.get(i) instanceof PokemonCard) {
                     activePokemon = (PokemonCard) bench.get(i);
                     bench.remove(i);
@@ -141,13 +131,12 @@ public class Ai_Player  extends  Player{
 
                 }
             }
-        }
-        else
+        } else {
             System.out.println(" you dont have pokemon in hand");
+        }
     }
 
-    public void attackOpponent(Card opponent)
-    {
+    public void attackOpponent(Card opponent) {
 
     }
 

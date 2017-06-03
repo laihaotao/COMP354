@@ -1,3 +1,10 @@
+/*
+ * description:  Used to display info about the board game
+ * author(s):    frede
+ * reviewer(s):
+ * date:         2017-05-17
+ */
+
 package ui;
 
 import card.Card;
@@ -10,13 +17,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ui.events.PlayerViewListener;
 
-/**
- * Used to display info about the boardgame
- */
-public class BoardView extends BorderPane implements PlayerViewListener{
+public class BoardView extends BorderPane implements PlayerViewListener {
 
     final static Logger logger = LogManager.getLogger(BoardView.class.getName());
-    
+
     private PlayerView[] playerViews;
 
     private GameBoard gameBoard;
@@ -26,7 +30,7 @@ public class BoardView extends BorderPane implements PlayerViewListener{
     public BoardView(GameBoard gameBoard) {
 
         this.gameBoard = gameBoard;
-        
+
         //NOTE: This will crash if the resource folder isn't set up correctly
         this.getStylesheets().add("style.css");
 
@@ -41,7 +45,7 @@ public class BoardView extends BorderPane implements PlayerViewListener{
         for (PlayerView playerView : playerViews) {
             playerView.registerListener(this);
         }
-        
+
         //create end game button
         Button endTurnBtn = new Button("End Turn");
         endTurnBtn.setOnAction((e) -> {
@@ -67,21 +71,20 @@ public class BoardView extends BorderPane implements PlayerViewListener{
             playerView.refreshView();
         }
         /**
-        //We need to redo rotate every yupdate in case
-        //player 2's pane changed dimensions
-        PlayerView p2View = playerViews[1];
-        ObservableList<Transform> p2Transforms = p2View.getTransforms();
-        p2Transforms.clear();
-        //The rotate should have the origin at the center of the player view
-        p2Transforms.add(new Rotate(180, p2View.getWidth() / 2, p2View.getHeight() / 2));
+         //We need to redo rotate every yupdate in case
+         //player 2's pane changed dimensions
+         PlayerView p2View = playerViews[1];
+         ObservableList<Transform> p2Transforms = p2View.getTransforms();
+         p2Transforms.clear();
+         //The rotate should have the origin at the center of the player view
+         p2Transforms.add(new Rotate(180, p2View.getWidth() / 2, p2View.getHeight() / 2));
          **/
 
     }
 
 
-
     @Override
-    public void onHandCardClicked(Player player, Card card) {        
+    public void onHandCardClicked(Player player, Card card) {
         gameBoard.onHandCardClicked(player, card);
         refreshView();
     }
@@ -103,9 +106,9 @@ public class BoardView extends BorderPane implements PlayerViewListener{
         gameBoard.onActiveAbilityClicked(player, card, ability);
         refreshView();
     }
-    
+
     @Override
-    public void onRetreatButtonClicked(Player player){
+    public void onRetreatButtonClicked(Player player) {
         gameBoard.onRetreatButtonClicked(player);
         refreshView();
     }
