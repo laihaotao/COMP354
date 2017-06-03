@@ -46,13 +46,12 @@ public class BoardView extends BorderPane implements PlayerViewListener {
             playerView.registerListener(this);
         }
 
-        //create end game button
+        // create end game button
         Button endTurnBtn = new Button("End Turn");
         endTurnBtn.setOnAction((e) -> {
             gameBoard.onEndTurnButtonClicked();
             refreshView();
         });
-
 
         //Put end game button on the center, with players on top / bottom
         this.setCenter(endTurnBtn);
@@ -63,7 +62,7 @@ public class BoardView extends BorderPane implements PlayerViewListener {
     }
 
     /**
-     * Updates the board view and player views to display new info
+     * Updates the board view and player views to displayGameResult new info
      */
     public void refreshView() {
 
@@ -111,5 +110,10 @@ public class BoardView extends BorderPane implements PlayerViewListener {
     public void onRetreatButtonClicked(Player player) {
         gameBoard.onRetreatButtonClicked(player);
         refreshView();
+    }
+
+    @Override
+    public void onDiscardPileClicked(Player player) {
+        gameBoard.onDiscardPileClicked();
     }
 }

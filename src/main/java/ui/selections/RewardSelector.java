@@ -41,10 +41,7 @@ public class RewardSelector {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.isPresent()) {
-            return possibleResults.get(result.get());
-        }
+        return result.map(possibleResults::get).orElse(null);
 
-        return null;
     }
 }

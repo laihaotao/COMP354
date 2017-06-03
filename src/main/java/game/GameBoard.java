@@ -13,14 +13,14 @@ import card.EnergyCard;
 import card.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ui.GameOutcomePopup;
+import ui.popup.GamePopup;
 
 import java.util.*;
 
 public class GameBoard {
 
     enum CardLocation {
-        DECK, HAND, BENCH, ACTIVE
+        DECK, HAND, BENCH, ACTIVE, DISCARD,
     }
 
     private final static Logger logger = LogManager.getLogger(GameBoard.class.getName());
@@ -120,8 +120,16 @@ public class GameBoard {
                 setSelectedCard(null, null);
             }
 
-            return;
         }
+    }
+
+    public void onDiscardPileClicked() {
+        Player player = getCurrentTurnPlayer();
+        int playerNum = (player == players[0]) ? 1 : 2;
+        logger.debug("Player" + playerNum + " has clicked the discard pile");
+
+        List<Card> pile = player.getDiscardPile();
+        GamePopup.displayDiscardPile(player, pile);
     }
 
     private boolean removeSelected() {
@@ -181,7 +189,7 @@ public class GameBoard {
     private void onCardDead(Player owner) {
         getOtherPlayer(owner).choseRewardCard();
         if (getOtherPlayer(owner).getPrizes().size() == 0) {
-            GameOutcomePopup.display("Player", true);
+            GamePopup.displayGameResult(getOtherPlayer(owner).getName(), true);
         }
     }
 

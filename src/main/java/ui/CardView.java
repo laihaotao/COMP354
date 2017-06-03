@@ -49,7 +49,7 @@ public class CardView extends BorderPane {
         topInfo = new HBox();
         topHealthInfo = new VBox();
 
-        //TODO display actual card info
+        //TODO displayGameResult actual card info
 
 
         topInfo.getChildren().addAll(new Label(card.getCardName()), topHealthInfo);

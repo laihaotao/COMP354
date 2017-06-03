@@ -10,18 +10,16 @@ package ui;
 
 import card.PokemonCard;
 import game.Player;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import ui.events.PlayerViewListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerView extends BorderPane {
 
@@ -43,10 +41,12 @@ public class PlayerView extends BorderPane {
 
     private VBox pileBox;
 
+    private Button discardPileBtn;
+
     /**
      * List of registered listeners
      */
-    private List<PlayerViewListener> registeredListeners = new ArrayList<PlayerViewListener>();
+    private List<PlayerViewListener> registeredListeners = new ArrayList<>();
 
     public PlayerView(Player player, boolean directionUp) {
 
@@ -61,12 +61,11 @@ public class PlayerView extends BorderPane {
 
         ScrollPane handScroll = new ScrollPane(handCards);
 
-
         benchCards = new HBox();
         benchCards.getStyleClass().add("Bench");
         activeCard = new HBox();
 
-        //Add them in "reverse" order for them to display from bottom to top
+        //Add them in "reverse" order for them to displayGameResult from bottom to top
         if (directionUp) {
             centerCardArea.getChildren().addAll(activeCard, benchCards, handScroll);
         } else {
@@ -76,8 +75,16 @@ public class PlayerView extends BorderPane {
         deck.getStyleClass().add("Deck");
 
         pileBox = new VBox();
-
         pileBox.getChildren().add(deck);
+
+        // create check the button for show the whole pile
+        discardPileBtn = new Button("Discard Pile("
+                + player.getDiscardPile().size() + "):");
+        discardPileBtn.setOnMouseClicked((event -> {
+            registeredListeners.forEach(listener -> listener
+                    .onDiscardPileClicked(player));
+        }));
+        discardPileBtn.setVisible(true);
 
         this.setCenter(centerCardArea);
         this.setRight(pileBox);
@@ -147,7 +154,7 @@ public class PlayerView extends BorderPane {
                 //registeredListeners.forEach(listener->listener.onActiveCardClicked(player,
                 // player.getActivePokemon()));
             }));
-            registeredListeners.forEach(listner -> cardView.registerListener(listner));
+            registeredListeners.forEach(listener -> cardView.registerListener(listener));
 
             PokemonCard pokemonCard = (PokemonCard) player.getActivePokemon();
 
@@ -163,10 +170,13 @@ public class PlayerView extends BorderPane {
         pileBox.getChildren().clear();
         pileBox.getChildren().add(new Label("Deck: "));
         pileBox.getChildren().add(deck);
-        pileBox.getChildren().add(new Label("Discard(" + player.getDiscardPile().size() + "): "));
+        pileBox.getChildren().add(discardPileBtn);
+
+        // update the discard view
         if (player.getDiscardPile().size() > 0) {
             pileBox.getChildren().add(new CardView(player, player.getDiscardPile().get(player
                     .getDiscardPile().size() - 1)));
+
         }
 
     }

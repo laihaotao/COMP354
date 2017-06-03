@@ -126,7 +126,13 @@ public class GameApp extends Application {
         List<Card> player1Deck = deck1Parser.getDeck();
         List<Card> player2Deck = deck2Parser.getDeck();
 
-        return new GameBoard(new Player(player1Deck), new Ai_Player(player2Deck));
+        Player player1 = new Player(player1Deck);
+        Player player2 = new Player(player2Deck);
+
+        player1.setName("human player");
+        player2.setName("AI player");
+
+        return new GameBoard(player1, player2);
     }
 
     private ObservableList<String> getOptionList() {

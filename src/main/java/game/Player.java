@@ -30,7 +30,7 @@ public class Player {
     private List<Card> trainerCards = new ArrayList<>();
     private Scanner kb = new Scanner(System.in);
     Random rand = new Random();
-
+    private String name;
 
     public Player(List<Card> playerDeck) {
         //Each player gets 7 cards drawn randomly at the beginning of the game
@@ -269,5 +269,13 @@ public class Player {
 
     public List<Card> getDiscardPile() {
         return discardPile;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
