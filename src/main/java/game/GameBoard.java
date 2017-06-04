@@ -1,7 +1,7 @@
 /*
  * description:  GameBoard is the game controller
  * author(s):    frede
- * reviewer(s):
+ * reviewer(s):  Eric
  * date:         2017-05-15
  */
 
@@ -13,6 +13,7 @@ import card.EnergyCard;
 import card.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ui.events.DiscardPileOnClickListener;
 import ui.popup.GamePopup;
 
 import java.util.*;
@@ -129,7 +130,12 @@ public class GameBoard {
         logger.debug("Player" + playerNum + " has clicked the discard pile");
 
         List<Card> pile = player.getDiscardPile();
-        GamePopup.displayDiscardPile(player, pile);
+        GamePopup.displayDiscardPile(player, pile, new DiscardPileOnClickListener() {
+            @Override
+            public void onClickDiscardCard(Card card) {
+                logger.debug(player + " click the card in discardpile: " + card.getCardName());
+            }
+        });
     }
 
     private boolean removeSelected() {

@@ -37,8 +37,11 @@ public class CardView extends BorderPane {
 
     private List<PlayerViewListener> registeredListeners;
 
+    private Card card;
+
     //TODO A Card instance should be passed to this once it is properly implemented
     public CardView(Player player, Card card) {
+        this.card = card;
         this.player = player;
         this.getStyleClass().add("Card");
 
@@ -98,5 +101,10 @@ public class CardView extends BorderPane {
 
     public void registerListener(PlayerViewListener listener) {
         registeredListeners.add(listener);
+    }
+
+    @Override
+    public String toString() {
+        return card.getCardName() +'\n' + card.getType();
     }
 }
