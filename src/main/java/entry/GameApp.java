@@ -127,7 +127,7 @@ public class GameApp extends Application {
         List<Card> player2Deck = deck2Parser.getDeck();
 
         Player player1 = new Player(player1Deck);
-        Player player2 = new Player(player2Deck);
+        Ai_Player player2 = new Ai_Player(player2Deck);
 
         player1.setName("human player");
         player2.setName("AI player");
