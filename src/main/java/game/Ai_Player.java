@@ -82,6 +82,7 @@ public class Ai_Player extends Player {
                 //activePokemon.setEnergyAttached((PokemonCard)c);
                 activePokemon.getEnergyAttached().addEnergy(((EnergyCard) c).getEnergyType()
                         .toString(), 1);
+                discardPile.add(c);
                 getHand().remove(c);
                 break;
             }
@@ -92,25 +93,30 @@ public class Ai_Player extends Player {
     @Override
     public void attachEnergyCard() {
 
+        int pokNum = rand.nextInt(bench.size());
 
-        for (Card card : bench) {
-            if (card instanceof PokemonCard) {
-
-                for (Card c : hand) {
-                    if (c instanceof EnergyCard) {
-                        //activePokemon.setEnergyAttached((PokemonCard)c);
-                        ((PokemonCard) card).getEnergyAttached().addEnergy(((EnergyCard) c)
-                                .getEnergyType().toString(), 1);
-                        getHand().remove(c);
-                        break;
-                    }
-
-                }
+        for (Card c : hand) {
+            if (c instanceof EnergyCard) {
+                //activePokemon.setEnergyAttached((PokemonCard)c);
+                ((PokemonCard)bench.get(pokNum)).getEnergyAttached().addEnergy(((EnergyCard) c)
+                        .getEnergyType().toString(), 1);
+                discardPile.add(c);
+                getHand().remove(c);
                 break;
             }
+
         }
 
 
+    }
+    @Override
+    public void choseRewardCard() {
+        int pokNum = rand.nextInt(prizes.size());
+        Card selectedPrize = prizes.get(pokNum);
+        if (selectedPrize != null) {
+            prizes.remove(selectedPrize);
+            hand.add(selectedPrize);
+        }
     }
 
     /*

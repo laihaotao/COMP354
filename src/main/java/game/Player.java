@@ -24,7 +24,7 @@ public class Player {
     protected List<Card> hand = new ArrayList<>();
     protected List<Card> bench = new ArrayList<>();//= new Card[5];;
     protected List<Card> discardPile = new ArrayList<>();
-    protected PokemonCard activePokemon;
+    protected PokemonCard activePokemon = null;
     protected List<PokemonCard> pokemonCards = new ArrayList<>();
     protected List<Card> energyCards = new ArrayList<>();
     private List<Card> trainerCards = new ArrayList<>();
@@ -228,6 +228,8 @@ public class Player {
 
 
     }
+
+
 
     public void attackOpponent(Card opponent) { }
 

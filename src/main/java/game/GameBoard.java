@@ -194,6 +194,9 @@ public class GameBoard {
 
     private void onCardDead(Player owner) {
         getOtherPlayer(owner).choseRewardCard();
+        if(currentTurn == 0){
+            players[1].chooseActivePokemon();
+        }
         if (getOtherPlayer(owner).getPrizes().size() == 0) {
             GamePopup.displayGameResult(getOtherPlayer(owner).getName(), true);
         }
@@ -231,10 +234,18 @@ public class GameBoard {
         for (int i = 0; i < (5 - cardTOAddToBench); i++) {
             players[1].putCardOnBench();
         }
+        int pokNum = rand.nextInt(2);
+        if(pokNum == 0 & players[1].activePokemon != null){
+            players[1].attachEnergyCardToActivePokemon();
+        }
 
-        if (players[1].activePokemon != null)
+        else
             players[1].attachEnergyCard();
 
+        if(players[1].activePokemon != null){
+            pokNum = rand.nextInt(players[1].activePokemon.getAbilities().size());
+            onActiveAbilityClicked(players[1],players[1].activePokemon,players[1].activePokemon.getAbility(pokNum) );
+        }
         //players[1].putCardOnBench();
         //players[1].activePokemon  this is suppose to attack
         nextTurn();
