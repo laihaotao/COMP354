@@ -7,7 +7,6 @@ import game.Player;
 import parser.commons.TargetProperty;
 import parser.commons.TokenProperty;
 import parser.tokenizer.Token;
-import ui.selections.TargetSelector;
 
 /**
  * Used to apply damage on a target
