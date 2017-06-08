@@ -102,6 +102,7 @@ public class CardParser {
         	card = new EnergyCard(cardLineSeperator.getName());
         }
         
+        cardLineSeperator.resetVariables();
         
         return card;
     }
