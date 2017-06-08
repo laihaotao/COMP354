@@ -10,12 +10,14 @@ package game;
 
 import card.Card;
 import card.PokemonCard;
+import parser.commons.TargetProperty;
 import ui.selections.RewardSelector;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import ui.selections.TargetSelector;
 
 public class Player {
 
@@ -279,5 +281,23 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Card getTarget(GameBoard gameBoard, TargetProperty target) {
+        switch(target.target.value){
+            case "choice":{
+                return TargetSelector.getTarget(gameBoard, this, target);
+            }
+
+            case "opponent-active":{
+                return gameBoard.getOtherPlayer(this).getActivePokemon();
+            }
+            
+            default: {
+                return null;
+            }
+        }
+        
+        
     }
 }
