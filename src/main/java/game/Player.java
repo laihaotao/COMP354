@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import ui.selections.TargetSelector;
 
 public class Player {
 
@@ -33,6 +32,8 @@ public class Player {
     private Scanner kb = new Scanner(System.in);
     Random rand = new Random();
     private String name;
+    
+    private game.TargetSelector targetSelector;
 
     public Player(List<Card> playerDeck) {
         //Each player gets 7 cards drawn randomly at the beginning of the game
@@ -44,6 +45,12 @@ public class Player {
         put7CardInHand();
 
         //chooseActivePokemon();
+        
+        createTargetSelector();
+    }
+    
+    public void createTargetSelector(){
+        targetSelector = new game.TargetSelector();
     }
 
     public void put7CardInHand() {
@@ -284,20 +291,6 @@ public class Player {
     }
 
     public Card getTarget(GameBoard gameBoard, TargetProperty target) {
-        switch(target.target.value){
-            case "choice":{
-                return TargetSelector.getTarget(gameBoard, this, target);
-            }
-
-            case "opponent-active":{
-                return gameBoard.getOtherPlayer(this).getActivePokemon();
-            }
-            
-            default: {
-                return null;
-            }
-        }
-        
-        
+        return targetSelector.getCard(gameBoard, this, target);
     }
 }
