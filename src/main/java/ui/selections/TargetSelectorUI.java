@@ -19,7 +19,7 @@ import parser.commons.TargetProperty;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class TargetSelector {
+public class TargetSelectorUI {
 
     public static Card getTarget(GameBoard board, Player callingPlayer, TargetProperty target) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
