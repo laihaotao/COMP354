@@ -45,11 +45,12 @@ public class PokemonCard extends Card {
     }
 
 
-    public PokemonCard(String name, String basic, String pokemonType, int hp, EnergyCost
+    public PokemonCard(String name, String basic, String evolvesFrom, String pokemonType, int hp, EnergyCost
             retreatEnergyCost, List<Ability> abilities) {
 
         this.pokemonStage = basic;
         this.name = name;
+        this.evolvesFrom = evolvesFrom;
         this.pokemonType = pokemonType;
         this.hp = hp;
         this.retreatEnergyCost = retreatEnergyCost;
@@ -243,7 +244,7 @@ public class PokemonCard extends Card {
     }
 
     public PokemonCard copy() {
-        return new PokemonCard(name, getPokemonStage(), getPokemonType(), getHp(), getRetreatEnergyCost(), abilities);
+        return new PokemonCard(name,getEvolvesFrom(), getPokemonStage(), getPokemonType(), getHp(), getRetreatEnergyCost(), abilities);
     }
 
 }

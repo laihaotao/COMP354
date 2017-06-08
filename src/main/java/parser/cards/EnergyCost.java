@@ -7,6 +7,8 @@
 
 package parser.cards;
 
+import java.util.ArrayList;
+
 /**
  * Created by frede on 2017-05-30.
  */
@@ -85,6 +87,26 @@ public class EnergyCost {
         string += "]";
         return string;
     }
+    
+    public static EnergyCost convertAndReturnEnergyCost(ArrayList<String> energyTypeAndAmount) {
+        // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fight-Dragon
+
+        EnergyCost energyCost = new EnergyCost();
+
+        for (int i = 0; i < energyTypeAndAmount.size(); i += 2) {
+
+            String energyType = energyTypeAndAmount.get(i);
+            //energyTypeAndAmount[i] should be the the energyType, energyTypeAndAmount[i+1]
+			// should be the amount
+            int energyAmount = 0;
+            energyAmount = Integer.parseInt(energyTypeAndAmount.get(i + 1));
+            energyCost.addEnergy(energyType, energyAmount);
+
+        }
+
+        return energyCost;
+    }
+    
 
 
 }

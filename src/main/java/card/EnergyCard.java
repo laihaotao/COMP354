@@ -10,12 +10,12 @@ package card;
 
 public class EnergyCard extends Card {
 	 // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fight-Dragon
-    public enum EnergyType {Colorless, Fire, Water, Lightning, Psychic, Grass, Darkness, Metal, Fairy, Fight, Dragon;}
+    public enum EnergyType {COLORLESS, FIRE, WATER, LIGHTNING, PSYCHIC, GRASS, DARKNESS, METAL, FAIRY, FIGHT, DRAGON;}
 
     private EnergyType energyType;
 
     public EnergyCard(String type) {
-        this(Enum.valueOf(EnergyType.class, type));
+    	this(Enum.valueOf(EnergyType.class, type.toUpperCase()));
     }
 
     public EnergyCard(EnergyType type){

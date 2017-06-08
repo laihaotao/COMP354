@@ -35,6 +35,8 @@ public class ParseDeckTest {
         ArrayList<Card> deck1 = (ArrayList<Card>) deckParser1.getDeck();
         ArrayList<Card> deck2 = (ArrayList<Card>) deckParser2.getDeck();
 
+        
+        
         System.out.println("------------");
         for (Card card : deck1) {
             if (card instanceof PokemonCard) {
