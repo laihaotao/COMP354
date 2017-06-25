@@ -194,7 +194,7 @@ public class GameBoard {
 
     private void onCardDead(Player owner) {
         getOtherPlayer(owner).choseRewardCard();
-        if(currentTurn == 0){
+        if (currentTurn == 0) {
             players[1].chooseActivePokemon();
         }
         if (getOtherPlayer(owner).getPrizes().size() == 0) {
@@ -203,7 +203,7 @@ public class GameBoard {
     }
 
     public void onEndTurnButtonClicked() {
-        checkWinLoose();
+        checkWinLose();
         nextTurn();
 
         //TODO process AI turn
@@ -235,39 +235,41 @@ public class GameBoard {
             players[1].putCardOnBench();
         }
         int pokNum = rand.nextInt(2);
-        if(pokNum == 0 & players[1].activePokemon != null){
+        if (pokNum == 0 & players[1].activePokemon != null) {
             players[1].attachEnergyCardToActivePokemon();
-        }
-
-        else
+        } else
             players[1].attachEnergyCard();
 
-        if(players[1].activePokemon != null){
+        if (players[1].activePokemon != null) {
             pokNum = rand.nextInt(players[1].activePokemon.getAbilities().size());
-            onActiveAbilityClicked(players[1],players[1].activePokemon,players[1].activePokemon.getAbility(pokNum) );
+            onActiveAbilityClicked(players[1],
+                    players[1].activePokemon, players[1].activePokemon.getAbility(pokNum));
         }
         //players[1].putCardOnBench();
         //players[1].activePokemon  this is suppose to attack
         nextTurn();
     }
 
-    private void checkWinLoose() {
+    private void checkWinLose() {
+        boolean stillHavePokemon = false;
 
-        List<Card> pCards = new ArrayList<>();
-        if (getCurrentTurnPlayer().prizes.size() == 0 || players[((currentTurn + 1) % 2)].deck
-                .size() == 0) {
-            for (Card c : players[((currentTurn + 1) % 2)].getBench())
-                if (c instanceof PokemonCard)//  .getType().equals("POKEMON"))
-                    pCards.add(c);
-            if (pCards.size() == 0) {
-                win();
+        if (getCurrentTurnPlayer().prizes.size() == 0 || getWaittingTurnPlayer().deck.size() == 0) {
+            printWinMsg();
+        }
+
+        for (Card c : getWaittingTurnPlayer().getBench()) {
+            if (c instanceof PokemonCard &&
+                    ((PokemonCard) c).getEvolvesFrom() == null) {
+                stillHavePokemon = true;
+                break;
             }
-
-
+        }
+        if (!stillHavePokemon) {
+            printWinMsg();
         }
     }
 
-    private void win() {
+    private void printWinMsg() {
         System.out.println("player " + currentTurn + "has won the game");
         System.exit(0);
     }
@@ -288,7 +290,7 @@ public class GameBoard {
         return players[currentTurn];
     }
 
-    public Player getOppositeTurnPlayer() {
+    public Player getWaittingTurnPlayer() {
         return players[(currentTurn + 1) % 2];
     }
 
