@@ -80,8 +80,6 @@ public class Player {
             int n = rand.nextInt(deck.size());
             prizes.add(deck.remove(n));
         }
-
-
     }
 
     //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.

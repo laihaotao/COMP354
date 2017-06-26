@@ -34,10 +34,16 @@ public class GameBoard {
     private CardLocation selectedCardLocation = null;
     private Random rand = new Random();
 
+    private boolean[] limitation;
+    private final int ATTACK_LIMT = 0;
+    private final int ENERGY_LIMT = 1;
+    private final int TRAINER_LIMT = 2;
+
     public GameBoard(Player p1, Player p2) {
         players = new Player[2];
         players[0] = p1;
         players[1] = p2;
+        limitation = new boolean[3];
     }
 
     private void setSelectedCard(Card card, CardLocation location) {
@@ -66,14 +72,17 @@ public class GameBoard {
         int playerNum = (player == players[0]) ? 1 : 2;
         logger.debug("Player" + playerNum + " has clicked a card in it's bench");
 
-        if (card != null && player == getCurrentTurnPlayer() && selectedCard != null &&
-                selectedCard instanceof EnergyCard) {
+        // add energy card to the bench card
+        if (!limitation[ENERGY_LIMT]
+                && card != null && player == getCurrentTurnPlayer()
+                && selectedCard != null && selectedCard instanceof EnergyCard) {
             if (card instanceof PokemonCard) {
                 PokemonCard pokemonCard = (PokemonCard) card;
                 EnergyCard energyCard = (EnergyCard) selectedCard;
                 pokemonCard.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
                 player.getHand().remove(energyCard);
                 selectedCard = null;
+                limitation[ENERGY_LIMT] = true;
                 return;
             }
         }
@@ -101,8 +110,9 @@ public class GameBoard {
         int playerNum = (player == players[0]) ? 1 : 2;
         logger.debug("Player" + playerNum + " has clicked the active pokemon");
 
-
-        if (card != null && player == getCurrentTurnPlayer() && selectedCard != null &&
+        // add energy card to activated card
+        if (!limitation[ENERGY_LIMT]
+                && card != null && player == getCurrentTurnPlayer() && selectedCard != null &&
                 selectedCard instanceof EnergyCard) {
             PokemonCard pokemonCard = (PokemonCard) card;
             EnergyCard energyCard = (EnergyCard) selectedCard;
@@ -110,6 +120,8 @@ public class GameBoard {
             player.getDiscardPile().add(energyCard);
             player.getHand().remove(energyCard);
             selectedCard = null;
+            limitation[ENERGY_LIMT] = true;
+
         }
 
         if (player.getActivePokemon() == null && selectedCard != null && selectedCard instanceof
@@ -204,6 +216,7 @@ public class GameBoard {
 
     public void onEndTurnButtonClicked() {
         checkWinLose();
+        clearLimitation();
         nextTurn();
 
         //TODO process AI turn
@@ -221,16 +234,18 @@ public class GameBoard {
         //add card to players hand
         currentPlayer.putCardInHand();
 
-        if (currentTurn == 1)
+        if (currentTurn == 1) {
             aiTurn();
+        }
 
     }
 
     private void aiTurn() {
 
         int cardTOAddToBench = rand.nextInt(5);
-        if (players[1].activePokemon == null)
+        if (players[1].activePokemon == null) {
             players[1].chooseActivePokemon();
+        }
         for (int i = 0; i < (5 - cardTOAddToBench); i++) {
             players[1].putCardOnBench();
         }
@@ -253,11 +268,11 @@ public class GameBoard {
     private void checkWinLose() {
         boolean stillHavePokemon = false;
 
-        if (getCurrentTurnPlayer().prizes.size() == 0 || getWaittingTurnPlayer().deck.size() == 0) {
+        if (getCurrentTurnPlayer().prizes.size() == 0 || getWaitingTurnPlayer().deck.size() == 0) {
             printWinMsg();
         }
 
-        for (Card c : getWaittingTurnPlayer().getBench()) {
+        for (Card c : getWaitingTurnPlayer().getBench()) {
             if (c instanceof PokemonCard &&
                     ((PokemonCard) c).getEvolvesFrom() == null) {
                 stillHavePokemon = true;
@@ -272,6 +287,12 @@ public class GameBoard {
     private void printWinMsg() {
         System.out.println("player " + currentTurn + "has won the game");
         System.exit(0);
+    }
+
+    private void clearLimitation() {
+        for (int i = 0; i < limitation.length; i++) {
+            limitation[i] = false;
+        }
     }
 
     public Player[] getPlayers() {
@@ -290,7 +311,7 @@ public class GameBoard {
         return players[currentTurn];
     }
 
-    public Player getWaittingTurnPlayer() {
+    public Player getWaitingTurnPlayer() {
         return players[(currentTurn + 1) % 2];
     }
 
