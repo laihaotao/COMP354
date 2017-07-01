@@ -34,7 +34,7 @@ public class TargetProperty extends Property {
   }
   
   public String toString(){
-      return "Target: "+Formatting.toSafeString(target) + " " + Formatting.toSafeString(modifier);
+      return "Target: "+Formatting.toSafeString(target) + ":" + Formatting.toSafeString(modifier);
   }
   
 }

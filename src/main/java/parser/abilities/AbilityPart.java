@@ -28,4 +28,6 @@ public abstract class AbilityPart {
    * @param owner The player owner of the ability
    */
   public abstract void use(GameBoard targetBoard, Player owner);
+  
+  public abstract String getDescriptionString();
 }

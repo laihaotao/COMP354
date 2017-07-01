@@ -19,6 +19,20 @@ public class TokenArithmetic extends Token{
   public String toString(){
     return super.toString() + "Arithmetic -> "+ leftValue + " " + type + " " + rightValue;
   }
-  
-  
+
+  @Override
+  public String getDisplayString() {
+    String string = leftValue.getDisplayString();
+    switch(type){
+      case MULTIPLICATION:
+        string += "*";
+        break;
+      default:
+        return " ";
+    }
+    
+    return string + rightValue.getDisplayString();
+  }
+
+
 }

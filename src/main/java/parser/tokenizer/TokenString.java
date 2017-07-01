@@ -16,4 +16,9 @@ public class TokenString extends Token{
     return super.toString() + "String -> "+value;
   }
 
+  @Override
+  public String getDisplayString() {
+    return value;
+  }
+
 }

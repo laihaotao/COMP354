@@ -27,4 +27,9 @@ public class AbilityPartDraw extends AbilityPart{
   public void use(GameBoard targetBoard, Player owner) {
     
   }
+
+  @Override
+  public String getDescriptionString() {
+    return "Draw a card on "+target;
+  }
 }

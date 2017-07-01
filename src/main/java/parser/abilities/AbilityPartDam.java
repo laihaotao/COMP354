@@ -37,4 +37,9 @@ public class AbilityPartDam extends AbilityPart{
     //damage target card
         
   }
+
+  @Override
+  public String getDescriptionString() {
+    return "Damages "+ target + " for "+ammount.getDisplayString();
+  }
 }
