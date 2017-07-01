@@ -49,11 +49,13 @@ public class CardParser {
         int lineNum = 1;
         String line;
 
-      
+        AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
+        AbilityTemplate[] abilities = abilitiesParser.parse();
+        
         while ((line = br.readLine()) != null) {
 
 
-            Card card = createCard(line);
+            Card card = createCard(line, abilities);
 
 
             if (null != card) {
@@ -71,7 +73,7 @@ public class CardParser {
 
     }
 
-    private Card createCard(String line) throws IOException {
+    private Card createCard(String line, AbilityTemplate[] abilities) throws IOException {
     	
     	
     	Card card = null;
@@ -81,7 +83,7 @@ public class CardParser {
         
         
         CardLineSeperator cardLineSeperator = new CardLineSeperator();
-        cardLineSeperator.seperate(line);
+        cardLineSeperator.seperate(line, abilities);
         
         
         if(line.contains(":pokemon:")){

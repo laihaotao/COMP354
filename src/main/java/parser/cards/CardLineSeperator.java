@@ -38,14 +38,9 @@ public class CardLineSeperator {
     }
     
     
-	public void seperate(String line){
+	public void seperate(String line, AbilityTemplate[] abilities){
 		
 		int beginIndex;
-        AbilitiesParser aParser = new AbilitiesParser("abilities.txt");
-        AbilityTemplate[] abilities = aParser.parse();
-
-        
-        
         
 		this.line = line.replaceAll("é", "e");
         this.line = this.line.replaceAll("cat:", "");
