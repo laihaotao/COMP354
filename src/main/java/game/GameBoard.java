@@ -215,7 +215,7 @@ public class GameBoard {
     }
 
     public void onEndTurnButtonClicked() {
-        checkWinLose();
+        //checkWinLose(); //NOTE commented out until method is fixed
         clearLimitation();
         nextTurn();
 
@@ -265,6 +265,7 @@ public class GameBoard {
         nextTurn();
     }
 
+    //TODO this method is broken, exits the game on first turn
     private void checkWinLose() {
         boolean stillHavePokemon = false;
 
