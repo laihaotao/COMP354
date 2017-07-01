@@ -23,6 +23,11 @@ public class AbilityView extends BorderPane {
 
         setLeft(name);
         setCenter(new Label(ability.getEnergyCost().toCondensedString()));
+        StringBuilder descriptionBuilder = new StringBuilder();
+        ability.getTemplate().parts.forEach(part->{
+                descriptionBuilder.append(part.getDescriptionString() + "\n");
+        });
+        setRight(new Label(descriptionBuilder.toString()));
     }
 
 }
