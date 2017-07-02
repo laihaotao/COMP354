@@ -84,7 +84,7 @@ public class GameApp extends Application {
 
         root.add(startBtn, 2, 3);
 
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         primaryStage.setScene(new Scene(root, 400, 300));
         primaryStage.setTitle("Select Deck File ");
 
@@ -104,7 +104,7 @@ public class GameApp extends Application {
         primaryStage.show();
 
         //TODO add support for resizing
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
 
         //This needs to be called since primaryStage.show() changes dimensions of panes
         //This means that any transformatons need to be re-applied to the views

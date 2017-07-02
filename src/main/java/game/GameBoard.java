@@ -124,15 +124,23 @@ public class GameBoard {
 
         }
 
-        if (player.getActivePokemon() == null && selectedCard != null && selectedCard instanceof
+        if (selectedCard != null && selectedCard instanceof
                 PokemonCard && player == getCurrentTurnPlayer()) {
-
-            //remove selected card from player's hand and put it as active
-            if (removeSelected()) {
-                player.setActivePokemon((PokemonCard) selectedCard);
-                setSelectedCard(null, null);
+            PokemonCard pokemonCard = (PokemonCard)selectedCard;
+            if(player.getActivePokemon() == null) {
+                //remove selected card from player's hand and put it as active
+                if (removeSelected()) {
+                    player.setActivePokemon(pokemonCard);
+                    setSelectedCard(null, null);
+                }
+            }else if(pokemonCard.getEvolvesFrom() != null){
+                if(pokemonCard.getEvolvesFrom().equalsIgnoreCase(player.getActivePokemon().getCardName())){
+                    if(removeSelected()){
+                        player.setActivePokemon(pokemonCard);
+                        setSelectedCard(null, null);
+                    }
+                }
             }
-
         }
     }
 
