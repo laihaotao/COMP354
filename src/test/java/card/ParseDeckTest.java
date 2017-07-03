@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Eric on 5/30/2017.
@@ -66,5 +67,7 @@ public class ParseDeckTest {
             assertEquals(expected.get(i), deck.get(i).getCardName());
         }
     }
+    
+    
 
 }
