@@ -258,7 +258,6 @@ public class GameBoard {
 
     public void onEndTurnButtonClicked() {
         //checkWinLose(); //NOTE commented out until method is fixed
-        turnInfo.reset();
         nextTurn();
 
         //TODO process AI turn
@@ -268,6 +267,7 @@ public class GameBoard {
     }
 
     private void nextTurn() {
+        turnInfo.reset();
         //This will cycle between 0 and 1
         currentTurn = (currentTurn + 1) % 2;
 
