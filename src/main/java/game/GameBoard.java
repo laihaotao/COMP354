@@ -302,7 +302,10 @@ public class GameBoard {
         boolean stillHavePokemon = false;
 
         if (getCurrentTurnPlayer().prizes.size() == 0 || getWaitingTurnPlayer().deck.size() == 0) {
-            printWinMsg();
+            //printWinMsg();
+            // NOTE: the win message should always use
+            // GamePopup.displayGameResult(player.getName(), true);
+            // Since it uses the javafx gui instead of the console
         }
 
         for (Card c : getWaitingTurnPlayer().getBench()) {
@@ -313,13 +316,9 @@ public class GameBoard {
             }
         }
         if (!stillHavePokemon) {
-            printWinMsg();
+            //printWinMsg();
+            // See above note
         }
-    }
-
-    private void printWinMsg() {
-        System.out.println("player " + currentTurn + "has won the game");
-        System.exit(0);
     }
 
     private void clearLimitation() {
