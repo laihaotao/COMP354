@@ -67,20 +67,6 @@ public class EnergyCost {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof EnergyCost) {
-            EnergyCost another = (EnergyCost) obj;
-
-            return this.colorless == another.colorless
-                    && this.water == another.water
-                    && this.lightning == another.lightning
-                    && this.psychic == another.psychic
-                    && this.fight == another.fight;
-        }
-        return false;
-    }
-
     public String toCondensedString() {
         String string = "[ ";
         if (colorless > 0) {

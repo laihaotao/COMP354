@@ -185,14 +185,21 @@ public class GameBoard {
     }
 
     public void applyDamageToCard(Player callingPlayer, PokemonCard targetPokemon, int damage) {
-        if (!limitation[ATTACK_LIMT]
-                && Objects.equals(
-                        clickedAbility.getEnergyCost(), targetPokemon.getEnergyAttached())
-                ) {
+        if (!limitation[ATTACK_LIMT] &&
+                enoughEnergy(clickedAbility.getEnergyCost(), targetPokemon.getEnergyAttached())) {
             targetPokemon.setDamage(targetPokemon.getDamage() + damage);
             clickedAbility = null;
             limitation[ATTACK_LIMT] = true;
         }
+    }
+
+    private boolean enoughEnergy(EnergyCost energyCost, EnergyCost energyAttached) {
+
+        return energyAttached.colorless >= energyCost.colorless
+                && energyAttached.water >= energyCost.water
+                && energyAttached.lightning >= energyCost.lightning
+                && energyAttached.psychic >= energyCost.psychic
+                && energyAttached.fight >= energyCost.fight;
     }
 
     private void checkPokemons() {
