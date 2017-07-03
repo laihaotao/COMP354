@@ -178,6 +178,11 @@ public class GameBoard {
         }
     }
 
+    public void applyDamageToCard(Player callingPlayer, PokemonCard targetPokemon, int damage) {
+        targetPokemon.setDamage(targetPokemon.getDamage() + damage);
+
+    }
+
     private void checkPokemons() {
         for (Player player : players) {
             if (player.getActivePokemon() != null) {
