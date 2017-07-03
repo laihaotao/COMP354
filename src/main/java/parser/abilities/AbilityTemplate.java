@@ -27,4 +27,14 @@ public class AbilityTemplate {
             part.use(board, owner);
         }
     }
+
+    public boolean appliesDamage(){
+        for(AbilityPart part : parts){
+            if(part instanceof AbilityPartDam){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

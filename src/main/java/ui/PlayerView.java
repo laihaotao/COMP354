@@ -63,13 +63,16 @@ public class PlayerView extends BorderPane {
 
         benchCards = new HBox();
         benchCards.getStyleClass().add("Bench");
+
+        ScrollPane benchScroll = new ScrollPane(benchCards);
+
         activeCard = new HBox();
 
         //Add them in "reverse" order for them to displayGameResult from bottom to top
         if (directionUp) {
-            centerCardArea.getChildren().addAll(activeCard, benchCards, handScroll);
+            centerCardArea.getChildren().addAll(activeCard, benchScroll, handScroll);
         } else {
-            centerCardArea.getChildren().addAll(handScroll, benchCards, activeCard);
+            centerCardArea.getChildren().addAll(handScroll, benchScroll, activeCard);
         }
         deck = new Label("");
         deck.getStyleClass().add("Deck");

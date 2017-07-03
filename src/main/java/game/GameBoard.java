@@ -35,18 +35,14 @@ public class GameBoard {
     private CardLocation selectedCardLocation = null;
     private Random rand = new Random();
 
-    private Ability clickedAbility;
-    private boolean[] limitation;
-    private final int ATTACK_LIMT = 0;
-    private final int ENERGY_LIMT = 1;
-    private final int TRAINER_LIMT = 2;
+    private TurnInfo turnInfo;
 
 
     public GameBoard(Player p1, Player p2) {
         players = new Player[2];
         players[0] = p1;
         players[1] = p2;
-        limitation = new boolean[3];
+        turnInfo = new TurnInfo();
     }
 
     private void setSelectedCard(Card card, CardLocation location) {
@@ -76,7 +72,7 @@ public class GameBoard {
         logger.debug("Player" + playerNum + " has clicked a card in it's bench");
 
         // add energy card to the bench card
-        if (!limitation[ENERGY_LIMT]
+        if (!turnInfo.getEnergyTrigger().getStatus()
                 && card != null && player == getCurrentTurnPlayer()
                 && selectedCard != null && selectedCard instanceof EnergyCard) {
             if (card instanceof PokemonCard) {
@@ -85,7 +81,7 @@ public class GameBoard {
                 pokemonCard.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
                 player.getHand().remove(energyCard);
                 selectedCard = null;
-                limitation[ENERGY_LIMT] = true;
+                turnInfo.getEnergyTrigger().trigger();
                 return;
             }
         }
@@ -114,7 +110,7 @@ public class GameBoard {
         logger.debug("Player" + playerNum + " has clicked the active pokemon");
 
         // add energy card to activated card
-        if (!limitation[ENERGY_LIMT]
+        if (!turnInfo.getEnergyTrigger().getStatus()
                 && card != null && player == getCurrentTurnPlayer() && selectedCard != null &&
                 selectedCard instanceof EnergyCard) {
             PokemonCard pokemonCard = (PokemonCard) card;
@@ -123,7 +119,7 @@ public class GameBoard {
             player.getDiscardPile().add(energyCard);
             player.getHand().remove(energyCard);
             selectedCard = null;
-            limitation[ENERGY_LIMT] = true;
+            turnInfo.getEnergyTrigger().trigger();
 
         }
 
@@ -177,29 +173,43 @@ public class GameBoard {
         logger.debug("Player " + playerNum + " has clicked " + ability.getTemplate().name + " on " +
                 "" + card.getCardName());
 
-        clickedAbility = ability;
         if (player == getCurrentTurnPlayer()) {
-            ability.getTemplate().use(this, player);
+
+            //If the card is a pokemon, abilities require energy and need to be checked against card energy
+            if(card instanceof PokemonCard && enoughEnergy(ability.getEnergyCost(), ((PokemonCard)card).getEnergyAttached())) {
+
+                //If ability applies damage, it should trigger the Attack limit trigger
+                if(ability.getTemplate().appliesDamage()){
+                    //Make sure player only attacks onc with a pokemon
+                    if(!turnInfo.getAttackTrigger().getStatus()) {
+                        turnInfo.getAttackTrigger().trigger();
+                        ability.getTemplate().use(this, player);
+                    }
+                }else{
+                    //regular ability, does not apply damage and thus does not trigger attack limit
+                    ability.getTemplate().use(this, player);
+                }
+            }else {
+
+            }
             checkPokemons();
         }
     }
 
     public void applyDamageToCard(Player callingPlayer, PokemonCard targetPokemon, int damage) {
-        if (!limitation[ATTACK_LIMT] &&
-                enoughEnergy(clickedAbility.getEnergyCost(), targetPokemon.getEnergyAttached())) {
             targetPokemon.setDamage(targetPokemon.getDamage() + damage);
-            clickedAbility = null;
-            limitation[ATTACK_LIMT] = true;
-        }
+            turnInfo.getAttackTrigger().trigger();
     }
 
     private boolean enoughEnergy(EnergyCost energyCost, EnergyCost energyAttached) {
 
-        return energyAttached.colorless >= energyCost.colorless
+        return true;
+        /**return energyAttached.colorless >= energyCost.colorless
                 && energyAttached.water >= energyCost.water
                 && energyAttached.lightning >= energyCost.lightning
                 && energyAttached.psychic >= energyCost.psychic
                 && energyAttached.fight >= energyCost.fight;
+         **/
     }
 
     private void checkPokemons() {
@@ -248,7 +258,6 @@ public class GameBoard {
 
     public void onEndTurnButtonClicked() {
         //checkWinLose(); //NOTE commented out until method is fixed
-        clearLimitation();
         nextTurn();
 
         //TODO process AI turn
@@ -258,6 +267,7 @@ public class GameBoard {
     }
 
     private void nextTurn() {
+        turnInfo.reset();
         //This will cycle between 0 and 1
         currentTurn = (currentTurn + 1) % 2;
 
@@ -302,7 +312,10 @@ public class GameBoard {
         boolean stillHavePokemon = false;
 
         if (getCurrentTurnPlayer().prizes.size() == 0 || getWaitingTurnPlayer().deck.size() == 0) {
-            printWinMsg();
+            //printWinMsg();
+            // NOTE: the win message should always use
+            // GamePopup.displayGameResult(player.getName(), true);
+            // Since it uses the javafx gui instead of the console
         }
 
         for (Card c : getWaitingTurnPlayer().getBench()) {
@@ -313,18 +326,8 @@ public class GameBoard {
             }
         }
         if (!stillHavePokemon) {
-            printWinMsg();
-        }
-    }
-
-    private void printWinMsg() {
-        System.out.println("player " + currentTurn + "has won the game");
-        System.exit(0);
-    }
-
-    private void clearLimitation() {
-        for (int i = 0; i < limitation.length; i++) {
-            limitation[i] = false;
+            //printWinMsg();
+            // See above note
         }
     }
 
