@@ -35,8 +35,6 @@ public class GameBoard {
     private CardLocation selectedCardLocation = null;
     private Random rand = new Random();
 
-    private Ability clickedAbility;
-
     private TurnInfo turnInfo;
 
 
@@ -175,28 +173,43 @@ public class GameBoard {
         logger.debug("Player " + playerNum + " has clicked " + ability.getTemplate().name + " on " +
                 "" + card.getCardName());
 
-        clickedAbility = ability;
         if (player == getCurrentTurnPlayer()) {
-            ability.getTemplate().use(this, player);
+
+            //If the card is a pokemon, abilities require energy and need to be checked against card energy
+            if(card instanceof PokemonCard && enoughEnergy(ability.getEnergyCost(), ((PokemonCard)card).getEnergyAttached())) {
+
+                //If ability applies damage, it should trigger the Attack limit trigger
+                if(ability.getTemplate().appliesDamage()){
+                    //Make sure player only attacks onc with a pokemon
+                    if(!turnInfo.getAttackTrigger().getStatus()) {
+                        turnInfo.getAttackTrigger().trigger();
+                        ability.getTemplate().use(this, player);
+                    }
+                }else{
+                    //regular ability, does not apply damage and thus does not trigger attack limit
+                    ability.getTemplate().use(this, player);
+                }
+            }else {
+
+            }
             checkPokemons();
         }
     }
 
     public void applyDamageToCard(Player callingPlayer, PokemonCard targetPokemon, int damage) {
-        if (enoughEnergy(clickedAbility.getEnergyCost(), targetPokemon.getEnergyAttached())) {
             targetPokemon.setDamage(targetPokemon.getDamage() + damage);
-            clickedAbility = null;
             turnInfo.getAttackTrigger().trigger();
-        }
     }
 
     private boolean enoughEnergy(EnergyCost energyCost, EnergyCost energyAttached) {
 
-        return energyAttached.colorless >= energyCost.colorless
+        return true;
+        /**return energyAttached.colorless >= energyCost.colorless
                 && energyAttached.water >= energyCost.water
                 && energyAttached.lightning >= energyCost.lightning
                 && energyAttached.psychic >= energyCost.psychic
                 && energyAttached.fight >= energyCost.fight;
+         **/
     }
 
     private void checkPokemons() {

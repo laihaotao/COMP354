@@ -7,7 +7,7 @@ import java.util.List;
  * Created by frede on 2017-07-03.
  */
 public class TurnInfo {
-    private TurnTrigger attackTrigger, energyTrigger, trainerTrigger;
+    private TurnTrigger attackTrigger = new TurnTrigger(), energyTrigger = new TurnTrigger(), trainerTrigger = new TurnTrigger();
 
     public void reset(){
         attackTrigger.reset();
