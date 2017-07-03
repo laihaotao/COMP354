@@ -13,6 +13,7 @@ import card.EnergyCard;
 import card.PokemonCard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import parser.cards.EnergyCost;
 import ui.events.DiscardPileOnClickListener;
 import ui.popup.GamePopup;
 
@@ -34,10 +35,12 @@ public class GameBoard {
     private CardLocation selectedCardLocation = null;
     private Random rand = new Random();
 
+    private Ability clickedAbility;
     private boolean[] limitation;
     private final int ATTACK_LIMT = 0;
     private final int ENERGY_LIMT = 1;
     private final int TRAINER_LIMT = 2;
+
 
     public GameBoard(Player p1, Player p2) {
         players = new Player[2];
@@ -126,16 +129,17 @@ public class GameBoard {
 
         if (selectedCard != null && selectedCard instanceof
                 PokemonCard && player == getCurrentTurnPlayer()) {
-            PokemonCard pokemonCard = (PokemonCard)selectedCard;
-            if(player.getActivePokemon() == null) {
+            PokemonCard pokemonCard = (PokemonCard) selectedCard;
+            if (player.getActivePokemon() == null) {
                 //remove selected card from player's hand and put it as active
                 if (removeSelected()) {
                     player.setActivePokemon(pokemonCard);
                     setSelectedCard(null, null);
                 }
-            }else if(pokemonCard.getEvolvesFrom() != null){
-                if(pokemonCard.getEvolvesFrom().equalsIgnoreCase(player.getActivePokemon().getCardName())){
-                    if(removeSelected()){
+            } else if (pokemonCard.getEvolvesFrom() != null) {
+                if (pokemonCard.getEvolvesFrom().equalsIgnoreCase(player.getActivePokemon()
+                        .getCardName())) {
+                    if (removeSelected()) {
                         player.setActivePokemon(pokemonCard);
                         setSelectedCard(null, null);
                     }
@@ -172,6 +176,8 @@ public class GameBoard {
         int playerNum = (player == players[0]) ? 1 : 2;
         logger.debug("Player " + playerNum + " has clicked " + ability.getTemplate().name + " on " +
                 "" + card.getCardName());
+
+        clickedAbility = ability;
         if (player == getCurrentTurnPlayer()) {
             ability.getTemplate().use(this, player);
             checkPokemons();
@@ -179,8 +185,14 @@ public class GameBoard {
     }
 
     public void applyDamageToCard(Player callingPlayer, PokemonCard targetPokemon, int damage) {
-        targetPokemon.setDamage(targetPokemon.getDamage() + damage);
-
+        if (!limitation[ATTACK_LIMT]
+                && Objects.equals(
+                        clickedAbility.getEnergyCost(), targetPokemon.getEnergyAttached())
+                ) {
+            targetPokemon.setDamage(targetPokemon.getDamage() + damage);
+            clickedAbility = null;
+            limitation[ATTACK_LIMT] = true;
+        }
     }
 
     private void checkPokemons() {
