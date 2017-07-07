@@ -203,13 +203,12 @@ public class GameBoard {
 
     private boolean enoughEnergy(EnergyCost energyCost, EnergyCost energyAttached) {
 
-        return true;
-        /**return energyAttached.colorless >= energyCost.colorless
+        return energyAttached.colorless >= energyCost.colorless
                 && energyAttached.water >= energyCost.water
                 && energyAttached.lightning >= energyCost.lightning
                 && energyAttached.psychic >= energyCost.psychic
                 && energyAttached.fight >= energyCost.fight;
-         **/
+
     }
 
     private void checkPokemons() {
