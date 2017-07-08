@@ -250,7 +250,7 @@ public class AbilitiesParser {
       AbilityPart truePart = parseNextPart(tokenStream);
       AbilityPart falsePart = null;
       if(tokenStream.validateTokenString("else") != null){
-        falsePart = parseDamPart(tokenStream);
+        falsePart = parseNextPart(tokenStream);
       }
       
       abilityPartCond.setResults(truePart, falsePart);
