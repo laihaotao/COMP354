@@ -75,6 +75,15 @@ public class TokenStream {
     return null;
   }
   
+  public TokenCondition validateTokenCondition(){
+      Token token = getNextToken();
+      if(token instanceof TokenCondition){
+          return (TokenCondition)token;
+      }
+      backtrack();
+      return null;
+  }
+  
   public void backtrack(){
       currentToken--;
   }

@@ -187,7 +187,16 @@ public class LanguageTokenizer {
                     lastArithmeticTokenType = ArithmeticType.MULTIPLICATION;
                     currentTokenString = "";
                     break;
+                case '>':
+                    //create a new token if necessary
+                    if (currentTokenString.length() > 0)
+                        addToken(tokens, createTokenFromString(location, currentTokenString),
+                            lastArithmeticTokenType);
 
+                    //remember that the operator was there
+                    lastArithmeticTokenType = ArithmeticType.GREATER;
+                    currentTokenString = "";
+                    break;
                 default:
                     //If character signals end of scope, add last tokena nd then return the scope
                     if (endChar != '\n')
@@ -235,8 +244,17 @@ public class LanguageTokenizer {
 
             ArithmeticType type = lastArithmeticTokenType;
             lastArithmeticTokenType = null;
-
-            addToken(tokens, new TokenArithmetic(right.endLocation, type, left, right), lastArithmeticTokenType);
+            
+            Token newToken = null;
+            switch(type){
+                case MULTIPLICATION:
+                    newToken = new TokenArithmetic(right.endLocation, type, left, right);
+                    break;
+                case GREATER:
+                    newToken = new TokenCondition(right.endLocation, type, left, right);
+            }
+            
+            addToken(tokens, newToken, lastArithmeticTokenType);
         }
     }
 

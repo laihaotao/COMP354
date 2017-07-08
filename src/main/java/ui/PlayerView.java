@@ -152,7 +152,7 @@ public class PlayerView extends BorderPane {
         if (player.getActivePokemon() != null) {
 
             CardView cardView = new CardView(player, player.getActivePokemon());
-
+            cardView.getStyleClass().add("active");
             cardView.setOnMouseClicked((event -> {
                 //registeredListeners.forEach(listener->listener.onActiveCardClicked(player,
                 // player.getActivePokemon()));

@@ -13,8 +13,10 @@ import parser.commons.DestinationProperty;
 import parser.commons.TargetProperty;
 import parser.tokenizer.LanguageTokenizer;
 import parser.tokenizer.Token;
+import parser.tokenizer.TokenCondition;
 import parser.tokenizer.TokenInteger;
 import parser.tokenizer.TokenScope;
+import parser.tokenizer.TokenSeparator;
 import parser.tokenizer.TokenStream;
 import parser.tokenizer.TokenString;
 import parser.tokenizer.TokenType;
@@ -78,8 +80,8 @@ public class AbilitiesParser {
     
     stage.setScene(new Scene(mainView, 1200,800));
     stage.show();
-    
-    **/
+ **/
+
     
     return templates.toArray(new AbilityTemplate[0]);
   }
@@ -107,30 +109,42 @@ public class AbilitiesParser {
     //log.debug(" " + name+ " ");
     
     //Go through tokens, parsing them into ability parts
-    Token token = null;
-    while((token = tokenStream.getNextToken()) != null) {
-        if(token instanceof TokenString){
-          TokenString tokenString = (TokenString)token;
-          switch(tokenString.value){
-            case "deck":
-              template.parts.add(parsePartDeck(tokenStream));
-              break;
-            case  "dam":
-              template.parts.add(parseDamPart(tokenStream));
-              break;
-            case "draw":
-              template.parts.add(parseDrawPart(tokenStream));
-              break;
-            default:
-              waitUntil(tokenStream, TokenType.SEPERATOR);
-        }
-        
-        }
+    AbilityPart abilityPart = null;
+    while((abilityPart = parseNextPart(tokenStream)) != null) {
+        template.parts.add(abilityPart);
     }
     
     return template;
   }
 
+  private AbilityPart parseNextPart(TokenStream tokenStream){
+      Token token = tokenStream.getNextToken();
+      if(token == null){
+          return null;
+      }
+
+    if(token instanceof TokenString){
+      TokenString tokenString = (TokenString)token;
+      switch(tokenString.value){
+        case "deck":
+          return parsePartDeck(tokenStream);
+        case  "dam":
+          return parseDamPart(tokenStream);
+        case "draw":
+          return parseDrawPart(tokenStream);
+        case "cond":
+          return parseCondPart(tokenStream);
+        default:
+          waitUntil(tokenStream, TokenType.SEPERATOR);
+          return parseNextPart(tokenStream);
+      }
+
+    }else if(token instanceof TokenSeparator){
+      return parseNextPart(tokenStream);
+    }
+    return null;
+  }
+  
   /**
    * Go through tokens until we reach the desired one
    * @param stream
@@ -209,5 +223,39 @@ public class AbilitiesParser {
     return new AbilityPartDraw(target, amount);
   }
 
-  
+  private AbilityPart parseCondPart(TokenStream tokenStream){    
+      Token type = tokenStream.getNextToken();
+      
+      AbilityPartCond abilityPartCond = new AbilityPartCond();
+      if(type instanceof TokenString) {
+        switch (((TokenString)type).value) {
+          case "healed":
+            TargetProperty targetProperty = TargetProperty.read(tokenStream);
+            //apply if target has been healed
+            break;
+          case "flip":
+            //apply 50% of the time
+            break;
+          case "ability":
+            // ???
+            break;
+          case "choice":
+            //player choses
+            break;
+        }
+      }else if(type instanceof TokenCondition){
+
+      }
+      
+      AbilityPart truePart = parseNextPart(tokenStream);
+      AbilityPart falsePart = null;
+      if(tokenStream.validateTokenString("else") != null){
+        falsePart = parseDamPart(tokenStream);
+      }
+      
+      abilityPartCond.setResults(truePart, falsePart);
+    
+      return abilityPartCond;
+      
+  }
 }
