@@ -88,9 +88,6 @@ public class CardLineSeperator {
         	
             
             
-        	//System.out.println(abilitiesID.get(0));
-        	//System.out.println(abilitiesEnergyCostList.get(0));
-            
             
             
             for (int i = beginIndex+1; i < lineParts.length; i++){
