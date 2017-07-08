@@ -244,7 +244,7 @@ public class PokemonCard extends Card {
     }
 
     public PokemonCard copy() {
-        return new PokemonCard(name,getEvolvesFrom(), getPokemonStage(), getPokemonType(), getHp(), getRetreatEnergyCost(), abilities);
+        return new PokemonCard(name,getPokemonStage(), getEvolvesFrom(), getPokemonType(), getHp(), getRetreatEnergyCost(), abilities);
     }
 
 }
