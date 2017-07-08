@@ -27,6 +27,6 @@ public class AbilityPartCond extends AbilityPart{
 
     @Override
     public String getDescriptionString() {
-        return null;
+        return "Condition: "+((truePart != null)?truePart.getDescriptionString():"") + ((falsePart != null)?" else "+falsePart.getDescriptionString():"");
     }
 }

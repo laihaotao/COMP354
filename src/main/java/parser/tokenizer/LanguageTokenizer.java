@@ -1,10 +1,6 @@
 package parser.tokenizer;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +122,7 @@ public class LanguageTokenizer {
         //Remebers if an arithmetic operation was present
         //TODO This needs to be changed if we need to implement precedence of operations, ie
       // Multiplication having higher priority than addition
-        ArithmeticType lastArithmeticTokenType = null;
+        OperatorType lastArithmeticTokenType = null;
 
         //scan through every character from the scope start
         for (int location = start; location < line.length(); location++) {
@@ -184,7 +180,7 @@ public class LanguageTokenizer {
                                 lastArithmeticTokenType);
 
                     //remember that the operator was there
-                    lastArithmeticTokenType = ArithmeticType.MULTIPLICATION;
+                    lastArithmeticTokenType = OperatorType.MULTIPLICATION;
                     currentTokenString = "";
                     break;
                 case '>':
@@ -194,7 +190,7 @@ public class LanguageTokenizer {
                             lastArithmeticTokenType);
 
                     //remember that the operator was there
-                    lastArithmeticTokenType = ArithmeticType.GREATER;
+                    lastArithmeticTokenType = OperatorType.GREATER;
                     currentTokenString = "";
                     break;
                 default:
@@ -230,11 +226,11 @@ public class LanguageTokenizer {
     /**
      * This checks if the last two tokens need to be replaced by an Arithmetic token
      *
-     * @param lastArithmeticTokenType
+     * @param lastOperatorTokenType
      * @param tokens
      */
-    private void checkArithmetics(ArithmeticType lastArithmeticTokenType, List<Token> tokens) {
-        if (lastArithmeticTokenType != null && lastArithmeticTokenType != ArithmeticType.NULL) {
+    private void checkOperator(OperatorType lastOperatorTokenType, List<Token> tokens) {
+        if (lastOperatorTokenType != null && lastOperatorTokenType != OperatorType.NULL) {
 
             //get and remove last two tokens
             Token left = tokens.get(tokens.size() - 2);
@@ -242,8 +238,8 @@ public class LanguageTokenizer {
             tokens.remove(tokens.size() - 1);
             tokens.remove(tokens.size() - 1);
 
-            ArithmeticType type = lastArithmeticTokenType;
-            lastArithmeticTokenType = null;
+            OperatorType type = lastOperatorTokenType;
+            lastOperatorTokenType = null;
             
             Token newToken = null;
             switch(type){
@@ -254,7 +250,7 @@ public class LanguageTokenizer {
                     newToken = new TokenCondition(right.endLocation, type, left, right);
             }
             
-            addToken(tokens, newToken, lastArithmeticTokenType);
+            addToken(tokens, newToken, lastOperatorTokenType);
         }
     }
 
@@ -263,10 +259,10 @@ public class LanguageTokenizer {
      *
      * @param tokens         Where to add the token
      * @param token          Token to add
-     * @param arithmeticType arithmetic type to check
+     * @param operatorType arithmetic type to check
      */
-    private void addToken(List<Token> tokens, Token token, ArithmeticType arithmeticType) {
+    private void addToken(List<Token> tokens, Token token, OperatorType operatorType) {
         tokens.add(token);
-        checkArithmetics(arithmeticType, tokens);
+        checkOperator(operatorType, tokens);
     }
 }

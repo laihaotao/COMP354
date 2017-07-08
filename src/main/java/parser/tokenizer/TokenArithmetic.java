@@ -5,12 +5,12 @@ package parser.tokenizer;
  */
 public class TokenArithmetic extends Token{
   
-  public final ArithmeticType type;
+  public final OperatorType type;
   
   public Token leftValue, rightValue;
   
-  public TokenArithmetic(int endLocation, ArithmeticType type, Token leftValue, Token rightValue) {
-    super(TokenType.ARITHMETIC, endLocation);
+  public TokenArithmetic(int endLocation, OperatorType type, Token leftValue, Token rightValue) {
+    super(TokenType.OPERATOR, endLocation);
     this.type = type;
     this.leftValue = leftValue;
     this.rightValue = rightValue;

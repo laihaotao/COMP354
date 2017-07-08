@@ -5,12 +5,12 @@ package parser.tokenizer;
  */
 public class TokenCondition extends Token{
 
-    public final ArithmeticType type;
+    public final OperatorType type;
 
     public Token leftValue, rightValue;
 
-    public TokenCondition(int endLocation, ArithmeticType type, Token leftValue, Token rightValue) {
-        super(TokenType.ARITHMETIC, endLocation);
+    public TokenCondition(int endLocation, OperatorType type, Token leftValue, Token rightValue) {
+        super(TokenType.OPERATOR, endLocation);
         this.type = type;
         this.leftValue = leftValue;
         this.rightValue = rightValue;
@@ -24,8 +24,8 @@ public class TokenCondition extends Token{
     public String getDisplayString() {
         String string = leftValue.getDisplayString();
         switch(type){
-            case MULTIPLICATION:
-                string += "*";
+            case GREATER:
+                string += ">";
                 break;
             default:
                 return " ";
