@@ -46,11 +46,11 @@ public class Player {
 
         //chooseActivePokemon();
         
-        createTargetSelector();
+        targetSelector = createTargetSelector();
     }
     
-    public void createTargetSelector(){
-        targetSelector = new game.TargetSelector();
+    public TargetSelector createTargetSelector(){
+        return new game.TargetSelector();
     }
 
     public void put7CardInHand() {
