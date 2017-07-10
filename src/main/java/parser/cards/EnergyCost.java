@@ -20,6 +20,8 @@ public class EnergyCost {
     public int psychic;
     public int fight;
 
+    private int sum;
+
     public EnergyCost() {
 
     }
@@ -31,6 +33,7 @@ public class EnergyCost {
         this.lightning = lightning;
         this.psychic = psychic;
         this.fight = fight;
+        this.sum = colorless + water + lightning + psychic + fight;
     }
 
     public void addEnergy(String name, int num) {
@@ -87,7 +90,7 @@ public class EnergyCost {
         string += "]";
         return string;
     }
-    
+
     public static EnergyCost convertAndReturnEnergyCost(ArrayList<String> energyTypeAndAmount) {
         // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fight-Dragon
 
@@ -97,7 +100,7 @@ public class EnergyCost {
 
             String energyType = energyTypeAndAmount.get(i);
             //energyTypeAndAmount[i] should be the the energyType, energyTypeAndAmount[i+1]
-			// should be the amount
+            // should be the amount
             int energyAmount = 0;
             energyAmount = Integer.parseInt(energyTypeAndAmount.get(i + 1));
             energyCost.addEnergy(energyType, energyAmount);
@@ -106,7 +109,21 @@ public class EnergyCost {
 
         return energyCost;
     }
-    
 
+    public boolean equals(EnergyCost attachedEnergy) {
+        int sumRemain = 0;
+        int[] remain = new int[4];
 
+        remain[0] = attachedEnergy.water - this.water;
+        remain[1] = attachedEnergy.lightning - this.lightning;
+        remain[2] = attachedEnergy.psychic - this.psychic;
+        remain[3] = attachedEnergy.fight - this.fight;
+
+        for (int res : remain) {
+            if (res < 0) return false;
+            sumRemain += res;
+        }
+
+        return sumRemain >= this.colorless;
+    }
 }

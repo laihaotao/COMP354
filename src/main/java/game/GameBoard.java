@@ -176,7 +176,11 @@ public class GameBoard {
         if (player == getCurrentTurnPlayer()) {
 
             //If the card is a pokemon, abilities require energy and need to be checked against card energy
-            if(card instanceof PokemonCard && enoughEnergy(ability.getEnergyCost(), ((PokemonCard)card).getEnergyAttached())) {
+            if(card instanceof PokemonCard
+                    // attention here, want to compare the energy cost must use the
+                    // required energy equal to the attached energy
+                    // --> ability.energycost.equals(card.attachedenergy)
+                    && ability.getEnergyCost().equals(((PokemonCard)card).getEnergyAttached())) {
 
                 //If ability applies damage, it should trigger the Attack limit trigger
                 if(ability.getTemplate().appliesDamage()){
@@ -201,16 +205,6 @@ public class GameBoard {
             turnInfo.getAttackTrigger().trigger();
     }
 
-    private boolean enoughEnergy(EnergyCost energyCost, EnergyCost energyAttached) {
-/**
-        return energyAttached.colorless >= energyCost.colorless
-                && energyAttached.water >= energyCost.water
-                && energyAttached.lightning >= energyCost.lightning
-                && energyAttached.psychic >= energyCost.psychic
-                && energyAttached.fight >= energyCost.fight;
-**/
-    return true;
-    }
 
     private void checkPokemons() {
         for (Player player : players) {
