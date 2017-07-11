@@ -177,7 +177,11 @@ public class GameBoard {
         if (player == getCurrentTurnPlayer()) {
 
             //If the card is a pokemon, abilities require energy and need to be checked against card energy
-            if(card instanceof PokemonCard && enoughEnergy(ability.getEnergyCost(), ((PokemonCard)card).getEnergyAttached())) {
+            if(card instanceof PokemonCard
+                    // attention here, want to compare the energy cost must use the
+                    // required energy equal to the attached energy
+                    // --> ability.energycost.equals(card.attachedenergy)
+                    && ability.getEnergyCost().equals(((PokemonCard)card).getEnergyAttached())) {
 
                 //If ability applies damage, it should trigger the Attack limit trigger
                 if(ability.getTemplate().appliesDamage()){
@@ -200,14 +204,6 @@ public class GameBoard {
     public void applyDamageToCard(Player callingPlayer, PokemonCard targetPokemon, int damage) {
             targetPokemon.setDamage(targetPokemon.getDamage() + damage);
             turnInfo.getAttackTrigger().trigger();
-    }
-
-    private boolean enoughEnergy(EnergyCost energyCost, EnergyCost energyAttached) {
-        return energyAttached.colorless >= energyCost.colorless
-                && energyAttached.water >= energyCost.water
-                && energyAttached.lightning >= energyCost.lightning
-                && energyAttached.psychic >= energyCost.psychic
-                && energyAttached.fight >= energyCost.fight;
     }
 
     private void checkPokemons() {
@@ -364,9 +360,12 @@ public class GameBoard {
 
     public void onRetreatButtonClicked(Player player) {
         if (player.getActivePokemon() != null) {
-            Card card = player.getActivePokemon();
-            player.setActivePokemon(null);
-            player.getBench().add(card);
+            PokemonCard card = (PokemonCard) player.getActivePokemon();
+            if ((card.getRetreatEnergyCost().equals(card.getEnergyAttached()))) {
+                card.getEnergyAttached().retreat(card.getRetreatEnergyCost());
+                player.setActivePokemon(null);
+                player.getBench().add(card);
+            }
         }
     }
 }

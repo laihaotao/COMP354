@@ -20,6 +20,8 @@ public class EnergyCost {
     public int psychic;
     public int fight;
 
+    private int sum;
+
     public EnergyCost() {
 
     }
@@ -31,6 +33,7 @@ public class EnergyCost {
         this.lightning = lightning;
         this.psychic = psychic;
         this.fight = fight;
+        this.sum = colorless + water + lightning + psychic + fight;
     }
 
     public void addEnergy(String name, int num) {
@@ -87,19 +90,6 @@ public class EnergyCost {
         string += "]";
         return string;
     }
-    
-    public void add(EnergyCost energyCost){
-        this.colorless += energyCost.colorless;
-        this.water += energyCost.water;
-        this.lightning += energyCost.lightning;
-        this.psychic += energyCost.psychic;
-        this.fight += energyCost.fight;
-    }
-
-    public int[] getAsArray(){
-        return new int[]{colorless, water, lightning, psychic, fight};
-    }
-    
     public static EnergyCost convertAndReturnEnergyCost(ArrayList<String> energyTypeAndAmount) {
         // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fight-Dragon
 
@@ -109,7 +99,7 @@ public class EnergyCost {
 
             String energyType = energyTypeAndAmount.get(i);
             //energyTypeAndAmount[i] should be the the energyType, energyTypeAndAmount[i+1]
-			// should be the amount
+            // should be the amount
             int energyAmount = 0;
             energyAmount = Integer.parseInt(energyTypeAndAmount.get(i + 1));
             energyCost.addEnergy(energyType, energyAmount);
@@ -118,7 +108,59 @@ public class EnergyCost {
 
         return energyCost;
     }
-    
 
+    public boolean equals(EnergyCost attachedEnergy) {
+        int sumRemain = 0;
+        int[] remain = new int[4];
 
+        remain[0] = attachedEnergy.water - this.water;
+        remain[1] = attachedEnergy.lightning - this.lightning;
+        remain[2] = attachedEnergy.psychic - this.psychic;
+        remain[3] = attachedEnergy.fight - this.fight;
+
+        for (int res : remain) {
+            if (res < 0) return false;
+            sumRemain += res;
+        }
+
+        return sumRemain >= this.colorless;
+    }
+
+    public void retreat(EnergyCost retreatCost) {
+//        water -= retreatCost.water;
+//        lightning -= retreatCost.lightning;
+//        psychic -= retreatCost.psychic;
+//        fight -= retreatCost.fight;
+
+        if (retreatCost.colorless != 0) {
+            while (retreatCost.colorless !=0) {
+                if (water != 0) {
+                    water -= 1;
+                }
+                if (lightning != 0) {
+                    lightning -= 1;
+                }
+                if (psychic != 0) {
+                    psychic -= 1;
+                }
+                if (fight != 0) {
+                    fight -= 1;
+                }
+                retreatCost.colorless--;
+            }
+        } else {
+            if (retreatCost.water != 0) {
+                water -= retreatCost.water;
+            }
+            if (retreatCost.lightning != 0) {
+                lightning -= retreatCost.lightning;
+            }
+            if (retreatCost.psychic != 0) {
+                psychic -= retreatCost.psychic;
+            }
+            if (retreatCost.fight != 0) {
+                fight -= retreatCost.fight;
+            }
+        }
+    }
 }

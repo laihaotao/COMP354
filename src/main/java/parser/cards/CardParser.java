@@ -92,8 +92,8 @@ public class CardParser {
         			cardLineSeperator.getEvolvesFrom(), cardLineSeperator.getCardEnergyType(),
         			cardLineSeperator.getHp(), cardLineSeperator.getRetreatEnergyCost(),
         			cardLineSeperator.getAbilitiesList());
-        	
-        	
+        	PokemonCard pokemonCard = (PokemonCard) card;
+
         }
         else if(line.contains(":trainer:")){
         	card = new TrainerCard(cardLineSeperator.getName(), cardLineSeperator.getCardSubClass(),
