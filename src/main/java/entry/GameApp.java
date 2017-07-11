@@ -1,10 +1,9 @@
 package entry;
 
 import card.Card;
-import game.Ai_Player;
 import game.GameBoard;
 import game.Player;
-import game.ai.InteliigentPlayer;
+import game.ai.intelligentPlayer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -128,7 +127,7 @@ public class GameApp extends Application {
         List<Card> player2Deck = deck2Parser.getDeck();
 
         Player player1 = new Player(player1Deck);
-        InteliigentPlayer player2 = new InteliigentPlayer(player2Deck);
+        intelligentPlayer player2 = new intelligentPlayer(player2Deck);
 
         player1.setName("human player");
         player2.setName("AI player");

@@ -19,9 +19,9 @@ import ui.selections.TargetSelectorUI;
 /**
  * Created by frede on 2017-07-08.
  */
-public class InteliigentPlayer extends Player {
+public class intelligentPlayer extends Player {
 
-    public InteliigentPlayer(List<Card> playerDeck) {
+    public intelligentPlayer(List<Card> playerDeck) {
         super(playerDeck);
     }
     
@@ -79,6 +79,7 @@ public class InteliigentPlayer extends Player {
                 EnergyCost energyUsed = new EnergyCost();
                 for(Ability ability : pokemonCard.getAbilities()){
                     energyUsed.add(ability.getEnergyCost());
+                    
                     
                     for(AbilityPart part: ability.getTemplate().parts){
                         if(part instanceof AbilityPartDam){

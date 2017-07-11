@@ -11,10 +11,9 @@ import card.Card;
 import card.Ability;
 import card.EnergyCard;
 import card.PokemonCard;
-import game.ai.InteliigentPlayer;
+import game.ai.intelligentPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import parser.cards.EnergyCost;
 import ui.events.DiscardPileOnClickListener;
 import ui.popup.GamePopup;
 
@@ -271,8 +270,8 @@ public class GameBoard {
         currentPlayer.putCardInHand();
 
         if (currentTurn == 1) {
-            if(currentPlayer instanceof InteliigentPlayer){
-                ((InteliigentPlayer) currentPlayer).doTurn(this);
+            if(currentPlayer instanceof intelligentPlayer){
+                ((intelligentPlayer) currentPlayer).doTurn(this);
                 nextTurn();
             }else {
                 aiTurn();
