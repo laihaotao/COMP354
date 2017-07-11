@@ -249,9 +249,6 @@ public class GameBoard {
 
     private void onCardDead(Player owner) {
         getOtherPlayer(owner).choseRewardCard();
-        if (currentTurn == 0) {
-            players[1].chooseActivePokemon();
-        }
         if (getOtherPlayer(owner).getPrizes().size() == 0) {
             GamePopup.displayGameResult(getOtherPlayer(owner).getName(), true);
             if(!Thread.currentThread().getName().contains("FX")){
