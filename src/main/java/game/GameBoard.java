@@ -355,9 +355,12 @@ public class GameBoard {
 
     public void onRetreatButtonClicked(Player player) {
         if (player.getActivePokemon() != null) {
-            Card card = player.getActivePokemon();
-            player.setActivePokemon(null);
-            player.getBench().add(card);
+            PokemonCard card = (PokemonCard) player.getActivePokemon();
+            if ((card.getRetreatEnergyCost().equals(card.getEnergyAttached()))) {
+                card.getEnergyAttached().retreat(card.getRetreatEnergyCost());
+                player.setActivePokemon(null);
+                player.getBench().add(card);
+            }
         }
     }
 }

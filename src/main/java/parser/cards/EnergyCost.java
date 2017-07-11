@@ -126,4 +126,42 @@ public class EnergyCost {
 
         return sumRemain >= this.colorless;
     }
+
+    public void retreat(EnergyCost retreatCost) {
+//        water -= retreatCost.water;
+//        lightning -= retreatCost.lightning;
+//        psychic -= retreatCost.psychic;
+//        fight -= retreatCost.fight;
+
+        if (retreatCost.colorless != 0) {
+            while (retreatCost.colorless !=0) {
+                if (water != 0) {
+                    water -= 1;
+                }
+                if (lightning != 0) {
+                    lightning -= 1;
+                }
+                if (psychic != 0) {
+                    psychic -= 1;
+                }
+                if (fight != 0) {
+                    fight -= 1;
+                }
+                retreatCost.colorless--;
+            }
+        } else {
+            if (retreatCost.water != 0) {
+                water -= retreatCost.water;
+            }
+            if (retreatCost.lightning != 0) {
+                lightning -= retreatCost.lightning;
+            }
+            if (retreatCost.psychic != 0) {
+                psychic -= retreatCost.psychic;
+            }
+            if (retreatCost.fight != 0) {
+                fight -= retreatCost.fight;
+            }
+        }
+    }
 }
