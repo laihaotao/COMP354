@@ -11,9 +11,9 @@ import card.Card;
 import card.Ability;
 import card.EnergyCard;
 import card.PokemonCard;
+import game.ai.intelligentPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import parser.cards.EnergyCost;
 import ui.events.DiscardPileOnClickListener;
 import ui.popup.GamePopup;
 
@@ -205,7 +205,6 @@ public class GameBoard {
             turnInfo.getAttackTrigger().trigger();
     }
 
-
     private void checkPokemons() {
         for (Player player : players) {
             if (player.getActivePokemon() != null) {
@@ -271,7 +270,12 @@ public class GameBoard {
         currentPlayer.putCardInHand();
 
         if (currentTurn == 1) {
-            aiTurn();
+            if(currentPlayer instanceof intelligentPlayer){
+                ((intelligentPlayer) currentPlayer).doTurn(this);
+                nextTurn();
+            }else {
+                aiTurn();
+            }
         }
 
     }

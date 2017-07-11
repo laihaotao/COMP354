@@ -10,7 +10,7 @@ package card;
 
 public class EnergyCard extends Card {
 	 // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fight-Dragon
-    public enum EnergyType {COLORLESS, FIRE, WATER, LIGHTNING, PSYCHIC, GRASS, DARKNESS, METAL, FAIRY, FIGHT, DRAGON;}
+    public enum EnergyType {COLORLESS, WATER, LIGHTNING, PSYCHIC, FIGHT}
 
     private EnergyType energyType;
 

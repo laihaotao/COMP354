@@ -42,4 +42,8 @@ public class AbilityPartDam extends AbilityPart{
   public String getDescriptionString() {
     return "Damages "+ target + " for "+ammount.getDisplayString();
   }
+  
+  public Token getAmmount(){
+    return ammount;
+  }
 }

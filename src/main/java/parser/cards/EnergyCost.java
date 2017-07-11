@@ -90,7 +90,6 @@ public class EnergyCost {
         string += "]";
         return string;
     }
-
     public static EnergyCost convertAndReturnEnergyCost(ArrayList<String> energyTypeAndAmount) {
         // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fight-Dragon
 
@@ -163,5 +162,17 @@ public class EnergyCost {
                 fight -= retreatCost.fight;
             }
         }
+    }
+
+    public void add(EnergyCost energyCost){
+        this.colorless += energyCost.colorless;
+        this.water += energyCost.water;
+        this.lightning += energyCost.lightning;
+        this.psychic += energyCost.psychic;
+        this.fight += energyCost.fight;
+    }
+
+    public int[] getAsArray(){
+        return new int[]{colorless, water, lightning, psychic, fight};
     }
 }
