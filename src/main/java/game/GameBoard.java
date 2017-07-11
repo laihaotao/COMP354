@@ -11,9 +11,11 @@ import card.Card;
 import card.Ability;
 import card.EnergyCard;
 import card.PokemonCard;
-import game.ai.intelligentPlayer;
+import game.ai.IntelligentPlayer;
+import javafx.application.Platform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ui.BoardView;
 import ui.events.DiscardPileOnClickListener;
 import ui.popup.GamePopup;
 
@@ -37,6 +39,8 @@ public class GameBoard {
 
     private TurnInfo turnInfo;
 
+    public BoardView view;
+    
 
     public GameBoard(Player p1, Player p2) {
         players = new Player[2];
@@ -45,6 +49,10 @@ public class GameBoard {
         turnInfo = new TurnInfo();
     }
 
+    public void attachView(BoardView view){
+        this.view = view;
+    }
+    
     private void setSelectedCard(Card card, CardLocation location) {
         if (selectedCard != null) {
             selectedCard.setSelected(false);
@@ -246,6 +254,9 @@ public class GameBoard {
         }
         if (getOtherPlayer(owner).getPrizes().size() == 0) {
             GamePopup.displayGameResult(getOtherPlayer(owner).getName(), true);
+            if(!Thread.currentThread().getName().contains("FX")){
+                Thread.currentThread().stop();
+            }
         }
     }
 
@@ -269,14 +280,23 @@ public class GameBoard {
         //add card to players hand
         currentPlayer.putCardInHand();
 
-        if (currentTurn == 1) {
-            if(currentPlayer instanceof intelligentPlayer){
-                ((intelligentPlayer) currentPlayer).doTurn(this);
+            if(currentPlayer instanceof IntelligentPlayer){
+                ((IntelligentPlayer) currentPlayer).doTurn(this);
+                if(view != null) {
+                    Platform.runLater(()->{
+                        view.refreshView();
+                    });
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 nextTurn();
-            }else {
+            }else if(currentPlayer instanceof Ai_Player){
                 aiTurn();
             }
-        }
+        
 
     }
 

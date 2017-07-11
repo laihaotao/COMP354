@@ -9,6 +9,7 @@ package ui.popup;
 
 import card.Card;
 import game.Player;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -34,11 +35,13 @@ public class GamePopup {
     private static Logger logger = LogManager.getLogger(GamePopup.class.getName());
 
     public static void displayGameResult(String player, boolean won) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setContentText(player + " " + (won ? "won" : "lost") + " the game!");
+        Platform.runLater(()->{
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setContentText(player + " " + (won ? "won" : "lost") + " the game!");
 
-        alert.showAndWait();
-        System.exit(0);
+            alert.showAndWait();
+            System.exit(0);
+        });
     }
 
     public static void displayDiscardPile(Player player, List<Card> pile,

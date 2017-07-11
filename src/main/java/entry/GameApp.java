@@ -3,7 +3,7 @@ package entry;
 import card.Card;
 import game.GameBoard;
 import game.Player;
-import game.ai.intelligentPlayer;
+import game.ai.IntelligentPlayer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -115,6 +115,10 @@ public class GameApp extends Application {
 
 //        CardDebugParser cardDebugParser = new CardDebugParser("cards.txt");
 //        cardDebugParser.parse();
+        
+        if(gameBoard.getPlayer1() instanceof IntelligentPlayer && gameBoard.getPlayer2() instanceof IntelligentPlayer){
+            new Thread(() -> gameBoard.onEndTurnButtonClicked()).start();
+        }
     }
 
     private GameBoard getGameBoard(String deck1FileNm, String deck2FileNm)
@@ -127,7 +131,7 @@ public class GameApp extends Application {
         List<Card> player2Deck = deck2Parser.getDeck();
 
         Player player1 = new Player(player1Deck);
-        intelligentPlayer player2 = new intelligentPlayer(player2Deck);
+        Player player2 = new IntelligentPlayer(player2Deck);
 
         player1.setName("human player");
         player2.setName("AI player");

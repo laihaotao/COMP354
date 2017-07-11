@@ -30,7 +30,7 @@ public class BoardView extends BorderPane implements PlayerViewListener {
     public BoardView(GameBoard gameBoard) {
 
         this.gameBoard = gameBoard;
-
+        gameBoard.attachView(this);
         //NOTE: This will crash if the resource folder isn't set up correctly
         this.getStylesheets().add("style.css");
 
