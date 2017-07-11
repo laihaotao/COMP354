@@ -19,9 +19,9 @@ import ui.selections.TargetSelectorUI;
 /**
  * Created by frede on 2017-07-08.
  */
-public class intelligentPlayer extends Player {
+public class IntelligentPlayer extends Player {
 
-    public intelligentPlayer(List<Card> playerDeck) {
+    public IntelligentPlayer(List<Card> playerDeck) {
         super(playerDeck);
     }
     
@@ -194,8 +194,10 @@ public class intelligentPlayer extends Player {
         }
     }
     public void choseRewardCard() {
-        int prizeId = new Random(System.currentTimeMillis()).nextInt(prizes.size());
-         hand.add(prizes.remove(prizeId));
+        if(prizes.size() > 0) {
+            int prizeId = new Random(System.currentTimeMillis()).nextInt(prizes.size());
+            hand.add(prizes.remove(prizeId));
+        }
         
     }
     public TargetSelector createTargetSelector(){
