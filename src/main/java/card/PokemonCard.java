@@ -19,19 +19,11 @@ public class PokemonCard extends Card {
     private String pokemonStage;
     private int hp;
     private int attackCounter;
-
-    //note: Abilities will contain special abilities, but also basic attacks
-    //Each ability has a cost, therefore abilityName[i] will refer to abilityCost[i];
-    /**
-     * private ArrayList<AbilityTemplate> abilityTemplates = new ArrayList<>();
-     * private ArrayList<int[]> abilityCost = new ArrayList<>();
-     **/
     private List<Ability> abilities;
-
     private int damage;
     private int defense;
-
     private EnergyCost energyAttached = new EnergyCost();
+    private ArrayList<EnergyCard> attachedEnergyCard = new ArrayList<>();
 
     // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
     private EnergyCost retreatEnergyCost;
@@ -60,9 +52,6 @@ public class PokemonCard extends Card {
         this.attackCounter = 0;
         this.status = "";
         this.cardType = CardType.POKEMON;
-        
-        
-
     }
 
 
@@ -247,4 +236,12 @@ public class PokemonCard extends Card {
         return new PokemonCard(name,getPokemonStage(), getEvolvesFrom(), getPokemonType(), getHp(), getRetreatEnergyCost(), abilities);
     }
 
+    public void addEnergy(EnergyCard energyCard) {
+        this.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
+        attachedEnergyCard.add(energyCard);
+    }
+
+    public ArrayList<EnergyCard> getAttachedEnergyCard() {
+        return this.attachedEnergyCard;
+    }
 }
