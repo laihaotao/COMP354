@@ -26,16 +26,18 @@ public class AbilityPartDam extends AbilityPart{
   }
 
   @Override
-  public void use(GameBoard targetBoard, Player owner) {
+  public boolean use(GameBoard targetBoard, Player owner) {
     Card targetCard = owner.getTarget(targetBoard, target);
     if(targetCard != null) {
       if (targetCard instanceof PokemonCard) {
         PokemonCard pokemonCard = (PokemonCard) targetCard;
         targetBoard.applyDamageToCard(owner, pokemonCard, ammount.evaluateAsExpression());
+        return true;
       }
     }
     //damage target card
         
+    return false;
   }
 
   @Override
