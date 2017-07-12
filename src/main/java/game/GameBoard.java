@@ -193,8 +193,10 @@ public class GameBoard {
                 if(ability.getTemplate().appliesDamage()){
                     //Make sure player only attacks onc with a pokemon
                     if(!turnInfo.getAttackTrigger().getStatus()) {
-                        turnInfo.getAttackTrigger().trigger();
-                        ability.getTemplate().use(this, player);
+                        
+                        if(ability.getTemplate().use(this, player)){
+                            turnInfo.getAttackTrigger().trigger();
+                        }
                     } else {
                         GamePopup.displayMessage("You can only attack once per turn");
                     }
@@ -303,10 +305,12 @@ public class GameBoard {
                         view.refreshView();
                     });
                 }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if(getPlayer1() instanceof IntelligentPlayer && getPlayer2() instanceof IntelligentPlayer) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 nextTurn();
             }else if(currentPlayer instanceof Ai_Player){
