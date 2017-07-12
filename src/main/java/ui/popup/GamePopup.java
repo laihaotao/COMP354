@@ -43,6 +43,14 @@ public class GamePopup {
         });
     }
 
+    public static void displayMessage(String msg) {
+        Platform.runLater(()->{
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setContentText(msg);
+            alert.showAndWait();
+        });
+    }
+
     public static void displayDiscardPile(Player player, List<Card> pile,
                                           DiscardPileOnClickListener listener) {
         Stage stage = new Stage();

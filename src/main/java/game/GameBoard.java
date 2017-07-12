@@ -92,6 +92,8 @@ public class GameBoard {
                 turnInfo.getEnergyTrigger().trigger();
                 return;
             }
+        } else if (turnInfo.getEnergyTrigger().getStatus()) {
+            GamePopup.displayMessage("You can only add one energy per turn");
         }
 
         //Player is trying to place pokemon card on bench
@@ -128,7 +130,8 @@ public class GameBoard {
             player.getHand().remove(energyCard);
             selectedCard = null;
             turnInfo.getEnergyTrigger().trigger();
-
+        } else if (turnInfo.getEnergyTrigger().getStatus()) {
+            GamePopup.displayMessage("You can only add one energy per turn");
         }
 
         if (selectedCard != null && selectedCard instanceof
@@ -192,6 +195,8 @@ public class GameBoard {
                     if(!turnInfo.getAttackTrigger().getStatus()) {
                         turnInfo.getAttackTrigger().trigger();
                         ability.getTemplate().use(this, player);
+                    } else {
+                        GamePopup.displayMessage("You can only attack once per turn");
                     }
                 }else{
                     //regular ability, does not apply damage and thus does not trigger attack limit
@@ -254,13 +259,11 @@ public class GameBoard {
     }
 
     public void onEndTurnButtonClicked() {
-        //checkWinLose(); //NOTE commented out until method is fixed
+        if (turnInfo.turnNum != 1) {
+            checkWinLose();
+        }
         nextTurn();
-
-        //TODO process AI turn
-
-        //finish AI turn
-        // nextTurn();
+        turnInfo.turnNum++;
     }
 
     private void nextTurn() {
@@ -318,27 +321,30 @@ public class GameBoard {
         nextTurn();
     }
 
-    //TODO this method is broken, exits the game on first turn
+    /*
+      win conditions:
+        1. Take all of your Prize cards.
+        2. Knock Out all of your opponent’s in-play Pokemon.
+        3. If your opponent has no cards in their deck at the beginning of their turn.
+    */
     private void checkWinLose() {
-        boolean stillHavePokemon = false;
-
         if (getCurrentTurnPlayer().prizes.size() == 0 || getWaitingTurnPlayer().deck.size() == 0) {
-            //printWinMsg();
-            // NOTE: the win message should always use
-            // GamePopup.displayGameResult(player.getName(), true);
-            // Since it uses the javafx gui instead of the console
+            logger.debug("prize card size or enemy deck size equal zero");
+            GamePopup.displayGameResult(getCurrentTurnPlayer().getName(), true);
         }
 
-        for (Card c : getWaitingTurnPlayer().getBench()) {
-            if (c instanceof PokemonCard &&
-                    ((PokemonCard) c).getEvolvesFrom() == null) {
-                stillHavePokemon = true;
-                break;
+        if (getCurrentTurnPlayer().activePokemon == null) {
+            boolean stillHavePokemon = false;
+            for (Card c : getWaitingTurnPlayer().getBench()) {
+                if (c instanceof PokemonCard &&
+                        ((PokemonCard) c).getEvolvesFrom() == null) {
+                    stillHavePokemon = true;
+                    break;
+                }
             }
-        }
-        if (!stillHavePokemon) {
-            //printWinMsg();
-            // See above note
+            if (!stillHavePokemon) {
+                GamePopup.displayGameResult(getCurrentTurnPlayer().getName(), true);
+            }
         }
     }
 

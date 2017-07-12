@@ -165,13 +165,4 @@ public class GameApp extends Application {
         }
         return list;
     }
-
-//    private File[] getFile(String path) {
-//        return new File(path).listFiles(pathname -> {
-//            // return all file whose name contains "deck"
-//            logger.debug("getFile: " + pathname.getName());
-//            return pathname.getName().contains("deck");
-//        });
-//    }
-
 }
