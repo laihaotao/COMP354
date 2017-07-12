@@ -223,7 +223,7 @@ public class GameBoard {
                     // if the active pokemon die, we need to move it the discard pile
                     // and the attached energy card
                     logger.debug("active pokemon: " + pokemonCard.getCardName() + " has been knock out");
-                    removeAttachedEnergyCardToDiscardpile(pokemonCard);
+                    removeAttachedEnergyCardToDiscardpile(player, pokemonCard);
                     player.getDiscardPile().add(pokemonCard);
                     player.setActivePokemon(null);
                     onCardDead(player);
@@ -237,7 +237,7 @@ public class GameBoard {
                     if (pokemonCard.getDamage() >= pokemonCard.getHp()) {
                         // if the bench pokemon die, we need to move it the discard pile
                         // and the attached energy card
-                        removeAttachedEnergyCardToDiscardpile(pokemonCard);
+                        removeAttachedEnergyCardToDiscardpile(player, pokemonCard);
                         player.getBench().remove(pokemonCard);
                         player.getDiscardPile().add(pokemonCard);
                         onCardDead(player);
@@ -259,11 +259,11 @@ public class GameBoard {
         }
     }
 
-    private void removeAttachedEnergyCardToDiscardpile(PokemonCard pc) {
+    private void removeAttachedEnergyCardToDiscardpile(Player player, PokemonCard pc) {
         ArrayList<EnergyCard> list = pc.getAttachedEnergyCard();
         for (EnergyCard energyCard : list) {
             logger.debug("add " + energyCard.getCardName() + " to discard pile");
-            getCurrentTurnPlayer().getDiscardPile().add(energyCard);
+            player.getDiscardPile().add(energyCard);
         }
         pc.getAttachedEnergyCard().clear();
     }
