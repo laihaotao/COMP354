@@ -158,12 +158,8 @@ public class GameBoard {
         logger.debug("Player" + playerNum + " has clicked the discard pile");
 
         List<Card> pile = player.getDiscardPile();
-        GamePopup.displayDiscardPile(player, pile, new DiscardPileOnClickListener() {
-            @Override
-            public void onClickDiscardCard(Card card) {
-                logger.debug(player + " click the card in discardpile: " + card.getCardName());
-            }
-        });
+        GamePopup.displayDiscardPile(player, pile, card ->
+                logger.debug(player + " click the card in discardpile: " + card.getCardName()));
     }
 
     private boolean removeSelected() {
@@ -178,8 +174,8 @@ public class GameBoard {
 
     public void onActiveAbilityClicked(Player player, Card card, Ability ability) {
         int playerNum = (player == players[0]) ? 1 : 2;
-        logger.debug("Player " + playerNum + " has clicked " + ability.getTemplate().name + " on " +
-                "" + card.getCardName());
+        logger.debug("Player " + playerNum + " has clicked " + ability.getTemplate().name
+                + " on "+ card.getCardName());
 
         if (player == getCurrentTurnPlayer()) {
 

@@ -38,7 +38,6 @@ public class GamePopup {
         Platform.runLater(()->{
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setContentText(player + " " + (won ? "won" : "lost") + " the game!");
-
             alert.showAndWait();
             System.exit(0);
         });
@@ -60,9 +59,9 @@ public class GamePopup {
                 if (child instanceof ScrollPane) {
                     ScrollPane scrollPane = (ScrollPane) child;
 
-                    // todo now only for testing purpose, it will display the hand cards
                     VBox box = new VBox();
-                    for (Card c : player.getHand()) {
+                    for (Card c : pile) {
+//                    for (Card c : player.getHand()) {
                         Button button = new Button(new CardView(player, c).toString());
                         button.setOnMouseClicked(event -> {
                             listener.onClickDiscardCard(c);
