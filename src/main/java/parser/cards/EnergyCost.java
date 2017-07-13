@@ -109,7 +109,7 @@ public class EnergyCost {
         return energyCost;
     }
 
-    public boolean equals(EnergyCost attachedEnergy) {
+    public boolean canSupport(EnergyCost attachedEnergy) {
         int sumRemain = 0;
         int[] remain = new int[4];
 

@@ -20,7 +20,7 @@ public class CheckEnergyCost {
                 , null);
         p1.setEnergyAttached(attachedEnergy);
         EnergyCost requiredEnergy = new EnergyCost(0, 3, 3, 3, 3);
-        assertEquals(false, requiredEnergy.equals(p1.getEnergyAttached()));
+        assertEquals(false, requiredEnergy.canSupport(p1.getEnergyAttached()));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class CheckEnergyCost {
         p1.setEnergyAttached(attachedEnergy);
 
         EnergyCost requiredEnergy = new EnergyCost(1, 0, 0, 0, 0);
-        assertEquals(true, requiredEnergy.equals(p1.getEnergyAttached()));
+        assertEquals(true, requiredEnergy.canSupport(p1.getEnergyAttached()));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class CheckEnergyCost {
         p1.setEnergyAttached(attachedEnergy);
 
         EnergyCost requiredEnergy = new EnergyCost(1, 0, 1, 0, 0);
-        assertEquals(true, requiredEnergy.equals(p1.getEnergyAttached()));
+        assertEquals(true, requiredEnergy.canSupport(p1.getEnergyAttached()));
     }
 
     @Test
@@ -53,6 +53,6 @@ public class CheckEnergyCost {
         p1.setEnergyAttached(attachedEnergy);
 
         EnergyCost requiredEnergy = new EnergyCost(1, 0, 1, 1, 0);
-        assertEquals(true, requiredEnergy.equals(p1.getEnergyAttached()));
+        assertEquals(true, requiredEnergy.canSupport(p1.getEnergyAttached()));
     }
 }

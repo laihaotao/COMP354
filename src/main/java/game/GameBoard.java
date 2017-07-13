@@ -16,7 +16,6 @@ import javafx.application.Platform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ui.BoardView;
-import ui.events.DiscardPileOnClickListener;
 import ui.popup.GamePopup;
 
 import java.util.*;
@@ -186,8 +185,8 @@ public class GameBoard {
             if(card instanceof PokemonCard
                     // attention here, want to compare the energy cost must use the
                     // required energy equal to the attached energy
-                    // --> ability.energycost.equals(card.attachedenergy)
-                    && ability.getEnergyCost().equals(((PokemonCard)card).getEnergyAttached())) {
+                    // --> ability.energycost.canSupport(card.attachedenergy)
+                    && ability.getEnergyCost().canSupport(((PokemonCard)card).getEnergyAttached())) {
 
                 //If ability applies damage, it should trigger the Attack limit trigger
                 if(ability.getTemplate().appliesDamage()){
@@ -399,7 +398,7 @@ public class GameBoard {
     public void onRetreatButtonClicked(Player player) {
         if (player.getActivePokemon() != null) {
             PokemonCard card = (PokemonCard) player.getActivePokemon();
-            if ((card.getRetreatEnergyCost().equals(card.getEnergyAttached()))) {
+            if ((card.getRetreatEnergyCost().canSupport(card.getEnergyAttached()))) {
                 card.getEnergyAttached().retreat(card.getRetreatEnergyCost());
                 player.setActivePokemon(null);
                 player.getBench().add(card);

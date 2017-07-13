@@ -85,7 +85,7 @@ public class Player {
     //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
     public void putCardInHand() {
         hand.add(deck.remove(0));
-        if (hand.get(hand.size() - 1) instanceof PokemonCard)//  .getType().equals("POKEMON"))
+        if (hand.get(hand.size() - 1) instanceof PokemonCard)//  .getType().canSupport("POKEMON"))
             pokemonCards.add((PokemonCard) hand.get(hand.size() - 1));
 
     }
