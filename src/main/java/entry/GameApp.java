@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -62,6 +63,8 @@ public class GameApp extends Application {
         comboBox1.setValue(f1);
         comboBox2.setValue(f2);
 
+        CheckBox aiBox = new CheckBox("AI vs AI");
+
         Button startBtn = new Button();
         startBtn.setText("Start Game");
         startBtn.setOnAction(event -> {
@@ -69,7 +72,7 @@ public class GameApp extends Application {
                 logger.debug(comboBox1.getValue());
                 logger.debug(comboBox2.getValue());
 
-                startGame(primaryStage, comboBox1.getValue(), comboBox2.getValue());
+                startGame(primaryStage, comboBox1.getValue(), comboBox2.getValue(), aiBox.isSelected());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -79,6 +82,7 @@ public class GameApp extends Application {
         root.setHgap(5);
         root.add(new Label("Human Player: "), 1, 1);
         root.add(comboBox1, 2, 1);
+        root.add(aiBox, 3, 1);
         root.add(new Label("AI Player: "), 1, 2);
         root.add(comboBox2, 2, 2);
 
@@ -91,11 +95,11 @@ public class GameApp extends Application {
         primaryStage.show();
     }
 
-    private void startGame(Stage primaryStage, String fileNm1, String fileNm2) throws Exception {
+    private void startGame(Stage primaryStage, String fileNm1, String fileNm2, boolean allAI) throws Exception {
         primaryStage.setTitle(WINDOW_TITLE);
         StartPane root = new StartPane();
 
-        GameBoard gameBoard = getGameBoard(fileNm1, fileNm2);
+        GameBoard gameBoard = getGameBoard(fileNm1, fileNm2, allAI);
 
         //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
@@ -121,7 +125,7 @@ public class GameApp extends Application {
         }
     }
 
-    private GameBoard getGameBoard(String deck1FileNm, String deck2FileNm)
+    private GameBoard getGameBoard(String deck1FileNm, String deck2FileNm, boolean allAI)
             throws IOException, ClassNotFoundException {
         CardParser cardParser = new CardParser(Config.FILE_PATH_CARDS_TXT);
         DeckParser deck1Parser = new DeckParser(deck1FileNm, cardParser);
@@ -130,7 +134,7 @@ public class GameApp extends Application {
         List<Card> player1Deck = deck1Parser.getDeck();
         List<Card> player2Deck = deck2Parser.getDeck();
 
-        Player player1 = new Player(player1Deck);
+        Player player1 = allAI?new IntelligentPlayer(player1Deck):new Player(player1Deck);
         Player player2 = new IntelligentPlayer(player2Deck);
 
         player1.setName("human player");
