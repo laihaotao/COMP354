@@ -78,7 +78,7 @@ public class Player {
     public void putPrizes() {
         for (int i = 0; i < 6; i++) {
             int n = rand.nextInt(deck.size());
-            prizes.add(deck.remove(n));
+            prizes.add(deck.remove(deck.size()-i-1));
         }
     }
 
