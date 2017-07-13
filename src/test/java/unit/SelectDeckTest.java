@@ -17,19 +17,5 @@ import java.util.jar.JarFile;
  */
 public class SelectDeckTest {
 
-    @Test
-    public void test() throws IOException {
-        File dir = new File("/Users/ERIC_LAI/IdeaProjects/COMP354/target/COMP354-1.0-SNAPSHOT-jar-with-dependencies.jar!/decks/");
-        if (dir.isDirectory()) {
-            for (File f : dir.listFiles()) {
-                System.out.println(f.getName());
-            }
-        }else {
-            Enumeration<JarEntry> entries = new JarFile
-                    ("/Users/ERIC_LAI/IdeaProjects/COMP354/target/COMP354-1.0" +
-                    "-SNAPSHOT-jar-with-dependencies.jar").entries();
 
-
-        }
-    }
 }
