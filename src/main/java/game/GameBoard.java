@@ -7,10 +7,7 @@
 
 package game;
 
-import card.Card;
-import card.Ability;
-import card.EnergyCard;
-import card.PokemonCard;
+import card.*;
 import game.ai.IntelligentPlayer;
 import javafx.application.Platform;
 import org.apache.logging.log4j.LogManager;
@@ -202,6 +199,11 @@ public class GameBoard {
                 }else{
                     //regular ability, does not apply damage and thus does not trigger attack limit
                     ability.getTemplate().use(this, player);
+                }
+            }else if (card instanceof TrainerCard){
+                if(ability.getTemplate().use(this, player)){
+                    player.hand.remove(card);
+                    player.discardPile.add(card);
                 }
             }
             

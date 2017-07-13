@@ -88,7 +88,14 @@ public class CardView extends BorderPane {
             }));
         } else if (card instanceof TrainerCard) {
             TrainerCard trainerCard = (TrainerCard) card;
-            abilitiesInfo.getChildren().add(new AbilityView(trainerCard.getAbility()));
+            AbilityView abilityView = new AbilityView(trainerCard.getAbility());
+            abilityView.setOnMouseClicked(event->{
+                registeredListeners.forEach(listener->{
+                    listener.onActiveAbilityClicked(player, card, trainerCard.getAbility());
+                });
+            });
+            abilitiesInfo.getChildren().add(abilityView);
+
         } else if (card instanceof EnergyCard) {
 
         }
