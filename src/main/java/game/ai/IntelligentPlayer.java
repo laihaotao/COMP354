@@ -20,6 +20,7 @@ import ui.selections.TargetSelectorUI;
  * Created by frede on 2017-07-08.
  */
 public class IntelligentPlayer extends Player {
+    boolean firstTurn = true;
 
     public IntelligentPlayer(List<Card> playerDeck) {
         super(playerDeck);
@@ -27,13 +28,18 @@ public class IntelligentPlayer extends Player {
     
     public void doTurn(GameBoard gameBoard){
         if(activePokemon == null){
-            PokemonCard optimalActive = findOptimalPokemon();
+            PokemonCard optimalActive = firstTurn?findOptimalPokemon(hand):findOptimalPokemon(bench);
             if(optimalActive != null) {
-                gameBoard.onHandCardClicked(this, optimalActive);
+                if(firstTurn) {
+                    gameBoard.onHandCardClicked(this, optimalActive);
+                    firstTurn = false;
+                }else{
+                    gameBoard.onBenchCardClicked(this, optimalActive);
+                }
                 gameBoard.onActiveCardClicked(this, null);
             }
         }else{
-            PokemonCard optimalBench = findOptimalPokemon();
+            PokemonCard optimalBench = findOptimalPokemon(hand);
             if(optimalBench != null){
                 gameBoard.onHandCardClicked(this, optimalBench);
                 gameBoard.onBenchCardClicked(this, null);
@@ -44,14 +50,13 @@ public class IntelligentPlayer extends Player {
         tryAttack(gameBoard);
     }
     
-    private PokemonCard findOptimalPokemon(){
+    private PokemonCard findOptimalPokemon(List<Card> cards){
         int bestScore = -1;
-        int energyScore = -1;
         
         PokemonCard bestCard = null;
         
         EnergyCost energyInHand = new EnergyCost();
-        for(Card card : hand){
+        for(Card card : cards){
             if(card instanceof EnergyCard){
                 EnergyCard energyCard = (EnergyCard)card;
                 switch(energyCard.getEnergyType()){
@@ -71,7 +76,7 @@ public class IntelligentPlayer extends Player {
             }
         }
         
-        for(Card card : hand){
+        for(Card card : cards){
             if(card instanceof PokemonCard){
                 int score = 0;
                 
@@ -112,75 +117,100 @@ public class IntelligentPlayer extends Player {
     
     private void playEnergyCard(GameBoard gameBoard){
         if(activePokemon != null){
-            EnergyCost neededEnergy = new EnergyCost();
-            EnergyCost currentEnergy = activePokemon.getEnergyAttached();
-            activePokemon.getAbilities().forEach(ability -> {
-                int neededColorless = ability.getEnergyCost().colorless - currentEnergy.colorless;
-                if(neededColorless > neededEnergy.colorless){
-                    neededEnergy.colorless = neededColorless;
+            boolean enoughEnergy = true;
+            for(Ability ability : activePokemon.getAbilities()){
+                if(!ability.getEnergyCost().equals(activePokemon.getEnergyAttached())){
+                    enoughEnergy = false;
                 }
-                
-                int neededWater = ability.getEnergyCost().water - currentEnergy.water;
-                if(neededWater > neededEnergy.water){
-                    neededEnergy.water = neededWater;
-                }
-                
-                int neededLightning = ability.getEnergyCost().lightning - currentEnergy.lightning;
-                if(neededLightning > neededEnergy.lightning){
-                    neededEnergy.lightning = neededLightning;
-                }
-                
-                int neededPsychic = ability.getEnergyCost().psychic - currentEnergy.psychic;
-                if(neededPsychic > neededEnergy.psychic){
-                    neededEnergy.psychic = neededPsychic;
-                }
-                
-                int neededFight = ability.getEnergyCost().fight- currentEnergy.fight;
-                if(neededFight > neededEnergy.fight){
-                    neededEnergy.fight = neededFight;
-                }
-                
-            });
-            
-            EnergyCard energyToPlay = null;
-            
-            search:
-            for(Card card : hand){
-                if(card instanceof EnergyCard){
-                    EnergyCard energyCard = (EnergyCard)card;
-                    switch(energyCard.getEnergyType()){
-                        case FIGHT:
-                            if(neededEnergy.fight <= 0 && neededEnergy.colorless <=0){
-                                break;
-                            }
-                            
-                        case WATER:
-                            if(neededEnergy.water <= 0 && neededEnergy.colorless <=0){
-                                break;
-                            }
-                        case PSYCHIC:
-                            if(neededEnergy.psychic <= 0 && neededEnergy.colorless <=0){
-                                break;
-                            }
-                        case LIGHTNING:
-                            if(neededEnergy.lightning <= 0 && neededEnergy.colorless <=0){
-                                break;
-                            }
+            }
+            if(!enoughEnergy) {
+                EnergyCard energyToPlay = findOptimalEnergy(activePokemon);
 
-                        default:
-                            energyToPlay = energyCard;
-                            break search;
-                            
+                if (energyToPlay != null) {
+                    gameBoard.onHandCardClicked(this, energyToPlay);
+                    gameBoard.onActiveCardClicked(this, activePokemon);
+                }
+            }else{
+                PokemonCard target = findOptimalPokemon(bench);
+                if(target != null){
+                    EnergyCard energyToPlay = findOptimalEnergy(target);
+
+                    if(energyToPlay != null){
+                        gameBoard.onHandCardClicked(this, energyToPlay);
+                        gameBoard.onBenchCardClicked(this, target);
                     }
                 }
             }
             
-            if(energyToPlay != null){
-                gameBoard.onHandCardClicked(this, energyToPlay);
-                gameBoard.onActiveCardClicked(this, activePokemon);
-            }
-            
         }
+    }
+    
+    private EnergyCard findOptimalEnergy(PokemonCard target){
+        EnergyCost neededEnergy = new EnergyCost();
+        EnergyCost currentEnergy = target.getEnergyAttached();
+        target.getAbilities().forEach(ability -> {
+            int neededColorless = ability.getEnergyCost().colorless - currentEnergy.colorless;
+            if(neededColorless > neededEnergy.colorless){
+                neededEnergy.colorless = neededColorless;
+            }
+
+            int neededWater = ability.getEnergyCost().water - currentEnergy.water;
+            if(neededWater > neededEnergy.water){
+                neededEnergy.water = neededWater;
+            }
+
+            int neededLightning = ability.getEnergyCost().lightning - currentEnergy.lightning;
+            if(neededLightning > neededEnergy.lightning){
+                neededEnergy.lightning = neededLightning;
+            }
+
+            int neededPsychic = ability.getEnergyCost().psychic - currentEnergy.psychic;
+            if(neededPsychic > neededEnergy.psychic){
+                neededEnergy.psychic = neededPsychic;
+            }
+
+            int neededFight = ability.getEnergyCost().fight- currentEnergy.fight;
+            if(neededFight > neededEnergy.fight){
+                neededEnergy.fight = neededFight;
+            }
+
+        });
+
+        EnergyCard energyToPlay = null;
+
+        search:
+        for(Card card : hand){
+            if(card instanceof EnergyCard){
+                EnergyCard energyCard = (EnergyCard)card;
+                switch(energyCard.getEnergyType()){
+                    case FIGHT:
+                        if(neededEnergy.fight <= 0 && neededEnergy.colorless <=0){
+                            break;
+                        }
+
+                    case WATER:
+                        if(neededEnergy.water <= 0 && neededEnergy.colorless <=0){
+                            break;
+                        }
+                    case PSYCHIC:
+                        if(neededEnergy.psychic <= 0 && neededEnergy.colorless <=0){
+                            break;
+                        }
+                    case LIGHTNING:
+                        if(neededEnergy.lightning <= 0 && neededEnergy.colorless <=0){
+                            break;
+                        }
+
+                    default:
+                        energyToPlay = energyCard;
+                        break search;
+
+                }
+            }
+        }
+        
+        return energyToPlay;
+        
     }
     
     private void tryAttack(GameBoard gameBoard){

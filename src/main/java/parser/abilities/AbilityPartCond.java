@@ -2,6 +2,7 @@ package parser.abilities;
 
 import game.GameBoard;
 import game.Player;
+import parser.tokenizer.TokenCondition;
 
 /**
  * Created by frede on 2017-07-07.
