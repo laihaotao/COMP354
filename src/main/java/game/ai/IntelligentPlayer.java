@@ -7,6 +7,7 @@ import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import game.TargetSelector;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import parser.abilities.AbilityPart;
@@ -39,10 +40,25 @@ public class IntelligentPlayer extends Player {
                 gameBoard.onActiveCardClicked(this, null);
             }
         }else{
-            PokemonCard optimalBench = findOptimalPokemon(hand);
-            if(optimalBench != null){
-                gameBoard.onHandCardClicked(this, optimalBench);
-                gameBoard.onBenchCardClicked(this, null);
+            boolean putOnBench = true;
+            if(activePokemon.getEnergyAttached().equals(activePokemon.getRetreatEnergyCost())) {
+                List<Card> fullList = new ArrayList<>();
+                fullList.addAll(bench);
+                fullList.add(activePokemon);
+                PokemonCard optimal = findOptimalPokemon(fullList);
+                if (optimal != null && optimal != activePokemon) {
+                    gameBoard.onRetreatButtonClicked(this);
+                    gameBoard.onBenchCardClicked(this, optimal);
+                    gameBoard.onActiveCardClicked(this, null);
+                    putOnBench = false;
+                }
+            }
+            if(putOnBench) {
+                PokemonCard optimalBench = findOptimalPokemon(hand);
+                if (optimalBench != null) {
+                    gameBoard.onHandCardClicked(this, optimalBench);
+                    gameBoard.onBenchCardClicked(this, null);
+                }
             }
         }
         
