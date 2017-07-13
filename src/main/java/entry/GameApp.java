@@ -3,9 +3,11 @@ package entry;
 import card.Card;
 import game.GameBoard;
 import game.Player;
+import selectdeck.DeckReader;
+import selectdeck.JarDeckFileReader;
+import selectdeck.NormalDeckFileReader;
 import game.ai.IntelligentPlayer;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,10 +22,8 @@ import parser.cards.CardParser;
 import parser.cards.DeckParser;
 import ui.BoardView;
 import ui.StartPane;
-import util.ResourceReader;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,29 +39,41 @@ public class GameApp extends Application {
     public static final int WINDOW_WIDTH = 1000, WINDOW_HEIGHT = 800;
 
     private static final String WINDOW_TITLE = "Pokemon Go Back";
+    private static String deckPath = GameApp.class.getClassLoader().getResource("decks/").getPath();
 
     public static void main(String[] args) throws IOException {
         logger.info("Starting pokemon game!");
+        logger.info(deckPath);
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        selectDeck(primaryStage);
+        try {
+            selectDeck(primaryStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void selectDeck(Stage primaryStage) {
+    private void selectDeck(Stage primaryStage) throws IOException {
         GridPane root = new GridPane();
-        String f1 = Config.PATH_FILE_DECK1_TXT;
-        String f2 = Config.PATH_FILE_DECK2_TXT;
+        String default_f1 = Config.FILE_PATH_DECK1_TXT;
+        String default_f2 = Config.FILE_PATH_DECK2_TXT;
 
-        ObservableList<String> player1List = getOptionList();
-        ObservableList<String> player2List = getOptionList();
+        DeckReader deckReader;
+        if (deckPath.contains("jar")) {
+            deckReader = new JarDeckFileReader(deckPath);
+        } else {
+            deckReader = new NormalDeckFileReader(deckPath);
+        }
+        ObservableList<String> player1List = deckReader.getOptionList();
+        ObservableList<String> player2List = deckReader.getOptionList();
 
         final ComboBox<String> comboBox1 = new ComboBox<>(player1List);
         final ComboBox<String> comboBox2 = new ComboBox<>(player2List);
-        comboBox1.setValue(f1);
-        comboBox2.setValue(f2);
+        comboBox1.setValue(default_f1);
+        comboBox2.setValue(default_f2);
 
         CheckBox aiBox = new CheckBox("AI vs AI");
 
@@ -127,6 +139,7 @@ public class GameApp extends Application {
 
     private GameBoard getGameBoard(String deck1FileNm, String deck2FileNm, boolean allAI)
             throws IOException, ClassNotFoundException {
+
         CardParser cardParser = new CardParser(Config.FILE_PATH_CARDS_TXT);
         DeckParser deck1Parser = new DeckParser(deck1FileNm, cardParser);
         DeckParser deck2Parser = new DeckParser(deck2FileNm, cardParser);
@@ -141,32 +154,5 @@ public class GameApp extends Application {
         player2.setName("AI player");
 
         return new GameBoard(player1, player2);
-    }
-
-    private ObservableList<String> getOptionList() {
-        ArrayList<File> files = getDirectoryFiles();
-        ObservableList<String> options = FXCollections.observableArrayList();
-        for (File f : files) {
-            options.add(f.getName());
-        }
-        return options;
-    }
-
-    private ArrayList<File> getDirectoryFiles() {
-        InputStream is = ResourceReader.readFile("deck_description.txt");
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-        ArrayList<File> list = new ArrayList<>();
-        String line;
-
-        try {
-            while ((line = br.readLine()) != null) {
-                list.add(new File(line));
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return list;
     }
 }
