@@ -30,6 +30,7 @@ public class ParseCardTest {
         assertEquals(true, res);
     }
 
+
     public void buildCardResult() throws IOException {
         File output = new File("src/main/resources/output/PokemonCardAbilitiesCost.txt");
         buildCardResult(output.getPath());
