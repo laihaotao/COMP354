@@ -2,6 +2,7 @@ package parser.abilities;
 
 import game.GameBoard;
 import game.Player;
+import parser.tokenizer.TokenCondition;
 
 /**
  * Created by frede on 2017-07-07.
@@ -21,8 +22,8 @@ public class AbilityPartCond extends AbilityPart{
     }
     
     @Override
-    public void use(GameBoard targetBoard, Player owner) {
-        
+    public boolean use(GameBoard targetBoard, Player owner) {
+        return false;
     }
 
     @Override
