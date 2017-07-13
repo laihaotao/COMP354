@@ -1,7 +1,12 @@
 package unit;
 
-import game.SelectDeck;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 
 /**
@@ -13,12 +18,18 @@ import org.junit.Test;
 public class SelectDeckTest {
 
     @Test
-    public void test() {
+    public void test() throws IOException {
+        File dir = new File("/Users/ERIC_LAI/IdeaProjects/COMP354/target/COMP354-1.0-SNAPSHOT-jar-with-dependencies.jar!/decks/");
+        if (dir.isDirectory()) {
+            for (File f : dir.listFiles()) {
+                System.out.println(f.getName());
+            }
+        }else {
+            Enumeration<JarEntry> entries = new JarFile
+                    ("/Users/ERIC_LAI/IdeaProjects/COMP354/target/COMP354-1.0" +
+                    "-SNAPSHOT-jar-with-dependencies.jar").entries();
 
-//        System.out.println(SelectDeck.getPath());
 
-//        for (String str : propertiesFiles) {
-//            System.out.println(str);
-//        }
+        }
     }
 }

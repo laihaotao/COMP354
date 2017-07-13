@@ -25,7 +25,7 @@ public class DeckParser {
             throws IOException, ClassNotFoundException {
         deck = new ArrayList<>();
         this.cardParser = cardParser;
-        InputStream is = ResourceReader.readFile(deckFilePath);
+        InputStream is = ResourceReader.readFile("decks/" + deckFilePath);
         br = new BufferedReader(new InputStreamReader(is));
         buildDeck();
         br.close();

@@ -3,10 +3,11 @@ package entry;
 import card.Card;
 import game.GameBoard;
 import game.Player;
-import game.SelectDeck;
+import selectdeck.DeckReader;
+import selectdeck.JarDeckFileReader;
+import selectdeck.NormalDeckFileReader;
 import game.ai.IntelligentPlayer;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,10 +21,8 @@ import parser.cards.CardParser;
 import parser.cards.DeckParser;
 import ui.BoardView;
 import ui.StartPane;
-import util.ResourceReader;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -49,17 +48,26 @@ public class GameApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        selectDeck(primaryStage);
+        try {
+            selectDeck(primaryStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void selectDeck(Stage primaryStage) {
+    private void selectDeck(Stage primaryStage) throws IOException {
         GridPane root = new GridPane();
         String default_f1 = Config.FILE_PATH_DECK1_TXT;
         String default_f2 = Config.FILE_PATH_DECK2_TXT;
 
-        SelectDeck selectDeck = new SelectDeck(deckPath);
-        ObservableList<String> player1List = selectDeck.getOptionList();
-        ObservableList<String> player2List = selectDeck.getOptionList();
+        DeckReader deckReader;
+        if (deckPath.contains("jar")) {
+            deckReader = new JarDeckFileReader(deckPath);
+        } else {
+            deckReader = new NormalDeckFileReader(deckPath);
+        }
+        ObservableList<String> player1List = deckReader.getOptionList();
+        ObservableList<String> player2List = deckReader.getOptionList();
 
         final ComboBox<String> comboBox1 = new ComboBox<>(player1List);
         final ComboBox<String> comboBox2 = new ComboBox<>(player2List);
@@ -127,6 +135,7 @@ public class GameApp extends Application {
 
     private GameBoard getGameBoard(String deck1FileNm, String deck2FileNm)
             throws IOException, ClassNotFoundException {
+
         CardParser cardParser = new CardParser(Config.FILE_PATH_CARDS_TXT);
         DeckParser deck1Parser = new DeckParser(deck1FileNm, cardParser);
         DeckParser deck2Parser = new DeckParser(deck2FileNm, cardParser);
