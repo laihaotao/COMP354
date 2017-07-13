@@ -1,2 +1,3 @@
 deck1.txt
 deck2.txt
+deck_no_pokemon.txt

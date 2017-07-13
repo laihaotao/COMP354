@@ -1,9 +1,9 @@
 package entry;
 
-import entry.Config;
-import game.Ai_Player;
+import card.Card;
 import game.GameBoard;
 import game.Player;
+import game.ai.IntelligentPlayer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,23 +13,17 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
-import java.io.*;
-import java.util.*;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import card.Card;
-
-import ui.BoardView;
-import ui.StartPane;
-
 import parser.cards.CardParser;
 import parser.cards.DeckParser;
+import ui.BoardView;
+import ui.StartPane;
 import util.ResourceReader;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -90,7 +84,7 @@ public class GameApp extends Application {
 
         root.add(startBtn, 2, 3);
 
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         primaryStage.setScene(new Scene(root, 400, 300));
         primaryStage.setTitle("Select Deck File ");
 
@@ -110,7 +104,7 @@ public class GameApp extends Application {
         primaryStage.show();
 
         //TODO add support for resizing
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
 
         //This needs to be called since primaryStage.show() changes dimensions of panes
         //This means that any transformatons need to be re-applied to the views
@@ -121,6 +115,10 @@ public class GameApp extends Application {
 
 //        CardDebugParser cardDebugParser = new CardDebugParser("cards.txt");
 //        cardDebugParser.parse();
+        
+        if(gameBoard.getPlayer1() instanceof IntelligentPlayer && gameBoard.getPlayer2() instanceof IntelligentPlayer){
+            new Thread(() -> gameBoard.onEndTurnButtonClicked()).start();
+        }
     }
 
     private GameBoard getGameBoard(String deck1FileNm, String deck2FileNm)
@@ -132,7 +130,13 @@ public class GameApp extends Application {
         List<Card> player1Deck = deck1Parser.getDeck();
         List<Card> player2Deck = deck2Parser.getDeck();
 
-        return new GameBoard(new Player(player1Deck), new Ai_Player(player2Deck));
+        Player player1 = new Player(player1Deck);
+        Player player2 = new IntelligentPlayer(player2Deck);
+
+        player1.setName("human player");
+        player2.setName("AI player");
+
+        return new GameBoard(player1, player2);
     }
 
     private ObservableList<String> getOptionList() {
@@ -161,13 +165,4 @@ public class GameApp extends Application {
         }
         return list;
     }
-
-//    private File[] getFile(String path) {
-//        return new File(path).listFiles(pathname -> {
-//            // return all file whose name contains "deck"
-//            logger.debug("getFile: " + pathname.getName());
-//            return pathname.getName().contains("deck");
-//        });
-//    }
-
 }

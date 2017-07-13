@@ -4,6 +4,7 @@
 
 *Always keep the new announcement in the top*
 
+- the master branch has been locked, we are working on the `dev` branch now;
 - UML text format files add to the project under directory 'document/uml';
 - wiki page will be updated regularly;
 - use case is ongoing in the google doc, [link](https://docs.google.com/.../11o6333sEWp.../edit...);
@@ -32,6 +33,8 @@ For coder, we plan to use Maven for dependencies management. Also in case you di
 For testing which is an important part to our project, we plan to use a famous testing framework called "JUnit". Here is a [link](https://github.com/junit-team/junit4/wiki/Getting-started) to JUnit website getting start part. I already added this framework(dependency) into the `pom.xml` file (Maven).
 
 For buging tracking, we can just simply use the system provided by Github which called "issue". Here is a [link](https://guides.github.com/features/issues/) to a quick guide about it. I **strongerly suggest** all teams member should read it, since it is really significant.
+
+This is the pokemon [rulebook](http://assets.pokemon.com//assets/cms2/pdf/trading-card-game/rulebook/sm2_rulebook_en.pdf) if you want to check it.
 
 ps: *If anyone who has difficulty in setup the environment please make a post in the Facebook group or contact others member who know how to do it.*
 
@@ -66,5 +69,19 @@ In order to make the code clean, clear and easy to read, the whole team should f
 
 ps:*strongerly suggest you guys use the most intelligent IDE which is Intellij instead of Eclipse, trust me you will love it when you begin to use it!*
 
-This is the pokemon rulebook if you want to check it.
-http://assets.pokemon.com//assets/cms2/pdf/trading-card-game/rulebook/sm2_rulebook_en.pdf
+## Log4j Instruction
+
+For some reason, we are using log4j as a log tool. Here we provide some instruction for how to use it.
+
+First all of, all the log need to meet the following requirement:
+
+- the specific log for debug purpose must be labeled as `debug`;
+- the information for tracing the system can be labeled as `info`;
+- the error message should be labeled as `err`;
+
+## How to get the specific log
+
+There are two ways to do it:
+
+1. modify the `log4j2.xml` file, using a regex replace the `.*` in this line: `<RegexFilter regex=".*" onMatch="ACCEPT" onMismatch="DENY"/>`;
+2. using a console tool to filter the output, there is a tool named Grep in both eclipse and Intellij;

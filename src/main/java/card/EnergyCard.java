@@ -1,5 +1,5 @@
 /*
- * description:  The abstract class of energy card
+ * description:  The class of energy card
  * author(s):    Eric(Haotao) Lai
  * reviewer(s):
  * date:         2017-05-17
@@ -10,12 +10,12 @@ package card;
 
 public class EnergyCard extends Card {
 	 // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fight-Dragon
-    public enum EnergyType {Colorless, Fire, Water, Lightning, Psychic, Grass, Darkness, Metal, Fairy, Fight, Dragon;}
+    public enum EnergyType {COLORLESS, WATER, LIGHTNING, PSYCHIC, FIGHT}
 
     private EnergyType energyType;
 
     public EnergyCard(String type) {
-        this(Enum.valueOf(EnergyType.class, type));
+    	this(Enum.valueOf(EnergyType.class, type.toUpperCase()));
     }
 
     public EnergyCard(EnergyType type){

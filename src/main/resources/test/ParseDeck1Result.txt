@@ -1,13 +1,13 @@
 Shauna
 Pokemon Fan Club
 Switch
-Psychic
+PSYCHIC
 Hitmonlee
 Slowpoke
 Machop
 Meowth
-Fight
-Fight
+FIGHT
+FIGHT
 Doduo
 Dodrio
 Machop
@@ -19,23 +19,23 @@ Meowth
 Machoke
 Espurr
 Jynx
-Fight
-Psychic
-Fight
-Fight
+FIGHT
+PSYCHIC
+FIGHT
+FIGHT
 Red Card
-Psychic
+PSYCHIC
 Wally
-Psychic
-Psychic
-Psychic
-Fight
+PSYCHIC
+PSYCHIC
+PSYCHIC
+FIGHT
 Persian
-Fight
-Fight
+FIGHT
+FIGHT
 Haunter
-Psychic
-Psychic
+PSYCHIC
+PSYCHIC
 Doduo
 Geodude
 Zubat
@@ -46,15 +46,15 @@ Dugtrio
 Floral Crown
 Poke Ball
 Zubat
-Psychic
+PSYCHIC
 Gastly
 Diglett
 Diglett
-Fight
+FIGHT
 Espurr
 Geodude
 Jirachi
-Psychic
+PSYCHIC
 Energy Switch
-Fight
+FIGHT
 Jirachi

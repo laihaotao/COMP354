@@ -1,5 +1,5 @@
 /*
- * description:  The abstract class of pokemon card
+ * description:  The class of pokemon card
  * author(s):    Eric(Haotao) Lai
  * reviewer(s):
  * date:         2017-05-17
@@ -19,19 +19,11 @@ public class PokemonCard extends Card {
     private String pokemonStage;
     private int hp;
     private int attackCounter;
-
-    //note: Abilities will contain special abilities, but also basic attacks
-    //Each ability has a cost, therefore abilityName[i] will refer to abilityCost[i];
-    /**
-     * private ArrayList<AbilityTemplate> abilityTemplates = new ArrayList<>();
-     * private ArrayList<int[]> abilityCost = new ArrayList<>();
-     **/
     private List<Ability> abilities;
-
     private int damage;
     private int defense;
-
     private EnergyCost energyAttached = new EnergyCost();
+    private ArrayList<EnergyCard> attachedEnergyCard = new ArrayList<>();
 
     // Colorless-Fire-Water-Lightning-Psychic-Grass-Darkness-Metal-Fairy-Fightning-Dragon
     private EnergyCost retreatEnergyCost;
@@ -45,11 +37,12 @@ public class PokemonCard extends Card {
     }
 
 
-    public PokemonCard(String name, String basic, String pokemonType, int hp, EnergyCost
+    public PokemonCard(String name, String basic, String evolvesFrom, String pokemonType, int hp, EnergyCost
             retreatEnergyCost, List<Ability> abilities) {
 
         this.pokemonStage = basic;
         this.name = name;
+        this.evolvesFrom = evolvesFrom;
         this.pokemonType = pokemonType;
         this.hp = hp;
         this.retreatEnergyCost = retreatEnergyCost;
@@ -59,9 +52,6 @@ public class PokemonCard extends Card {
         this.attackCounter = 0;
         this.status = "";
         this.cardType = CardType.POKEMON;
-        
-        
-
     }
 
 
@@ -243,7 +233,15 @@ public class PokemonCard extends Card {
     }
 
     public PokemonCard copy() {
-        return new PokemonCard(name, getPokemonStage(), getPokemonType(), getHp(), getRetreatEnergyCost(), abilities);
+        return new PokemonCard(name,getPokemonStage(), getEvolvesFrom(), getPokemonType(), getHp(), getRetreatEnergyCost(), abilities);
     }
 
+    public void addEnergy(EnergyCard energyCard) {
+        this.getEnergyAttached().addEnergy(energyCard.getEnergyType().toString(), 1);
+        attachedEnergyCard.add(energyCard);
+    }
+
+    public ArrayList<EnergyCard> getAttachedEnergyCard() {
+        return this.attachedEnergyCard;
+    }
 }

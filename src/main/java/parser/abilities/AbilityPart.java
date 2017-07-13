@@ -27,5 +27,7 @@ public abstract class AbilityPart {
    * @param targetBoard GameBoard to use ability on
    * @param owner The player owner of the ability
    */
-  public abstract void use(GameBoard targetBoard, Player owner);
+  public abstract boolean use(GameBoard targetBoard, Player owner);
+  
+  public abstract String getDescriptionString();
 }

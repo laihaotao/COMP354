@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Eric on 5/30/2017.
@@ -35,6 +36,8 @@ public class ParseDeckTest {
         ArrayList<Card> deck1 = (ArrayList<Card>) deckParser1.getDeck();
         ArrayList<Card> deck2 = (ArrayList<Card>) deckParser2.getDeck();
 
+        
+        
         System.out.println("------------");
         for (Card card : deck1) {
             if (card instanceof PokemonCard) {
@@ -64,5 +67,7 @@ public class ParseDeckTest {
             assertEquals(expected.get(i), deck.get(i).getCardName());
         }
     }
+    
+    
 
 }

@@ -22,9 +22,21 @@ public class AbilityTemplate {
      * @param board The board to be used
      * @param owner The Player owner of the ability
      */
-    public void use(GameBoard board, Player owner){
+    public boolean use(GameBoard board, Player owner){
+        boolean used = false;
         for(AbilityPart part : parts){
-            part.use(board, owner);
+            used |= part.use(board, owner);
         }
+        return used;
+    }
+
+    public boolean appliesDamage(){
+        for(AbilityPart part : parts){
+            if(part instanceof AbilityPartDam){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

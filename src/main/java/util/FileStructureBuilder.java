@@ -1,3 +1,10 @@
+/*
+ * description:
+ * author(s):    Eric(Haotao) Lai
+ * reviewer(s):
+ * date:         2017-04-08
+ */
+
 package util;
 
 import java.io.File;
@@ -6,9 +13,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by ERIC_LAI on 2017-04-08.
- */
 public class FileStructureBuilder {
 
     public static void main(String[] args) {

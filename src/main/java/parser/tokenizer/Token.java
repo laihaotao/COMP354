@@ -20,4 +20,6 @@ public abstract class Token {
   public int evaluateAsExpression(){
     return 0;
   }
+  
+  public abstract String getDisplayString();
 }
