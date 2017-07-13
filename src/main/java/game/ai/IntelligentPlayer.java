@@ -41,7 +41,7 @@ public class IntelligentPlayer extends Player {
             }
         }else{
             boolean putOnBench = true;
-            if(activePokemon.getEnergyAttached().equals(activePokemon.getRetreatEnergyCost())) {
+            if(activePokemon.getEnergyAttached().canSupport(activePokemon.getRetreatEnergyCost())) {
                 List<Card> fullList = new ArrayList<>();
                 fullList.addAll(bench);
                 fullList.add(activePokemon);
@@ -135,7 +135,7 @@ public class IntelligentPlayer extends Player {
         if(activePokemon != null){
             boolean enoughEnergy = true;
             for(Ability ability : activePokemon.getAbilities()){
-                if(!ability.getEnergyCost().equals(activePokemon.getEnergyAttached())){
+                if(!ability.getEnergyCost().canSupport(activePokemon.getEnergyAttached())){
                     enoughEnergy = false;
                 }
             }
