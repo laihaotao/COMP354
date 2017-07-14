@@ -29,8 +29,7 @@ public class NormalDeckFileReader extends DeckReader {
         return options;
     }
 
-    private File[] getDirectoryFiles() {
-
+    public File[] getDirectoryFiles() {
         File dir = new File(deckPath);
         if (dir.isDirectory()) {
             return dir.listFiles();
