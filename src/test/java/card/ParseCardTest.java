@@ -1,5 +1,6 @@
 package card;
 
+import static org.junit.Assert.*;
 import entry.Config;
 import org.junit.Test;
 import parser.cards.CardParser;
