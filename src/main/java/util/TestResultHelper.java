@@ -1,3 +1,10 @@
+/*
+ * description:  This class is used for testing
+ * author(s):    Eric(Haotao) Lai
+ * reviewer(s):
+ * date:         2017-04-08
+ */
+
 package util;
 
 
@@ -5,12 +12,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-/**
- * Created by Eric on 5/30/2017.
- */
 public class TestResultHelper {
 
 
+    /**
+     * compare two file
+     * @param e expected file
+     * @param a actual file
+     * @return true, if two file are the same; otherwise, false;
+     * @throws IOException
+     */
     public static boolean compareTwoFiles(File e, File a) throws IOException {
         BufferedReader expectedReader = new BufferedReader(new FileReader(e));
         BufferedReader actualReader = new BufferedReader(new FileReader(a));
@@ -36,6 +47,12 @@ public class TestResultHelper {
         return res;
     }
 
+    /**
+     * Read a file and return a list contains each line's string as element
+     * @param path the file's path
+     * @return
+     * @throws IOException
+     */
     public static ArrayList<String> readResultFile(String path) throws IOException {
         ArrayList<String> list = new ArrayList<>();
         InputStream is = ResourceReader.readFile("test/" + path);

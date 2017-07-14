@@ -33,7 +33,12 @@ public class AbilityPartDeck extends AbilityPart{
   }
 
   @Override
-  public void use(GameBoard targetBoard, Player owner) {
-    
+  public boolean use(GameBoard targetBoard, Player owner) {
+      return false;
+  }
+
+  @Override
+  public String getDescriptionString() {
+    return "description"; //TODO add description
   }
 }

@@ -1,47 +1,39 @@
+/*
+ * description:  The class of player
+ * author(s):    frede
+ * reviewer(s):  kawsara
+ * date:         2017-05-15
+ */
+
 package game;
 
 
 import card.Card;
 import card.PokemonCard;
-
-import java.util.*;
-
-//import javax.sound.midi.SysexMessage;
-
-//import Card.CardType;
-/**
- * Created by frede on 2017-05-15.
- * modified by kawsara 2017-05-16
- *in progress
- */
-
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.Normalizer;
-
+import parser.commons.TargetProperty;
 import ui.selections.RewardSelector;
 
-/**
- * Created by frede on 2017-05-15.
- */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
 public class Player {
 
-    //function
-    //private  ArrayList<Card> listOfAllCards;
     protected List<Card> deck;// = new Card[60];
     protected List<Card> prizes = new ArrayList<>();//= new Card[6];
     protected List<Card> hand = new ArrayList<>();
     protected List<Card> bench = new ArrayList<>();//= new Card[5];;
     protected List<Card> discardPile = new ArrayList<>();
-    protected PokemonCard activePokemon;
+    protected PokemonCard activePokemon = null;
     protected List<PokemonCard> pokemonCards = new ArrayList<>();
     protected List<Card> energyCards = new ArrayList<>();
     private List<Card> trainerCards = new ArrayList<>();
     private Scanner kb = new Scanner(System.in);
     Random rand = new Random();
-
+    private String name;
+    
+    private game.TargetSelector targetSelector;
 
     public Player(List<Card> playerDeck) {
         //Each player gets 7 cards drawn randomly at the beginning of the game
@@ -53,6 +45,12 @@ public class Player {
         put7CardInHand();
 
         //chooseActivePokemon();
+        
+        targetSelector = createTargetSelector();
+    }
+    
+    public TargetSelector createTargetSelector(){
+        return new game.TargetSelector();
     }
 
     public void put7CardInHand() {
@@ -80,16 +78,14 @@ public class Player {
     public void putPrizes() {
         for (int i = 0; i < 6; i++) {
             int n = rand.nextInt(deck.size());
-            prizes.add(deck.remove(n));
+            prizes.add(deck.remove(deck.size()-i-1));
         }
-
-
     }
 
     //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
     public void putCardInHand() {
         hand.add(deck.remove(0));
-        if (hand.get(hand.size() - 1) instanceof PokemonCard)//  .getType().equals("POKEMON"))
+        if (hand.get(hand.size() - 1) instanceof PokemonCard)//  .getType().canSupport("POKEMON"))
             pokemonCards.add((PokemonCard) hand.get(hand.size() - 1));
 
     }
@@ -240,6 +236,8 @@ public class Player {
 
     }
 
+
+
     public void attackOpponent(Card opponent) { }
 
     public void attachEnergyCard() {}
@@ -278,7 +276,19 @@ public class Player {
         }
     }
 
-    public List<Card> getDiscardPile(){
+    public List<Card> getDiscardPile() {
         return discardPile;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Card getTarget(GameBoard gameBoard, TargetProperty target) {
+        return targetSelector.getCard(gameBoard, this, target);
     }
 }

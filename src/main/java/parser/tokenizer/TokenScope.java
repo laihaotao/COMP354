@@ -25,4 +25,16 @@ public class TokenScope extends Token {
     s += " )";
     return s;
   }
+
+  @Override
+  public String getDisplayString() {
+    StringBuilder displayBuilder = new StringBuilder();
+    displayBuilder.append(prefix+"(");
+    tokens.forEach(token->{
+      displayBuilder.append(token.getDisplayString()+":");
+    });
+    displayBuilder.append(")");
+    return displayBuilder.toString();
+  }
+
 }

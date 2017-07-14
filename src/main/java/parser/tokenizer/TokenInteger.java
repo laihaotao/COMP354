@@ -18,4 +18,9 @@ public class TokenInteger extends Token{
   public int evaluateAsExpression(){
       return value;
   }
+
+  @Override
+  public String getDisplayString() {
+    return String.valueOf(value);
+  }
 }

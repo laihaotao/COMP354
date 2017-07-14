@@ -1,7 +1,7 @@
 /*
  * description:  Loading the Deck
  * author(s):    Martin Tseng
- * reviewer(s):
+ * reviewer(s):  Eric(Haotao) Lai
  * date:         2017-05-29
  */
 
@@ -21,10 +21,11 @@ public class DeckParser {
     private BufferedReader br;
     private CardParser cardParser;
 
-    public DeckParser(String deckFilePath, CardParser cardParser) throws IOException, ClassNotFoundException {
+    public DeckParser(String deckFilePath, CardParser cardParser)
+            throws IOException, ClassNotFoundException {
         deck = new ArrayList<>();
         this.cardParser = cardParser;
-        InputStream is = ResourceReader.readFile(deckFilePath);
+        InputStream is = ResourceReader.readFile("decks/" + deckFilePath);
         br = new BufferedReader(new InputStreamReader(is));
         buildDeck();
         br.close();
@@ -37,8 +38,7 @@ public class DeckParser {
         return null;
     }
 
-    
-    
+
     private void buildDeck() throws IOException, ClassNotFoundException {
         String line;
         while ((line = br.readLine()) != null) {

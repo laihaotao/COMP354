@@ -1,5 +1,6 @@
 package card;
 
+import static org.junit.Assert.*;
 import entry.Config;
 import org.junit.Test;
 import parser.cards.CardParser;
@@ -29,6 +30,7 @@ public class ParseCardTest {
         boolean res = TestResultHelper.compareTwoFiles(expected, output);
         assertEquals(true, res);
     }
+
 
     public void buildCardResult() throws IOException {
         File output = new File("src/main/resources/output/PokemonCardAbilitiesCost.txt");

@@ -12,4 +12,9 @@ public class TokenSeparator extends Token{
   public String toString(){
       return super.toString() + "Separator -> --------------";
   }
+
+  @Override
+  public String getDisplayString() {
+    return "____";
+  }
 }

@@ -1,5 +1,5 @@
 /*
- * description:  The abstract class of trainer card
+ * description:  The class of trainer card
  * author(s):    Eric(Haotao) Lai
  * reviewer(s):
  * date:         2017-05-17
@@ -14,9 +14,11 @@ public class TrainerCard extends Card {
     private TrainerType trainerType;
 
     public TrainerCard(String name, String type, Ability ability) {
-        this.name = name;
+    	
+    	
+    	this.name = name;
         this.cardType = CardType.TRAINER;
-        this.trainerType = Enum.valueOf(TrainerType.class, type);
+        this.trainerType = Enum.valueOf(TrainerType.class, type.toUpperCase());
         this.ability = ability;
     }
     

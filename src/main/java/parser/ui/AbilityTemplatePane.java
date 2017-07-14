@@ -2,6 +2,7 @@ package parser.ui;
 
 import javafx.scene.control.TreeItem;
 import parser.abilities.AbilityPart;
+import parser.abilities.AbilityPartCond;
 import parser.abilities.AbilityTemplate;
 import parser.commons.Property;
 
@@ -27,8 +28,17 @@ public class AbilityTemplatePane extends TreeItem {
     }
     
     private void processAbilityPart(TreeItem ti, AbilityPart part){
+        if(part == null){
+            return;
+        }
         TreeItem item = new TreeItem<>(part);
         ti.getChildren().add(item);
+
+        if(part instanceof AbilityPartCond){
+            AbilityPartCond condPart = (AbilityPartCond)part; 
+            processAbilityPart(item, condPart.truePart);
+            processAbilityPart(item, condPart.falsePart);
+        }
         
         //process sub parts
       

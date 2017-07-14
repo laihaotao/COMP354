@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Eric on 5/30/2017.
@@ -29,12 +30,14 @@ public class ParseDeckTest {
     @Test
     public void parseTwoDeckTest() throws IOException, ClassNotFoundException {
         CardParser cardParser = new CardParser(Config.FILE_PATH_CARDS_TXT);
-        DeckParser deckParser1 = new DeckParser(Config.PATH_FILE_DECK1_TXT, cardParser);
-        DeckParser deckParser2 = new DeckParser(Config.PATH_FILE_DECK2_TXT, cardParser);
+        DeckParser deckParser1 = new DeckParser(Config.FILE_PATH_DECK1_TXT, cardParser);
+        DeckParser deckParser2 = new DeckParser(Config.FILE_PATH_DECK2_TXT, cardParser);
 
         ArrayList<Card> deck1 = (ArrayList<Card>) deckParser1.getDeck();
         ArrayList<Card> deck2 = (ArrayList<Card>) deckParser2.getDeck();
 
+        
+        
         System.out.println("------------");
         for (Card card : deck1) {
             if (card instanceof PokemonCard) {
@@ -56,7 +59,7 @@ public class ParseDeckTest {
         ArrayList<String> expected = TestResultHelper.readResultFile("ParseDeck1Result.txt");
 
         CardParser cardParser = new CardParser(Config.FILE_PATH_CARDS_TXT);
-        DeckParser deckParser = new DeckParser(Config.PATH_FILE_DECK1_TXT, cardParser);
+        DeckParser deckParser = new DeckParser(Config.FILE_PATH_DECK1_TXT, cardParser);
 
         ArrayList<Card> deck = (ArrayList<Card>) deckParser.getDeck();
 
@@ -64,5 +67,7 @@ public class ParseDeckTest {
             assertEquals(expected.get(i), deck.get(i).getCardName());
         }
     }
+    
+    
 
 }

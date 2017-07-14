@@ -12,13 +12,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 
-/**
- * Created by ERIC_LAI on 2017-05-30.
- */
+
 public class ResourceReader {
 
     private final static Logger logger = LogManager.getLogger(ResourceReader.class.getName());
-
 
     public static InputStream readFile(String path) {
         return ClassLoader.getSystemClassLoader().getResourceAsStream(path);
