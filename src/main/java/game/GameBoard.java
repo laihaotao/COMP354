@@ -19,6 +19,7 @@ import java.util.*;
 
 public class GameBoard {
 
+
     enum CardLocation {
         DECK, HAND, BENCH, ACTIVE, DISCARD,
     }
