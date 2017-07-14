@@ -79,25 +79,7 @@ public class HandTest {
         
         
         
-        /*
-        This tests if we have the prize cards in order. Uncomment these to test it.
-        assertEquals(player1.getPrizes().get(0).getCardName(), "Meowth");
-        assertEquals(player1.getPrizes().get(1).getCardName(), "FIGHT");
-        assertEquals(player1.getPrizes().get(2).getCardName(), "FIGHT");
-        assertEquals(player1.getPrizes().get(3).getCardName(), "Doduo");
-        assertEquals(player1.getPrizes().get(4).getCardName(), "Dodrio");
-        assertEquals(player1.getPrizes().get(5).getCardName(), "Machop");
-        
-        
-        assertEquals(player2.getPrizes().get(0).getCardName(), "Seaking");
-        assertEquals(player2.getPrizes().get(1).getCardName(), "Seaking");
-        assertEquals(player2.getPrizes().get(2).getCardName(), "Purugly");
-        assertEquals(player2.getPrizes().get(3).getCardName(), "LIGHTNING");
-        assertEquals(player2.getPrizes().get(4).getCardName(), "WATER");
-        assertEquals(player2.getPrizes().get(5).getCardName(), "LIGHTNING");
-        
-        
-        */
+
         
 		
 	}
