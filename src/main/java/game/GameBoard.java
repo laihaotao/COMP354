@@ -308,7 +308,7 @@ public class GameBoard {
                 ((IntelligentPlayer) currentPlayer).doTurn(this);
                 if(view != null) {
                     Platform.runLater(()->{
-                        //view.refreshView();
+                        view.refreshView();
                     });
                 }
                 if(getPlayer1() instanceof IntelligentPlayer && getPlayer2() instanceof IntelligentPlayer) {
