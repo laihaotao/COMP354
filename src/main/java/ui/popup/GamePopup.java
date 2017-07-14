@@ -35,6 +35,7 @@ public class GamePopup {
     private static Logger logger = LogManager.getLogger(GamePopup.class.getName());
 
     public static void displayGameResult(String player, boolean won) {
+        System.out.println(player + " " + (won ? "won" : "lost") + " the game!");
         Platform.runLater(()->{
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setContentText(player + " " + (won ? "won" : "lost") + " the game!");

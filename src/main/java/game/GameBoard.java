@@ -323,7 +323,7 @@ public class GameBoard {
                 aiTurn();
             }
         
-
+        
     }
 
     private void aiTurn() {
@@ -365,7 +365,7 @@ public class GameBoard {
 
         if (getCurrentTurnPlayer().activePokemon == null) {
             boolean stillHavePokemon = false;
-            for (Card c : getWaitingTurnPlayer().getBench()) {
+            for (Card c : getCurrentTurnPlayer().getBench()) {
                 if (c instanceof PokemonCard &&
                         ((PokemonCard) c).getEvolvesFrom() == null) {
                     stillHavePokemon = true;
