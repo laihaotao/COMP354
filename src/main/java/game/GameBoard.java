@@ -236,8 +236,8 @@ public class GameBoard {
                 }
             }
 
-            // check the bench pokemon's hp
-            player.getBench().forEach((card -> {
+            for(int i=0; i < player.getBench().size(); i++){
+                Card card = player.getBench().get(i);
                 if (card instanceof PokemonCard) {
                     PokemonCard pokemonCard = (PokemonCard) card;
                     if (pokemonCard.getDamage() >= pokemonCard.getHp()) {
@@ -246,22 +246,24 @@ public class GameBoard {
                         removeAttachedEnergyCardToDiscardpile(player, pokemonCard);
                         player.getBench().remove(pokemonCard);
                         player.getDiscardPile().add(pokemonCard);
+                        i--;
                         onCardDead(player);
                     }
                 }
-            }));
-
-            // check the hand pokemon's hp
-            player.getHand().forEach((card -> {
+            }
+            for(int i=0; i < player.getBench().size(); i++) {
+                Card card = player.getBench().get(i);
                 if (card instanceof PokemonCard) {
                     PokemonCard pokemonCard = (PokemonCard) card;
                     if (pokemonCard.getDamage() >= pokemonCard.getHp()) {
                         player.getHand().remove(card);
                         player.getDiscardPile().add(card);
                         onCardDead(player);
+                        i--;
                     }
                 }
-            }));
+            }
+
         }
     }
 
@@ -285,14 +287,14 @@ public class GameBoard {
     }
 
     public void onEndTurnButtonClicked() {
-        if (turnInfo.turnNum != 1) {
-            checkWinLose();
-        }
         nextTurn();
-        turnInfo.turnNum++;
     }
 
     private void nextTurn() {
+        if (turnInfo.turnNum != 1) {
+            checkWinLose();
+        }
+        turnInfo.turnNum++;
         turnInfo.reset();
         //This will cycle between 0 and 1
         currentTurn = (currentTurn + 1) % 2;
@@ -306,7 +308,7 @@ public class GameBoard {
                 ((IntelligentPlayer) currentPlayer).doTurn(this);
                 if(view != null) {
                     Platform.runLater(()->{
-                        view.refreshView();
+                        //view.refreshView();
                     });
                 }
                 if(getPlayer1() instanceof IntelligentPlayer && getPlayer2() instanceof IntelligentPlayer) {
@@ -358,7 +360,7 @@ public class GameBoard {
     private void checkWinLose() {
         if (getCurrentTurnPlayer().prizes.size() == 0 || getWaitingTurnPlayer().deck.size() == 0) {
             logger.debug("prize card size or enemy deck size equal zero");
-            GamePopup.displayGameResult(getCurrentTurnPlayer().getName(), true);
+            Platform.runLater(()->GamePopup.displayGameResult(getCurrentTurnPlayer().getName(), true));
         }
 
         if (getCurrentTurnPlayer().activePokemon == null) {
@@ -371,7 +373,7 @@ public class GameBoard {
                 }
             }
             if (!stillHavePokemon) {
-                GamePopup.displayGameResult(getCurrentTurnPlayer().getName(), true);
+                Platform.runLater(()->GamePopup.displayGameResult(getCurrentTurnPlayer().getName(), true));
             }
         }
     }

@@ -202,24 +202,33 @@ public class IntelligentPlayer extends Player {
                     case FIGHT:
                         if(neededEnergy.fight <= 0 && neededEnergy.colorless <=0){
                             break;
+                        }else{
+                            energyToPlay = energyCard;
+                            break search;
                         }
 
                     case WATER:
                         if(neededEnergy.water <= 0 && neededEnergy.colorless <=0){
                             break;
+                        }else{
+                            energyToPlay = energyCard;
+                            break search;
                         }
                     case PSYCHIC:
                         if(neededEnergy.psychic <= 0 && neededEnergy.colorless <=0){
                             break;
+                        }else{
+                            energyToPlay = energyCard;
+                            break search;
                         }
                     case LIGHTNING:
                         if(neededEnergy.lightning <= 0 && neededEnergy.colorless <=0){
                             break;
+                        }else{
+                            energyToPlay = energyCard;
+                            break search;
                         }
-
-                    default:
-                        energyToPlay = energyCard;
-                        break search;
+                        
 
                 }
             }
