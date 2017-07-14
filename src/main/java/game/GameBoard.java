@@ -68,6 +68,8 @@ public class GameBoard {
 
         if(card instanceof TrainerCard){
             onActiveAbilityClicked(player, card, ((TrainerCard) card).getAbility());
+            player.getDiscardPile().add(card);
+            player.getHand().remove(card);
         }else if (card != null && (playerNum - 1) == currentTurn) {
             setSelectedCard(card, CardLocation.HAND);
         }
