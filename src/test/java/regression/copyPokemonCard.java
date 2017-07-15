@@ -1,15 +1,13 @@
 package regression;
-import card.Ability;
+
 import card.Card;
 import card.PokemonCard;
-import card.Card.CardType;
+import org.junit.Test;
 import parser.abilities.AbilitiesParser;
 import parser.abilities.AbilityTemplate;
 import parser.cards.CardLineSeperator;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class copyPokemonCard {
 
