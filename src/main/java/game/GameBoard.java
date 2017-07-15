@@ -148,6 +148,7 @@ public class GameBoard {
                 if (pokemonCard.getEvolvesFrom().equalsIgnoreCase(player.getActivePokemon()
                         .getCardName())) {
                     if (removeSelected()) {
+                        pokemonCard.getEnergyAttached().add(((PokemonCard)player.getActivePokemon()).getEnergyAttached());
                         player.setActivePokemon(pokemonCard);
                         setSelectedCard(null, null);
                     }
