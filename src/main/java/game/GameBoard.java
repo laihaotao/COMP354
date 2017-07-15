@@ -120,21 +120,22 @@ public class GameBoard {
         int playerNum = (player == players[0]) ? 1 : 2;
         logger.debug("Player" + playerNum + " has clicked the active pokemon");
 
-        // add energy card to activated card
-        if (!turnInfo.getEnergyTrigger().getStatus()
-                && card != null && player == getCurrentTurnPlayer() && selectedCard != null &&
-                selectedCard instanceof EnergyCard) {
-            PokemonCard pokemonCard = (PokemonCard) card;
-            EnergyCard energyCard = (EnergyCard) selectedCard;
-            pokemonCard.addEnergy(energyCard);
+        if(selectedCard instanceof EnergyCard) {
+            // add energy card to activated card
+            if (!turnInfo.getEnergyTrigger().getStatus()
+                    && card != null && player == getCurrentTurnPlayer() && selectedCard != null &&
+                    selectedCard instanceof EnergyCard) {
+                PokemonCard pokemonCard = (PokemonCard) card;
+                EnergyCard energyCard = (EnergyCard) selectedCard;
+                pokemonCard.addEnergy(energyCard);
 //            player.getDiscardPile().add(energyCard);
-            player.getHand().remove(energyCard);
-            selectedCard = null;
-            turnInfo.getEnergyTrigger().trigger();
-        } else if (turnInfo.getEnergyTrigger().getStatus()) {
-            GamePopup.displayMessage("You can only add one energy per turn");
+                player.getHand().remove(energyCard);
+                selectedCard = null;
+                turnInfo.getEnergyTrigger().trigger();
+            } else if (turnInfo.getEnergyTrigger().getStatus()) {
+                GamePopup.displayMessage("You can only add one energy per turn");
+            }
         }
-
         if (selectedCard != null && selectedCard instanceof
                 PokemonCard && player == getCurrentTurnPlayer()) {
             PokemonCard pokemonCard = (PokemonCard) selectedCard;
@@ -148,6 +149,7 @@ public class GameBoard {
                 if (pokemonCard.getEvolvesFrom().equalsIgnoreCase(player.getActivePokemon()
                         .getCardName())) {
                     if (removeSelected()) {
+                        pokemonCard.getEnergyAttached().add(((PokemonCard)player.getActivePokemon()).getEnergyAttached());
                         player.setActivePokemon(pokemonCard);
                         setSelectedCard(null, null);
                     }
