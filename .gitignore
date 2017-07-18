@@ -5,3 +5,4 @@ COMP354.iml
 .project
 .settings/
 bin/
+.vscode/
