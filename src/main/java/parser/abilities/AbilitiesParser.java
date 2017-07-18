@@ -9,6 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import parser.commons.Condition;
+import parser.commons.ConditionFlip;
 import parser.commons.DestinationProperty;
 import parser.commons.TargetProperty;
 import parser.tokenizer.LanguageTokenizer;
@@ -225,8 +227,9 @@ public class AbilitiesParser {
 
   private AbilityPart parseCondPart(TokenStream tokenStream){    
       Token type = tokenStream.getNextToken();
-      
-      AbilityPartCond abilityPartCond = new AbilityPartCond();
+
+      Condition condition = null;
+     
       if(type instanceof TokenString) {
         switch (((TokenString)type).value) {
           case "healed":
@@ -234,7 +237,7 @@ public class AbilitiesParser {
             //apply if target has been healed
             break;
           case "flip":
-            //apply 50% of the time
+            condition = new ConditionFlip();
             break;
           case "ability":
             // ???
@@ -246,6 +249,7 @@ public class AbilitiesParser {
       }else if(type instanceof TokenCondition){
 
       }
+      AbilityPartCond abilityPartCond = new AbilityPartCond(condition);
       
       AbilityPart truePart = parseNextPart(tokenStream);
       AbilityPart falsePart = null;
