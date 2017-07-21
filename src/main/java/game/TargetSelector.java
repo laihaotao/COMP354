@@ -1,38 +1,63 @@
 package game;
 
 import card.Card;
+import java.util.ArrayList;
+import java.util.List;
 import parser.commons.TargetProperty;
 import ui.selections.TargetSelectorUI;
 
 /**
  * Created by frede on 2017-06-08.
  */
-public class TargetSelector {
+public  abstract class TargetSelector {
     public TargetSelector(){
       
     }
     
-    public Card getCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-      switch(targetProperty.target.value){
-        case "choice":{
-            return getChoiceCard(gameBoard, callingPlayer, targetProperty);
+    public Player getPlayer(GameBoard gameBoard, Player callingPlayer, TargetProperty target){
+        switch(target.target.value){
+            case "opponent":
+                return gameBoard.getOtherPlayer(callingPlayer);
+            case "your":
+                return callingPlayer;
         }
-
-        case "opponent-active":{
-            return getOpponentActive(gameBoard, callingPlayer);
-        }
-
-        default: {
-          return null;
-        }
-      }
+        return null;
     }
     
-    public Card getChoiceCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-        return TargetSelectorUI.getTarget(gameBoard, callingPlayer, targetProperty);
+    public Card getCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty) {
+        switch (targetProperty.target.value) {
+            case "choice": {
+                switch(targetProperty.modifier.value){
+                    case "opponent":
+                        return choseOpponentCard(gameBoard, callingPlayer);
+                    case "your":
+                        return choseYourCard(gameBoard, callingPlayer);
+                    case "opponent-bench":
+                        return choseOpponentBench(gameBoard, callingPlayer);
+                    case "your-bench":
+                        return choseYourBench(gameBoard, callingPlayer);
+                }
+            }
+            case "your-active": {
+                return callingPlayer.getActivePokemon();
+            }
+            case "opponent-active": {
+                return gameBoard.getOtherPlayer(callingPlayer).getActivePokemon();
+            }
+            case "opponent":
+                return choseOpponentCard(gameBoard, callingPlayer);
+            default: {
+                return null;
+            }
+        }
     }
     
-    public Card getOpponentActive(GameBoard gameBoard, Player callingPlayery){
-        return gameBoard.getOtherPlayer(callingPlayery).getActivePokemon();
-    }
+    public abstract Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer);
+    
+    public abstract Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer);
+    
+    public abstract Card choseYourCard(GameBoard gameBoard, Player callingPlayer);
+    
+    public abstract Card choseYourBench(GameBoard gameBoard, Player callingPlayer);
+    
 }

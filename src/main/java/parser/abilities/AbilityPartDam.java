@@ -31,8 +31,12 @@ public class AbilityPartDam extends AbilityPart{
     if(targetCard != null) {
       if (targetCard instanceof PokemonCard) {
         PokemonCard pokemonCard = (PokemonCard) targetCard;
-        targetBoard.applyDamageToCard(owner, pokemonCard, ammount.evaluateAsExpression());
-        return true;
+        int intAmmount = ammount.evaluateAsExpression();
+        if(intAmmount > 0) {
+          targetBoard.applyDamageToCard(owner, pokemonCard, intAmmount);
+          return true;
+        }
+        
       }
     }
     //damage target card

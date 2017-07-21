@@ -190,8 +190,8 @@ public class AbilitiesParser {
       //log.debug("---Deck---");
 
       TargetProperty targetPart = TargetProperty.read(tokenStream);
-    
-      DestinationProperty destinationPart = DestinationProperty.read(tokenStream);
+
+      TargetProperty destinationPart = TargetProperty.read(tokenStream);
       
       TokenString choice = null;
       if(tokenStream.validateTokenString("choice") != null){
@@ -279,10 +279,19 @@ public class AbilitiesParser {
     return new AbilityPartDraw(target, amount);
   }
 
-  private AbilityPart parseCondPart(TokenStream tokenStream){    
+  private AbilityPart parseCondPart(TokenStream tokenStream){
       Token type = tokenStream.getNextToken();
 
       Condition condition = null;
+      
+      boolean seperatedByScope = false;
+      boolean allInScope = false;
+      
+      TokenScope tempScope = null;
+      if((tempScope = tokenStream.validateTokenScope()) != null){
+          allInScope = true;
+          tokenStream = new TokenStream(tempScope.tokens);
+      }
      
       if(type instanceof TokenString) {
         switch (((TokenString)type).value) {
@@ -294,6 +303,7 @@ public class AbilitiesParser {
             condition = new ConditionFlip();
             break;
           case "ability":
+              seperatedByScope = true;
             // ???
             break;
           case "choice":
@@ -307,8 +317,19 @@ public class AbilitiesParser {
       
       AbilityPart truePart = parseNextPart(tokenStream);
       AbilityPart falsePart = null;
-      if(tokenStream.validateTokenString("else") != null){
-        falsePart = parseNextPart(tokenStream);
+      if(seperatedByScope) {
+          TokenScope uselessScope;
+          if((uselessScope = tokenStream.validateTokenScope()) != null){
+              parseNextPart(new TokenStream(uselessScope.tokens));
+          }
+      }else if(allInScope) {
+          if (tokenStream.validateTokenSeparator() != null) {
+              falsePart = parseNextPart(tokenStream);
+          }
+      }else {
+          if (tokenStream.validateTokenString("else") != null) {
+              falsePart = parseNextPart(tokenStream);
+          }
       }
       
       abilityPartCond.setResults(truePart, falsePart);

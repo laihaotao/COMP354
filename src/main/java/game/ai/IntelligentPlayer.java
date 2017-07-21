@@ -243,7 +243,9 @@ public class IntelligentPlayer extends Player {
             for(Ability ability : activePokemon.getAbilities()){
                 if(ability.getTemplate().appliesDamage()){
                     gameBoard.onActiveAbilityClicked(this, activePokemon, ability);
-                    return;
+                    if(gameBoard.getTurnInfo().getAttackTrigger().getStatus()){
+                        return;
+                    }
                 }
             }
         }
@@ -259,39 +261,56 @@ public class IntelligentPlayer extends Player {
         return new AiTargetSelector();
     }
     
-    public class AiTargetSelector extends TargetSelector{
-        
-        public Card getCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-            return getAiCard(gameBoard, callingPlayer, targetProperty);
-        }
+    public class AiTargetSelector extends TargetSelector {
 
-        public Card getChoiceCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-            return getAiCard(gameBoard, callingPlayer, targetProperty);
-        }
-        
-        private Card getAiCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-            switch(targetProperty.target.value){
-                case "choice":{
-                    switch(targetProperty.modifier.value){
-                        case "opponent-bench":{
-                            Player otherPlayer = gameBoard.getOtherPlayer(callingPlayer);
-                            if(otherPlayer.getBench().size() > 0) {
-                                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
-                                    otherPlayer.getBench().size());
-                                return otherPlayer.getBench().get(cardToSelect);
-                            }
-                        }
-                    }
+        @Override
+        public Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer) {
+            Player otherPlayer = gameBoard.getOtherPlayer(callingPlayer);
+            if (otherPlayer.getBench().size() > 0 || otherPlayer.getActivePokemon() != null) {
+                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
+                    otherPlayer.getBench().size() + 1);
+                if (cardToSelect == 0) {
+                    return otherPlayer.getActivePokemon();
                 }
-
-                case "opponent-active":{
-                    return getOpponentActive(gameBoard, callingPlayer);
-                }
-
-                default: {
-                    return null;
-                }
+                return otherPlayer.getBench().get(cardToSelect - 1);
             }
+
+            return null;
         }
+
+        @Override
+        public Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer) {
+            Player otherPlayer = gameBoard.getOtherPlayer(callingPlayer);
+            if (otherPlayer.getBench().size() > 0) {
+                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
+                    otherPlayer.getBench().size());
+                return otherPlayer.getBench().get(cardToSelect);
+            }
+
+            return null;
+        }
+
+        @Override
+        public Card choseYourCard(GameBoard gameBoard, Player callingPlayer) {
+            if (callingPlayer.getBench().size() > 0) {
+                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
+                    callingPlayer.getBench().size());
+                return callingPlayer.getBench().get(cardToSelect);
+            }
+
+            return null;
+        }
+
+        @Override
+        public Card choseYourBench(GameBoard gameBoard, Player callingPlayer) {
+            if (callingPlayer.getBench().size() > 0) {
+                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
+                    callingPlayer.getBench().size());
+                return callingPlayer.getBench().get(cardToSelect);
+            }
+
+            return null;
+        }
+
     }
 }

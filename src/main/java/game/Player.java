@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import ui.selections.TargetSelectorUI;
 
 public class Player {
 
@@ -50,7 +51,7 @@ public class Player {
     }
     
     public TargetSelector createTargetSelector(){
-        return new game.TargetSelector();
+        return new TargetSelectorUI();
     }
 
     public void put7CardInHand() {

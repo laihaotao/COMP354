@@ -14,11 +14,11 @@ import parser.tokenizer.TokenString;
 public class AbilityPartDeck extends AbilityPart{
   
   private TargetProperty target;
-  private DestinationProperty destination;
+  private TargetProperty destination;
   private TokenString choice;
   private Token amount;
   
-  public AbilityPartDeck(TargetProperty target, DestinationProperty destination,
+  public AbilityPartDeck(TargetProperty target, TargetProperty destination,
       TokenString choice, Token amount) {
     super("Deck");
     this.target = target;

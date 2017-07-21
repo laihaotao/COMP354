@@ -420,4 +420,8 @@ public class GameBoard {
             }
         }
     }
+    
+    public TurnInfo getTurnInfo(){
+        return turnInfo;
+    }
 }
