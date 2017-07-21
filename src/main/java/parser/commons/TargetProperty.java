@@ -33,6 +33,20 @@ public class TargetProperty extends Property {
     return new TargetProperty(target, targetModifier);
   }
   
+  public static TargetProperty readUnsafe(TokenStream tokenStream){
+    TokenString target = null;
+    TokenString targetModifier = null;
+    if((target = tokenStream.validateTokenString("choice")) != null){
+
+      targetModifier = tokenStream.validateTokenString();
+
+    }else{
+      target = tokenStream.validateTokenString();
+    }
+
+    return new TargetProperty(target, targetModifier);
+  }
+  
   public String toString(){
       return "Target: "+Formatting.toSafeString(target) + ":" + Formatting.toSafeString(modifier);
   }

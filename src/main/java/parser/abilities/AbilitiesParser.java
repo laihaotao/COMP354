@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import parser.commons.Condition;
 import parser.commons.ConditionFlip;
 import parser.commons.DestinationProperty;
+import parser.commons.StatusProperty;
 import parser.commons.TargetProperty;
 import parser.commons.TriggerProperty;
 import parser.tokenizer.LanguageTokenizer;
@@ -149,7 +150,10 @@ public class AbilitiesParser {
                 return parseSwapPart(tokenStream);
             case "add":
                 return parseAddPart(tokenStream);
-                
+            case "applystat":
+                return parseApplystatPart(tokenStream);
+            case "destat":
+                return parseDestatPart(tokenStream);
                 
             default:
               waitUntil(tokenStream, TokenType.SEPERATOR);
@@ -319,5 +323,18 @@ public class AbilitiesParser {
       AbilityPart abilityToAdd = parseNextPart(new TokenStream(((TokenScope)tokenStream.getNextToken()).tokens));
       
       return new AbilityPartAdd(target, triggerProperty ,abilityToAdd);
+  }
+  
+  private AbilityPart parseApplystatPart(TokenStream tokenStream){
+      StatusProperty status = StatusProperty.read(tokenStream);
+      TargetProperty target = TargetProperty.readUnsafe(tokenStream);
+      
+      return new AbilityPartApplystat(status, target);
+  }
+  
+  private AbilityPart parseDestatPart(TokenStream tokenStream){
+      TargetProperty target = TargetProperty.read(tokenStream);
+      
+      return new AbilityPartDestat(target);
   }
 }

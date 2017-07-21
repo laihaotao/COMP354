@@ -42,7 +42,7 @@ public class GameApp extends Application {
     private static String deckPath = GameApp.class.getClassLoader().getResource("decks/").getPath();
 
     public static void main(String[] args) throws IOException {
-        Config.DEBUG = true;
+        
         logger.info("Starting pokemon game!");
         logger.info(deckPath);
         launch(args);
@@ -77,14 +77,16 @@ public class GameApp extends Application {
         comboBox2.setValue(default_f2);
 
         CheckBox aiBox = new CheckBox("AI vs AI");
-
+        
+        CheckBox debugBox = new CheckBox("Debug");
+        
         Button startBtn = new Button();
         startBtn.setText("Start Game");
         startBtn.setOnAction(event -> {
             try {
                 logger.debug(comboBox1.getValue());
                 logger.debug(comboBox2.getValue());
-
+                Config.DEBUG = debugBox.isSelected();
                 startGame(primaryStage, comboBox1.getValue(), comboBox2.getValue(), aiBox.isSelected());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,7 +102,7 @@ public class GameApp extends Application {
         root.add(comboBox2, 2, 2);
 
         root.add(startBtn, 2, 3);
-
+        root.add(debugBox, 1, 4);
         primaryStage.setResizable(true);
         primaryStage.setScene(new Scene(root, 400, 300));
         primaryStage.setTitle("Select Deck File ");
