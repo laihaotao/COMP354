@@ -8,7 +8,7 @@
 package entry;
 
 public class Config {
-
+    public static boolean DEBUG = false;
 
     public static final String FILE_PATH_CARDS_TXT = "cards.txt";
     public static final String FILE_PATH_DECK1_TXT = "deck1.txt";

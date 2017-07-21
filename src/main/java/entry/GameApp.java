@@ -42,6 +42,7 @@ public class GameApp extends Application {
     private static String deckPath = GameApp.class.getClassLoader().getResource("decks/").getPath();
 
     public static void main(String[] args) throws IOException {
+        Config.DEBUG = true;
         logger.info("Starting pokemon game!");
         logger.info(deckPath);
         launch(args);

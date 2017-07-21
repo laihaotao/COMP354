@@ -20,7 +20,7 @@ public class TargetProperty extends Property {
     TokenString target = null;
     TokenString targetModifier = null;
 
-    if(tokenStream.validateTokenString("target") != null){
+    if(tokenStream.validateTokenString("target") != null || tokenStream.validateTokenString("source") != null || tokenStream.validateTokenString("destination") != null){
       if((target = tokenStream.validateTokenString("choice")) != null){
 
         targetModifier = tokenStream.validateTokenString();

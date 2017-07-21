@@ -1,5 +1,7 @@
 package parser.abilities;
 
+import card.Ability;
+import entry.Config;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
@@ -13,6 +15,7 @@ import parser.commons.Condition;
 import parser.commons.ConditionFlip;
 import parser.commons.DestinationProperty;
 import parser.commons.TargetProperty;
+import parser.commons.TriggerProperty;
 import parser.tokenizer.LanguageTokenizer;
 import parser.tokenizer.Token;
 import parser.tokenizer.TokenCondition;
@@ -61,28 +64,26 @@ public class AbilitiesParser {
         templates.add(parseNullScope(scope));
     });
     
-/**
-    Stage stage = new Stage();
-    stage.setTitle("Parser");
+    if(Config.DEBUG) {
+        Stage stage = new Stage();
+        stage.setTitle("Parser");
     
+        BorderPane mainView = new BorderPane();
     
-    BorderPane mainView = new BorderPane();
+        TreeItem tokenItemPane = new TokenPane(scopes.toArray(new Token[0]));
     
-    TreeItem tokenItemPane = new TokenPane(scopes.toArray(new Token[0]));
+        TreeView tokenView = new TreeView<>(tokenItemPane);
+        tokenView.setMinWidth(600);
+        mainView.setLeft(tokenView);
     
-    TreeView tokenView = new TreeView<>(tokenItemPane);
-    tokenView.setMinWidth(600);
-    mainView.setLeft(tokenView);
+        TreeItem abilityItemPane = new AbilityTemplatePane((templates.toArray(new AbilityTemplate[0])));
+        TreeView abilityView = new TreeView(abilityItemPane);
+        abilityView.setMinWidth(600);
+        mainView.setRight(abilityView);
     
-    TreeItem abilityItemPane = new AbilityTemplatePane((templates.toArray(new AbilityTemplate[0])));
-    TreeView abilityView = new TreeView(abilityItemPane);
-    abilityView.setMinWidth(600);
-    mainView.setRight(abilityView);
-    
-    
-    stage.setScene(new Scene(mainView, 1200,800));
-    stage.show();
- **/
+        stage.setScene(new Scene(mainView, 1200, 800));
+        stage.show();
+    }
 
     
     return templates.toArray(new AbilityTemplate[0]);
@@ -127,18 +128,32 @@ public class AbilitiesParser {
 
     if(token instanceof TokenString){
       TokenString tokenString = (TokenString)token;
-      switch(tokenString.value){
-        case "deck":
-          return parsePartDeck(tokenStream);
-        case  "dam":
-          return parseDamPart(tokenStream);
-        case "draw":
-          return parseDrawPart(tokenStream);
-        case "cond":
-          return parseCondPart(tokenStream);
-        default:
-          waitUntil(tokenStream, TokenType.SEPERATOR);
-          return parseNextPart(tokenStream);
+        switch (tokenString.value) {
+            case "deck":
+                return parsePartDeck(tokenStream);
+            case "dam":
+                return parseDamPart(tokenStream);
+            case "draw":
+                return parseDrawPart(tokenStream);
+            case "cond":
+                return parseCondPart(tokenStream);
+            case "heal":
+                return parseHealPart(tokenStream);
+            case "deenergize":
+                return parseDeenergizePart(tokenStream);
+            case "reenergize":
+                return parseReenergizePart(tokenStream);
+            case "redamage":
+                return parseRedamagePart(tokenStream);
+            case "swap":
+                return parseSwapPart(tokenStream);
+            case "add":
+                return parseAddPart(tokenStream);
+                
+                
+            default:
+              waitUntil(tokenStream, TokenType.SEPERATOR);
+              return parseNextPart(tokenStream);
       }
 
     }else if(token instanceof TokenSeparator){
@@ -208,6 +223,41 @@ public class AbilitiesParser {
     return new AbilityPartDam(targetPart, amount);
   }
 
+  private AbilityPart parseHealPart(TokenStream tokenStream){
+      TargetProperty target = TargetProperty.read(tokenStream);
+      Token amount = tokenStream.getNextToken();
+      
+      return new AbilityPartHeal(target, amount);
+  }
+  
+  private AbilityPart parseDeenergizePart(TokenStream tokenStream){
+      TargetProperty target = TargetProperty.read(tokenStream);
+      Token amount = tokenStream.getNextToken();
+
+      return new AbilityPartDeenergize(target, amount);
+  }
+  private AbilityPart parseReenergizePart(TokenStream tokenStream) {
+      TargetProperty source = TargetProperty.read(tokenStream);
+      TargetProperty target = TargetProperty.read(tokenStream);
+      Token amount = tokenStream.getNextToken();
+
+      return new AbilityPartReenergize(source, target, amount);
+  }
+  
+  private AbilityPart parseRedamagePart(TokenStream tokenStream){
+      TargetProperty source = TargetProperty.read(tokenStream);
+      TargetProperty target = TargetProperty.read(tokenStream);
+      Token amount = tokenStream.getNextToken();
+
+      return new AbilityPartRedamage(source, target, amount);
+  }
+  
+  private AbilityPart parseSwapPart(TokenStream tokenStream){
+      TargetProperty source = TargetProperty.read(tokenStream);
+      TargetProperty destination = TargetProperty.read(tokenStream);
+      
+      return new AbilityPartSwap(source, destination);
+  }
   /**
    * Parse the Draw ability part
    * @param tokenStream
@@ -261,5 +311,13 @@ public class AbilitiesParser {
     
       return abilityPartCond;
       
+  }
+  
+  private AbilityPart parseAddPart(TokenStream tokenStream){
+      TargetProperty target = TargetProperty.read(tokenStream);
+      TriggerProperty triggerProperty = TriggerProperty.read(tokenStream);
+      AbilityPart abilityToAdd = parseNextPart(new TokenStream(((TokenScope)tokenStream.getNextToken()).tokens));
+      
+      return new AbilityPartAdd(target, triggerProperty ,abilityToAdd);
   }
 }

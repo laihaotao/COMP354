@@ -25,6 +25,7 @@ public class AbilityPartDraw extends AbilityPart{
 
   @Override
   public boolean use(GameBoard targetBoard, Player owner) {
+    //TODO implement
       return false;
   }
 
