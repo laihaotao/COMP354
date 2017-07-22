@@ -1,5 +1,8 @@
 package parser.tokenizer;
 
+import game.GameBoard;
+import game.Player;
+
 /**
  * Token that holds an integer 
  */
@@ -15,7 +18,7 @@ public class TokenInteger extends Token{
     return super.toString()+"Integer -> "+value;
   }
   
-  public int evaluateAsExpression(){
+  public int evaluateAsExpression(GameBoard targetBoard, Player callingPlayer){
       return value;
   }
 

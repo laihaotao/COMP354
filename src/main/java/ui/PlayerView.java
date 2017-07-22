@@ -9,6 +9,7 @@
 package ui;
 
 import card.PokemonCard;
+import game.GameBoard;
 import game.Player;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,6 +24,7 @@ import java.util.List;
 
 public class PlayerView extends BorderPane {
 
+    private GameBoard targetBaord;
     private Player player;
 
     //List that constains player hand cards
@@ -43,12 +45,14 @@ public class PlayerView extends BorderPane {
 
     private Button discardPileBtn;
 
+    
     /**
      * List of registered listeners
      */
     private List<PlayerViewListener> registeredListeners = new ArrayList<>();
 
-    public PlayerView(Player player, boolean directionUp) {
+    public PlayerView(GameBoard targetBaord, Player player, boolean directionUp) {
+        this.targetBaord = targetBaord;
 
         this.player = player;
 
@@ -110,7 +114,7 @@ public class PlayerView extends BorderPane {
         //For now, just add 5 cardViews to make sure it displays
 
         player.getHand().forEach((card) -> {
-            CardView cardView = new CardView(player, card);
+            CardView cardView = new CardView(targetBaord, player, card);
 
             cardView.setOnMouseClicked((event -> {
                 registeredListeners.forEach(listener -> listener.onHandCardClicked(player, card));
@@ -130,7 +134,7 @@ public class PlayerView extends BorderPane {
         benchCards.getChildren().add(benchLabel);
 
         player.getBench().forEach((card) -> {
-            CardView cardView = new CardView(player, card);
+            CardView cardView = new CardView(targetBaord, player, card);
 
             cardView.setOnMouseClicked((event -> {
                 registeredListeners.forEach(listener -> listener.onBenchCardClicked(player, card));
@@ -151,7 +155,7 @@ public class PlayerView extends BorderPane {
 
         if (player.getActivePokemon() != null) {
 
-            CardView cardView = new CardView(player, player.getActivePokemon());
+            CardView cardView = new CardView(targetBaord, player, player.getActivePokemon());
             cardView.getStyleClass().add("active");
             cardView.setOnMouseClicked((event -> {
                 //registeredListeners.forEach(listener->listener.onActiveCardClicked(player,
@@ -177,7 +181,7 @@ public class PlayerView extends BorderPane {
 
         // update the discard view
         if (player.getDiscardPile().size() > 0) {
-            pileBox.getChildren().add(new CardView(player, player.getDiscardPile().get(player
+            pileBox.getChildren().add(new CardView(targetBaord, player, player.getDiscardPile().get(player
                     .getDiscardPile().size() - 1)));
 
         }

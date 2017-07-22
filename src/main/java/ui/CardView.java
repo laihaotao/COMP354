@@ -11,6 +11,7 @@ import card.Card;
 import card.EnergyCard;
 import card.PokemonCard;
 import card.TrainerCard;
+import game.GameBoard;
 import game.Player;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class CardView extends BorderPane {
     private Card card;
 
     //TODO A Card instance should be passed to this once it is properly implemented
-    public CardView(Player player, Card card) {
+    public CardView(GameBoard targetBoard, Player player, Card card) {
         this.card = card;
         this.player = player;
         this.getStyleClass().add("Card");
@@ -78,7 +79,7 @@ public class CardView extends BorderPane {
             })));
 
             pokemonCard.getAbilities().forEach((ability -> {
-                AbilityView abilityView = new AbilityView(ability);
+                AbilityView abilityView = new AbilityView(targetBoard, player, ability);
                 abilityView.setOnMouseClicked((event -> {
                     registeredListeners.forEach((listener -> {
                         listener.onActiveAbilityClicked(player, card, ability);
@@ -88,7 +89,7 @@ public class CardView extends BorderPane {
             }));
         } else if (card instanceof TrainerCard) {
             TrainerCard trainerCard = (TrainerCard) card;
-            AbilityView abilityView = new AbilityView(trainerCard.getAbility());
+            AbilityView abilityView = new AbilityView(targetBoard, player, trainerCard.getAbility());
             abilitiesInfo.getChildren().add(abilityView);
 
         } else if (card instanceof EnergyCard) {

@@ -40,6 +40,6 @@ public class AbilityPartDeck extends AbilityPart{
 
   @Override
   public String getDescriptionString() {
-    return "description"; //TODO add description
+    return "Deck from "+target + " to " + destination + " with choice "+choice + " for "+amount ; //TODO add description
   }
 }

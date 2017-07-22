@@ -1,5 +1,8 @@
 package parser.tokenizer;
 
+import game.GameBoard;
+import game.Player;
+
 /**
  * This symbolizes a token in the language
  */
@@ -17,7 +20,7 @@ public abstract class Token {
     return "@"+endLocation + " token:";
   }
 
-  public int evaluateAsExpression(){
+  public int evaluateAsExpression(GameBoard targetBoard, Player callingPlayer){
     return 0;
   }
   

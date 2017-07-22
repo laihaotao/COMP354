@@ -26,6 +26,6 @@ public class AbilityPartApplystat extends AbilityPart{
 
     @Override
     public String getDescriptionString() {
-        return null;
+        return "Apply stat "+statusType+" on " + target;
     }
 }

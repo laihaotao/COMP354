@@ -31,7 +31,7 @@ public class AbilityPartDam extends AbilityPart{
     if(targetCard != null) {
       if (targetCard instanceof PokemonCard) {
         PokemonCard pokemonCard = (PokemonCard) targetCard;
-        int intAmmount = ammount.evaluateAsExpression();
+        int intAmmount = ammount.evaluateAsExpression(targetBoard, owner);
         if(intAmmount > 0) {
           targetBoard.applyDamageToCard(owner, pokemonCard, intAmmount);
           return true;
@@ -47,6 +47,10 @@ public class AbilityPartDam extends AbilityPart{
   @Override
   public String getDescriptionString() {
     return "Damages "+ target + " for "+ammount.getDisplayString();
+  }
+
+  public String getCurrentDescription(GameBoard targetBoard, Player callingPlayer){
+    return "Damages " + target + "for " + ammount.evaluateAsExpression(targetBoard, callingPlayer);
   }
   
   public Token getAmmount(){

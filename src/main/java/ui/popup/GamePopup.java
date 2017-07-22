@@ -8,6 +8,7 @@
 package ui.popup;
 
 import card.Card;
+import game.GameBoard;
 import game.Player;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -52,7 +53,7 @@ public class GamePopup {
         });
     }
 
-    public static void displayDiscardPile(Player player, List<Card> pile,
+    public static void displayDiscardPile(GameBoard gameboard, Player player, List<Card> pile,
                                           DiscardPileOnClickListener listener) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
@@ -71,7 +72,7 @@ public class GamePopup {
                     VBox box = new VBox();
                     for (Card c : pile) {
 //                    for (Card c : player.getHand()) {
-                        Button button = new Button(new CardView(player, c).toString());
+                        Button button = new Button(new CardView(gameboard, player, c).toString());
                         button.setOnMouseClicked(event -> {
                             listener.onClickDiscardCard(c);
                         });

@@ -31,6 +31,6 @@ public class AbilityPartReenergize extends AbilityPart{
 
     @Override
     public String getDescriptionString() {
-        return "De-energize from " + source + " to " + target + " "+amount.getDisplayString() + "times";
+        return "Re-energize from " + source + " to " + target + " "+amount.getDisplayString() + "times";
     }
 }

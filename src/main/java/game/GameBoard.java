@@ -164,7 +164,7 @@ public class GameBoard {
         logger.debug("Player" + playerNum + " has clicked the discard pile");
 
         List<Card> pile = player.getDiscardPile();
-        GamePopup.displayDiscardPile(player, pile, card ->
+        GamePopup.displayDiscardPile(this, player, pile, card ->
                 logger.debug(player + " click the card in discardpile: " + card.getCardName()));
     }
 

@@ -29,7 +29,7 @@ public class IntelligentPlayer extends Player {
     
     public void doTurn(GameBoard gameBoard){
         if(activePokemon == null){
-            PokemonCard optimalActive = firstTurn?findOptimalPokemon(hand):findOptimalPokemon(bench);
+            PokemonCard optimalActive = firstTurn?findOptimalPokemon(gameBoard, hand):findOptimalPokemon(gameBoard, bench);
             if(optimalActive != null) {
                 if(firstTurn) {
                     gameBoard.onHandCardClicked(this, optimalActive);
@@ -45,7 +45,7 @@ public class IntelligentPlayer extends Player {
                 List<Card> fullList = new ArrayList<>();
                 fullList.addAll(bench);
                 fullList.add(activePokemon);
-                PokemonCard optimal = findOptimalPokemon(fullList);
+                PokemonCard optimal = findOptimalPokemon(gameBoard, fullList);
                 if (optimal != null && optimal != activePokemon) {
                     gameBoard.onRetreatButtonClicked(this);
                     gameBoard.onBenchCardClicked(this, optimal);
@@ -54,7 +54,7 @@ public class IntelligentPlayer extends Player {
                 }
             }
             if(putOnBench) {
-                PokemonCard optimalBench = findOptimalPokemon(hand);
+                PokemonCard optimalBench = findOptimalPokemon(gameBoard, hand);
                 if (optimalBench != null) {
                     gameBoard.onHandCardClicked(this, optimalBench);
                     gameBoard.onBenchCardClicked(this, null);
@@ -66,7 +66,7 @@ public class IntelligentPlayer extends Player {
         tryAttack(gameBoard);
     }
     
-    private PokemonCard findOptimalPokemon(List<Card> cards){
+    private PokemonCard findOptimalPokemon(GameBoard gameBoard, List<Card> cards){
         int bestScore = -1;
         
         PokemonCard bestCard = null;
@@ -105,7 +105,7 @@ public class IntelligentPlayer extends Player {
                     for(AbilityPart part: ability.getTemplate().parts){
                         if(part instanceof AbilityPartDam){
                             AbilityPartDam abilityPartDam = (AbilityPartDam)part;
-                            score += abilityPartDam .getAmmount().evaluateAsExpression();
+                            score += abilityPartDam .getAmmount().evaluateAsExpression(gameBoard, this);
                         }
                     }
                 }
@@ -147,7 +147,7 @@ public class IntelligentPlayer extends Player {
                     gameBoard.onActiveCardClicked(this, activePokemon);
                 }
             }else{
-                PokemonCard target = findOptimalPokemon(bench);
+                PokemonCard target = findOptimalPokemon(gameBoard, bench);
                 if(target != null){
                     EnergyCard energyToPlay = findOptimalEnergy(target);
 

@@ -30,4 +30,8 @@ public abstract class AbilityPart {
   public abstract boolean use(GameBoard targetBoard, Player owner);
   
   public abstract String getDescriptionString();
+
+    public String getCurrentDescription(GameBoard targetBoard, Player callingPlayer){
+        return getDescriptionString();
+    }
 }

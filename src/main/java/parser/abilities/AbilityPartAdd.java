@@ -29,6 +29,6 @@ public class AbilityPartAdd extends AbilityPart{
 
     @Override
     public String getDescriptionString() {
-        return null;
+        return "Add ability "+abilityToAdd.name + " to "+target;
     }
 }
