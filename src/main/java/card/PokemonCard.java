@@ -252,4 +252,8 @@ public class PokemonCard extends Card {
     public Effect getEffect() {
         return effect;
     }
+
+    public void setEffect(Effect effect) {
+        this.effect = effect;
+    }
 }

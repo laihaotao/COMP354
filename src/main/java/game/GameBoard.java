@@ -361,6 +361,10 @@ public class GameBoard {
 
         Player currentPlayer = getCurrentTurnPlayer();
 
+        // update effect
+        PokemonCard pokemon = (PokemonCard) currentPlayer.getActivePokemon();
+        pokemon.setEffect(pokemon.getEffect().remove());
+
         //add card to players hand
         currentPlayer.putCardInHand();
 

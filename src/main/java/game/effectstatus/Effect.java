@@ -23,9 +23,8 @@ public abstract class Effect {
 
     abstract void apply();
 
-    public void remove() {
-        this.canAttack = true;
-        this.canRetreat = true;
+    public Effect remove() {
+        return new Normal(target);
     }
 
     public boolean isCanAttack() {

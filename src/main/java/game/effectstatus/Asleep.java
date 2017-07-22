@@ -24,10 +24,11 @@ public class Asleep extends Effect {
     }
 
     @Override
-    public void remove() {
+    public Effect remove() {
         Coin.CoinStatus status = Coin.flip();
         if (status == Coin.CoinStatus.Head) {
-            super.remove();
+            return super.remove();
         }
+        return this;
     }
 }
