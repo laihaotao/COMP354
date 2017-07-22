@@ -15,29 +15,26 @@ import org.apache.logging.log4j.Logger;
 import ui.BoardView;
 import ui.popup.GamePopup;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class GameBoard {
-
-
+    
+    private final static Logger logger = LogManager.getLogger(GameBoard.class.getName());
+    
     enum CardLocation {
         DECK, HAND, BENCH, ACTIVE, DISCARD,
     }
-
-    private final static Logger logger = LogManager.getLogger(GameBoard.class.getName());
-
     private Player[] players;
-
     private int currentTurn = 0;
 
+    private TrainerCard inPlayTrainerCard = null;
     private Card selectedCard = null;
     private CardLocation selectedCardLocation = null;
-    private Random rand = new Random();
 
     private TurnInfo turnInfo;
-
-    public BoardView view;
-    
+    private BoardView view;
 
     public GameBoard(Player p1, Player p2) {
         players = new Player[2];
@@ -46,42 +43,29 @@ public class GameBoard {
         turnInfo = new TurnInfo();
     }
 
-    public void attachView(BoardView view){
+    public void attachView(BoardView view) {
         this.view = view;
     }
-    
-    private void setSelectedCard(Card card, CardLocation location) {
-        if (selectedCard != null) {
-            selectedCard.setSelected(false);
-        }
 
-        selectedCard = card;
-        if (selectedCard != null) {
-            selectedCard.setSelected(true);
-        }
-        selectedCardLocation = location;
-    }
-
+    // ===================================================================================
+    // =============================== button listener ===================================
+    // ===================================================================================
     public void onHandCardClicked(Player player, Card card) {
-        int playerNum = (player == players[0]) ? 1 : 2;
-        logger.debug("Player" + playerNum + " has clicked a card in it's hand");
+        logger.debug("Player" + getPlayerNum() + " has clicked a card in it's hand");
 
-        if(card instanceof TrainerCard){
+        if (card instanceof TrainerCard) {
             onActiveAbilityClicked(player, card, ((TrainerCard) card).getAbility());
-            player.getDiscardPile().add(card);
-            player.getHand().remove(card);
-        }else if (card != null && (playerNum - 1) == currentTurn) {
+            fromHandToDiscard(player, card);
+        } else if (card != null && getCurrentTurnPlayer() == player) {
             setSelectedCard(card, CardLocation.HAND);
         }
-
     }
 
     public void onBenchCardClicked(Player player, Card card) {
-        int playerNum = (player == players[0]) ? 1 : 2;
-        logger.debug("Player" + playerNum + " has clicked a card in it's bench");
+        logger.debug("Player" + getPlayerNum() + " has clicked a card in it's bench");
 
         // add energy card to the bench card
-        if (!turnInfo.getEnergyTrigger().getStatus()
+        if (!turnInfo.getEnergyTrigger().already()
                 && card != null && player == getCurrentTurnPlayer()
                 && selectedCard != null && selectedCard instanceof EnergyCard) {
             if (card instanceof PokemonCard) {
@@ -93,20 +77,18 @@ public class GameBoard {
                 turnInfo.getEnergyTrigger().trigger();
                 return;
             }
-        } else if (turnInfo.getEnergyTrigger().getStatus()) {
+        } else if (turnInfo.getEnergyTrigger().already()) {
             GamePopup.displayMessage("You can only add one energy per turn");
         }
 
-        //Player is trying to place pokemon card on bench
-        if (selectedCard != null && selectedCardLocation == CardLocation.HAND && selectedCard
-                instanceof PokemonCard && player == getCurrentTurnPlayer()) {
-
+        // Player is trying to place pokemon card on bench
+        if (selectedCard != null && selectedCardLocation == CardLocation.HAND
+                && selectedCard instanceof PokemonCard && player == getCurrentTurnPlayer()) {
             //remove selected card from player's hand and put it on the player's bench
             if (player.getHand().remove(selectedCard)) {
                 player.getBench().add(selectedCard);
                 setSelectedCard(null, null);
             }
-
             return;
         }
 
@@ -117,39 +99,43 @@ public class GameBoard {
     }
 
     public void onActiveCardClicked(Player player, Card card) {
-        int playerNum = (player == players[0]) ? 1 : 2;
-        logger.debug("Player" + playerNum + " has clicked the active pokemon");
+        logger.debug("Player" + getPlayerNum() + " has clicked the active pokemon");
 
-        if(selectedCard instanceof EnergyCard) {
+        // add energy to active Pokemon
+        if (selectedCard instanceof EnergyCard) {
             // add energy card to activated card
-            if (!turnInfo.getEnergyTrigger().getStatus()
-                    && card != null && player == getCurrentTurnPlayer() && selectedCard != null &&
-                    selectedCard instanceof EnergyCard) {
+            if (!turnInfo.getEnergyTrigger().already()
+                    && card != null && player == getCurrentTurnPlayer()
+                    && selectedCard != null && selectedCard instanceof EnergyCard) {
                 PokemonCard pokemonCard = (PokemonCard) card;
                 EnergyCard energyCard = (EnergyCard) selectedCard;
                 pokemonCard.addEnergy(energyCard);
-//            player.getDiscardPile().add(energyCard);
                 player.getHand().remove(energyCard);
-                selectedCard = null;
                 turnInfo.getEnergyTrigger().trigger();
-            } else if (turnInfo.getEnergyTrigger().getStatus()) {
+                selectedCard = null;
+            } else if (turnInfo.getEnergyTrigger().already()) {
                 GamePopup.displayMessage("You can only add one energy per turn");
             }
         }
-        if (selectedCard != null && selectedCard instanceof
-                PokemonCard && player == getCurrentTurnPlayer()) {
+
+        // put a Pokemon to active place
+        if (selectedCard != null && selectedCard instanceof PokemonCard
+                && player == getCurrentTurnPlayer()) {
             PokemonCard pokemonCard = (PokemonCard) selectedCard;
+            // remove selected card from player's hand and put it as active
             if (player.getActivePokemon() == null) {
-                //remove selected card from player's hand and put it as active
                 if (removeSelected()) {
                     player.setActivePokemon(pokemonCard);
                     setSelectedCard(null, null);
                 }
-            } else if (pokemonCard.getEvolvesFrom() != null) {
+            }
+            // evolve the active Pokemon
+            else if (pokemonCard.getEvolvesFrom() != null) {
                 if (pokemonCard.getEvolvesFrom().equalsIgnoreCase(player.getActivePokemon()
                         .getCardName())) {
                     if (removeSelected()) {
-                        pokemonCard.getEnergyAttached().add(((PokemonCard)player.getActivePokemon()).getEnergyAttached());
+                        pokemonCard.getEnergyAttached().add(((PokemonCard) player
+                                .getActivePokemon()).getEnergyAttached());
                         player.setActivePokemon(pokemonCard);
                         setSelectedCard(null, null);
                     }
@@ -159,68 +145,119 @@ public class GameBoard {
     }
 
     public void onDiscardPileClicked() {
+        logger.debug("Player" + getPlayerNum() + " has clicked the discard pile");
         Player player = getCurrentTurnPlayer();
-        int playerNum = (player == players[0]) ? 1 : 2;
-        logger.debug("Player" + playerNum + " has clicked the discard pile");
-
         List<Card> pile = player.getDiscardPile();
         GamePopup.displayDiscardPile(this, player, pile, card ->
                 logger.debug(player + " click the card in discardpile: " + card.getCardName()));
     }
 
-    private boolean removeSelected() {
-        switch (selectedCardLocation) {
-            case HAND:
-                return getCurrentTurnPlayer().hand.remove(selectedCard);
-            case BENCH:
-                return getCurrentTurnPlayer().getBench().remove(selectedCard);
-        }
-        return false;
-    }
-
     public void onActiveAbilityClicked(Player player, Card card, Ability ability) {
-        int playerNum = (player == players[0]) ? 1 : 2;
-        logger.debug("Player " + playerNum + " has clicked " + ability.getTemplate().name
-                + " on "+ card.getCardName());
+        logger.debug("Player " + getPlayerNum() + " has clicked " + ability.getTemplate().name
+                + " on " + card.getCardName());
 
         if (player == getCurrentTurnPlayer()) {
 
-            //If the card is a pokemon, abilities require energy and need to be checked against card energy
-            if(card instanceof PokemonCard
-                    // attention here, want to compare the energy cost must use the
-                    // required energy equal to the attached energy
+            //If the card is a pokemon, abilities require energy and need to be checked against
+            // card energy
+            if (card instanceof PokemonCard
                     // --> ability.energycost.canSupport(card.attachedenergy)
-                    && ability.getEnergyCost().canSupport(((PokemonCard)card).getEnergyAttached())) {
+                    && ability.getEnergyCost().canSupport(((PokemonCard) card).getEnergyAttached())
+                    && ((PokemonCard) card).getEffect().isCanAttack()) {
 
                 //If ability applies damage, it should trigger the Attack limit trigger
-                if(ability.getTemplate().appliesDamage()){
+                if (ability.getTemplate().appliesDamage()) {
                     //Make sure player only attacks onc with a pokemon
-                    if(!turnInfo.getAttackTrigger().getStatus()) {
-                        
-                        if(ability.getTemplate().use(this, player)){
+                    if (!turnInfo.getAttackTrigger().already()) {
+                        if (ability.getTemplate().use(this, player)) {
                             turnInfo.getAttackTrigger().trigger();
                         }
                     } else {
                         GamePopup.displayMessage("You can only attack once per turn");
                     }
-                }else{
+                } else {
                     //regular ability, does not apply damage and thus does not trigger attack limit
                     ability.getTemplate().use(this, player);
                 }
-            }else if (card instanceof TrainerCard){
-                if(ability.getTemplate().use(this, player)){
-                    player.hand.remove(card);
-                    player.discardPile.add(card);
+            }
+
+            // if the card is a trainer card
+            else if (card instanceof TrainerCard) {
+                if (!turnInfo.getTrainerTrigger().already()) {
+                    TrainerCard trainerCard = (TrainerCard) card;
+
+                    // if it is an stadium card and the in-play trainer card
+                    // with the same name, this card cannot be played
+                    if (trainerCard.getTrainerType() == TrainerCard.TrainerType.STADIUM
+                            && inPlayTrainerCard.getCardName().equals(trainerCard.getCardName())) {
+                        GamePopup.displayMessage("Stadium trainer card cannot be played when" +
+                                "there is a same card in-play!");
+                        return;
+                    }
+
+                    ability.getTemplate().use(this, player);
+
+                    // stadium card will keep in-play after using it
+                    if (trainerCard.getTrainerType() == TrainerCard.TrainerType.STADIUM) {
+                        if (inPlayTrainerCard != null) {
+                            removeTrainerCardEffect();
+                        }
+                        inPlayTrainerCard = trainerCard;
+                    }
+                    // not stadium card will go to discard pile after using it
+                    else {
+                        fromHandToDiscard(player, card);
+                    }
+
+                    // if this trainer card is support or stadium, trigger the limitation counter
+                    if (trainerCard.getTrainerType() != TrainerCard.TrainerType.ITEM) {
+                        turnInfo.getTrainerTrigger().trigger();
+                    }
+                } else {
+                    GamePopup.displayMessage("Support or Stadium trainer card can only be " +
+                            "played once per turn.");
                 }
             }
-            
+
+            // update the Pokemon info
             checkPokemons();
         }
     }
 
-    public void applyDamageToCard(Player callingPlayer, PokemonCard targetPokemon, int damage) {
-            targetPokemon.setDamage(targetPokemon.getDamage() + damage);
-            turnInfo.getAttackTrigger().trigger();
+    public void onRetreatButtonClicked(Player player) {
+        if (player.getActivePokemon() != null) {
+            PokemonCard pokemon = (PokemonCard) player.getActivePokemon();
+            if ((pokemon.getRetreatEnergyCost().canSupport(pokemon.getEnergyAttached()))
+                    && pokemon.getEffect().isCanRetreat()) {
+                pokemon.getEnergyAttached().retreat(pokemon.getRetreatEnergyCost());
+                player.setActivePokemon(null);
+                player.getBench().add(pokemon);
+            }
+        }
+    }
+
+    public void onEndTurnButtonClicked() {
+        nextTurn();
+    }
+    // ===================================================================================
+    // ============================ end of button listener ===============================
+    // ===================================================================================
+
+    public void applyDamageToCard(PokemonCard targetPokemon, int damage) {
+        targetPokemon.setDamage(targetPokemon.getDamage() + damage);
+        turnInfo.getAttackTrigger().trigger();
+    }
+
+    // ===================================================================================
+    // =============================== private methods ===================================
+    // ===================================================================================
+    private void removeTrainerCardEffect() {
+
+    }
+
+    private void fromHandToDiscard(Player player, Card card) {
+        player.getDiscardPile().add(card);
+        player.getHand().remove(card);
     }
 
     private void checkPokemons() {
@@ -232,7 +269,8 @@ public class GameBoard {
                 if (pokemonCard.getDamage() >= pokemonCard.getHp()) {
                     // if the active pokemon die, we need to move it the discard pile
                     // and the attached energy card
-                    logger.debug("active pokemon: " + pokemonCard.getCardName() + " has been knock out");
+                    logger.debug("active pokemon: " + pokemonCard.getCardName() + " has been " +
+                            "knock out");
                     removeAttachedEnergyCardToDiscardpile(player, pokemonCard);
                     player.getDiscardPile().add(pokemonCard);
                     player.setActivePokemon(null);
@@ -240,7 +278,7 @@ public class GameBoard {
                 }
             }
 
-            for(int i=0; i < player.getBench().size(); i++){
+            for (int i = 0; i < player.getBench().size(); i++) {
                 Card card = player.getBench().get(i);
                 if (card instanceof PokemonCard) {
                     PokemonCard pokemonCard = (PokemonCard) card;
@@ -255,7 +293,7 @@ public class GameBoard {
                     }
                 }
             }
-            for(int i=0; i < player.getBench().size(); i++) {
+            for (int i = 0; i < player.getBench().size(); i++) {
                 Card card = player.getBench().get(i);
                 if (card instanceof PokemonCard) {
                     PokemonCard pokemonCard = (PokemonCard) card;
@@ -284,14 +322,32 @@ public class GameBoard {
         getOtherPlayer(owner).choseRewardCard();
         if (getOtherPlayer(owner).getPrizes().size() == 0) {
             GamePopup.displayGameResult(getOtherPlayer(owner).getName(), true);
-            if(!Thread.currentThread().getName().contains("FX")){
+            if (!Thread.currentThread().getName().contains("FX")) {
                 Thread.currentThread().stop();
             }
         }
     }
 
-    public void onEndTurnButtonClicked() {
-        nextTurn();
+    private void setSelectedCard(Card card, CardLocation location) {
+        if (selectedCard != null) {
+            selectedCard.setSelected(false);
+        }
+
+        selectedCard = card;
+        if (selectedCard != null) {
+            selectedCard.setSelected(true);
+        }
+        selectedCardLocation = location;
+    }
+
+    private boolean removeSelected() {
+        switch (selectedCardLocation) {
+            case HAND:
+                return getCurrentTurnPlayer().hand.remove(selectedCard);
+            case BENCH:
+                return getCurrentTurnPlayer().getBench().remove(selectedCard);
+        }
+        return false;
     }
 
     private void nextTurn() {
@@ -308,30 +364,29 @@ public class GameBoard {
         //add card to players hand
         currentPlayer.putCardInHand();
 
-            if(currentPlayer instanceof IntelligentPlayer){
-                ((IntelligentPlayer) currentPlayer).doTurn(this);
-                if(view != null) {
-                    Platform.runLater(()->{
-                        view.refreshView();
-                    });
-                }
-                if(getPlayer1() instanceof IntelligentPlayer && getPlayer2() instanceof IntelligentPlayer) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                nextTurn();
-            }else if(currentPlayer instanceof Ai_Player){
-                aiTurn();
+        if (currentPlayer instanceof IntelligentPlayer) {
+            ((IntelligentPlayer) currentPlayer).doTurn(this);
+            if (view != null) {
+                Platform.runLater(() -> {
+                    view.refreshView();
+                });
             }
-        
-        
+            if (getPlayer1() instanceof IntelligentPlayer && getPlayer2() instanceof
+                    IntelligentPlayer) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            nextTurn();
+        } else if (currentPlayer instanceof Ai_Player) {
+            aiTurn();
+        }
     }
 
     private void aiTurn() {
-
+        Random rand = new Random();
         int cardTOAddToBench = rand.nextInt(5);
         if (players[1].activePokemon == null) {
             players[1].chooseActivePokemon();
@@ -364,7 +419,8 @@ public class GameBoard {
     private void checkWinLose() {
         if (getCurrentTurnPlayer().prizes.size() == 0 || getWaitingTurnPlayer().deck.size() == 0) {
             logger.debug("prize card size or enemy deck size equal zero");
-            Platform.runLater(()->GamePopup.displayGameResult(getCurrentTurnPlayer().getName(), true));
+            Platform.runLater(() -> GamePopup.displayGameResult(getCurrentTurnPlayer().getName(),
+                    true));
         }
 
         if (getCurrentTurnPlayer().activePokemon == null) {
@@ -377,15 +433,19 @@ public class GameBoard {
                 }
             }
             if (!stillHavePokemon) {
-                Platform.runLater(()->GamePopup.displayGameResult(getCurrentTurnPlayer().getName(), true));
+                Platform.runLater(() -> GamePopup.displayGameResult(getCurrentTurnPlayer()
+                        .getName(), true));
             }
         }
     }
-
-    public Player[] getPlayers() {
-        return players;
+    
+    public int getPlayerNum() {
+        return currentTurn + 1;
     }
 
+    // ==================================================================================
+    // =========================== setter and getter ====================================
+    // ==================================================================================
     public Player getPlayer1() {
         return players[0];
     }
@@ -410,18 +470,7 @@ public class GameBoard {
         return players[0];
     }
 
-    public void onRetreatButtonClicked(Player player) {
-        if (player.getActivePokemon() != null) {
-            PokemonCard card = (PokemonCard) player.getActivePokemon();
-            if ((card.getRetreatEnergyCost().canSupport(card.getEnergyAttached()))) {
-                card.getEnergyAttached().retreat(card.getRetreatEnergyCost());
-                player.setActivePokemon(null);
-                player.getBench().add(card);
-            }
-        }
-    }
-    
-    public TurnInfo getTurnInfo(){
+    public TurnInfo getTurnInfo() {
         return turnInfo;
     }
 }

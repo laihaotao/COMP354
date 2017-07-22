@@ -121,7 +121,7 @@ public class LanguageTokenizer {
 
         //Remebers if an arithmetic operation was present
         //TODO This needs to be changed if we need to implement precedence of operations, ie
-      // Multiplication having higher priority than addition
+        // Multiplication having higher priority than addition
         OperatorType lastArithmeticTokenType = null;
 
         //scan through every character from the scope start
@@ -169,7 +169,6 @@ public class LanguageTokenizer {
                     location = tScope2.endLocation;
                     tScope2.prefix = currentTokenString;
                     currentTokenString = "";
-                    ;
                     break;
 
                 //multiplication operator
@@ -187,7 +186,7 @@ public class LanguageTokenizer {
                     //create a new token if necessary
                     if (currentTokenString.length() > 0)
                         addToken(tokens, createTokenFromString(location, currentTokenString),
-                            lastArithmeticTokenType);
+                                lastArithmeticTokenType);
 
                     //remember that the operator was there
                     lastArithmeticTokenType = OperatorType.GREATER;
@@ -240,16 +239,16 @@ public class LanguageTokenizer {
 
             OperatorType type = lastOperatorTokenType;
             lastOperatorTokenType = null;
-            
+
             Token newToken = null;
-            switch(type){
+            switch (type) {
                 case MULTIPLICATION:
                     newToken = new TokenArithmetic(right.endLocation, type, left, right);
                     break;
                 case GREATER:
                     newToken = new TokenCondition(right.endLocation, type, left, right);
             }
-            
+
             addToken(tokens, newToken, lastOperatorTokenType);
         }
     }
@@ -257,8 +256,8 @@ public class LanguageTokenizer {
     /**
      * Add token and then check for arithmetic operations
      *
-     * @param tokens         Where to add the token
-     * @param token          Token to add
+     * @param tokens       Where to add the token
+     * @param token        Token to add
      * @param operatorType arithmetic type to check
      */
     private void addToken(List<Token> tokens, Token token, OperatorType operatorType) {

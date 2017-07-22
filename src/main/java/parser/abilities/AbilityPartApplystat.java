@@ -21,6 +21,7 @@ public class AbilityPartApplystat extends AbilityPart{
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
+
         return false;
     }
 

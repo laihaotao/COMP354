@@ -33,7 +33,7 @@ public class AbilityPartDam extends AbilityPart{
         PokemonCard pokemonCard = (PokemonCard) targetCard;
         int intAmmount = ammount.evaluateAsExpression(targetBoard, owner);
         if(intAmmount > 0) {
-          targetBoard.applyDamageToCard(owner, pokemonCard, intAmmount);
+          targetBoard.applyDamageToCard(pokemonCard, intAmmount);
           return true;
         }
         

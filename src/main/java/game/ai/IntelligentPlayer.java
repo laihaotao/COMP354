@@ -13,9 +13,6 @@ import java.util.Random;
 import parser.abilities.AbilityPart;
 import parser.abilities.AbilityPartDam;
 import parser.cards.EnergyCost;
-import parser.commons.TargetProperty;
-import ui.selections.RewardSelector;
-import ui.selections.TargetSelectorUI;
 
 /**
  * Created by frede on 2017-07-08.
@@ -243,7 +240,7 @@ public class IntelligentPlayer extends Player {
             for(Ability ability : activePokemon.getAbilities()){
                 if(ability.getTemplate().appliesDamage()){
                     gameBoard.onActiveAbilityClicked(this, activePokemon, ability);
-                    if(gameBoard.getTurnInfo().getAttackTrigger().getStatus()){
+                    if(gameBoard.getTurnInfo().getAttackTrigger().already()){
                         return;
                     }
                 }

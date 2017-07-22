@@ -10,10 +10,11 @@ package card;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.effectstatus.Effect;
+import game.effectstatus.Normal;
 import parser.cards.EnergyCost;
 
 public class PokemonCard extends Card {
-
 
     //basic, Stage One, Stage Two
     private String pokemonStage;
@@ -31,9 +32,10 @@ public class PokemonCard extends Card {
     private String status;
     private String evolvesFrom;
 
+    private Effect effect;
 
     public PokemonCard() {
-
+        effect = new Normal(this);
     }
 
 
@@ -52,6 +54,8 @@ public class PokemonCard extends Card {
         this.attackCounter = 0;
         this.status = "";
         this.cardType = CardType.POKEMON;
+
+        effect = new Normal(this);
     }
 
 
@@ -243,5 +247,9 @@ public class PokemonCard extends Card {
 
     public ArrayList<EnergyCard> getAttachedEnergyCard() {
         return this.attachedEnergyCard;
+    }
+
+    public Effect getEffect() {
+        return effect;
     }
 }
