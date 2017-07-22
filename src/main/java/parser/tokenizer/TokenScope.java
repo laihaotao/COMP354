@@ -77,7 +77,7 @@ public class TokenScope extends Token {
               PokemonCard pokemonCard = ((PokemonCard)targetCard);
               EnergyCost energyAttached = pokemonCard.getEnergyAttached();
               TokenString specificEnergy;
-              if((specificEnergy = tokenStream.validateTokenString())!=null){
+              if((specificEnergy = tokenStream.validateTokenString())!=null && specificEnergy.value.length()>0){
                 switch(specificEnergy.value){
                   case "psychic":
                     return energyAttached.psychic;

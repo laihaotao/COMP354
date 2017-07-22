@@ -42,4 +42,8 @@ public class AbilityPartDeck extends AbilityPart{
   public String getDescriptionString() {
     return "Deck from "+target + " to " + destination + " with choice "+choice + " for "+amount ; //TODO add description
   }
+
+  public String getCurrentDescription(GameBoard targetBoard, Player callingPlayer){
+    return "Deck from "+target + " to " + destination + " with choice "+choice + " for "+amount.evaluateAsExpression(targetBoard, callingPlayer) + " ["+amount.getDisplayString()+"]" ;
+  }
 }

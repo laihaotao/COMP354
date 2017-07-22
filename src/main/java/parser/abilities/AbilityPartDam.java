@@ -50,7 +50,7 @@ public class AbilityPartDam extends AbilityPart{
   }
 
   public String getCurrentDescription(GameBoard targetBoard, Player callingPlayer){
-    return "Damages " + target + "for " + ammount.evaluateAsExpression(targetBoard, callingPlayer);
+    return "Damages " + target + "for " + ammount.evaluateAsExpression(targetBoard, callingPlayer) + " ["+ ammount.getDisplayString() +"]";
   }
   
   public Token getAmmount(){
