@@ -1,5 +1,7 @@
 package parser.abilities;
 
+import card.Card;
+import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import parser.commons.StatusProperty;
@@ -21,7 +23,12 @@ public class AbilityPartApplystat extends AbilityPart{
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
-
+        Card targetCard = owner.getTarget(targetBoard, target);
+        if(targetCard instanceof PokemonCard){
+            PokemonCard pokemonCard = (PokemonCard)targetCard;
+            pokemonCard.setStatus(statusType.type.value);
+            return true;
+        }
         return false;
     }
 
