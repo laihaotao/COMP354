@@ -368,22 +368,31 @@ public class AbilitiesParser {
             TokenString filterType = null;
             if((filterType = tokenStream.validateTokenString()) != null){
                 switch(filterType.value){
-                    case "energy":
-                        break;
-                    case "cat":
+                    case "energy": {
+                        FilterEnergy energyFilter = new FilterEnergy();
+                        if (tokenStream.validateTokenString("cat") != null) {
+                            TokenString pokemonCategory = tokenStream.validateTokenString();
+                            energyFilter.setCategory(pokemonCategory.value);
+                        }
+
+                        filter = energyFilter;
+                    }  break;
+                    case "cat": {
                         TokenString category = tokenStream.validateTokenString();
                         filter = new FilterCategory(category.value);
-                        break;
-                    case "pokemon":
-                        FilterPokemon pokemonFilter= new FilterPokemon();
-                        if(tokenStream.validateTokenString("cat") != null){
+                    }break;
+                    case "pokemon": {
+                        FilterPokemon pokemonFilter = new FilterPokemon();
+                        if (tokenStream.validateTokenString("cat") != null) {
                             TokenString pokemonCategory = tokenStream.validateTokenString();
                             pokemonFilter.setCategory(pokemonCategory.value);
                         }
                         filter = pokemonFilter;
-                        break;
-                    case "evolves-from":
-                        break;
+                    }break;
+                    case "evolves-from": {
+                        TargetProperty evolvesFromTarget = TargetProperty.read(tokenStream);
+                        filter =  new FilterEvolveFrom(evolvesFromTarget);
+                    }break;
                     case "top":
                         break;
                     case "bottom":
