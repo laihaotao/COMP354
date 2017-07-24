@@ -362,6 +362,8 @@ public class AbilitiesParser {
         if(tokenStream.validateTokenString("source") != null){
             source = tokenStream.validateTokenString();
         }
+
+        Filter filter = new Filter();
         if(tokenStream.validateTokenString("filter") != null){
             TokenString filterType = null;
             if((filterType = tokenStream.validateTokenString()) != null){
@@ -369,11 +371,16 @@ public class AbilitiesParser {
                     case "energy":
                         break;
                     case "cat":
+                        TokenString category = tokenStream.validateTokenString();
+                        filter = new FilterCategory(category.value);
                         break;
                     case "pokemon":
+                        FilterPokemon pokemonFilter= new FilterPokemon();
                         if(tokenStream.validateTokenString("cat") != null){
                             TokenString pokemonCategory = tokenStream.validateTokenString();
+                            pokemonFilter.setCategory(pokemonCategory.value);
                         }
+                        filter = pokemonFilter;
                         break;
                     case "evolves-from":
                         break;
@@ -390,6 +397,6 @@ public class AbilitiesParser {
         Token amount = tokenStream.getNextToken();
 
 
-        return new AbilityPartSearch(target, source, amount);
+        return new AbilityPartSearch(target, source, filter, amount);
     }
 }
