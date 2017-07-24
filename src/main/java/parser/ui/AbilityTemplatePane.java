@@ -53,7 +53,7 @@ public class AbilityTemplatePane extends TreeItem {
     }
     
     private void processProperties(TreeItem ti, Property property){
-        TreeItem item = new TreeItem(property);
+        TreeItem item = new TreeItem(property.toString());
         ti.getChildren().add(item);
         
         

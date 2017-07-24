@@ -62,7 +62,7 @@ public class TargetProperty extends Property {
   }
   
   public String toString(){
-      return "Target: "+Formatting.toSafeString(target) + ":" + Formatting.toSafeString(modifier) + ammountModifier==null?ammountModifier.getDisplayString():"";
+      return "Target: "+Formatting.toSafeString(target) + ":" + Formatting.toSafeString(modifier) + ((ammountModifier!=null)?ammountModifier.getDisplayString():"");
   }
   
 }

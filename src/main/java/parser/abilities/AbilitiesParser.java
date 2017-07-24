@@ -143,6 +143,8 @@ public class AbilitiesParser {
                     return parseApplystatPart(tokenStream);
                 case "destat":
                     return parseDestatPart(tokenStream);
+                case "search":
+                    return parseSearchPart(tokenStream);
 
                 default:
                     waitUntil(tokenStream, TokenType.SEPERATOR);
@@ -313,7 +315,7 @@ public class AbilitiesParser {
         if (seperatedByScope) {
             TokenScope uselessScope;
             if ((uselessScope = tokenStream.validateTokenScope()) != null) {
-                parseNextPart(new TokenStream(uselessScope.tokens));
+                falsePart = parseNextPart(new TokenStream(uselessScope.tokens));
             }
         } else if (allInScope) {
             if (tokenStream.validateTokenSeparator() != null) {
@@ -350,5 +352,44 @@ public class AbilitiesParser {
         TargetProperty target = TargetProperty.read(tokenStream);
 
         return new AbilityPartDestat(target);
+    }
+
+    private AbilityPart parseSearchPart(TokenStream tokenStream){
+
+        TargetProperty target = TargetProperty.read(tokenStream);
+
+        TokenString source = null;
+        if(tokenStream.validateTokenString("source") != null){
+            source = tokenStream.validateTokenString();
+        }
+        if(tokenStream.validateTokenString("filter") != null){
+            TokenString filterType = null;
+            if((filterType = tokenStream.validateTokenString()) != null){
+                switch(filterType.value){
+                    case "energy":
+                        break;
+                    case "cat":
+                        break;
+                    case "pokemon":
+                        if(tokenStream.validateTokenString("cat") != null){
+                            TokenString pokemonCategory = tokenStream.validateTokenString();
+                        }
+                        break;
+                    case "evolves-from":
+                        break;
+                    case "top":
+                        break;
+                    case "bottom":
+                        break;
+
+                }
+            }
+
+        }
+
+        Token amount = tokenStream.getNextToken();
+
+
+        return new AbilityPartSearch(target, source, amount);
     }
 }
