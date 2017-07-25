@@ -3,7 +3,7 @@ package parser.commons;
 import game.GameBoard;
 import game.Player;
 
-public class ConditionAbility extends Condition{
+public class ConditionChoice extends Condition{
 
     @Override
     public boolean evaluate(GameBoard gameBoard, Player owner) {

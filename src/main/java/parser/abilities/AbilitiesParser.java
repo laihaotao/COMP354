@@ -306,16 +306,16 @@ public class AbilitiesParser {
             switch (((TokenString) type).value) {
                 case "healed":
                     TargetProperty targetProperty = TargetProperty.read(tokenStream);
-                    //apply if target has been healed
+                    condition = new ConditionHealed(targetProperty);
                     break;
                 case "flip":
                     condition = new ConditionFlip();
                     break;
                 case "ability":
-                    // ???
+                    condition = new ConditionAbility();
                     break;
                 case "choice":
-                    //player choses
+                    condition = new ConditionChoice();
                     break;
             }
         } else if (type instanceof TokenCondition) {
