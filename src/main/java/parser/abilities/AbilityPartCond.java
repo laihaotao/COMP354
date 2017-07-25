@@ -49,17 +49,20 @@ public class AbilityPartCond extends AbilityPart{
         trueParts.forEach(part->{
             if(part != null) {
                 descriptionBuilder.append(part.getDescriptionString());
+                descriptionBuilder.append(" and ");
             }
         });
+        descriptionBuilder.replace(descriptionBuilder.length()-5, descriptionBuilder.length(), "");
 
         descriptionBuilder.append(" else ");
         
         falseParts.forEach(part->{
             if(part != null) {
                 descriptionBuilder.append(part.getDescriptionString());
+                descriptionBuilder.append(" and ");
             }
         });
-
+        descriptionBuilder.replace(descriptionBuilder.length()-5, descriptionBuilder.length(), "");
 
         return descriptionBuilder.toString();
     }
