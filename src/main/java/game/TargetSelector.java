@@ -1,7 +1,7 @@
 package game;
 
 import card.Card;
-import parser.abilities.Property.TargetProperty;
+import parser.abilities.properties.TargetProperty;
 
 /**
  * Created by frede on 2017-06-08.

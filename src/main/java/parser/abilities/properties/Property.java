@@ -1,4 +1,4 @@
-package parser.abilities.Property;
+package parser.abilities.properties;
 
 /**
  * Created by frede on 2017-05-23.

@@ -1,6 +1,6 @@
 package parser.abilities.filters;
 
-import parser.abilities.Property.TargetProperty;
+import parser.abilities.properties.TargetProperty;
 
 public class FilterEvolveFrom extends Filter {
 

@@ -3,7 +3,7 @@ package parser.abilities.parts;
 import game.GameBoard;
 import game.Player;
 import game.SpecialAbility;
-import parser.abilities.Property.TargetProperty;
+import parser.abilities.properties.TargetProperty;
 
 public class AbilityPartShuffle extends AbilityPart{
 

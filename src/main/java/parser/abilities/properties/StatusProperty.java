@@ -1,4 +1,4 @@
-package parser.abilities.Property;
+package parser.abilities.properties;
 
 import parser.commons.Formatting;
 import parser.tokenizer.TokenStream;

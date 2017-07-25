@@ -10,7 +10,7 @@ package game;
 
 import card.Card;
 import card.PokemonCard;
-import parser.abilities.Property.TargetProperty;
+import parser.abilities.properties.TargetProperty;
 import ui.selections.RewardSelector;
 
 import java.util.ArrayList;

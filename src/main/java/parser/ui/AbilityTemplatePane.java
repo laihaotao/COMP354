@@ -5,7 +5,7 @@ import parser.abilities.parts.AbilityPart;
 import parser.abilities.parts.AbilityPartAdd;
 import parser.abilities.parts.AbilityPartCond;
 import parser.abilities.AbilityTemplate;
-import parser.abilities.Property.Property;
+import parser.abilities.properties.Property;
 
 /**
  * Created by frede on 2017-05-23.
