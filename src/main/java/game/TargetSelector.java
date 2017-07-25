@@ -14,42 +14,67 @@ public  abstract class TargetSelector {
       
     }
     
+    private Card lastCardTarget;
+    private Player lastPlayerTarget;
+    
     public Player getPlayer(GameBoard gameBoard, Player callingPlayer, TargetProperty target){
         switch(target.target.value){
             case "opponent":
                 return gameBoard.getOtherPlayer(callingPlayer);
             case "your":
                 return callingPlayer;
+            case "last":
+                return lastPlayerTarget;
         }
         return null;
     }
     
     public Card getCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty) {
         switch (targetProperty.target.value) {
+            case "last":
+                return lastCardTarget;
             case "choice": {
                 switch(targetProperty.modifier.value){
                     case "opponent":
-                        return choseOpponentCard(gameBoard, callingPlayer);
+                        return storeAndReturn(choseOpponentCard(gameBoard, callingPlayer));
                     case "your":
-                        return choseYourCard(gameBoard, callingPlayer);
+                        return storeAndReturn(choseYourCard(gameBoard, callingPlayer));
                     case "opponent-bench":
-                        return choseOpponentBench(gameBoard, callingPlayer);
+                        return storeAndReturn(choseOpponentBench(gameBoard, callingPlayer));
                     case "your-bench":
-                        return choseYourBench(gameBoard, callingPlayer);
+                        return storeAndReturn(choseYourBench(gameBoard, callingPlayer));
                 }
             }
             case "your-active": {
-                return callingPlayer.getActivePokemon();
+                return storeAndReturn(callingPlayer.getActivePokemon());
             }
             case "opponent-active": {
-                return gameBoard.getOtherPlayer(callingPlayer).getActivePokemon();
+                return storeAndReturn(gameBoard.getOtherPlayer(callingPlayer).getActivePokemon());
             }
             case "opponent":
-                return choseOpponentCard(gameBoard, callingPlayer);
+                return storeAndReturn(choseOpponentCard(gameBoard, callingPlayer));
             default: {
                 return null;
             }
         }
+    }
+    
+    private Card storeAndReturn(Card card){
+        lastCardTarget = card;
+        return card;
+    }
+    
+    private Player storeAndReturn(Player player){
+        lastPlayerTarget = player;
+        return player;
+    }
+    
+    public Player getLastPlayerTarget(){
+        return lastPlayerTarget;
+    }
+    
+    public Card getLastCardTarget(){
+        return lastCardTarget;
     }
     
     public abstract Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer);
