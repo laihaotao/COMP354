@@ -2,8 +2,8 @@ package parser.abilities;
 
 import game.GameBoard;
 import game.Player;
-import parser.commons.TargetProperty;
-import parser.commons.TokenProperty;
+import parser.abilities.Property.TargetProperty;
+import parser.abilities.Property.TokenProperty;
 import parser.tokenizer.Token;
 
 public class AbilityPartReenergize extends AbilityPart{

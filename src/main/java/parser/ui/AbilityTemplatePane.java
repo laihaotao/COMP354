@@ -1,12 +1,11 @@
 package parser.ui;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import parser.abilities.AbilityPart;
 import parser.abilities.AbilityPartAdd;
 import parser.abilities.AbilityPartCond;
 import parser.abilities.AbilityTemplate;
-import parser.commons.Property;
+import parser.abilities.Property.Property;
 
 /**
  * Created by frede on 2017-05-23.

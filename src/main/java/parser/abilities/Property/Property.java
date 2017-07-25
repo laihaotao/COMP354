@@ -1,4 +1,4 @@
-package parser.commons;
+package parser.abilities.Property;
 
 /**
  * Created by frede on 2017-05-23.

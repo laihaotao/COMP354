@@ -2,8 +2,8 @@ package parser.abilities;
 
 import game.GameBoard;
 import game.Player;
-import parser.commons.TargetProperty;
-import parser.commons.TriggerProperty;
+import parser.abilities.Property.TargetProperty;
+import parser.abilities.Property.TriggerProperty;
 
 public class AbilityPartAdd extends AbilityPart{
 

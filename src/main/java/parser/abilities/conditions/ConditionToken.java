@@ -1,4 +1,4 @@
-package parser.commons;
+package parser.abilities.conditions;
 
 import game.GameBoard;
 import game.Player;

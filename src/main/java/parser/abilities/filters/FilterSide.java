@@ -1,4 +1,4 @@
-package parser.commons;
+package parser.abilities.filters;
 
 import card.Card;
 import game.GameBoard;
@@ -6,7 +6,6 @@ import game.Player;
 import java.util.ArrayList;
 import java.util.List;
 import parser.tokenizer.Token;
-import parser.tokenizer.TokenInteger;
 
 public class FilterSide extends Filter {
 

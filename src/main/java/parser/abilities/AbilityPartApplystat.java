@@ -4,8 +4,8 @@ import card.Card;
 import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
-import parser.commons.StatusProperty;
-import parser.commons.TargetProperty;
+import parser.abilities.Property.StatusProperty;
+import parser.abilities.Property.TargetProperty;
 
 public class AbilityPartApplystat extends AbilityPart{
 

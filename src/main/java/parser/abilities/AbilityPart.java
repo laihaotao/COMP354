@@ -4,7 +4,7 @@ import game.GameBoard;
 import game.Player;
 import java.util.ArrayList;
 import java.util.List;
-import parser.commons.Property;
+import parser.abilities.Property.Property;
 
 /**
  * AbilityPart defines behavior for an an ability

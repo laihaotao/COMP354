@@ -1,4 +1,4 @@
-package parser.commons;
+package parser.abilities.filters;
 
 public class FilterCategory extends Filter{
     private String category;

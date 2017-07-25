@@ -1,5 +1,6 @@
-package parser.commons;
+package parser.abilities.Property;
 
+import parser.commons.Formatting;
 import parser.tokenizer.TokenStream;
 import parser.tokenizer.TokenString;
 

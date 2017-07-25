@@ -3,8 +3,7 @@ package parser.abilities;
 import game.GameBoard;
 import game.Player;
 import java.util.List;
-import parser.commons.Condition;
-import parser.tokenizer.TokenCondition;
+import parser.abilities.conditions.Condition;
 
 /**
  * Created by frede on 2017-07-07.

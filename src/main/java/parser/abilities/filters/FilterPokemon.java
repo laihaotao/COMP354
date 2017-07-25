@@ -1,12 +1,11 @@
-package parser.commons;
+package parser.abilities.filters;
 
 import card.Card;
-import card.EnergyCard;
 import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 
-public class FilterEnergy extends Filter{
+public class FilterPokemon extends Filter{
     public String category = null;
 
     public void setCategory(String category){
@@ -15,10 +14,11 @@ public class FilterEnergy extends Filter{
 
     @Override
     public boolean evaluate(GameBoard targetBoard, Player owner,Card card) {
-        return card instanceof EnergyCard;
+        return card instanceof PokemonCard;
     }
 
     public String toString(){
         return "filter pokemons " + ((category!=null)?" of cat "+category:"");
     }
+
 }

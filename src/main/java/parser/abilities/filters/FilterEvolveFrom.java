@@ -1,7 +1,6 @@
-package parser.commons;
+package parser.abilities.filters;
 
-import card.Card;
-import card.PokemonCard;
+import parser.abilities.Property.TargetProperty;
 
 public class FilterEvolveFrom extends Filter {
 

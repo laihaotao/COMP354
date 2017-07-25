@@ -1,10 +1,7 @@
 package game;
 
 import card.Card;
-import java.util.ArrayList;
-import java.util.List;
-import parser.commons.TargetProperty;
-import ui.selections.TargetSelectorUI;
+import parser.abilities.Property.TargetProperty;
 
 /**
  * Created by frede on 2017-06-08.

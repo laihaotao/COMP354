@@ -1,4 +1,4 @@
-package parser.commons;
+package parser.abilities.filters;
 
 import card.Card;
 import game.GameBoard;

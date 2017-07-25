@@ -1,5 +1,6 @@
-package parser.commons;
+package parser.abilities.Property;
 
+import parser.commons.Formatting;
 import parser.tokenizer.Token;
 import parser.tokenizer.TokenStream;
 import parser.tokenizer.TokenString;
@@ -62,7 +63,7 @@ public class TargetProperty extends Property {
   }
   
   public String toString(){
-      return "Target: "+Formatting.toSafeString(target) + ":" + Formatting.toSafeString(modifier) + ((ammountModifier!=null)?ammountModifier.getDisplayString():"");
+      return "Target: "+ Formatting.toSafeString(target) + ":" + Formatting.toSafeString(modifier) + ((ammountModifier!=null)?ammountModifier.getDisplayString():"");
   }
   
 }
