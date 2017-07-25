@@ -1,4 +1,4 @@
-package parser.abilities;
+package parser.abilities.parts;
 
 import game.GameBoard;
 import game.Player;
@@ -6,14 +6,14 @@ import parser.abilities.Property.TargetProperty;
 import parser.abilities.Property.TokenProperty;
 import parser.tokenizer.Token;
 
-public class AbilityPartRedamage extends AbilityPart{
+public class AbilityPartReenergize extends AbilityPart{
+    
     private TargetProperty source;
     private TargetProperty target;
     private Token amount;
 
-
-    public AbilityPartRedamage(TargetProperty source, TargetProperty target, Token amount) {
-        super("ReDamage");
+    public AbilityPartReenergize(TargetProperty source, TargetProperty target, Token amount) {
+        super("DeEnergize");
         this.source = source;
         this.target = target;
         this.amount = amount;
@@ -31,6 +31,6 @@ public class AbilityPartRedamage extends AbilityPart{
 
     @Override
     public String getDescriptionString() {
-        return "De-damage from " + source + " to " + target + " "+amount.getDisplayString() + "times";
+        return "Re-energize from " + source + " to " + target + " "+amount.getDisplayString() + "times";
     }
 }

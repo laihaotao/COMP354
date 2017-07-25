@@ -1,4 +1,4 @@
-package parser.abilities;
+package parser.abilities.parts;
 
 import game.GameBoard;
 import game.Player;

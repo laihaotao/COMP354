@@ -1,4 +1,4 @@
-package parser.abilities;
+package parser.abilities.parts;
 
 import card.Card;
 import card.PokemonCard;
