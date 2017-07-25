@@ -1,13 +1,10 @@
 package parser.debug;
 
-import java.util.Arrays;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import parser.abilities.AbilitiesParser;
-import parser.abilities.AbilityPart;
 import parser.abilities.AbilityTemplate;
-import parser.cards.CardParser;
 import parser.cards.EnergyCost;
 import parser.tokenizer.LanguageTokenizer;
 import parser.tokenizer.TokenScope;

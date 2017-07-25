@@ -10,8 +10,8 @@ import game.TargetSelector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import parser.abilities.AbilityPart;
-import parser.abilities.AbilityPartDam;
+import parser.abilities.parts.AbilityPart;
+import parser.abilities.parts.AbilityPartDam;
 import parser.cards.EnergyCost;
 
 /**

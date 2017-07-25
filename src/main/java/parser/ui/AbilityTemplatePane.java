@@ -1,9 +1,9 @@
 package parser.ui;
 
 import javafx.scene.control.TreeItem;
-import parser.abilities.AbilityPart;
-import parser.abilities.AbilityPartAdd;
-import parser.abilities.AbilityPartCond;
+import parser.abilities.parts.AbilityPart;
+import parser.abilities.parts.AbilityPartAdd;
+import parser.abilities.parts.AbilityPartCond;
 import parser.abilities.AbilityTemplate;
 import parser.abilities.Property.Property;
 
