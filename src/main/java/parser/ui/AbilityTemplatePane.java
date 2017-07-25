@@ -38,6 +38,7 @@ public class AbilityTemplatePane extends TreeItem {
 
         if(part instanceof AbilityPartCond){
             AbilityPartCond condPart = (AbilityPartCond)part; 
+            TreeItem conditionItem = new TreeItem(condPart.condition);
             TreeItem trueItem = new TreeItem<>("true");
             condPart.trueParts.forEach(tpart->{
                 processAbilityPart(trueItem, tpart);
@@ -46,7 +47,7 @@ public class AbilityTemplatePane extends TreeItem {
             condPart.falseParts.forEach(fpart->{
                 processAbilityPart(falseItem, fpart);
             });
-            item.getChildren().addAll(trueItem, falseItem);
+            item.getChildren().addAll(conditionItem, trueItem, falseItem);
         }else if(part instanceof AbilityPartAdd){
             AbilityPartAdd addPart = (AbilityPartAdd)part;
             processAbilityPart(item, addPart.abilityToAdd);

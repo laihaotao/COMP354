@@ -1,5 +1,8 @@
 package parser.tokenizer;
 
+import game.GameBoard;
+import game.Player;
+
 /**
  * Used to delimit arithmetics
  */
@@ -19,7 +22,16 @@ public class TokenCondition extends Token{
     public String toString(){
         return super.toString() + "Condition -> "+ leftValue + " " + type + " " + rightValue;
     }
-
+    
+    public int evaluateAsExpression(GameBoard targetBoard, Player callingPlayer) {
+        switch(type){
+            case GREATER:
+                return (leftValue.evaluateAsExpression(targetBoard, callingPlayer) > rightValue.evaluateAsExpression(targetBoard, callingPlayer)?1:0);
+            default:
+                return 0;
+        }
+    }
+    
     @Override
     public String getDisplayString() {
         String string = leftValue.getDisplayString();

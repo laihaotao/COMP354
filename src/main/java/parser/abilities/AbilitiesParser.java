@@ -319,7 +319,7 @@ public class AbilitiesParser {
                     break;
             }
         } else if (type instanceof TokenCondition) {
-
+            condition = new ConditionToken(tokenStream.validateTokenCondition());
         }
        
         List<AbilityPart> trueParts = parseNextPartSafe(tokenStream);
