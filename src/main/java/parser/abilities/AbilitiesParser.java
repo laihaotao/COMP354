@@ -166,6 +166,8 @@ public class AbilitiesParser {
                     return parseDestatPart(tokenStream);
                 case "search":
                     return parseSearchPart(tokenStream);
+                case "shuffle":
+                    return parseShufflePart(tokenStream);
 
                 default:
                     waitUntil(tokenStream, TokenType.SEPERATOR);
@@ -351,6 +353,12 @@ public class AbilitiesParser {
         return new AbilityPartDestat(target);
     }
 
+    private AbilityPart parseShufflePart(TokenStream tokenStream){
+        TargetProperty target = TargetProperty.read(tokenStream);
+        
+        return new AbilityPartShuffle(target);
+    }
+    
     private AbilityPart parseSearchPart(TokenStream tokenStream){
 
         TargetProperty target = TargetProperty.read(tokenStream);
@@ -390,10 +398,12 @@ public class AbilitiesParser {
                         TargetProperty evolvesFromTarget = TargetProperty.read(tokenStream);
                         filter =  new FilterEvolveFrom(evolvesFromTarget);
                     }break;
-                    case "top":
-                        break;
-                    case "bottom":
-                        break;
+                    case "top": {
+                        Token amount = tokenStream.getNextToken();
+                    }break;
+                    case "bottom": {
+                        Token amount = tokenStream.getNextToken();
+                    }break;
 
                 }
             }

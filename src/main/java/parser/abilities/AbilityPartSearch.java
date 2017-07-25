@@ -4,6 +4,7 @@ import game.GameBoard;
 import game.Player;
 import parser.commons.Filter;
 import parser.commons.TargetProperty;
+import parser.commons.TokenProperty;
 import parser.tokenizer.Token;
 import parser.tokenizer.TokenString;
 
@@ -19,6 +20,10 @@ public class AbilityPartSearch extends AbilityPart {
         this.source = source;
         this.filter = filter;
         this.amount = amount;
+        
+        properties.add(target);
+        properties.add(new TokenProperty("source", source));
+        properties.add(new TokenProperty("filter", new TokenString(0,filter.toString())));
     }
 
     @Override
