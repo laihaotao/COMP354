@@ -1,5 +1,7 @@
 package parser.abilities.conditions;
 
+import card.Card;
+import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import parser.abilities.Property.TargetProperty;
@@ -14,6 +16,10 @@ public class ConditionHealed extends Condition {
 
     @Override
     public boolean evaluate(GameBoard gameBoard, Player owner) {
+        Card card = owner.getTarget(gameBoard, targetProperty);
+        if(card instanceof PokemonCard){
+            return ((PokemonCard)card).hasBeenHealed();
+        }
         return false;
     }
 }

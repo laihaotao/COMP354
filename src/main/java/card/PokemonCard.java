@@ -32,6 +32,8 @@ public class PokemonCard extends Card {
     private String status;
     private String evolvesFrom;
 
+    private boolean hasBeenHealed = false;
+    
     private Effect effect;
 
     public PokemonCard() {
@@ -255,5 +257,13 @@ public class PokemonCard extends Card {
 
     public void setEffect(Effect effect) {
         this.effect = effect;
+    }
+
+    public boolean hasBeenHealed() {
+        return hasBeenHealed;
+    }
+
+    public void setHasBeenHealed(boolean hasBeenHealed) {
+        this.hasBeenHealed = hasBeenHealed;
     }
 }

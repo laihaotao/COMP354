@@ -39,8 +39,7 @@ public class CardView extends BorderPane {
     private List<PlayerViewListener> registeredListeners;
 
     private Card card;
-
-    //TODO A Card instance should be passed to this once it is properly implemented
+    
     public CardView(GameBoard targetBoard, Player player, Card card) {
         this.card = card;
         this.player = player;
