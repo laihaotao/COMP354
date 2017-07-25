@@ -400,9 +400,11 @@ public class AbilitiesParser {
                     }break;
                     case "top": {
                         Token amount = tokenStream.getNextToken();
+                        filter = new FilterSide("top", amount);
                     }break;
                     case "bottom": {
                         Token amount = tokenStream.getNextToken();
+                        filter = new FilterSide("bottom", amount);
                     }break;
 
                 }

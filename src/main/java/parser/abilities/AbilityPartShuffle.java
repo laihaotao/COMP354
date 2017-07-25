@@ -17,6 +17,15 @@ public class AbilityPartShuffle extends AbilityPart{
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
+        switch(target.target.value){
+            case "your":{
+                //TODO shuffle
+            }break;
+            
+            case "opponent":{
+                //TODO shuffle
+            }break;
+        }
         return false;
     }
 

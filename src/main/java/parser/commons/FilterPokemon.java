@@ -2,6 +2,8 @@ package parser.commons;
 
 import card.Card;
 import card.PokemonCard;
+import game.GameBoard;
+import game.Player;
 
 public class FilterPokemon extends Filter{
     public String category = null;
@@ -11,7 +13,7 @@ public class FilterPokemon extends Filter{
     }
 
     @Override
-    public boolean evaluate(Card card) {
+    public boolean evaluate(GameBoard targetBoard, Player owner,Card card) {
         return card instanceof PokemonCard;
     }
 

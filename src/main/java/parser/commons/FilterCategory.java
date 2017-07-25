@@ -2,7 +2,7 @@ package parser.commons;
 
 public class FilterCategory extends Filter{
     private String category;
-
+    
     public FilterCategory(String category){
 
         this.category = category;
