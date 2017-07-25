@@ -29,7 +29,10 @@ public class AbilityView extends BorderPane {
         ability.getTemplate().parts.forEach(part->{
                 descriptionBuilder.append(part.getCurrentDescription(gameBoard, owner) + "\n");
         });
-        setRight(new Label(descriptionBuilder.toString()));
+        Label description = new Label(descriptionBuilder.toString());
+        description.setWrapText(true);
+        description.setMaxWidth(150);
+        setRight(description);
     }
 
 }
