@@ -102,12 +102,33 @@ public class AbilitiesParser {
         //log.debug(" " + name+ " ");
 
         //Go through tokens, parsing them into ability parts
-        AbilityPart abilityPart = null;
-        while ((abilityPart = parseNextPart(tokenStream)) != null) {
-            template.parts.add(abilityPart);
-        }
+        template.parts.addAll(getPartsFromScope(tokenStream));
 
         return template;
+    }
+    
+    private List<AbilityPart> parseNextPartSafe(TokenStream tokenStream){
+        List<AbilityPart> parts;
+        TokenScope scope = null;
+        if((scope = tokenStream.validateTokenScope()) != null){
+            parts = getPartsFromScope(scope);
+        }else{
+            parts = new ArrayList<>();
+            parts.add(parseNextPart(tokenStream));
+        }
+        return parts;
+    }
+    private List<AbilityPart> getPartsFromScope(TokenStream tokenStream){
+        List<AbilityPart> parts = new ArrayList<>();
+        AbilityPart abilityPart = null;
+        while ((abilityPart = parseNextPart(tokenStream)) != null) {
+            parts.add(abilityPart);
+        }
+
+        return parts;
+    }
+    private List<AbilityPart> getPartsFromScope(TokenScope scope){
+        return getPartsFromScope(new TokenStream(scope.tokens));
     }
 
     private AbilityPart parseNextPart(TokenStream tokenStream) {
@@ -279,15 +300,6 @@ public class AbilitiesParser {
 
         Condition condition = null;
 
-        boolean seperatedByScope = false;
-        boolean allInScope = false;
-
-        TokenScope tempScope = null;
-        if ((tempScope = tokenStream.validateTokenScope()) != null) {
-            allInScope = true;
-            tokenStream = new TokenStream(tempScope.tokens);
-        }
-
         if (type instanceof TokenString) {
             switch (((TokenString) type).value) {
                 case "healed":
@@ -298,7 +310,6 @@ public class AbilitiesParser {
                     condition = new ConditionFlip();
                     break;
                 case "ability":
-                    seperatedByScope = true;
                     // ???
                     break;
                 case "choice":
@@ -308,26 +319,12 @@ public class AbilitiesParser {
         } else if (type instanceof TokenCondition) {
 
         }
-        AbilityPartCond abilityPartCond = new AbilityPartCond(condition);
-
-        AbilityPart truePart = parseNextPart(tokenStream);
-        AbilityPart falsePart = null;
-        if (seperatedByScope) {
-            TokenScope uselessScope;
-            if ((uselessScope = tokenStream.validateTokenScope()) != null) {
-                falsePart = parseNextPart(new TokenStream(uselessScope.tokens));
-            }
-        } else if (allInScope) {
-            if (tokenStream.validateTokenSeparator() != null) {
-                falsePart = parseNextPart(tokenStream);
-            }
-        } else {
-            if (tokenStream.validateTokenString("else") != null) {
-                falsePart = parseNextPart(tokenStream);
-            }
-        }
-
-        abilityPartCond.setResults(truePart, falsePart);
+       
+        List<AbilityPart> trueParts = parseNextPartSafe(tokenStream);
+        tokenStream.validateTokenString("else");
+        List<AbilityPart> falseParts = parseNextPartSafe(tokenStream);
+        
+        AbilityPartCond abilityPartCond = new AbilityPartCond(condition, trueParts, falseParts);
 
         return abilityPartCond;
 

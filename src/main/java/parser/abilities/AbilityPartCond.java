@@ -2,6 +2,7 @@ package parser.abilities;
 
 import game.GameBoard;
 import game.Player;
+import java.util.List;
 import parser.commons.Condition;
 import parser.tokenizer.TokenCondition;
 
@@ -12,17 +13,14 @@ public class AbilityPartCond extends AbilityPart{
 
     public Condition condition;
     
-    public AbilityPart truePart;
-    public AbilityPart falsePart;
+    public List<AbilityPart> trueParts;
+    public List<AbilityPart> falseParts;
     
-    public AbilityPartCond(Condition condition) {
+    public AbilityPartCond(Condition condition, List<AbilityPart> trueParts, List<AbilityPart> falseParts) {
         super("cond");
         this.condition = condition;
-    }
-
-    public void setResults(AbilityPart truePart, AbilityPart falsePart){
-        this.truePart = truePart;
-        this.falsePart = falsePart;
+        this.trueParts = trueParts;
+        this.falseParts = falseParts;
     }
     
     @Override
@@ -31,19 +29,38 @@ public class AbilityPartCond extends AbilityPart{
             return false;
         }
         if(condition.evaluate(targetBoard, owner)){
-            if(truePart != null){
-                return truePart.use(targetBoard, owner);
-            }
+            trueParts.forEach(part->{
+                part.use(targetBoard, owner);
+            });
         }else{
-            if(falsePart != null){
-                return falsePart.use(targetBoard, owner);
-            }
+            falseParts.forEach(part->{
+                part.use(targetBoard, owner);
+            });
         }
         return true;
     }
 
     @Override
     public String getDescriptionString() {
-        return (condition==null?"Condition":condition.getClass().getSimpleName())+":"+((truePart != null)?truePart.getDescriptionString():"") + ((falsePart != null)?" else "+falsePart.getDescriptionString():"");
+        
+        StringBuilder descriptionBuilder = new StringBuilder();
+        descriptionBuilder.append((condition==null?"Condition":condition.getClass().getSimpleName())+":");
+        
+        trueParts.forEach(part->{
+            if(part != null) {
+                descriptionBuilder.append(part.getDescriptionString());
+            }
+        });
+
+        descriptionBuilder.append(" else ");
+        
+        falseParts.forEach(part->{
+            if(part != null) {
+                descriptionBuilder.append(part.getDescriptionString());
+            }
+        });
+
+
+        return descriptionBuilder.toString();
     }
 }
