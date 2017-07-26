@@ -1,5 +1,7 @@
 package parser.abilities.parts;
 
+import card.Card;
+import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import parser.abilities.properties.TargetProperty;
@@ -23,6 +25,12 @@ public class AbilityPartHeal extends AbilityPart{
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
+        Card card = owner.getTarget(targetBoard, target);
+        if(card instanceof PokemonCard){
+            PokemonCard pokemonCard = (PokemonCard)card;
+            pokemonCard.heal(amount.evaluateAsExpression(targetBoard, owner));
+            return true;
+        }
         return false;
     }
 

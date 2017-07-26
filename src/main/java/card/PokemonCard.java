@@ -259,6 +259,14 @@ public class PokemonCard extends Card {
         this.effect = effect;
     }
 
+    public void heal(int amount){
+        damage -= amount;
+        if(damage < 0) {
+            damage = 0;
+        }
+        hasBeenHealed = true;
+    }
+    
     public boolean hasBeenHealed() {
         return hasBeenHealed;
     }

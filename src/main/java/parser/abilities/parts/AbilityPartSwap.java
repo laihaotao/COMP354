@@ -1,5 +1,6 @@
 package parser.abilities.parts;
 
+import card.Card;
 import game.GameBoard;
 import game.Player;
 import parser.abilities.properties.TargetProperty;
