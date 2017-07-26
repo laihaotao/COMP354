@@ -1,7 +1,10 @@
 package parser.abilities.parts;
 
+import card.Card;
+import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
+import game.effectstatus.Normal;
 import parser.abilities.properties.TargetProperty;
 
 public class AbilityPartDestat extends AbilityPart{
@@ -18,6 +21,12 @@ public class AbilityPartDestat extends AbilityPart{
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
+        Card card = owner.getTarget(targetBoard, targetProperty);
+        if(card instanceof PokemonCard){
+            PokemonCard pokemonCard = (PokemonCard)card;
+            pokemonCard.setEffect(new Normal(pokemonCard));
+        }
+        
         return false;
     }
 
