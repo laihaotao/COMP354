@@ -14,6 +14,12 @@ public class FilterEnergy extends Filter{
 
     @Override
     public boolean evaluate(GameBoard targetBoard, Player owner,Card card) {
+        if(category != null){
+            if(card instanceof EnergyCard){
+                EnergyCard energyCard = (EnergyCard)card;
+                if(category.equalsIgnoreCase(energyCard.getEnergyType().toString()));
+            }
+        }
         return card instanceof EnergyCard;
     }
 
