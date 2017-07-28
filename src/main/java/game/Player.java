@@ -292,4 +292,8 @@ public class Player {
     public Card getTarget(GameBoard gameBoard, TargetProperty target) {
         return targetSelector.getCard(gameBoard, this, target);
     }
+
+    public Player getTargetPlayer(GameBoard gameBoard, TargetProperty target) {
+        return targetSelector.getPlayer(gameBoard, this, target);
+    }
 }
