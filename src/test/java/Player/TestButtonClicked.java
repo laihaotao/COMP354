@@ -11,7 +11,6 @@ import parser.cards.DeckParser;
 
 import java.io.IOException;
 import java.util.List;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -52,7 +51,7 @@ public class TestButtonClicked {
 
         GameBoard gm = new GameBoard(player1,player2);
         player1.chooseActivePokemon();
-        player2.checkForPokemon();
+        player2.checkMulligans();
         gm.onRetreatButtonClicked(player1);
         gm.onRetreatButtonClicked(player2);
 

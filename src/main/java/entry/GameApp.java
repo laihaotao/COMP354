@@ -42,7 +42,7 @@ public class GameApp extends Application {
     private static String deckPath = GameApp.class.getClassLoader().getResource("decks/").getPath();
 
     public static void main(String[] args) throws IOException {
-        
+
         logger.info("Starting pokemon game!");
         logger.info(deckPath);
         launch(args);
@@ -77,9 +77,9 @@ public class GameApp extends Application {
         comboBox2.setValue(default_f2);
 
         CheckBox aiBox = new CheckBox("AI vs AI");
-        
+
         CheckBox debugBox = new CheckBox("Debug");
-        
+
         Button startBtn = new Button();
         startBtn.setText("Start Game");
         startBtn.setOnAction(event -> {
@@ -125,17 +125,9 @@ public class GameApp extends Application {
         //TODO add support for resizing
         primaryStage.setResizable(true);
 
-        //This needs to be called since primaryStage.show() changes dimensions of panes
-        //This means that any transformatons need to be re-applied to the views
         boardView.refreshView();
 
-        //AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
-        //AbilityTemplate[] abilities = abilitiesParser.parse();
-
-//        CardDebugParser cardDebugParser = new CardDebugParser("cards.txt");
-//        cardDebugParser.parse();
-        
-        if(gameBoard.getPlayer1() instanceof IntelligentPlayer && gameBoard.getPlayer2() instanceof IntelligentPlayer){
+        if (gameBoard.getPlayer1() instanceof IntelligentPlayer && gameBoard.getPlayer2() instanceof IntelligentPlayer) {
             new Thread(() -> gameBoard.onEndTurnButtonClicked()).start();
         }
     }
@@ -150,7 +142,7 @@ public class GameApp extends Application {
         List<Card> player1Deck = deck1Parser.getDeck();
         List<Card> player2Deck = deck2Parser.getDeck();
 
-        Player player1 = allAI?new IntelligentPlayer(player1Deck):new Player(player1Deck);
+        Player player1 = allAI ? new IntelligentPlayer(player1Deck) : new Player(player1Deck);
         Player player2 = new IntelligentPlayer(player2Deck);
 
         player1.setName("human player");
@@ -158,4 +150,5 @@ public class GameApp extends Application {
 
         return new GameBoard(player1, player2);
     }
+
 }

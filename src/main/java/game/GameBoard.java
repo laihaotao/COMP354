@@ -367,7 +367,7 @@ public class GameBoard {
             pokemon.setEffect(pokemon.getEffect().remove());
         }
         //add card to players hand
-        currentPlayer.putCardInHand();
+        currentPlayer.drawOneCard();
 
         if (currentPlayer instanceof IntelligentPlayer) {
             ((IntelligentPlayer) currentPlayer).doTurn(this);

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+
 import ui.selections.TargetSelectorUI;
 
 public class Player {
@@ -33,7 +34,7 @@ public class Player {
     private Scanner kb = new Scanner(System.in);
     Random rand = new Random();
     private String name;
-    
+
     private game.TargetSelector targetSelector;
 
     public Player(List<Card> playerDeck) {
@@ -43,35 +44,34 @@ public class Player {
         putPrizes();  //lack of better name
         //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
 
-        put7CardInHand();
+        draw7Cards();
+//        chooseActivePokemon();
 
-        //chooseActivePokemon();
-        
         targetSelector = createTargetSelector();
     }
-    
-    public TargetSelector createTargetSelector(){
+
+    public TargetSelector createTargetSelector() {
         return new TargetSelectorUI();
     }
 
-    public void put7CardInHand() {
-
+    public void draw7Cards() {
         for (int i = 0; i < 7; i++) {
-            putCardInHand();
+            drawOneCard();
         }
-        checkForPokemon();
+        checkMulligans();
     }
 
-    public void checkForPokemon() {
-
+    public void checkMulligans() {
+        // pokemonCards is used to trace the pokemon cards in the hand
         if (pokemonCards.size() == 0) {
             int handSize = hand.size();
             while (handSize > 0) {
+                // put the current hand card at the end of the deck
                 deck.add(hand.remove(0));
                 handSize--;
             }
 
-            put7CardInHand(); // this takes care of Mulligans // change when deck is updated
+            draw7Cards();
         }
     }
 
@@ -79,16 +79,16 @@ public class Player {
     public void putPrizes() {
         for (int i = 0; i < 6; i++) {
             int n = rand.nextInt(deck.size());
-            prizes.add(deck.remove(deck.size()-i-1));
+            prizes.add(deck.remove(deck.size() - i - 1));
         }
     }
 
     //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
-    public void putCardInHand() {
+    public void drawOneCard() {
         hand.add(deck.remove(0));
-        if (hand.get(hand.size() - 1) instanceof PokemonCard)//  .getType().canSupport("POKEMON"))
+        if (hand.get(hand.size() - 1) instanceof PokemonCard) {//  .getType().canSupport("POKEMON"))
             pokemonCards.add((PokemonCard) hand.get(hand.size() - 1));
-
+        }
     }
 
     /*
@@ -151,7 +151,7 @@ public class Player {
 
     public void drawTopSixCard() {
         for (int i = 0; i < 6; i++) {
-            putCardInHand();
+            drawOneCard();
         }
 
     }
@@ -238,12 +238,14 @@ public class Player {
     }
 
 
+    public void attackOpponent(Card opponent) {
+    }
 
-    public void attackOpponent(Card opponent) { }
+    public void attachEnergyCard() {
+    }
 
-    public void attachEnergyCard() {}
-
-    public void attachEnergyCardToActivePokemon() {}
+    public void attachEnergyCardToActivePokemon() {
+    }
 
     public List<Card> getDeck() {
         return deck;
