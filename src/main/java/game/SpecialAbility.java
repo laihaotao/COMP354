@@ -32,7 +32,7 @@ public class SpecialAbility {
         return res;
     }
 
-    private static void swapCardPos(Card x, Card y) {
+    public static void swapCardPos(Card x, Card y) {
         Card tmp = x;
         x = y;
         y = tmp;

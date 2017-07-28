@@ -1,8 +1,10 @@
 package parser.abilities.parts;
 
 import card.Card;
+import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
+import game.SpecialAbility;
 import parser.abilities.properties.TargetProperty;
 
 public class AbilityPartSwap extends AbilityPart{
@@ -21,7 +23,12 @@ public class AbilityPartSwap extends AbilityPart{
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
-        return false;
+        PokemonCard p1 = (PokemonCard) owner.getTarget(targetBoard, source);
+        PokemonCard p2 = (PokemonCard) owner.getTarget(targetBoard, destination);
+        // remove all status effects
+        p1.setEffect(p1.getEffect().remove());
+        SpecialAbility.swapCardPos(p1, p2);
+        return true;
     }
 
     @Override

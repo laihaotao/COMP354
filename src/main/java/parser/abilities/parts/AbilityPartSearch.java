@@ -1,12 +1,17 @@
 package parser.abilities.parts;
 
+import card.Card;
 import game.GameBoard;
 import game.Player;
+import game.TargetSelector;
 import parser.abilities.filters.Filter;
 import parser.abilities.properties.TargetProperty;
 import parser.abilities.properties.TokenProperty;
 import parser.tokenizer.Token;
 import parser.tokenizer.TokenString;
+import ui.popup.GamePopup;
+
+import java.util.List;
 
 public class AbilityPartSearch extends AbilityPart {
     private TargetProperty target;
@@ -28,6 +33,22 @@ public class AbilityPartSearch extends AbilityPart {
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
+        Player player = owner.getTargetPlayer(targetBoard, target);
+        List<Card> sourceList = null;
+        switch (source.value) {
+            case "deck":
+                sourceList = owner.getDeck();
+                break;
+            case "discard":
+                sourceList = owner.getDiscardPile();
+                break;
+        }
+        List<Card> fileterList = filter.evaluate(targetBoard, owner, sourceList);
+        for (int i = 0; i < amount.evaluateAsExpression(targetBoard, owner); i++) {
+
+            // todo need to implement a popup
+
+        }
         return false;
     }
 

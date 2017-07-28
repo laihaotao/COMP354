@@ -90,7 +90,6 @@ public class Player {
      * this is done only at the begining
      */
     public void chooseActivePokemon() {
-       /*
         printPokemonCards();
         if (pokemonCards.size() > 0) {
             //System.out.println("chose which card you want to use ");
@@ -103,8 +102,6 @@ public class Player {
             activePokemon = pokemonCards.get(pokNum - 1);
             System.out.println(" your active pokemon is: " + activePokemon.getCardName());
         }
-        */
-
     }
 
 

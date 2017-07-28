@@ -116,9 +116,10 @@ public class GameApp extends Application {
         StartPane root = new StartPane();
 
         GameBoard gameBoard = getGameBoard(fileNm1, fileNm2, allAI);
-        gameBoard.chooseActivePokemon();
+        if (!allAI) {
+            gameBoard.chooseActivePokemon();
+        }
 
-        //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
         root.setCurrentView(boardView);
         primaryStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -152,12 +153,5 @@ public class GameApp extends Application {
 
         gameBoard = new GameBoard(player1, player2);
         return gameBoard;
-    }
-
-    public static GameBoard getGameBoard() {
-        if (gameBoard != null) {
-            return gameBoard;
-        }
-        return null;
     }
 }

@@ -25,8 +25,17 @@ public class AbilityPartDraw extends AbilityPart{
 
   @Override
   public boolean use(GameBoard targetBoard, Player owner) {
-    //TODO implement
-      return false;
+      int cardAmount = amount.evaluateAsExpression(targetBoard, owner);
+      Player player;
+      if (target.target == null) {
+          player = owner;
+      } else {
+          player = targetBoard.getOtherPlayer(owner);
+      }
+      for (int i = 0; i < cardAmount; i++) {
+          player.drawOneCard();
+      }
+      return true;
   }
 
   @Override
