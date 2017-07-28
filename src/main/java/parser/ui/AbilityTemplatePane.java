@@ -1,11 +1,11 @@
 package parser.ui;
 
 import javafx.scene.control.TreeItem;
-import parser.abilities.AbilityPart;
-import parser.abilities.AbilityPartAdd;
-import parser.abilities.AbilityPartCond;
+import parser.abilities.parts.AbilityPart;
+import parser.abilities.parts.AbilityPartAdd;
+import parser.abilities.parts.AbilityPartCond;
 import parser.abilities.AbilityTemplate;
-import parser.commons.Property;
+import parser.abilities.properties.Property;
 
 /**
  * Created by frede on 2017-05-23.
@@ -37,8 +37,16 @@ public class AbilityTemplatePane extends TreeItem {
 
         if(part instanceof AbilityPartCond){
             AbilityPartCond condPart = (AbilityPartCond)part; 
-            processAbilityPart(item, condPart.truePart);
-            processAbilityPart(item, condPart.falsePart);
+            TreeItem conditionItem = new TreeItem(condPart.condition);
+            TreeItem trueItem = new TreeItem<>("true");
+            condPart.trueParts.forEach(tpart->{
+                processAbilityPart(trueItem, tpart);
+            });
+            TreeItem falseItem = new TreeItem<>("false");
+            condPart.falseParts.forEach(fpart->{
+                processAbilityPart(falseItem, fpart);
+            });
+            item.getChildren().addAll(conditionItem, trueItem, falseItem);
         }else if(part instanceof AbilityPartAdd){
             AbilityPartAdd addPart = (AbilityPartAdd)part;
             processAbilityPart(item, addPart.abilityToAdd);

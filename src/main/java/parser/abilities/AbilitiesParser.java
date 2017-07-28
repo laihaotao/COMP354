@@ -8,7 +8,36 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import parser.commons.*;
+import parser.abilities.properties.StatusProperty;
+import parser.abilities.properties.TargetProperty;
+import parser.abilities.properties.TriggerProperty;
+import parser.abilities.conditions.Condition;
+import parser.abilities.conditions.ConditionAbility;
+import parser.abilities.conditions.ConditionChoice;
+import parser.abilities.conditions.ConditionFlip;
+import parser.abilities.conditions.ConditionHealed;
+import parser.abilities.conditions.ConditionToken;
+import parser.abilities.filters.Filter;
+import parser.abilities.filters.FilterCategory;
+import parser.abilities.filters.FilterEnergy;
+import parser.abilities.filters.FilterEvolveFrom;
+import parser.abilities.filters.FilterPokemon;
+import parser.abilities.filters.FilterSide;
+import parser.abilities.parts.AbilityPart;
+import parser.abilities.parts.AbilityPartAdd;
+import parser.abilities.parts.AbilityPartApplystat;
+import parser.abilities.parts.AbilityPartCond;
+import parser.abilities.parts.AbilityPartDam;
+import parser.abilities.parts.AbilityPartDeck;
+import parser.abilities.parts.AbilityPartDeenergize;
+import parser.abilities.parts.AbilityPartDestat;
+import parser.abilities.parts.AbilityPartDraw;
+import parser.abilities.parts.AbilityPartHeal;
+import parser.abilities.parts.AbilityPartRedamage;
+import parser.abilities.parts.AbilityPartReenergize;
+import parser.abilities.parts.AbilityPartSearch;
+import parser.abilities.parts.AbilityPartShuffle;
+import parser.abilities.parts.AbilityPartSwap;
 import parser.tokenizer.*;
 import parser.ui.AbilityTemplatePane;
 import parser.ui.TokenPane;
@@ -102,12 +131,33 @@ public class AbilitiesParser {
         //log.debug(" " + name+ " ");
 
         //Go through tokens, parsing them into ability parts
-        AbilityPart abilityPart = null;
-        while ((abilityPart = parseNextPart(tokenStream)) != null) {
-            template.parts.add(abilityPart);
-        }
+        template.parts.addAll(getPartsFromScope(tokenStream));
 
         return template;
+    }
+    
+    private List<AbilityPart> parseNextPartSafe(TokenStream tokenStream){
+        List<AbilityPart> parts;
+        TokenScope scope = null;
+        if((scope = tokenStream.validateTokenScope()) != null){
+            parts = getPartsFromScope(scope);
+        }else{
+            parts = new ArrayList<>();
+            parts.add(parseNextPart(tokenStream));
+        }
+        return parts;
+    }
+    private List<AbilityPart> getPartsFromScope(TokenStream tokenStream){
+        List<AbilityPart> parts = new ArrayList<>();
+        AbilityPart abilityPart = null;
+        while ((abilityPart = parseNextPart(tokenStream)) != null) {
+            parts.add(abilityPart);
+        }
+
+        return parts;
+    }
+    private List<AbilityPart> getPartsFromScope(TokenScope scope){
+        return getPartsFromScope(new TokenStream(scope.tokens));
     }
 
     private AbilityPart parseNextPart(TokenStream tokenStream) {
@@ -145,6 +195,8 @@ public class AbilitiesParser {
                     return parseDestatPart(tokenStream);
                 case "search":
                     return parseSearchPart(tokenStream);
+                case "shuffle":
+                    return parseShufflePart(tokenStream);
 
                 default:
                     waitUntil(tokenStream, TokenType.SEPERATOR);
@@ -279,55 +331,31 @@ public class AbilitiesParser {
 
         Condition condition = null;
 
-        boolean seperatedByScope = false;
-        boolean allInScope = false;
-
-        TokenScope tempScope = null;
-        if ((tempScope = tokenStream.validateTokenScope()) != null) {
-            allInScope = true;
-            tokenStream = new TokenStream(tempScope.tokens);
-        }
-
         if (type instanceof TokenString) {
             switch (((TokenString) type).value) {
                 case "healed":
                     TargetProperty targetProperty = TargetProperty.read(tokenStream);
-                    //apply if target has been healed
+                    condition = new ConditionHealed(targetProperty);
                     break;
                 case "flip":
                     condition = new ConditionFlip();
                     break;
                 case "ability":
-                    seperatedByScope = true;
-                    // ???
+                    condition = new ConditionAbility();
                     break;
                 case "choice":
-                    //player choses
+                    condition = new ConditionChoice();
                     break;
             }
         } else if (type instanceof TokenCondition) {
-
+            condition = new ConditionToken(tokenStream.validateTokenCondition());
         }
-        AbilityPartCond abilityPartCond = new AbilityPartCond(condition);
-
-        AbilityPart truePart = parseNextPart(tokenStream);
-        AbilityPart falsePart = null;
-        if (seperatedByScope) {
-            TokenScope uselessScope;
-            if ((uselessScope = tokenStream.validateTokenScope()) != null) {
-                falsePart = parseNextPart(new TokenStream(uselessScope.tokens));
-            }
-        } else if (allInScope) {
-            if (tokenStream.validateTokenSeparator() != null) {
-                falsePart = parseNextPart(tokenStream);
-            }
-        } else {
-            if (tokenStream.validateTokenString("else") != null) {
-                falsePart = parseNextPart(tokenStream);
-            }
-        }
-
-        abilityPartCond.setResults(truePart, falsePart);
+       
+        List<AbilityPart> trueParts = parseNextPartSafe(tokenStream);
+        tokenStream.validateTokenString("else");
+        List<AbilityPart> falseParts = parseNextPartSafe(tokenStream);
+        
+        AbilityPartCond abilityPartCond = new AbilityPartCond(condition, trueParts, falseParts);
 
         return abilityPartCond;
 
@@ -354,6 +382,12 @@ public class AbilitiesParser {
         return new AbilityPartDestat(target);
     }
 
+    private AbilityPart parseShufflePart(TokenStream tokenStream){
+        TargetProperty target = TargetProperty.read(tokenStream);
+        
+        return new AbilityPartShuffle(target);
+    }
+    
     private AbilityPart parseSearchPart(TokenStream tokenStream){
 
         TargetProperty target = TargetProperty.read(tokenStream);
@@ -393,10 +427,14 @@ public class AbilitiesParser {
                         TargetProperty evolvesFromTarget = TargetProperty.read(tokenStream);
                         filter =  new FilterEvolveFrom(evolvesFromTarget);
                     }break;
-                    case "top":
-                        break;
-                    case "bottom":
-                        break;
+                    case "top": {
+                        Token amount = tokenStream.getNextToken();
+                        filter = new FilterSide("top", amount);
+                    }break;
+                    case "bottom": {
+                        Token amount = tokenStream.getNextToken();
+                        filter = new FilterSide("bottom", amount);
+                    }break;
 
                 }
             }

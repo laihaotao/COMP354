@@ -4,6 +4,8 @@ import game.GameBoard;
 import game.Player;
 import java.util.ArrayList;
 import java.util.List;
+import parser.abilities.parts.AbilityPart;
+import parser.abilities.parts.AbilityPartDam;
 
 /**
  * Ability template contains all the non player-specific parts of the ability 
