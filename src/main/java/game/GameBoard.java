@@ -20,12 +20,13 @@ import java.util.List;
 import java.util.Random;
 
 public class GameBoard {
-    
+
     private final static Logger logger = LogManager.getLogger(GameBoard.class.getName());
-    
+
     enum CardLocation {
         DECK, HAND, BENCH, ACTIVE, DISCARD,
     }
+
     private Player[] players;
     private int currentTurn = 0;
 
@@ -52,7 +53,6 @@ public class GameBoard {
     // ===================================================================================
     public void onHandCardClicked(Player player, Card card) {
         logger.debug("Player" + getPlayerNum() + " has clicked a card in it's hand");
-
         if (card instanceof TrainerCard) {
             onActiveAbilityClicked(player, card, ((TrainerCard) card).getAbility());
             fromHandToDiscard(player, card);
@@ -239,6 +239,13 @@ public class GameBoard {
     public void onEndTurnButtonClicked() {
         nextTurn();
     }
+
+    public void chooseActivePokemon() {
+        GamePopup.displayPokemonsInHand(this, getCurrentTurnPlayer(),
+                getCurrentTurnPlayer().getPokemonCards(),
+                card -> selectActivePokemon((PokemonCard) card, getCurrentTurnPlayer()));
+
+    }
     // ===================================================================================
     // ============================ end of button listener ===============================
     // ===================================================================================
@@ -253,6 +260,17 @@ public class GameBoard {
     // ===================================================================================
     private void removeTrainerCardEffect() {
 
+    }
+
+    private void selectActivePokemon(PokemonCard card, Player player) {
+        if (turnInfo.turnNum == 0 && card != null && card.getPokemonStage().equals("basic")) {
+            // turnNum = 0, means choose active Pokemon
+            logger.debug("select active pokemon: " + card.getCardName());
+            player.setActivePokemon(card);
+            player.getHand().remove(card);
+            turnInfo.turnNum++;
+            view.refreshView();
+        }
     }
 
     private void fromHandToDiscard(Player player, Card card) {
@@ -351,7 +369,7 @@ public class GameBoard {
     }
 
     private void nextTurn() {
-        if (turnInfo.turnNum != 1) {
+        if (turnInfo.turnNum > 1) {
             checkWinLose();
         }
         turnInfo.turnNum++;
@@ -362,7 +380,7 @@ public class GameBoard {
         Player currentPlayer = getCurrentTurnPlayer();
 
         // update effect
-        if(currentPlayer.getActivePokemon() != null) {
+        if (currentPlayer.getActivePokemon() != null) {
             PokemonCard pokemon = (PokemonCard) currentPlayer.getActivePokemon();
             pokemon.setEffect(pokemon.getEffect().remove());
         }
@@ -443,7 +461,7 @@ public class GameBoard {
             }
         }
     }
-    
+
     public int getPlayerNum() {
         return currentTurn + 1;
     }

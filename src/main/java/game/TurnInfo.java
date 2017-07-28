@@ -5,7 +5,7 @@ package game;
  */
 public class TurnInfo {
 
-    int turnNum = 1;
+    int turnNum = 0;
 
     private TurnTrigger attackTrigger = new TurnTrigger();
     private TurnTrigger energyTrigger = new TurnTrigger();

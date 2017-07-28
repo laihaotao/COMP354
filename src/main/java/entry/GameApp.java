@@ -40,6 +40,7 @@ public class GameApp extends Application {
 
     private static final String WINDOW_TITLE = "Pokemon Go Back";
     private static String deckPath = GameApp.class.getClassLoader().getResource("decks/").getPath();
+    private static GameBoard gameBoard = null;
 
     public static void main(String[] args) throws IOException {
 
@@ -115,6 +116,7 @@ public class GameApp extends Application {
         StartPane root = new StartPane();
 
         GameBoard gameBoard = getGameBoard(fileNm1, fileNm2, allAI);
+        gameBoard.chooseActivePokemon();
 
         //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
@@ -148,7 +150,14 @@ public class GameApp extends Application {
         player1.setName("human player");
         player2.setName("AI player");
 
-        return new GameBoard(player1, player2);
+        gameBoard = new GameBoard(player1, player2);
+        return gameBoard;
     }
 
+    public static GameBoard getGameBoard() {
+        if (gameBoard != null) {
+            return gameBoard;
+        }
+        return null;
+    }
 }

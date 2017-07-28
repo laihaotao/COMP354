@@ -10,6 +10,7 @@ package game;
 
 import card.Card;
 import card.PokemonCard;
+import entry.GameApp;
 import parser.abilities.properties.TargetProperty;
 import ui.selections.RewardSelector;
 
@@ -40,13 +41,8 @@ public class Player {
     public Player(List<Card> playerDeck) {
         //Each player gets 7 cards drawn randomly at the beginning of the game
         deck = playerDeck;
-
-        putPrizes();  //lack of better name
-        //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
-
+        putPrizes();
         draw7Cards();
-//        chooseActivePokemon();
-
         targetSelector = createTargetSelector();
     }
 
@@ -78,7 +74,6 @@ public class Player {
     //Each player gets 7 cards drawn randomly at the beginning of the game
     public void putPrizes() {
         for (int i = 0; i < 6; i++) {
-            int n = rand.nextInt(deck.size());
             prizes.add(deck.remove(deck.size() - i - 1));
         }
     }
@@ -95,6 +90,7 @@ public class Player {
      * this is done only at the begining
      */
     public void chooseActivePokemon() {
+       /*
         printPokemonCards();
         if (pokemonCards.size() > 0) {
             //System.out.println("chose which card you want to use ");
@@ -107,6 +103,7 @@ public class Player {
             activePokemon = pokemonCards.get(pokNum - 1);
             System.out.println(" your active pokemon is: " + activePokemon.getCardName());
         }
+        */
 
     }
 
@@ -297,5 +294,9 @@ public class Player {
 
     public Player getTargetPlayer(GameBoard gameBoard, TargetProperty target) {
         return targetSelector.getPlayer(gameBoard, this, target);
+    }
+
+    public List<PokemonCard> getPokemonCards() {
+        return pokemonCards;
     }
 }

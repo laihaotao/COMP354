@@ -8,6 +8,7 @@
 package ui.popup;
 
 import card.Card;
+import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import javafx.application.Platform;
@@ -25,7 +26,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ui.CardView;
-import ui.events.DiscardPileOnClickListener;
+import ui.events.PopupOnClickListener;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,7 +38,7 @@ public class GamePopup {
 
     public static void displayGameResult(String player, boolean won) {
         System.out.println(player + " " + (won ? "won" : "lost") + " the game!");
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setContentText(player + " " + (won ? "won" : "lost") + " the game!");
             alert.showAndWait();
@@ -46,7 +47,7 @@ public class GamePopup {
     }
 
     public static void displayMessage(String msg) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setContentText(msg);
             alert.showAndWait();
@@ -54,7 +55,7 @@ public class GamePopup {
     }
 
     public static void displayDiscardPile(GameBoard gameboard, Player player, List<Card> pile,
-                                          DiscardPileOnClickListener listener) {
+                                          PopupOnClickListener listener) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         URL location = ClassLoader.getSystemClassLoader().getResource("ui/discardpile.fxml");
@@ -71,10 +72,9 @@ public class GamePopup {
 
                     VBox box = new VBox();
                     for (Card c : pile) {
-//                    for (Card c : player.getHand()) {
                         Button button = new Button(new CardView(gameboard, player, c).toString());
                         button.setOnMouseClicked(event -> {
-                            listener.onClickDiscardCard(c);
+                            listener.onClick(c);
                         });
                         box.getChildren().add(button);
                     }
@@ -86,6 +86,44 @@ public class GamePopup {
             stage.setScene(scene);
             stage.show();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void displayPokemonsInHand(GameBoard gameboard, Player player,
+                                             List<PokemonCard> pokemonInHand, PopupOnClickListener listener) {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        URL location = ClassLoader.getSystemClassLoader().getResource("ui/selectactive.fxml");
+        loader.setLocation(location);
+        try {
+            BorderPane borderPane = loader.load();
+            Scene scene = new Scene(borderPane);
+
+            ObservableList<Node> childrenList = borderPane.getChildren();
+            for (Node child : childrenList) {
+                if (child instanceof ScrollPane) {
+                    ScrollPane scrollPane = (ScrollPane) child;
+
+                    VBox box = new VBox();
+                    for (PokemonCard c : pokemonInHand) {
+                        Button button = new Button(new CardView(gameboard, player, c).toString());
+                        button.setOnMouseClicked(event -> {
+                            listener.onClick(c);
+                            stage.hide();
+                        });
+                        box.getChildren().add(button);
+                    }
+
+                    scrollPane.setContent(box);
+                }
+            }
+
+            stage.setScene(scene);
+            stage.setAlwaysOnTop(true);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
