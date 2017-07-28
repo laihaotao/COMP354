@@ -274,4 +274,8 @@ public class PokemonCard extends Card {
     public void setHasBeenHealed(boolean hasBeenHealed) {
         this.hasBeenHealed = hasBeenHealed;
     }
+
+    public void deenergy(int amount) {
+        this.energyAttached.deenergy(amount);
+    }
 }

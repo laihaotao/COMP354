@@ -175,4 +175,22 @@ public class EnergyCost {
     public int[] getAsArray(){
         return new int[]{colorless, water, lightning, psychic, fight};
     }
+
+    public void deenergy(int amount) {
+        while (amount > 0) {
+            if (water != 0) {
+                water -= 1;
+            }
+            if (lightning != 0) {
+                lightning -= 1;
+            }
+            if (psychic != 0) {
+                psychic -= 1;
+            }
+            if (fight != 0) {
+                fight -= 1;
+            }
+            amount -= 1;
+        }
+    }
 }
