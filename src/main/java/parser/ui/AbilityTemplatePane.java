@@ -1,5 +1,6 @@
 package parser.ui;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import parser.abilities.parts.AbilityPart;
 import parser.abilities.parts.AbilityPartAdd;
@@ -61,8 +62,14 @@ public class AbilityTemplatePane extends TreeItem {
     }
     
     private void processProperties(TreeItem ti, Property property){
-        TreeItem item = new TreeItem(property.toString());
-        ti.getChildren().add(item);
+        if(property != null) {
+            TreeItem item = new TreeItem(property.toString());
+            ti.getChildren().add(item);
+        }
+        else { ;
+            ti.getChildren().add(new Label("NULL PROPERTY"));
+        
+        }
         
         
     }

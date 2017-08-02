@@ -1,5 +1,6 @@
 package parser.abilities.properties;
 
+import parser.abilities.filters.Filter;
 import parser.tokenizer.TokenStream;
 import parser.tokenizer.TokenString;
 
@@ -19,7 +20,7 @@ public class TriggerProperty extends Property {
             
             TokenString target = tokenStream.validateTokenString();
             TokenString mod = tokenStream.validateTokenString();
-            return new TriggerProperty(new TargetProperty(target, mod));
+            return new TriggerProperty(new TargetProperty(target, mod, new Filter()));
         }
         return null;
     }

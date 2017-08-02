@@ -316,7 +316,7 @@ public class AbilitiesParser {
      * @return
      */
     private AbilityPart parseDrawPart(TokenStream tokenStream) {
-        TargetProperty target = new TargetProperty(tokenStream.validateTokenString(), null);
+        TargetProperty target = new TargetProperty(tokenStream.validateTokenString(), null, new Filter());
 
         Token amount = tokenStream.getNextToken();
         if (!(amount instanceof TokenScope) && !(amount instanceof TokenInteger)) {

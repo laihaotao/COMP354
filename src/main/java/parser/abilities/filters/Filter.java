@@ -19,10 +19,12 @@ public class Filter {
     }
     
     public boolean evaluate(GameBoard targetBoard, Player owner, Card card){
-        return false;
+        return true;
     }
     
     public String toString(){
-        return "filters ";
+        return "filters nothing";
     }
+    
+    
 }
