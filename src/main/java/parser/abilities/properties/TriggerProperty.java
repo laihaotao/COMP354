@@ -5,7 +5,7 @@ import parser.tokenizer.TokenString;
 
 public class TriggerProperty extends Property {
 
-    TargetProperty target;
+    public TargetProperty target;
     
     public TriggerProperty(TargetProperty target) {
         super("Trigger");

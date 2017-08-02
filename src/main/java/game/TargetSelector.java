@@ -28,6 +28,8 @@ public  abstract class TargetSelector {
     
     public Card getCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty) {
         switch (targetProperty.target.value) {
+            case "your":
+                return storeAndReturn(choseYourCard(gameBoard, callingPlayer));
             case "last":
                 return lastCardTarget;
             case "choice": {

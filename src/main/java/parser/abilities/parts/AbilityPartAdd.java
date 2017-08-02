@@ -1,5 +1,7 @@
 package parser.abilities.parts;
 
+import card.Card;
+import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import parser.abilities.properties.TargetProperty;
@@ -24,6 +26,35 @@ public class AbilityPartAdd extends AbilityPart{
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
+        
+        Card card = owner.getTarget(targetBoard, target);
+        
+        if(card instanceof PokemonCard) {
+            final PokemonCard pokemonCard = (PokemonCard)card;
+            switch(trigger.target.modifier.value) {
+                case "turn-end": {
+                    Player player = null;
+                    switch(trigger.target.target.value){
+                        case "opponent":{
+                            player = targetBoard.getOtherPlayer(owner);
+                        }break;
+                        case "your": {
+                            player = owner;
+                        }break;
+                    }
+                    if(player != null){
+                        player.addEndTurnEvent((p)->{
+                            pokemonCard.getAbilities().forEach(ability -> {
+                                ability.getTemplate().parts.add(abilityToAdd);
+                            });
+                        });
+                        return true;
+                    }
+                    
+                }break;
+            }
+        }
+        
         return false;
     }
 

@@ -35,7 +35,7 @@ public class GameBoard {
     private CardLocation selectedCardLocation = null;
 
     private TurnInfo turnInfo;
-    private BoardView view;
+    public BoardView view;
 
     public GameBoard(Player p1, Player p2) {
         players = new Player[2];
@@ -378,7 +378,7 @@ public class GameBoard {
         currentTurn = (currentTurn + 1) % 2;
 
         Player currentPlayer = getCurrentTurnPlayer();
-
+        getOtherPlayer(currentPlayer).onEndTurn(turnInfo.turnNum-1);
         // update effect
         if (currentPlayer.getActivePokemon() != null) {
             PokemonCard pokemon = (PokemonCard) currentPlayer.getActivePokemon();
@@ -412,7 +412,7 @@ public class GameBoard {
         Random rand = new Random();
         int cardTOAddToBench = rand.nextInt(5);
         if (players[1].activePokemon == null) {
-            players[1].chooseActivePokemon();
+            //players[1].chooseActivePokemon();
         }
         for (int i = 0; i < (5 - cardTOAddToBench); i++) {
             players[1].putCardOnBench();

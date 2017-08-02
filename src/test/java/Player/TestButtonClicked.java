@@ -50,7 +50,7 @@ public class TestButtonClicked {
 
 
         GameBoard gm = new GameBoard(player1,player2);
-        player1.chooseActivePokemon();
+        player1.chooseActivePokemon(gm);
         player2.checkMulligans();
         gm.onRetreatButtonClicked(player1);
         gm.onRetreatButtonClicked(player2);

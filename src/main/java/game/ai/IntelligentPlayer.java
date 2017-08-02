@@ -257,6 +257,16 @@ public class IntelligentPlayer extends Player {
     public TargetSelector createTargetSelector(){
         return new AiTargetSelector();
     }
+
+    public void chooseActivePokemon(GameBoard gameBoard){
+        PokemonCard optimalActive = firstTurn?findOptimalPokemon(gameBoard, hand):findOptimalPokemon(gameBoard, bench);
+        if(optimalActive != null) {
+            
+            hand.remove(optimalActive);
+            firstTurn = false;
+            activePokemon = optimalActive;
+        }
+    }
     
     public class AiTargetSelector extends TargetSelector {
 

@@ -11,7 +11,10 @@ package game;
 import card.Card;
 import card.PokemonCard;
 import entry.GameApp;
+import game.events.PlayerEndTurnEvent;
+import java.util.Stack;
 import parser.abilities.properties.TargetProperty;
+import ui.popup.GamePopup;
 import ui.selections.RewardSelector;
 
 import java.util.ArrayList;
@@ -36,6 +39,8 @@ public class Player {
     Random rand = new Random();
     private String name;
 
+    private Stack<PlayerEndTurnEvent> onEndTurnEvents;
+    
     private game.TargetSelector targetSelector;
 
     public Player(List<Card> playerDeck) {
@@ -44,8 +49,20 @@ public class Player {
         putPrizes();
         draw7Cards();
         targetSelector = createTargetSelector();
+
+        onEndTurnEvents = new Stack<>();
     }
 
+    public void addEndTurnEvent(PlayerEndTurnEvent event) {
+        onEndTurnEvents.add(event);
+    }
+    
+    public void onEndTurn(int turnNum) {
+        while(!onEndTurnEvents.empty()) {
+            onEndTurnEvents.pop().onEndTurn(this);
+        }
+    }
+    
     public TargetSelector createTargetSelector() {
         return new TargetSelectorUI();
     }
@@ -89,19 +106,14 @@ public class Player {
     /*
      * this is done only at the begining
      */
-    public void chooseActivePokemon() {
-        printPokemonCards();
-        if (pokemonCards.size() > 0) {
-            //System.out.println("chose which card you want to use ");
-            int pokNum;
-            do {
-                System.out.println("chose which card you want to use as your active pokemon ");
-                System.out.println("Enter the number");
-                pokNum = kb.nextInt();
-            } while (pokNum < 1 || pokNum > pokemonCards.size());
-            activePokemon = pokemonCards.get(pokNum - 1);
-            System.out.println(" your active pokemon is: " + activePokemon.getCardName());
-        }
+    public void chooseActivePokemon(GameBoard gameBoard) {
+        GamePopup.displayPokemonsInHand(gameBoard, this,
+            this.getPokemonCards(), (card)-> {
+                this.activePokemon = (PokemonCard)card;
+                this.hand.remove(activePokemon);
+                gameBoard.view.refreshView();
+        });
+            
     }
 
 

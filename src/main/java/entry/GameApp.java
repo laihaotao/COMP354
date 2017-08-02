@@ -116,9 +116,12 @@ public class GameApp extends Application {
         StartPane root = new StartPane();
 
         GameBoard gameBoard = getGameBoard(fileNm1, fileNm2, allAI);
-        if (!allAI) {
-            gameBoard.chooseActivePokemon();
-        }
+        
+        gameBoard.getPlayer1().chooseActivePokemon(gameBoard);
+        gameBoard.getPlayer2().chooseActivePokemon(gameBoard);
+        
+        
+        
 
         BoardView boardView = new BoardView(gameBoard);
         root.setCurrentView(boardView);

@@ -21,6 +21,7 @@ public class Ability {
     }
 
     public AbilityTemplate getTemplate() {
+        
         return template;
     }
 
