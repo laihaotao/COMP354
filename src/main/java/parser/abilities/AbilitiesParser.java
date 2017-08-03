@@ -342,7 +342,8 @@ public class AbilitiesParser {
                     condition = new ConditionFlip();
                     break;
                 case "ability":
-                    condition = new ConditionAbility();
+                    List<AbilityPart> condAbility = parseNextPartSafe(tokenStream);
+                    condition = new ConditionAbility(condAbility.get(0));
                     break;
                 case "choice":
                     condition = new ConditionChoice();
