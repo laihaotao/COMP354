@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Random;
 import parser.abilities.parts.AbilityPart;
 import parser.abilities.parts.AbilityPartDam;
+import parser.abilities.parts.AbilityPartDeck;
 import parser.cards.EnergyCost;
+import ui.selections.TargetSelectorUI;
 
 /**
  * Created by frede on 2017-07-08.
@@ -320,6 +322,14 @@ public class IntelligentPlayer extends Player {
 
             return null;
         }
+
+        public boolean shouldDoDeckAbility(GameBoard board, AbilityPartDeck abilityPartDeck){
+            return true;
+        }
+        public Card selectCardToDiscardFromHand(){
+            return hand.get(hand.size()-1);
+        }
+        
 
     }
 }

@@ -18,6 +18,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import parser.abilities.parts.AbilityPart;
+import parser.abilities.parts.AbilityPartDam;
+import parser.abilities.parts.AbilityPartDeck;
 import parser.abilities.properties.TargetProperty;
 import ui.popup.GamePopup;
 import ui.selections.RewardSelector;
@@ -334,6 +336,30 @@ public class Player {
             return false;
         }
         
+        return false;
+    }
+    
+    public Card selectCardToDiscardFromHand(){
+        return TargetSelectorUI.selectCard(hand);
+    }
+    
+    public boolean shouldDoDeckAbility(GameBoard board, AbilityPartDeck abilityPartDeck){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Deck choice");
+        alert.setHeaderText("Do you want to use: "+abilityPartDeck.getCurrentDescription(board, this));
+
+        ButtonType buttonTypeOne = new ButtonType("Yes");
+        ButtonType buttonTypeTwo = new ButtonType("No");
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne){
+            return true;
+        } else if (result.get() == buttonTypeTwo) {
+            return false;
+        }
+
         return false;
     }
 }
