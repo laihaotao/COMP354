@@ -29,11 +29,15 @@ public class AbilityPartCond extends AbilityPart{
         }
         if(condition.evaluate(this, targetBoard, owner)){
             trueParts.forEach(part->{
-                part.use(targetBoard, owner);
+                if(part != null) {
+                    part.use(targetBoard, owner);
+                }
             });
         }else{
             falseParts.forEach(part->{
-                part.use(targetBoard, owner);
+                if(part != null) {
+                    part.use(targetBoard, owner);
+                }
             });
         }
         return true;
