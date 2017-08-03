@@ -114,7 +114,7 @@ public class PlayerView extends BorderPane {
         //For now, just add 5 cardViews to make sure it displays
 
         player.getHand().forEach((card) -> {
-            CardView cardView = new CardView(targetBaord, player, card);
+            CardView cardView = new CardView(targetBaord, player, card, false);
 
             cardView.setOnMouseClicked((event -> {
                 registeredListeners.forEach(listener -> listener.onHandCardClicked(player, card));
@@ -134,7 +134,7 @@ public class PlayerView extends BorderPane {
         benchCards.getChildren().add(benchLabel);
 
         player.getBench().forEach((card) -> {
-            CardView cardView = new CardView(targetBaord, player, card);
+            CardView cardView = new CardView(targetBaord, player, card, false);
 
             cardView.setOnMouseClicked((event -> {
                 registeredListeners.forEach(listener -> listener.onBenchCardClicked(player, card));
@@ -155,7 +155,7 @@ public class PlayerView extends BorderPane {
 
         if (player.getActivePokemon() != null) {
 
-            CardView cardView = new CardView(targetBaord, player, player.getActivePokemon());
+            CardView cardView = new CardView(targetBaord, player, player.getActivePokemon(), false);
             cardView.getStyleClass().add("active");
             cardView.setOnMouseClicked((event -> {
                 //registeredListeners.forEach(listener->listener.onActiveCardClicked(player,
@@ -182,7 +182,7 @@ public class PlayerView extends BorderPane {
         // update the discard view
         if (player.getDiscardPile().size() > 0) {
             pileBox.getChildren().add(new CardView(targetBaord, player, player.getDiscardPile().get(player
-                    .getDiscardPile().size() - 1)));
+                    .getDiscardPile().size() - 1), true));
 
         }
 

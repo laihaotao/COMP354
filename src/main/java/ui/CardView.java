@@ -40,7 +40,9 @@ public class CardView extends BorderPane {
 
     private Card card;
     
-    public CardView(GameBoard targetBoard, Player player, Card card) {
+    boolean smallView;
+    
+    public CardView(GameBoard targetBoard, Player player, Card card, boolean smallView) {
         this.card = card;
         this.player = player;
         this.getStyleClass().add("Card");
@@ -51,6 +53,8 @@ public class CardView extends BorderPane {
 
         topInfo = new HBox();
         topHealthInfo = new VBox();
+        
+        this.smallView = smallView;
 
         //TODO displayGameResult actual card info
 
@@ -77,15 +81,17 @@ public class CardView extends BorderPane {
                 listener.onActiveCardClicked(player, card);
             })));
 
-            pokemonCard.getAbilities().forEach((ability -> {
-                AbilityView abilityView = new AbilityView(targetBoard, player, ability);
-                abilityView.setOnMouseClicked((event -> {
-                    registeredListeners.forEach((listener -> {
-                        listener.onActiveAbilityClicked(player, card, ability);
+            if(!smallView) {
+                pokemonCard.getAbilities().forEach((ability -> {
+                    AbilityView abilityView = new AbilityView(targetBoard, player, ability);
+                    abilityView.setOnMouseClicked((event -> {
+                        registeredListeners.forEach((listener -> {
+                            listener.onActiveAbilityClicked(player, card, ability);
+                        }));
                     }));
+                    abilitiesInfo.getChildren().add(abilityView);
                 }));
-                abilitiesInfo.getChildren().add(abilityView);
-            }));
+            }
         } else if (card instanceof TrainerCard) {
             TrainerCard trainerCard = (TrainerCard) card;
             AbilityView abilityView = new AbilityView(targetBoard, player, trainerCard.getAbility());

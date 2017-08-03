@@ -67,10 +67,19 @@ public class TokenScope extends Token {
             return callingPlayer.getHand().size();
           case "opponent-hand":
             return targetBoard.getOtherPlayer(callingPlayer).getHand().size();
+          case "last":
+            targetCard = callingPlayer.getLastTarget(0);
         }
         
         if(targetCard != null){
           switch(tokenStream.validateTokenString().value){
+            case "source": {
+              switch(tokenStream.validateTokenString().value){
+                case "damage":{
+                  return ((PokemonCard)targetCard).getDamage();
+                }
+              }
+            }break;
             case "damage":
               return ((PokemonCard)targetCard).getDamage();
             case "energy":

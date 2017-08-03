@@ -72,7 +72,7 @@ public class GamePopup {
 
                     VBox box = new VBox();
                     for (Card c : pile) {
-                        Button button = new Button(new CardView(gameboard, player, c).toString());
+                        Button button = new Button(new CardView(gameboard, player, c,false).toString());
                         button.setOnMouseClicked(event -> {
                             listener.onClick(c);
                         });
@@ -109,7 +109,7 @@ public class GamePopup {
 
                     VBox box = new VBox();
                     for (PokemonCard c : pokemonInHand) {
-                        Button button = new Button(new CardView(gameboard, player, c).toString());
+                        Button button = new Button(new CardView(gameboard, player, c, false).toString());
                         button.setOnMouseClicked(event -> {
                             listener.onClick(c);
                             stage.hide();

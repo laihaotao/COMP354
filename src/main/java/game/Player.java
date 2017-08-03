@@ -115,8 +115,11 @@ public class Player {
         });
             
     }
-
-
+    
+    public Card getLastTarget(int rollback){
+        return targetSelector.getLastCardTarget(rollback);
+    }
+    
     public void putCardOnBench() {
         printCardInHand();
         if (hand.size() > 0) {

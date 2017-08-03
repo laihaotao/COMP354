@@ -1,5 +1,7 @@
 package parser.abilities.parts;
 
+import card.Card;
+import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import parser.abilities.properties.TargetProperty;
@@ -25,8 +27,26 @@ public class AbilityPartRedamage extends AbilityPart{
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
+        Card damageSource = owner.getTarget(targetBoard, source);
+        int damageAmount = amount.evaluateAsExpression(targetBoard, owner);
+        
+        boolean didSomething = false;
+        for(int i=0; i < damageAmount; i++)
+        {
+            Card damageTarget = owner.getTarget(targetBoard, target);
+            if(damageTarget instanceof PokemonCard && damageSource instanceof  PokemonCard){
+                PokemonCard pokemonSource = (PokemonCard)damageSource;
+                PokemonCard pokemonTarget = (PokemonCard)damageTarget;
+                didSomething = true;
+                pokemonSource.setDamage(pokemonSource.getDamage()-1);
+                targetBoard.applyDamageToCard(pokemonTarget, 1);
+            }else
+            {
+                break;
+            }
+        }
         //TODO implement
-        return false;
+        return didSomething;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package game;
 
 import card.Card;
+import java.util.ArrayList;
+import java.util.List;
 import parser.abilities.properties.TargetProperty;
 
 /**
@@ -11,7 +13,8 @@ public  abstract class TargetSelector {
       
     }
     
-    private Card lastCardTarget;
+    private List<Card> targetBuffer = new ArrayList<>();
+
     private Player lastPlayerTarget;
     
     public Player getPlayer(GameBoard gameBoard, Player callingPlayer, TargetProperty target){
@@ -31,7 +34,7 @@ public  abstract class TargetSelector {
             case "your":
                 return storeAndReturn(choseYourCard(gameBoard, callingPlayer));
             case "last":
-                return lastCardTarget;
+                return targetBuffer.get(targetBuffer.size()-1);
             case "choice": {
                 switch(targetProperty.modifier.value){
                     case "opponent":
@@ -59,7 +62,7 @@ public  abstract class TargetSelector {
     }
     
     private Card storeAndReturn(Card card){
-        lastCardTarget = card;
+        targetBuffer.add(card);
         return card;
     }
     
@@ -72,8 +75,8 @@ public  abstract class TargetSelector {
         return lastPlayerTarget;
     }
     
-    public Card getLastCardTarget(){
-        return lastCardTarget;
+    public Card getLastCardTarget(int rollback){
+        return targetBuffer.get(targetBuffer.size()-1-rollback);
     }
     
     public abstract Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer);
