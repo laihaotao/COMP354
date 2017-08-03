@@ -34,12 +34,16 @@ public class ParseAbilitiesTest {
         AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
         AbilityTemplate[] abilities = abilitiesParser.parse();
 
-        assertEquals("Damages Target: opponent-active:_ for 30", abilities[0].parts.get(0).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(1).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(2).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(3).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(4).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(5).getDescriptionString());
+        //System.out.print(abilities[0].parts.get(0));
+        
+        assertEquals("Damages Target: opponent-active:_ for 30", abilities[0].parts.get(0).getDescriptionString().toString());
+        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(1).getDescriptionString().toString());
+        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(2).getDescriptionString().toString());
+        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(3).getDescriptionString().toString());
+        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(4).getDescriptionString().toString());
+        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(5).getDescriptionString().toString());
+        
+  
         
 	}
 
