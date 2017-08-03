@@ -17,7 +17,7 @@ public class Normal extends Effect {
     }
 
     @Override
-    void apply() {
+    public void apply() {
         // nothing can be put here!!!
     }
 }

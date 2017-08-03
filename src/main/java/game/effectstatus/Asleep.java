@@ -18,7 +18,7 @@ public class Asleep extends Effect {
     }
 
     @Override
-    void apply() {
+    public void apply() {
         this.canAttack = false;
         this.canRetreat = false;
     }

@@ -5,10 +5,15 @@ import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import game.effectstatus.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import parser.abilities.properties.StatusProperty;
 import parser.abilities.properties.TargetProperty;
 
 public class AbilityPartApplystat extends AbilityPart {
+
+    private final static Logger logger = LogManager.getLogger(AbilityPartApplystat.class.getName());
+
 
     private StatusProperty statusType;
     private TargetProperty target;
@@ -44,6 +49,8 @@ public class AbilityPartApplystat extends AbilityPart {
                     break;
             }
             if (effect != null) {
+                logger.debug(pokemonCard.getCardName() + " get " + effectName + " effect");
+                effect.apply();
                 pokemonCard.setEffect(effect);
                 pokemonCard.setStatus(effectName);
                 return true;
