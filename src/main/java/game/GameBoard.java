@@ -382,6 +382,7 @@ public class GameBoard {
             PokemonCard pokemon = (PokemonCard) currentPlayer.getActivePokemon();
             pokemon.setEffect(pokemon.getEffect().remove());
         }
+        view.refreshView();
         //add card to players hand
         currentPlayer.drawOneCard();
 
