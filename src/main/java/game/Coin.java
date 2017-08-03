@@ -10,7 +10,7 @@ public class Coin {
     public enum CoinStatus {Head, Tail,}
 
     public static CoinStatus flip() {
-        int randomNum =  new Random().nextInt();
+        int randomNum =  new Random(System.currentTimeMillis()).nextInt();
         if (randomNum % 2 == 0) return CoinStatus.Head;
         else return CoinStatus.Tail;
     }
