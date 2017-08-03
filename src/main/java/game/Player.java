@@ -12,7 +12,12 @@ import card.Card;
 import card.PokemonCard;
 import entry.GameApp;
 import game.events.PlayerEndTurnEvent;
+import java.util.Optional;
 import java.util.Stack;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import parser.abilities.parts.AbilityPart;
 import parser.abilities.properties.TargetProperty;
 import ui.popup.GamePopup;
 import ui.selections.RewardSelector;
@@ -310,5 +315,25 @@ public class Player {
 
     public List<PokemonCard> getPokemonCards() {
         return pokemonCards;
+    }
+    
+    public boolean ShouldDoAbility(GameBoard board, AbilityPart ability){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Ability choice");
+        alert.setHeaderText("Do you want to use: "+ability.getCurrentDescription(board, this));
+        
+        ButtonType buttonTypeOne = new ButtonType("Yes");
+        ButtonType buttonTypeTwo = new ButtonType("No");
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne){
+            return true;
+        } else if (result.get() == buttonTypeTwo) {
+            return false;
+        }
+        
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package parser.abilities.conditions;
 
 import game.GameBoard;
 import game.Player;
+import parser.abilities.parts.AbilityPart;
 import parser.tokenizer.TokenCondition;
 
 public class ConditionToken extends Condition {
@@ -14,7 +15,7 @@ public class ConditionToken extends Condition {
     }
 
     @Override
-    public boolean evaluate(GameBoard gameBoard, Player owner) {
+    public boolean evaluate(AbilityPart caller, GameBoard gameBoard, Player owner) {
         return tokenCondition.evaluateAsExpression(gameBoard, owner) == 1;
     }
 }

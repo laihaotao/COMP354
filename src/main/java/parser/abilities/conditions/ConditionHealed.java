@@ -4,6 +4,7 @@ import card.Card;
 import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
+import parser.abilities.parts.AbilityPart;
 import parser.abilities.properties.TargetProperty;
 
 public class ConditionHealed extends Condition {
@@ -15,7 +16,7 @@ public class ConditionHealed extends Condition {
     }
 
     @Override
-    public boolean evaluate(GameBoard gameBoard, Player owner) {
+    public boolean evaluate(AbilityPart caller, GameBoard gameBoard, Player owner) {
         Card card = owner.getTarget(gameBoard, targetProperty);
         if(card instanceof PokemonCard){
             return ((PokemonCard)card).hasBeenHealed();

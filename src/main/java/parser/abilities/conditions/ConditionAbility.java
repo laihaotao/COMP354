@@ -13,7 +13,7 @@ public class ConditionAbility extends Condition{
     }
     
     @Override
-    public boolean evaluate(GameBoard gameBoard, Player owner) {
+    public boolean evaluate(AbilityPart caller, GameBoard gameBoard, Player owner) {
         //TODO implement
         return abilityPart.use(gameBoard, owner);
     }

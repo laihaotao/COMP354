@@ -267,7 +267,9 @@ public class IntelligentPlayer extends Player {
             activePokemon = optimalActive;
         }
     }
-    
+    public boolean ShouldDoAbility(GameBoard board, AbilityPart ability){
+        return true;
+    }
     public class AiTargetSelector extends TargetSelector {
 
         @Override
