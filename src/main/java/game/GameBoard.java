@@ -54,8 +54,10 @@ public class GameBoard {
     public void onHandCardClicked(Player player, Card card) {
         logger.debug("Player" + getPlayerNum() + " has clicked a card in it's hand");
         if (card instanceof TrainerCard) {
-            onActiveAbilityClicked(player, card, ((TrainerCard) card).getAbility());
-            fromHandToDiscard(player, card);
+            TrainerCard trainerCard = (TrainerCard) card;
+            if(trainerCard.getAbility().getTemplate().use(this, player)) {
+                fromHandToDiscard(player, card);
+            }
         } else if (card != null && getCurrentTurnPlayer() == player) {
             setSelectedCard(card, CardLocation.HAND);
         }
