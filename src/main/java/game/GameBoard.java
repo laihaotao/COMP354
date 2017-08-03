@@ -79,7 +79,7 @@ public class GameBoard {
                 turnInfo.getEnergyTrigger().trigger();
                 return;
             }
-        } else if (turnInfo.getEnergyTrigger().already()) {
+        } else if (turnInfo.getEnergyTrigger().already() && selectedCard instanceof EnergyCard) {
             GamePopup.displayMessage("You can only add one energy per turn");
         }
 
