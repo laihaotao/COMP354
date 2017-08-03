@@ -166,19 +166,15 @@ public class GameBoard {
                     && ((PokemonCard) card).getEffect().isCanAttack()) {
 
                 //If ability applies damage, it should trigger the Attack limit trigger
-                if (ability.getTemplate().appliesDamage()) {
                     //Make sure player only attacks onc with a pokemon
-                    if (!turnInfo.getAttackTrigger().already()) {
-                        if (ability.getTemplate().use(this, player)) {
-                            turnInfo.getAttackTrigger().trigger();
-                        }
-                    } else {
-                        GamePopup.displayMessage("You can only attack once per turn");
+                if (!turnInfo.getAttackTrigger().already()) {
+                    if (ability.getTemplate().use(this, player)) {
+                        turnInfo.getAttackTrigger().trigger();
                     }
                 } else {
-                    //regular ability, does not apply damage and thus does not trigger attack limit
-                    ability.getTemplate().use(this, player);
-                }
+                    GamePopup.displayMessage("You can only attack once per turn");
+                    }
+                
             }
 
             // if the card is a trainer card
