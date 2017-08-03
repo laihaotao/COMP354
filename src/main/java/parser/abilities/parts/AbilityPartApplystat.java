@@ -4,10 +4,11 @@ import card.Card;
 import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
+import game.effectstatus.*;
 import parser.abilities.properties.StatusProperty;
 import parser.abilities.properties.TargetProperty;
 
-public class AbilityPartApplystat extends AbilityPart{
+public class AbilityPartApplystat extends AbilityPart {
 
     private StatusProperty statusType;
     private TargetProperty target;
@@ -16,7 +17,7 @@ public class AbilityPartApplystat extends AbilityPart{
         super("ApplyStat");
         this.statusType = statusType;
         this.target = target;
-        
+
         properties.add(statusType);
         properties.add(target);
     }
@@ -24,16 +25,37 @@ public class AbilityPartApplystat extends AbilityPart{
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
         Card targetCard = owner.getTarget(targetBoard, target);
-        if(targetCard instanceof PokemonCard){
-            PokemonCard pokemonCard = (PokemonCard)targetCard;
-            pokemonCard.setStatus(statusType.type.value);
-            return true;
+        if (targetCard instanceof PokemonCard) {
+            PokemonCard pokemonCard = (PokemonCard) targetCard;
+            String effectName = statusType.type.value;
+            Effect effect = null;
+            switch (effectName) {
+                case "asleep":
+                    effect = new Asleep(pokemonCard);
+                    break;
+                case "paralyzed":
+                    effect = new Paralyzed(pokemonCard);
+                    break;
+                case "poisoned":
+                    effect = new Poisoned(pokemonCard);
+                    break;
+                case "stuck":
+                    effect = new Stuck(pokemonCard);
+                    break;
+            }
+            if (effect != null) {
+                pokemonCard.setEffect(effect);
+                pokemonCard.setStatus(effectName);
+                return true;
+            } else {
+                return false;
+            }
         }
         return false;
     }
 
     @Override
     public String getDescriptionString() {
-        return "Apply stat "+statusType+" on " + target;
+        return "Apply stat " + statusType + " on " + target;
     }
 }

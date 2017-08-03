@@ -24,6 +24,7 @@ public abstract class Effect {
     abstract void apply();
 
     public Effect remove() {
+        this.target.setStatus(null);
         return new Normal(target);
     }
 
