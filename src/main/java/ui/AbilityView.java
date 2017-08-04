@@ -13,6 +13,7 @@ import game.Player;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 public class AbilityView extends BorderPane {
 
@@ -31,10 +32,8 @@ public class AbilityView extends BorderPane {
                 descriptionBuilder.append(part.getCurrentDescription(gameBoard, owner) + "\n");
         });
         ScrollPane descriptionScrollPane = new ScrollPane();
-        Label description = new Label(descriptionBuilder.toString());
-        description.setWrapText(true);
-        description.setMaxWidth(250);
-        description.setMaxHeight(50);
+        Text description = new Text(descriptionBuilder.toString());
+
         descriptionScrollPane.setContent(description);
         setRight(descriptionScrollPane);
     }

@@ -41,4 +41,13 @@ public class AbilityTemplate {
 
         return false;
     }
+    
+    public AbilityTemplate getCopy(){
+        AbilityTemplate copyTemplate = new AbilityTemplate(name);
+        parts.forEach(part->{
+            copyTemplate.parts.add(part);
+        });
+        
+        return copyTemplate;
+    }
 }

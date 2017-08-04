@@ -55,6 +55,7 @@ public class BoardView extends BorderPane implements PlayerViewListener {
 
         //Put end game button on the center, with players on top / bottom
         this.setCenter(endTurnBtn);
+        
         this.setTop(playerViews[1]);
         this.setBottom(playerViews[0]);
 

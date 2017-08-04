@@ -60,7 +60,7 @@ public class CardView extends BorderPane {
 
 
         topInfo.getChildren().addAll(new Label(card.getCardName()), topHealthInfo);
-
+        topInfo.getChildren().add(new Label("  "+card.getCardType().toString()+"  "));
         //Display abilities
         abilitiesInfo = new VBox();
 
@@ -104,7 +104,6 @@ public class CardView extends BorderPane {
 
         setTop(topInfo);
         setCenter(abilitiesInfo);
-        setBottom(new Label(card.getCardType().toString()));
         registeredListeners = new ArrayList<>();
     }
 

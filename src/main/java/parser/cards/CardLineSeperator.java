@@ -113,7 +113,7 @@ public class CardLineSeperator {
         	//add in the abilities
         	for (int i = 0 ; i < abilitiesID.size();i++){
         		
-        		Ability ability = new Ability(abilities[abilitiesID.get(i)-1], abilitiesEnergyCostList.get(i));
+        		Ability ability = new Ability(abilities[abilitiesID.get(i)-1].getCopy(), abilitiesEnergyCostList.get(i));
         		abilitiesList.add(ability);
 
         		
@@ -127,7 +127,7 @@ public class CardLineSeperator {
         
         if (lineParts[1].contains("trainer")){
         	EnergyCost energyCost = new EnergyCost();
-        	Ability ability = new Ability(abilities[Integer.parseInt(lineParts[3]) -1], energyCost);
+        	Ability ability = new Ability(abilities[Integer.parseInt(lineParts[3]) -1].getCopy(), energyCost);
         	abilitiesList.add(ability);
         }
         

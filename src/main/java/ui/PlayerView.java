@@ -11,8 +11,11 @@ package ui;
 import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
+import java.awt.Scrollbar;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -99,7 +102,7 @@ public class PlayerView extends BorderPane {
     }
 
     public void refreshView() {
-
+        
         deck.setText(String.valueOf(player.getDeck().size()));
 
         //Add hand cards
