@@ -105,6 +105,14 @@ public class TokenScope extends Token {
         }
       }
     }
+    else if(tokens.size() > 0){
+      for (Token token : tokens) {
+        int value = token.evaluateAsExpression(targetBoard, callingPlayer);
+        if (value > 0) {
+          return value;
+        }
+      }
+    }
     
     return 0;
   }
