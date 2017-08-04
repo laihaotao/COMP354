@@ -56,23 +56,16 @@ public class MeowsticTest {
         assertEquals(card.getHp(), 90);
         
         //Now testing the hashmap
-        
         CardParser cardParser = new CardParser(Config.FILE_PATH_CARDS_TXT);
-        
-        System.out.println(cardParser.getCardMap().get(27));
-        
+        assertNull(cardParser.getCardMap().get(27));
+        assertEquals(cardParser.getCardMap().get(28).getCardName(), "Meowstic");
         /*
-        //Now let's test the Deck
-		String deck1FileNm = "deckApplyStatAbilities.txt";
-		
-        CardParser cardParser = new CardParser(Config.FILE_PATH_CARDS_TXT);
-        DeckParser deck1Parser = new DeckParser(deck1FileNm, cardParser);
-       
-        //List<Card> player1Deck = deck1Parser.getDeck();
-        //Player player1 = new Player(player1Deck);
+         * Conclusion: The card parser counts the # as a line. Therefore, in this case, the line 27 will be considered null, and
+         * Meowstic will be considered as line 28.
+         */
         
-        //assertEquals(player1.getPrizes().size(), 6);
-		*/
+        
+
 	}
 
 }
