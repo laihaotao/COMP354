@@ -25,9 +25,9 @@ public class AbilityPartAdd extends AbilityPart{
     }
 
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
         
-        Card card = owner.getTarget(targetBoard, target);
+        Card card = owner.getTarget(targetBoard, callingCard, target);
         
         if(card instanceof PokemonCard) {
             final PokemonCard pokemonCard = (PokemonCard)card;

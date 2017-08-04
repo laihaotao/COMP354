@@ -19,7 +19,7 @@ public class FilterEvolveFrom extends Filter {
 
     public List<Card> evaluate(GameBoard targetBoard, Player owner, List<Card> cards){
         List<Card> filteredCards = new ArrayList<>();
-        Card targetCard = owner.getTarget(targetBoard, target);
+        Card targetCard = owner.getTarget(targetBoard, null, target);
         if(targetCard instanceof PokemonCard) {
             PokemonCard targetPokemon = (PokemonCard)targetCard; 
             cards.forEach(card -> {

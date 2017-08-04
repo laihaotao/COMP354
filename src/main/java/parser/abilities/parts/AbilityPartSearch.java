@@ -32,7 +32,7 @@ public class AbilityPartSearch extends AbilityPart {
     }
 
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
         Player player = owner.getTargetPlayer(targetBoard, target);
         List<Card> sourceList = null;
         switch (source.value) {

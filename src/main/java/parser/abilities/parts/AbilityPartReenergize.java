@@ -1,5 +1,6 @@
 package parser.abilities.parts;
 
+import card.Card;
 import game.GameBoard;
 import game.Player;
 import parser.abilities.properties.TargetProperty;
@@ -24,7 +25,7 @@ public class AbilityPartReenergize extends AbilityPart{
     }
 
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
         //TODO implement
         return false;
     }

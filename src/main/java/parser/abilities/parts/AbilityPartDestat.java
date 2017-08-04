@@ -20,8 +20,8 @@ public class AbilityPartDestat extends AbilityPart{
     }
 
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
-        Card card = owner.getTarget(targetBoard, targetProperty);
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
+        Card card = owner.getTarget(targetBoard,callingCard, targetProperty);
         if(card instanceof PokemonCard){
             PokemonCard pokemonCard = (PokemonCard)card;
             pokemonCard.setEffect(new Normal(pokemonCard));

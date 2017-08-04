@@ -307,8 +307,8 @@ public class Player {
         this.name = name;
     }
 
-    public Card getTarget(GameBoard gameBoard, TargetProperty target) {
-        return targetSelector.getCard(gameBoard, this, target);
+    public Card getTarget(GameBoard gameBoard, Card callingCard, TargetProperty target) {
+        return targetSelector.getCard(gameBoard, this,callingCard, target);
     }
 
     public Player getTargetPlayer(GameBoard gameBoard, TargetProperty target) {

@@ -29,7 +29,7 @@ public  abstract class TargetSelector {
         return null;
     }
     
-    public Card getCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty) {
+    public Card getCard(GameBoard gameBoard, Player callingPlayer, Card callingCard, TargetProperty targetProperty) {
         switch (targetProperty.target.value) {
             case "your":
                 return storeAndReturn(choseYourCard(gameBoard, callingPlayer));
@@ -55,6 +55,8 @@ public  abstract class TargetSelector {
             }
             case "opponent":
                 return storeAndReturn(choseOpponentCard(gameBoard, callingPlayer));
+            case "self":
+                return callingCard;
             default: {
                 return null;
             }

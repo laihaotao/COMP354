@@ -24,8 +24,8 @@ public class AbilityPartHeal extends AbilityPart{
     }
 
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
-        Card card = owner.getTarget(targetBoard, target);
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
+        Card card = owner.getTarget(targetBoard, callingCard,target);
         if(card instanceof PokemonCard){
             PokemonCard pokemonCard = (PokemonCard)card;
             pokemonCard.heal(amount.evaluateAsExpression(targetBoard, owner));

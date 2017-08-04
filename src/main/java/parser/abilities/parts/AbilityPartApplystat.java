@@ -28,8 +28,8 @@ public class AbilityPartApplystat extends AbilityPart {
     }
 
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
-        Card targetCard = owner.getTarget(targetBoard, target);
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
+        Card targetCard = owner.getTarget(targetBoard,callingCard,  target);
         if (targetCard instanceof PokemonCard) {
             PokemonCard pokemonCard = (PokemonCard) targetCard;
             String effectName = statusType.type.value;

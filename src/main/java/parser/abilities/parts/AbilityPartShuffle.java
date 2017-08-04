@@ -1,5 +1,6 @@
 package parser.abilities.parts;
 
+import card.Card;
 import game.GameBoard;
 import game.Player;
 import game.SpecialAbility;
@@ -17,7 +18,7 @@ public class AbilityPartShuffle extends AbilityPart{
     }
 
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
         switch(target.target.value){
             case "your":{
                 SpecialAbility.shuffleDeck(targetBoard.getCurrentTurnPlayer().getDeck());

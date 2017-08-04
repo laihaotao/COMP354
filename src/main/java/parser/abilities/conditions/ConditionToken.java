@@ -1,5 +1,6 @@
 package parser.abilities.conditions;
 
+import card.Card;
 import game.GameBoard;
 import game.Player;
 import parser.abilities.parts.AbilityPart;
@@ -15,7 +16,7 @@ public class ConditionToken extends Condition {
     }
 
     @Override
-    public boolean evaluate(AbilityPart caller, GameBoard gameBoard, Player owner) {
+    public boolean evaluate(AbilityPart caller, GameBoard gameBoard, Player owner, Card callingCard) {
         return tokenCondition.evaluateAsExpression(gameBoard, owner) == 1;
     }
 }

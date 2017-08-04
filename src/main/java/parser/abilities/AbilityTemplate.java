@@ -1,5 +1,6 @@
 package parser.abilities;
 
+import card.Card;
 import game.GameBoard;
 import game.Player;
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ public class AbilityTemplate {
      * @param board The board to be used
      * @param owner The Player owner of the ability
      */
-    public boolean use(GameBoard board, Player owner){
+    public boolean use(GameBoard board, Player owner, Card callingCard){
         boolean used = false;
         for(AbilityPart part : parts){
-            used |= part.use(board, owner);
+            used |= part.use(board, owner, callingCard);
         }
         return used;
     }

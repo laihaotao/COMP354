@@ -26,14 +26,14 @@ public class AbilityPartRedamage extends AbilityPart{
     }
 
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
-        Card damageSource = owner.getTarget(targetBoard, source);
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
+        Card damageSource = owner.getTarget(targetBoard,callingCard, source);
         int damageAmount = amount.evaluateAsExpression(targetBoard, owner);
         
         boolean didSomething = false;
         for(int i=0; i < damageAmount; i++)
         {
-            Card damageTarget = owner.getTarget(targetBoard, target);
+            Card damageTarget = owner.getTarget(targetBoard,callingCard, target);
             if(damageTarget instanceof PokemonCard && damageSource instanceof  PokemonCard){
                 PokemonCard pokemonSource = (PokemonCard)damageSource;
                 PokemonCard pokemonTarget = (PokemonCard)damageTarget;

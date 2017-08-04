@@ -1,5 +1,6 @@
 package parser.abilities.parts;
 
+import card.Card;
 import game.GameBoard;
 import game.Player;
 import java.util.List;
@@ -23,20 +24,20 @@ public class AbilityPartCond extends AbilityPart{
     }
     
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
         if(condition == null) {
             return false;
         }
-        if(condition.evaluate(this, targetBoard, owner)){
+        if(condition.evaluate(this, targetBoard, owner, callingCard)){
             trueParts.forEach(part->{
                 if(part != null) {
-                    part.use(targetBoard, owner);
+                    part.use(targetBoard, owner, callingCard);
                 }
             });
         }else{
             falseParts.forEach(part->{
                 if(part != null) {
-                    part.use(targetBoard, owner);
+                    part.use(targetBoard, owner, callingCard);
                 }
             });
         }

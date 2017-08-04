@@ -1,5 +1,6 @@
 package parser.abilities.parts;
 
+import card.Card;
 import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
@@ -22,8 +23,8 @@ public class AbilityPartDeenergize extends AbilityPart{
     }
 
     @Override
-    public boolean use(GameBoard targetBoard, Player owner) {
-        PokemonCard target = (PokemonCard) owner.getTarget(targetBoard, this.target);
+    public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
+        PokemonCard target = (PokemonCard) owner.getTarget(targetBoard,callingCard, this.target);
         int energyAmount = this.amount.evaluateAsExpression(targetBoard, owner);
         target.deenergy(energyAmount);
         return true;

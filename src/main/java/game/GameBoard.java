@@ -55,7 +55,7 @@ public class GameBoard {
         logger.debug("Player" + getPlayerNum() + " has clicked a card in it's hand");
         if (card instanceof TrainerCard) {
             TrainerCard trainerCard = (TrainerCard) card;
-            if(trainerCard.getAbility().getTemplate().use(this, player)) {
+            if(trainerCard.getAbility().getTemplate().use(this, player, trainerCard)) {
                 fromHandToDiscard(player, card);
             }
         } else if (card != null && getCurrentTurnPlayer() == player) {
@@ -170,7 +170,7 @@ public class GameBoard {
                     //If ability applies damage, it should trigger the Attack limit trigger
                     //Make sure player only attacks onc with a pokemon
                     if (!turnInfo.getAttackTrigger().already()) {
-                        if (ability.getTemplate().use(this, player)) {
+                        if (ability.getTemplate().use(this, player, card)) {
                             turnInfo.getAttackTrigger().trigger();
                         }
                     } else {
@@ -195,7 +195,7 @@ public class GameBoard {
                         return;
                     }
 
-                    ability.getTemplate().use(this, player);
+                    ability.getTemplate().use(this, player, card);
 
                     // stadium card will keep in-play after using it
                     if (trainerCard.getTrainerType() == TrainerCard.TrainerType.STADIUM) {

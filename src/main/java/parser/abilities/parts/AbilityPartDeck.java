@@ -36,7 +36,7 @@ public class AbilityPartDeck extends AbilityPart{
   }
 
   @Override
-  public boolean use(GameBoard targetBoard, Player owner) { 
+  public boolean use(GameBoard targetBoard, Player owner, Card callingCard) { 
 
 
     Player targetPlayer = owner.getTargetPlayer(targetBoard, target);

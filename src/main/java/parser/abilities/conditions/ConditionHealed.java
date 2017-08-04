@@ -16,8 +16,8 @@ public class ConditionHealed extends Condition {
     }
 
     @Override
-    public boolean evaluate(AbilityPart caller, GameBoard gameBoard, Player owner) {
-        Card card = owner.getTarget(gameBoard, targetProperty);
+    public boolean evaluate(AbilityPart caller, GameBoard gameBoard, Player owner, Card callingCard) {
+        Card card = owner.getTarget(gameBoard, callingCard, targetProperty);
         if(card instanceof PokemonCard){
             return ((PokemonCard)card).hasBeenHealed();
         }
