@@ -3,6 +3,7 @@ package game;
 import card.Card;
 import java.util.ArrayList;
 import java.util.List;
+import parser.abilities.filters.Filter;
 import parser.abilities.properties.TargetProperty;
 
 /**
@@ -32,19 +33,19 @@ public  abstract class TargetSelector {
     public Card getCard(GameBoard gameBoard, Player callingPlayer, Card callingCard, TargetProperty targetProperty) {
         switch (targetProperty.target.value) {
             case "your":
-                return storeAndReturn(choseYourCard(gameBoard, callingPlayer));
+                return storeAndReturn(choseYourCard(gameBoard, callingPlayer, targetProperty.filter));
             case "last":
                 return targetBuffer.get(targetBuffer.size()-1);
             case "choice": {
                 switch(targetProperty.modifier.value){
                     case "opponent":
-                        return storeAndReturn(choseOpponentCard(gameBoard, callingPlayer));
+                        return storeAndReturn(choseOpponentCard(gameBoard, callingPlayer, targetProperty.filter));
                     case "your":
-                        return storeAndReturn(choseYourCard(gameBoard, callingPlayer));
+                        return storeAndReturn(choseYourCard(gameBoard, callingPlayer, targetProperty.filter));
                     case "opponent-bench":
-                        return storeAndReturn(choseOpponentBench(gameBoard, callingPlayer));
+                        return storeAndReturn(choseOpponentBench(gameBoard, callingPlayer,targetProperty.filter));
                     case "your-bench":
-                        return storeAndReturn(choseYourBench(gameBoard, callingPlayer));
+                        return storeAndReturn(choseYourBench(gameBoard, callingPlayer,targetProperty.filter));
                 }
             }
             case "your-active": {
@@ -54,7 +55,7 @@ public  abstract class TargetSelector {
                 return storeAndReturn(gameBoard.getOtherPlayer(callingPlayer).getActivePokemon());
             }
             case "opponent":
-                return storeAndReturn(choseOpponentCard(gameBoard, callingPlayer));
+                return storeAndReturn(choseOpponentCard(gameBoard, callingPlayer,targetProperty.filter ));
             case "self":
                 return callingCard;
             default: {
@@ -81,12 +82,12 @@ public  abstract class TargetSelector {
         return targetBuffer.get(targetBuffer.size()-1-rollback);
     }
     
-    public abstract Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer);
+    public abstract Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer, Filter filter);
     
-    public abstract Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer);
+    public abstract Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer, Filter filter);
     
-    public abstract Card choseYourCard(GameBoard gameBoard, Player callingPlayer);
+    public abstract Card choseYourCard(GameBoard gameBoard, Player callingPlayer, Filter filter);
     
-    public abstract Card choseYourBench(GameBoard gameBoard, Player callingPlayer);
+    public abstract Card choseYourBench(GameBoard gameBoard, Player callingPlayer, Filter filter);
     
 }

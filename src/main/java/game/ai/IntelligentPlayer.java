@@ -10,6 +10,7 @@ import game.TargetSelector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import parser.abilities.filters.Filter;
 import parser.abilities.parts.AbilityPart;
 import parser.abilities.parts.AbilityPartDam;
 import parser.abilities.parts.AbilityPartDeck;
@@ -275,7 +276,7 @@ public class IntelligentPlayer extends Player {
     public class AiTargetSelector extends TargetSelector {
 
         @Override
-        public Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer) {
+        public Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer, Filter filter) {
             Player otherPlayer = gameBoard.getOtherPlayer(callingPlayer);
             if (otherPlayer.getBench().size() > 0 || otherPlayer.getActivePokemon() != null) {
                 int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
@@ -290,7 +291,7 @@ public class IntelligentPlayer extends Player {
         }
 
         @Override
-        public Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer) {
+        public Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer, Filter filter) {
             Player otherPlayer = gameBoard.getOtherPlayer(callingPlayer);
             if (otherPlayer.getBench().size() > 0) {
                 int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
@@ -302,7 +303,7 @@ public class IntelligentPlayer extends Player {
         }
 
         @Override
-        public Card choseYourCard(GameBoard gameBoard, Player callingPlayer) {
+        public Card choseYourCard(GameBoard gameBoard, Player callingPlayer, Filter filter) {
             if (callingPlayer.getBench().size() > 0) {
                 int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
                     callingPlayer.getBench().size());
@@ -313,7 +314,7 @@ public class IntelligentPlayer extends Player {
         }
 
         @Override
-        public Card choseYourBench(GameBoard gameBoard, Player callingPlayer) {
+        public Card choseYourBench(GameBoard gameBoard, Player callingPlayer, Filter filter) {
             if (callingPlayer.getBench().size() > 0) {
                 int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
                     callingPlayer.getBench().size());
@@ -322,14 +323,11 @@ public class IntelligentPlayer extends Player {
 
             return null;
         }
-
-        public boolean shouldDoDeckAbility(GameBoard board, AbilityPartDeck abilityPartDeck){
-            return true;
-        }
-        public Card selectCardToDiscardFromHand(){
-            return hand.get(hand.size()-1);
-        }
-        
-
+    }
+    public boolean shouldDoDeckAbility(GameBoard board, AbilityPartDeck abilityPartDeck){
+        return true;
+    }
+    public Card selectCardToDiscardFromHand(){
+        return hand.get(hand.size()-1);
     }
 }

@@ -21,6 +21,9 @@ public class TargetProperty extends Property {
     this.target = target;
     this.modifier = modifier;
     ammountModifier = null;
+    if(filter == null){
+      filter = new Filter();
+    }
     this.filter = filter;
   }
   public TargetProperty(TokenString target, TokenString modifier, Token ammountModifier, Filter filter) {
@@ -28,6 +31,9 @@ public class TargetProperty extends Property {
     this.target = target;
     this.modifier = modifier;
     this.ammountModifier = ammountModifier;
+    if(filter == null){
+      filter = new Filter();
+    }
     this.filter = filter;
   }
   
@@ -65,11 +71,7 @@ public class TargetProperty extends Property {
         }
       }
 
-
-    }else if((target = tokenStream.validateTokenString("deck")) != null) {
-      if((targetModifier = tokenStream.validateTokenString()) == null){
-        amountModifier = tokenStream.getNextToken();
-      }
+      
     }else{
       target = tokenStream.validateTokenString();
     }

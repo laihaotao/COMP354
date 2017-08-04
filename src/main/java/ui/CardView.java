@@ -66,6 +66,7 @@ public class CardView extends BorderPane {
 
         if (card instanceof PokemonCard) {
             PokemonCard pokemonCard = (PokemonCard) card;
+            topInfo.getChildren().add(new Label(pokemonCard.getPokemonType()+ "  "));
             topInfo.getChildren().add(new Label(pokemonCard.getEffect().getClass().getSimpleName()));
             abilitiesInfo.getChildren().add(new Label(pokemonCard.getEnergyAttached()
                     .toCondensedString()));
