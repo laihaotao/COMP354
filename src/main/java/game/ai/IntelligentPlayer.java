@@ -40,24 +40,32 @@ public class IntelligentPlayer extends Player {
                 gameBoard.onActiveCardClicked(this, null);
             }
         }else{
-            boolean putOnBench = true;
-            if(activePokemon.getEnergyAttached().canSupport(activePokemon.getRetreatEnergyCost())) {
-                List<Card> fullList = new ArrayList<>();
-                fullList.addAll(bench);
-                fullList.add(activePokemon);
-                PokemonCard optimal = findOptimalPokemon(gameBoard, fullList);
-                if (optimal != null && optimal != activePokemon) {
-                    gameBoard.onRetreatButtonClicked(this);
-                    gameBoard.onBenchCardClicked(this, optimal);
-                    gameBoard.onActiveCardClicked(this, null);
-                    putOnBench = false;
+            PokemonCard matching = getHandEvolution(activePokemon);
+            if(matching != null){
+                gameBoard.onHandCardClicked(this, matching);
+                gameBoard.onActiveCardClicked(this, activePokemon);
+            }else {
+
+                boolean putOnBench = true;
+                if (activePokemon.getEnergyAttached()
+                    .canSupport(activePokemon.getRetreatEnergyCost())) {
+                    List<Card> fullList = new ArrayList<>();
+                    fullList.addAll(bench);
+                    fullList.add(activePokemon);
+                    PokemonCard optimal = findOptimalPokemon(gameBoard, fullList);
+                    if (optimal != null && optimal != activePokemon) {
+                        gameBoard.onRetreatButtonClicked(this);
+                        gameBoard.onBenchCardClicked(this, optimal);
+                        gameBoard.onActiveCardClicked(this, null);
+                        putOnBench = false;
+                    }
                 }
-            }
-            if(putOnBench) {
-                PokemonCard optimalBench = findOptimalPokemon(gameBoard, hand);
-                if (optimalBench != null) {
-                    gameBoard.onHandCardClicked(this, optimalBench);
-                    gameBoard.onBenchCardClicked(this, null);
+                if (putOnBench) {
+                    PokemonCard optimalBench = findOptimalPokemon(gameBoard, hand);
+                    if (optimalBench != null) {
+                        gameBoard.onHandCardClicked(this, optimalBench);
+                        gameBoard.onBenchCardClicked(this, null);
+                    }
                 }
             }
         }
@@ -118,6 +126,10 @@ public class IntelligentPlayer extends Player {
                     if(pokemonEnergy > 0 && handEnergy > 0){
                         matchingEnergy++;
                     }
+                }
+
+                if(getHandEvolution(pokemonCard) != null){
+                    score += 50;
                 }
                 
                 score *= ((double)matchingEnergy)/5+0.2;
@@ -261,6 +273,23 @@ public class IntelligentPlayer extends Player {
         return new AiTargetSelector();
     }
 
+    public PokemonCard getHandEvolution(Card baseCard){
+        if(baseCard == null){
+            return null;
+        }
+        for (Card card : hand) {
+            if (card instanceof PokemonCard) {
+                PokemonCard pokemonCard = (PokemonCard) card;
+                if(pokemonCard.getEvolvesFrom() != null) {
+                    if (pokemonCard.getEvolvesFrom().equalsIgnoreCase(baseCard.getCardName())) {
+                        return pokemonCard;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
     public void chooseActivePokemon(GameBoard gameBoard){
         PokemonCard optimalActive = firstTurn?findOptimalPokemon(gameBoard, hand):findOptimalPokemon(gameBoard, bench);
         if(optimalActive != null) {

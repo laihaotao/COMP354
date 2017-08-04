@@ -35,10 +35,15 @@ public class GameBoard {
     private Card selectedCard = null;
     private CardLocation selectedCardLocation = null;
 
+    boolean isAIGame = false;
+    
     private TurnInfo turnInfo;
     public BoardView view;
 
     public GameBoard(Player p1, Player p2) {
+        if(p1 instanceof  IntelligentPlayer && p2 instanceof  IntelligentPlayer){
+            isAIGame = true;
+        }
         players = new Player[2];
         players[0] = p1;
         players[1] = p2;
@@ -406,7 +411,7 @@ public class GameBoard {
         Player currentPlayer = getCurrentTurnPlayer();
         getOtherPlayer(currentPlayer).onEndTurn(turnInfo.turnNum - 1);
 
-        if (view != null) {
+        if (view != null && !isAIGame) {
             view.refreshView();
         }
         //add card to players hand
@@ -432,7 +437,7 @@ public class GameBoard {
             aiTurn();
         }
     }
-
+    
     private void aiTurn() {
         Random rand = new Random();
         int cardTOAddToBench = rand.nextInt(5);
