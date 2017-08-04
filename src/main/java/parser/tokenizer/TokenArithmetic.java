@@ -27,6 +27,12 @@ public class TokenArithmetic extends Token{
     switch(type){
       case MULTIPLICATION:
         return leftValue.evaluateAsExpression(targetBoard, callingPlayer) * rightValue.evaluateAsExpression(targetBoard, callingPlayer);
+      case DIVISION:
+        return leftValue.evaluateAsExpression(targetBoard, callingPlayer) / rightValue.evaluateAsExpression(targetBoard, callingPlayer);
+      case ADDITION:
+        return leftValue.evaluateAsExpression(targetBoard, callingPlayer) + rightValue.evaluateAsExpression(targetBoard, callingPlayer);
+      case SUBTRATION:
+        return leftValue.evaluateAsExpression(targetBoard, callingPlayer) - rightValue.evaluateAsExpression(targetBoard, callingPlayer);
       default:
         return 0;
     }

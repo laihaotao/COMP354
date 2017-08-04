@@ -182,6 +182,43 @@ public class LanguageTokenizer {
                     lastArithmeticTokenType = OperatorType.MULTIPLICATION;
                     currentTokenString = "";
                     break;
+                case '/':
+                    //create a new token if necessary
+                    if (currentTokenString.length() > 0)
+                        addToken(tokens, createTokenFromString(location, currentTokenString),
+                            lastArithmeticTokenType);
+
+                    //remember that the operator was there
+                    lastArithmeticTokenType = OperatorType.DIVISION;
+                    currentTokenString = "";
+                    break;
+                case '+':
+                    //create a new token if necessary
+                    if (currentTokenString.length() > 0)
+                        addToken(tokens, createTokenFromString(location, currentTokenString),
+                            lastArithmeticTokenType);
+
+                    //remember that the operator was there
+                    lastArithmeticTokenType = OperatorType.ADDITION;
+                    currentTokenString = "";
+                    break;
+                    
+                    //NOTE: subtration messes up due to the use of - when declarining things. Ask the teacher to change - to _? 
+                    
+                    /**
+                case '-':
+                    //create a new token if necessary
+                    if (currentTokenString.length() > 0)
+                        addToken(tokens, createTokenFromString(location, currentTokenString),
+                            lastArithmeticTokenType);
+
+                    //remember that the operator was there
+                    lastArithmeticTokenType = OperatorType.SUBTRATION;
+                    currentTokenString = "";
+                    break;
+                     **/
+                    
+            
                 case '>':
                     //create a new token if necessary
                     if (currentTokenString.length() > 0)
@@ -190,6 +227,26 @@ public class LanguageTokenizer {
 
                     //remember that the operator was there
                     lastArithmeticTokenType = OperatorType.GREATER;
+                    currentTokenString = "";
+                    break;
+                case '=':
+                    //create a new token if necessary
+                    if (currentTokenString.length() > 0)
+                        addToken(tokens, createTokenFromString(location, currentTokenString),
+                            lastArithmeticTokenType);
+
+                    //remember that the operator was there
+                    lastArithmeticTokenType = OperatorType.EQUAL;
+                    currentTokenString = "";
+                    break;
+                case '<':
+                    //create a new token if necessary
+                    if (currentTokenString.length() > 0)
+                        addToken(tokens, createTokenFromString(location, currentTokenString),
+                            lastArithmeticTokenType);
+
+                    //remember that the operator was there
+                    lastArithmeticTokenType = OperatorType.SMALLER;
                     currentTokenString = "";
                     break;
                 default:
@@ -242,10 +299,15 @@ public class LanguageTokenizer {
 
             Token newToken = null;
             switch (type) {
+                case DIVISION:
                 case MULTIPLICATION:
+                case ADDITION:
+                case SUBTRATION:
                     newToken = new TokenArithmetic(right.endLocation, type, left, right);
                     break;
                 case GREATER:
+                case SMALLER:
+                case EQUAL:
                     newToken = new TokenCondition(right.endLocation, type, left, right);
             }
 

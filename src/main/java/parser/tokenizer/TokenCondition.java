@@ -27,6 +27,10 @@ public class TokenCondition extends Token{
         switch(type){
             case GREATER:
                 return (leftValue.evaluateAsExpression(targetBoard, callingPlayer) > rightValue.evaluateAsExpression(targetBoard, callingPlayer)?1:0);
+            case SMALLER:
+                return (leftValue.evaluateAsExpression(targetBoard, callingPlayer) < rightValue.evaluateAsExpression(targetBoard, callingPlayer)?1:0);
+            case EQUAL:
+                return (leftValue.evaluateAsExpression(targetBoard, callingPlayer) == rightValue.evaluateAsExpression(targetBoard, callingPlayer)?1:0);
             default:
                 return 0;
         }

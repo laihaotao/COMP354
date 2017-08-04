@@ -5,5 +5,5 @@ package parser.tokenizer;
  * Represents the different types of arithmetic operations
  */
 public enum OperatorType {
-  NULL, MULTIPLICATION , GREATER
+  NULL, MULTIPLICATION , DIVISION, SUBTRATION, ADDITION, GREATER, SMALLER, EQUAL
 }
