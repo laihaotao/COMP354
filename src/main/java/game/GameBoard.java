@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ui.BoardView;
+import ui.events.PopupOnClickListener;
 import ui.popup.GamePopup;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class GameBoard {
         logger.debug("Player" + getPlayerNum() + " has clicked a card in it's hand");
         if (card instanceof TrainerCard) {
             TrainerCard trainerCard = (TrainerCard) card;
-            if(trainerCard.getAbility().getTemplate().use(this, player, trainerCard)) {
+            if (trainerCard.getAbility().getTemplate().use(this, player, trainerCard)) {
                 fromHandToDiscard(player, card);
             }
         } else if (card != null && getCurrentTurnPlayer() == player) {
@@ -164,7 +165,8 @@ public class GameBoard {
             // card energy
             if (card instanceof PokemonCard
                     // --> ability.energycost.canSupport(card.attachedenergy)
-                    && ability.getEnergyCost().canSupport(((PokemonCard) card).getEnergyAttached())) {
+                    && ability.getEnergyCost().canSupport(((PokemonCard) card).getEnergyAttached
+                    ())) {
 
                 if (((PokemonCard) card).getEffect().isCanAttack()) {
                     //If ability applies damage, it should trigger the Attack limit trigger
@@ -254,6 +256,23 @@ public class GameBoard {
     public void applyDamageToCard(PokemonCard targetPokemon, int damage) {
         targetPokemon.setDamage(targetPokemon.getDamage() + damage);
         turnInfo.getAttackTrigger().trigger();
+    }
+
+    public void displayAndWaitForClick(List<Card> filterList, final int amount, final Player
+            player) {
+
+        GamePopup.displaySearchCards(this, player, filterList,
+                new PopupOnClickListener() {
+                    @Override
+                    public void onClick(Card card) {
+                        filterList.remove(card);
+                        player.getHand().add(card);
+                        int a = amount - 1;
+                        if (a > 0) {
+                            displayAndWaitForClick(filterList, a, player);
+                        }
+                    }
+                });
     }
 
     // ===================================================================================
@@ -385,7 +404,7 @@ public class GameBoard {
         //This will cycle between 0 and 1
         currentTurn = (currentTurn + 1) % 2;
         Player currentPlayer = getCurrentTurnPlayer();
-        getOtherPlayer(currentPlayer).onEndTurn(turnInfo.turnNum-1);
+        getOtherPlayer(currentPlayer).onEndTurn(turnInfo.turnNum - 1);
 
         if (view != null) {
             view.refreshView();

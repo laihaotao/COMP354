@@ -9,6 +9,7 @@ import parser.abilities.properties.TargetProperty;
 import parser.abilities.properties.TokenProperty;
 import parser.tokenizer.Token;
 import parser.tokenizer.TokenString;
+import ui.events.PopupOnClickListener;
 import ui.popup.GamePopup;
 
 import java.util.List;
@@ -43,13 +44,9 @@ public class AbilityPartSearch extends AbilityPart {
                 sourceList = owner.getDiscardPile();
                 break;
         }
-        List<Card> fileterList = filter.evaluate(targetBoard, owner, sourceList);
-        for (int i = 0; i < amount.evaluateAsExpression(targetBoard, owner); i++) {
-
-            // todo need to implement a popup
-
-        }
-        return false;
+        List<Card> filterList = filter.evaluate(targetBoard, owner, sourceList);
+        targetBoard.displayAndWaitForClick(filterList, amount.evaluateAsExpression(targetBoard, owner), owner);
+        return true;
     }
 
     @Override

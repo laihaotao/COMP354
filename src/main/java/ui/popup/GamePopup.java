@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -54,8 +55,9 @@ public class GamePopup {
         });
     }
 
-    public static void displayDiscardPile(GameBoard gameboard, Player player, List<Card> pile,
-                                          PopupOnClickListener listener) {
+    public static void displayDiscardPile(GameBoard gameboard, Player player,
+                                          List<Card> pile, PopupOnClickListener listener) {
+
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         URL location = ClassLoader.getSystemClassLoader().getResource("ui/discardpile.fxml");
@@ -72,7 +74,8 @@ public class GamePopup {
 
                     VBox box = new VBox();
                     for (Card c : pile) {
-                        Button button = new Button(new CardView(gameboard, player, c,false).toString());
+                        Button button = new Button(new CardView(gameboard, player, c, false)
+                                .toString());
                         button.setOnMouseClicked(event -> {
                             listener.onClick(c);
                         });
@@ -93,23 +96,71 @@ public class GamePopup {
 
 
     public static void displayPokemonsInHand(GameBoard gameboard, Player player,
-                                             List<PokemonCard> pokemonInHand, PopupOnClickListener listener) {
+                                             List<PokemonCard> pokemonInHand,
+                                             PopupOnClickListener listener) {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        URL location = ClassLoader.getSystemClassLoader().getResource("ui/selectactive.fxml");
+        URL location = ClassLoader.getSystemClassLoader().getResource("ui/select.fxml");
         loader.setLocation(location);
         try {
             BorderPane borderPane = loader.load();
             Scene scene = new Scene(borderPane);
-
             ObservableList<Node> childrenList = borderPane.getChildren();
             for (Node child : childrenList) {
+                if (child instanceof Label) {
+                    Label label = (Label) child;
+                    label.setText("Select Active Pokemon");
+                }
                 if (child instanceof ScrollPane) {
                     ScrollPane scrollPane = (ScrollPane) child;
 
                     VBox box = new VBox();
                     for (PokemonCard c : pokemonInHand) {
-                        Button button = new Button(new CardView(gameboard, player, c, false).toString());
+                        Button button = new Button(new CardView(gameboard, player, c, false)
+                                .toString());
+                        button.setOnMouseClicked(event -> {
+                            listener.onClick(c);
+                            stage.hide();
+                        });
+                        box.getChildren().add(button);
+
+                    }
+
+                    scrollPane.setContent(box);
+                }
+            }
+
+            stage.setScene(scene);
+            stage.setAlwaysOnTop(true);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void displaySearchCards(GameBoard gameboard, Player player,
+                                          List<Card> filterList,
+                                          PopupOnClickListener listener) {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        URL location = ClassLoader.getSystemClassLoader().getResource("ui/select.fxml");
+        loader.setLocation(location);
+        try {
+            BorderPane borderPane = loader.load();
+            Scene scene = new Scene(borderPane);
+            ObservableList<Node> childrenList = borderPane.getChildren();
+            for (Node child : childrenList) {
+                if (child instanceof Label) {
+                    Label label = (Label) child;
+                    label.setText("Searching Result");
+                }
+                if (child instanceof ScrollPane) {
+                    ScrollPane scrollPane = (ScrollPane) child;
+
+                    VBox box = new VBox();
+                    for (Card c : filterList) {
+                        Button button = new Button(new CardView(gameboard, player, c, false)
+                                .toString());
                         button.setOnMouseClicked(event -> {
                             listener.onClick(c);
                             stage.hide();
@@ -128,5 +179,6 @@ public class GamePopup {
             e.printStackTrace();
         }
     }
+
 
 }
