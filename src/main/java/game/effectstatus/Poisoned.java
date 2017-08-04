@@ -17,7 +17,7 @@ public class Poisoned extends Effect {
     }
 
     @Override
-    void apply() {
-
+    public void apply() {
+        this.target.setAttackCounter(this.target.getAttackCounter() + 1);
     }
 }

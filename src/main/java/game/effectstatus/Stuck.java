@@ -17,7 +17,7 @@ public class Stuck extends Effect {
     }
 
     @Override
-    void apply() {
+    public void apply() {
         this.canRetreat = false;
         this.canAttack = true;
     }

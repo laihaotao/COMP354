@@ -164,19 +164,21 @@ public class GameBoard {
             // card energy
             if (card instanceof PokemonCard
                     // --> ability.energycost.canSupport(card.attachedenergy)
-                    && ability.getEnergyCost().canSupport(((PokemonCard) card).getEnergyAttached())
-                    && ((PokemonCard) card).getEffect().isCanAttack()) {
+                    && ability.getEnergyCost().canSupport(((PokemonCard) card).getEnergyAttached())) {
 
-                //If ability applies damage, it should trigger the Attack limit trigger
+                if (((PokemonCard) card).getEffect().isCanAttack()) {
+                    //If ability applies damage, it should trigger the Attack limit trigger
                     //Make sure player only attacks onc with a pokemon
-                if (!turnInfo.getAttackTrigger().already()) {
-                    if (ability.getTemplate().use(this, player)) {
-                        turnInfo.getAttackTrigger().trigger();
+                    if (!turnInfo.getAttackTrigger().already()) {
+                        if (ability.getTemplate().use(this, player)) {
+                            turnInfo.getAttackTrigger().trigger();
+                        }
+                    } else {
+                        GamePopup.displayMessage("You can only attack once per turn");
                     }
                 } else {
-                    GamePopup.displayMessage("You can only attack once per turn");
-                    }
-                
+                    logger.debug(card.getCardName() + "cannot attack because of attached effect");
+                }
             }
 
             // if the card is a trainer card
@@ -236,6 +238,7 @@ public class GameBoard {
 
     public void onEndTurnButtonClicked() {
         nextTurn();
+        logger.debug("====== end current turn ======");
     }
 
     public void chooseActivePokemon() {
@@ -377,11 +380,13 @@ public class GameBoard {
 
         Player currentPlayer = getCurrentTurnPlayer();
         getOtherPlayer(currentPlayer).onEndTurn(turnInfo.turnNum-1);
+
         // update effect
         if (currentPlayer.getActivePokemon() != null) {
             PokemonCard pokemon = (PokemonCard) currentPlayer.getActivePokemon();
             pokemon.setEffect(pokemon.getEffect().remove());
         }
+
         view.refreshView();
         //add card to players hand
         currentPlayer.drawOneCard();

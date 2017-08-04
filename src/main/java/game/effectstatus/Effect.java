@@ -21,7 +21,7 @@ public abstract class Effect {
         this.target = target;
     }
 
-    abstract void apply();
+    public abstract void apply();
 
     public Effect remove() {
         this.target.setStatus(null);

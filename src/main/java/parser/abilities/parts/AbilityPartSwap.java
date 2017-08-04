@@ -23,12 +23,16 @@ public class AbilityPartSwap extends AbilityPart{
 
     @Override
     public boolean use(GameBoard targetBoard, Player owner) {
-        PokemonCard p1 = (PokemonCard) owner.getTarget(targetBoard, source);
-        PokemonCard p2 = (PokemonCard) owner.getTarget(targetBoard, destination);
-        // remove all status effects
-        p1.setEffect(p1.getEffect().remove());
-        SpecialAbility.swapCardPos(p1, p2);
-        return true;
+        if (owner.getTarget(targetBoard, source) instanceof PokemonCard
+                &&owner.getTarget(targetBoard, destination) instanceof PokemonCard) {
+            PokemonCard p1 = (PokemonCard) owner.getTarget(targetBoard, source);
+            PokemonCard p2 = (PokemonCard) owner.getTarget(targetBoard, destination);
+            // remove all status effects
+            p1.setEffect(p1.getEffect().remove());
+            SpecialAbility.swapCardPos(p1, p2);
+            return true;
+        }
+        return false;
     }
 
     @Override
