@@ -417,18 +417,6 @@ public class GameBoard {
         turnInfo.turnNum++;
         turnInfo.reset();
 
-        // update effect
-        if (getCurrentTurnPlayer().getActivePokemon() != null) {
-            PokemonCard pokemon = (PokemonCard) getCurrentTurnPlayer().getActivePokemon();
-            List<Effect> effectsToRemove = new ArrayList<>();
-            for(Effect effect : pokemon.getEffects()){
-                if(effect.remove()){
-                    effectsToRemove.add(effect);
-                }
-            }
-            pokemon.getEffects().removeAll(effectsToRemove);
-        }
-
         //This will cycle between 0 and 1
         currentTurn = (currentTurn + 1) % 2;
         Player currentPlayer = getCurrentTurnPlayer();
@@ -463,6 +451,18 @@ public class GameBoard {
 
         if((currentPlayer.getActivePokemon()) != null)
             ((PokemonCard)currentPlayer.getActivePokemon()).getEffects().forEach(Effect::apply);
+
+        // update effect
+        if (currentPlayer.getActivePokemon() != null) {
+            PokemonCard pokemon = (PokemonCard) currentPlayer.getActivePokemon();
+            List<Effect> effectsToRemove = new ArrayList<>();
+            for(Effect effect : pokemon.getEffects()){
+                if(effect.remove()){
+                    effectsToRemove.add(effect);
+                }
+            }
+            pokemon.getEffects().removeAll(effectsToRemove);
+        }
     }
     
     private void aiTurn() {
