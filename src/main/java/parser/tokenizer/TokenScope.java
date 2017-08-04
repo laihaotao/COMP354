@@ -47,8 +47,8 @@ public class TokenScope extends Token {
   public int evaluateAsExpression(GameBoard targetBoard, Player callingPlayer) {
     if(prefix.equalsIgnoreCase("count")){
       TokenStream tokenStream = new TokenStream(tokens);
-
-      if (tokenStream.validateTokenString("target") != null) {
+      tokenStream.validateTokenString("target");
+ 
         Card targetCard = null;
         switch (tokenStream.validateTokenString().value) {
           case "opponent-active":
@@ -104,8 +104,8 @@ public class TokenScope extends Token {
           }
         }
       }
-    }
-    else if(tokens.size() > 0){
+    
+    if(tokens.size() > 0){
       for (Token token : tokens) {
         int value = token.evaluateAsExpression(targetBoard, callingPlayer);
         if (value > 0) {

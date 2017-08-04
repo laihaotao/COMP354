@@ -41,6 +41,10 @@ public class AbilityPartDraw extends AbilityPart{
 
   @Override
   public String getDescriptionString() {
-    return "Draw a card on "+target;
+    return "Draw "+amount.getDisplayString()+" card(s) on "+target ;
   }
+
+    public String getCurrentDescription(GameBoard targetBoard, Player callingPlayer){
+        return "Draw "+amount.evaluateAsExpression(targetBoard, callingPlayer)+"["+amount.getDisplayString()+"] card(s) on "+target ;
+    }
 }

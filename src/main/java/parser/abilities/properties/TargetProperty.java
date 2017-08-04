@@ -71,11 +71,7 @@ public class TargetProperty extends Property {
         }
       }
 
-
-    }else if((target = tokenStream.validateTokenString("deck")) != null) {
-      if((targetModifier = tokenStream.validateTokenString()) == null){
-        amountModifier = tokenStream.getNextToken();
-      }
+      
     }else{
       target = tokenStream.validateTokenString();
     }
