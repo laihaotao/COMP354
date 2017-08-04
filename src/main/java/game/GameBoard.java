@@ -410,6 +410,7 @@ public class GameBoard {
     }
 
     private void nextTurn() {
+        checkPokemons();
         if (turnInfo.turnNum > 1) {
             checkWinLose();
         }
