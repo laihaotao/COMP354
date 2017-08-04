@@ -27,6 +27,8 @@ public class SelectDeck {
         File[] actual = reader.getDirectoryFiles();
         ArrayList<String> expected = TestResultHelper.readResultFile("DeckResult.txt");
 
+        
+        
         for (int i = 0; i < actual.length; i ++) {
             assertEquals(expected.get(i), actual[i].getName());
         }

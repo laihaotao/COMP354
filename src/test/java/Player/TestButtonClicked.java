@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by kawsa on 7/13/2017.
@@ -50,14 +51,22 @@ public class TestButtonClicked {
 
 
         GameBoard gm = new GameBoard(player1,player2);
+        
+        
+        //This line is not good
         player1.chooseActivePokemon(gm);
         player2.checkMulligans();
+        
         gm.onRetreatButtonClicked(player1);
         gm.onRetreatButtonClicked(player2);
 
-        assertEquals(null, player1.getActivePokemon() );
-
-        assertEquals(null, player2.getActivePokemon());
+        
+        
+        System.out.println(player1.getActivePokemon());
+        System.out.println(player2.getActivePokemon());
+        
+        assertNull(player1.getActivePokemon());
+        assertNull(player2.getActivePokemon());
 
     }
 
