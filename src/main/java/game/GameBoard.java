@@ -432,10 +432,15 @@ public class GameBoard {
                     e.printStackTrace();
                 }
             }
+            ((PokemonCard)currentPlayer.getActivePokemon()).getEffect().apply();
+            ((PokemonCard)getOtherPlayer(currentPlayer).getActivePokemon()).getEffect().apply();
             nextTurn();
         } else if (currentPlayer instanceof Ai_Player) {
             aiTurn();
         }
+
+        ((PokemonCard)currentPlayer.getActivePokemon()).getEffect().apply();
+        ((PokemonCard)getOtherPlayer(currentPlayer).getActivePokemon()).getEffect().apply();
     }
     
     private void aiTurn() {
