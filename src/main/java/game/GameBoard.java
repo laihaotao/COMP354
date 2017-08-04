@@ -375,19 +375,21 @@ public class GameBoard {
         }
         turnInfo.turnNum++;
         turnInfo.reset();
-        //This will cycle between 0 and 1
-        currentTurn = (currentTurn + 1) % 2;
-
-        Player currentPlayer = getCurrentTurnPlayer();
-        getOtherPlayer(currentPlayer).onEndTurn(turnInfo.turnNum-1);
 
         // update effect
-        if (currentPlayer.getActivePokemon() != null) {
-            PokemonCard pokemon = (PokemonCard) currentPlayer.getActivePokemon();
+        if (getCurrentTurnPlayer().getActivePokemon() != null) {
+            PokemonCard pokemon = (PokemonCard) getCurrentTurnPlayer().getActivePokemon();
             pokemon.setEffect(pokemon.getEffect().remove());
         }
 
-        view.refreshView();
+        //This will cycle between 0 and 1
+        currentTurn = (currentTurn + 1) % 2;
+        Player currentPlayer = getCurrentTurnPlayer();
+        getOtherPlayer(currentPlayer).onEndTurn(turnInfo.turnNum-1);
+
+        if (view != null) {
+            view.refreshView();
+        }
         //add card to players hand
         currentPlayer.drawOneCard();
 
@@ -499,5 +501,9 @@ public class GameBoard {
 
     public TurnInfo getTurnInfo() {
         return turnInfo;
+    }
+
+    public void setCurrentTurn(int currentTurn) {
+        this.currentTurn = currentTurn;
     }
 }
