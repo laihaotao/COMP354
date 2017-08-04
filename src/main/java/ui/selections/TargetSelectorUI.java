@@ -20,6 +20,7 @@ import javafx.scene.control.ButtonType;
 
 import java.util.HashMap;
 import java.util.Optional;
+import parser.abilities.filters.Filter;
 
 public class TargetSelectorUI extends TargetSelector{
 
@@ -55,14 +56,17 @@ public class TargetSelectorUI extends TargetSelector{
     }
 
     @Override
-    public Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer) {
+    public Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer, Filter filter) {
         Player opponent = gameBoard.getOtherPlayer(callingPlayer);
 
         List<Card> choices = new ArrayList<>();
         if(opponent.getActivePokemon() != null) {
-            choices.add(opponent.getActivePokemon());
+            if(filter.evaluate(gameBoard, callingPlayer, opponent.getActivePokemon())) {
+                choices.add(opponent.getActivePokemon());
+            }
         }
-        opponent.getBench().forEach(card->{
+
+        filter.evaluate(gameBoard, callingPlayer, opponent.getBench()).forEach(card->{
             choices.add(card);
         });
 
@@ -70,19 +74,19 @@ public class TargetSelectorUI extends TargetSelector{
     }
 
     @Override
-    public Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer) {
+    public Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer, Filter filter) {
         Player opponent = gameBoard.getOtherPlayer(callingPlayer);
 
-        return TargetSelectorUI.selectCard(opponent.getBench());
+        return TargetSelectorUI.selectCard(filter.evaluate(gameBoard, callingPlayer, opponent.getBench()));
     }
 
     @Override
-    public Card choseYourCard(GameBoard gameBoard, Player callingPlayer) {
+    public Card choseYourCard(GameBoard gameBoard, Player callingPlayer, Filter filter) {
         List<Card> choices = new ArrayList<>();
-        if(callingPlayer.getActivePokemon() != null) {
+        if(callingPlayer.getActivePokemon() != null && filter.evaluate(gameBoard, callingPlayer, callingPlayer.getActivePokemon())) {
             choices.add(callingPlayer.getActivePokemon());
         }
-        callingPlayer.getBench().forEach(card->{
+        filter.evaluate(gameBoard, callingPlayer, callingPlayer.getBench()).forEach(card->{
             choices.add(card);
         });
 
@@ -90,7 +94,7 @@ public class TargetSelectorUI extends TargetSelector{
     }
 
     @Override
-    public Card choseYourBench(GameBoard gameBoard, Player callingPlayer) {
-        return TargetSelectorUI.selectCard(callingPlayer.getBench());
+    public Card choseYourBench(GameBoard gameBoard, Player callingPlayer, Filter filter) {
+        return TargetSelectorUI.selectCard(filter.evaluate(gameBoard, callingPlayer, callingPlayer.getBench()));
     }
 }
