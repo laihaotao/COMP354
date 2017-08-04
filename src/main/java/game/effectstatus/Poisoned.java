@@ -24,7 +24,7 @@ public class Poisoned extends Effect {
     }
 
     @Override
-    public Effect remove() {
-        return this;
+    public boolean remove() {
+        return false;
     }
 }

@@ -9,6 +9,7 @@ package game;
 
 import card.*;
 import game.ai.IntelligentPlayer;
+import game.effectstatus.Effect;
 import javafx.application.Platform;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -173,7 +174,14 @@ public class GameBoard {
                     && ability.getEnergyCost().canSupport(((PokemonCard) card).getEnergyAttached
                     ())) {
 
-                if (((PokemonCard) card).getEffect().isCanAttack()) {
+                boolean canAttack = true;
+                for(Effect effect : ((PokemonCard) card).getEffects()){
+                    if(!effect.isCanAttack()){
+                        canAttack = false;
+                    }
+                }
+                
+                if (canAttack) {
                     //If ability applies damage, it should trigger the Attack limit trigger
                     //Make sure player only attacks onc with a pokemon
                     if (!turnInfo.getAttackTrigger().already()) {
@@ -234,8 +242,16 @@ public class GameBoard {
     public void onRetreatButtonClicked(Player player) {
         if (player.getActivePokemon() != null) {
             PokemonCard pokemon = (PokemonCard) player.getActivePokemon();
+
+            boolean canRetreat = true;
+            for(Effect effect : pokemon.getEffects()){
+                if(!effect.isCanRetreat()){
+                    canRetreat = false;
+                }
+            }
+            
             if ((pokemon.getRetreatEnergyCost().canSupport(pokemon.getEnergyAttached()))
-                    && pokemon.getEffect().isCanRetreat()) {
+                    && canRetreat) {
                 pokemon.getEnergyAttached().retreat(pokemon.getRetreatEnergyCost());
                 player.setActivePokemon(null);
                 player.getBench().add(pokemon);
@@ -403,7 +419,13 @@ public class GameBoard {
         // update effect
         if (getCurrentTurnPlayer().getActivePokemon() != null) {
             PokemonCard pokemon = (PokemonCard) getCurrentTurnPlayer().getActivePokemon();
-            pokemon.setEffect(pokemon.getEffect().remove());
+            List<Effect> effectsToRemove = new ArrayList<>();
+            for(Effect effect : pokemon.getEffects()){
+                if(effect.remove()){
+                    effectsToRemove.add(effect);
+                }
+            }
+            pokemon.getEffects().removeAll(effectsToRemove);
         }
 
         //This will cycle between 0 and 1
@@ -432,15 +454,19 @@ public class GameBoard {
                     e.printStackTrace();
                 }
             }
-            ((PokemonCard)currentPlayer.getActivePokemon()).getEffect().apply();
-            ((PokemonCard)getOtherPlayer(currentPlayer).getActivePokemon()).getEffect().apply();
+            if((currentPlayer.getActivePokemon()) != null)
+            ((PokemonCard)currentPlayer.getActivePokemon()).getEffects().forEach(Effect::apply);
+            if((getOtherPlayer(currentPlayer).getActivePokemon()) != null)
+            ((PokemonCard)getOtherPlayer(currentPlayer).getActivePokemon()).getEffects().forEach(Effect::apply);
             nextTurn();
         } else if (currentPlayer instanceof Ai_Player) {
             aiTurn();
         }
 
-        ((PokemonCard)currentPlayer.getActivePokemon()).getEffect().apply();
-        ((PokemonCard)getOtherPlayer(currentPlayer).getActivePokemon()).getEffect().apply();
+        if((currentPlayer.getActivePokemon()) != null)
+            ((PokemonCard)currentPlayer.getActivePokemon()).getEffects().forEach(Effect::apply);
+        if((getOtherPlayer(currentPlayer).getActivePokemon()) != null)
+            ((PokemonCard)getOtherPlayer(currentPlayer).getActivePokemon()).getEffects().forEach(Effect::apply);
     }
     
     private void aiTurn() {

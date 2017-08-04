@@ -67,7 +67,13 @@ public class CardView extends BorderPane {
         if (card instanceof PokemonCard) {
             PokemonCard pokemonCard = (PokemonCard) card;
             topInfo.getChildren().add(new Label(pokemonCard.getPokemonType()+ "  "));
-            topInfo.getChildren().add(new Label(pokemonCard.getEffect().getClass().getSimpleName()));
+            
+            StringBuilder effectString = new StringBuilder();
+            pokemonCard.getEffects().forEach(e->{
+                effectString.append(e.getClass().getSimpleName());
+            });
+            
+            topInfo.getChildren().add(new Label(effectString.toString()));
             abilitiesInfo.getChildren().add(new Label(pokemonCard.getEnergyAttached()
                     .toCondensedString()));
             //displays health and damage values

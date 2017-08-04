@@ -104,7 +104,7 @@ public class EffectTest {
             // set Hitmonlee to be paralyzed
             Effect paralyzed = new Paralyzed(target);
             paralyzed.apply();
-            target.setEffect(paralyzed);
+            target.addEffect(paralyzed);
 
             gameBoard.onEndTurnButtonClicked();
             // set turn to player1's turn

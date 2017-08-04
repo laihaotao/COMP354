@@ -51,7 +51,7 @@ public class AbilityPartApplystat extends AbilityPart {
             if (effect != null) {
                 logger.debug(pokemonCard.getCardName() + " get " + effectName + " effect");
                 //effect.apply();
-                pokemonCard.setEffect(effect);
+                pokemonCard.addEffect(effect);
                 pokemonCard.setStatus(effectName);
                 return true;
             } else {

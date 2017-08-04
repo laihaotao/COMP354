@@ -5,6 +5,7 @@ import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import game.SpecialAbility;
+import game.effectstatus.Effect;
 import java.util.ArrayList;
 import java.util.List;
 import parser.abilities.properties.TargetProperty;
@@ -31,7 +32,7 @@ public class AbilityPartSwap extends AbilityPart{
             PokemonCard p1 = (PokemonCard)sourceCard;
             PokemonCard p2 = (PokemonCard)destinationCard;
             // remove all status effects
-            p1.setEffect(p1.getEffect().remove());
+            p1.getEffects().clear();
             
             SearchResult p1Source = getCardSource(targetBoard, p1);
             SearchResult p2Source = getCardSource(targetBoard, p2);

@@ -34,10 +34,9 @@ public class PokemonCard extends Card {
 
     private boolean hasBeenHealed = false;
     
-    private Effect effect;
+    private List<Effect> effects = new ArrayList<>();
 
-    public PokemonCard() {
-        effect = new Normal(this);
+    public PokemonCard() {;
     }
 
 
@@ -56,8 +55,6 @@ public class PokemonCard extends Card {
         this.attackCounter = 0;
         this.status = "";
         this.cardType = CardType.POKEMON;
-
-        effect = new Normal(this);
     }
 
 
@@ -251,12 +248,12 @@ public class PokemonCard extends Card {
         return this.attachedEnergyCard;
     }
 
-    public Effect getEffect() {
-        return effect;
+    public List<Effect> getEffects() {
+        return effects;
     }
 
-    public void setEffect(Effect effect) {
-        this.effect = effect;
+    public void addEffect(Effect effect) {
+        effects.add(effect);
     }
 
     public void heal(int amount){

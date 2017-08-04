@@ -24,7 +24,7 @@ public class AbilityPartDestat extends AbilityPart{
         Card card = owner.getTarget(targetBoard,callingCard, targetProperty);
         if(card instanceof PokemonCard){
             PokemonCard pokemonCard = (PokemonCard)card;
-            pokemonCard.setEffect(new Normal(pokemonCard));
+            pokemonCard.getEffects().clear();
             return true;
         }
         
