@@ -33,13 +33,53 @@ public class AbilityPartReenergize extends AbilityPart{
 
         boolean didSomething = false;
 
-        Card energyTarget = owner.getTarget(targetBoard,callingCard, target);
-        if(energyTarget instanceof PokemonCard && energySource instanceof  PokemonCard){
+        
+        if( energySource instanceof  PokemonCard){
             PokemonCard pokemonSource = (PokemonCard)energySource;
-            PokemonCard pokemonTarget = (PokemonCard)energySource;
+            
             didSomething = true;
             EnergyCost transferEnergy = pokemonSource.getEnergyAttached().deenergy(energyAmount);
-            pokemonTarget.getEnergyAttached().add(transferEnergy);
+
+            for(int i=0; i < transferEnergy.fight; i++){
+                Card energyTarget = owner.getTarget(targetBoard,callingCard, target);
+                if(energyTarget instanceof PokemonCard) {
+                    PokemonCard pokemonTarget = (PokemonCard) energyTarget;
+                    pokemonTarget.getEnergyAttached().fight++;
+                }
+            }
+
+            for(int i=0; i < transferEnergy.psychic; i++){
+                Card energyTarget = owner.getTarget(targetBoard,callingCard, target);
+                if(energyTarget instanceof PokemonCard) {
+                    PokemonCard pokemonTarget = (PokemonCard) energyTarget;
+                    pokemonTarget.getEnergyAttached().psychic++;
+                }
+            }
+
+            for(int i=0; i < transferEnergy.lightning; i++){
+                Card energyTarget = owner.getTarget(targetBoard,callingCard, target);
+                if(energyTarget instanceof PokemonCard) {
+                    PokemonCard pokemonTarget = (PokemonCard) energyTarget;
+                    pokemonTarget.getEnergyAttached().lightning++;
+                }
+            }
+
+            for(int i=0; i < transferEnergy.water; i++){
+                Card energyTarget = owner.getTarget(targetBoard,callingCard, target);
+                if(energyTarget instanceof PokemonCard) {
+                    PokemonCard pokemonTarget = (PokemonCard) energyTarget;
+                    pokemonTarget.getEnergyAttached().water++;
+                }
+            }
+            for(int i=0; i < transferEnergy.colorless; i++){
+                Card energyTarget = owner.getTarget(targetBoard,callingCard, target);
+                if(energyTarget instanceof PokemonCard) {
+                    PokemonCard pokemonTarget = (PokemonCard) energyTarget;
+                    pokemonTarget.getEnergyAttached().colorless++;
+                }
+            }
+            
+            
         }   
         
         //TODO implement
