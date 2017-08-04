@@ -486,7 +486,7 @@ public class GameBoard {
                 }
             }
             if (!stillHavePokemon) {
-                Platform.runLater(() -> GamePopup.displayGameResult(getCurrentTurnPlayer()
+                Platform.runLater(() -> GamePopup.displayGameResult(getOtherPlayer(getCurrentTurnPlayer())
                         .getName(), true));
             }
         }
