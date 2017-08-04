@@ -297,6 +297,7 @@ public class AbilitiesParser {
 
     private AbilityPart parseRedamagePart(TokenStream tokenStream) {
         TargetProperty source = TargetProperty.read(tokenStream);
+        tokenStream.getNextToken();
         TargetProperty target = TargetProperty.read(tokenStream);
         Token amount = tokenStream.getNextToken();
 
