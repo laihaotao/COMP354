@@ -455,10 +455,7 @@ public class GameBoard {
                     e.printStackTrace();
                 }
             }
-            if((currentPlayer.getActivePokemon()) != null)
-            ((PokemonCard)currentPlayer.getActivePokemon()).getEffects().forEach(Effect::apply);
-            if((getOtherPlayer(currentPlayer).getActivePokemon()) != null)
-            ((PokemonCard)getOtherPlayer(currentPlayer).getActivePokemon()).getEffects().forEach(Effect::apply);
+            
             nextTurn();
         } else if (currentPlayer instanceof Ai_Player) {
             aiTurn();
@@ -466,8 +463,6 @@ public class GameBoard {
 
         if((currentPlayer.getActivePokemon()) != null)
             ((PokemonCard)currentPlayer.getActivePokemon()).getEffects().forEach(Effect::apply);
-        if((getOtherPlayer(currentPlayer).getActivePokemon()) != null)
-            ((PokemonCard)getOtherPlayer(currentPlayer).getActivePokemon()).getEffects().forEach(Effect::apply);
     }
     
     private void aiTurn() {
