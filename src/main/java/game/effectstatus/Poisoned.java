@@ -1,6 +1,8 @@
 package game.effectstatus;
 
 import card.PokemonCard;
+import game.Coin;
+import java.util.Random;
 
 /**
  * Author:  Eric(Haotao) Lai
@@ -18,6 +20,11 @@ public class Poisoned extends Effect {
 
     @Override
     public void apply() {
-        this.target.setDamage(this.target.getDamage() + 1);
+        this.target.setDamage(this.target.getDamage() + 10);
+    }
+
+    @Override
+    public Effect remove() {
+        return this;
     }
 }
