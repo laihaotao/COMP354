@@ -72,7 +72,14 @@ public class TargetProperty extends Property {
       }
 
       
-    }else{
+    }else if ((target = tokenStream.validateTokenString("deck")) != null) {
+        if(tokenStream.validateTokenString("top") != null){
+            targetModifier = new TokenString(0, "top");
+        }else if(tokenStream.validateTokenString("bottom")!= null){
+          targetModifier = new TokenString(0, "bottom");
+        }
+    }else
+    {
       target = tokenStream.validateTokenString();
     }
     return new TargetProperty(target, targetModifier, amountModifier, filter);

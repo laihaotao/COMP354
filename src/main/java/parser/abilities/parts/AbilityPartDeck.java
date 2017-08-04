@@ -76,13 +76,17 @@ public class AbilityPartDeck extends AbilityPart{
           if(cardToRemove != null) {
             targetList.remove(cardToRemove);
             boolean addToTop = true;
-            switch (destination.modifier.value){
-              case "top":{
-                addToTop = true;
-              }break;
-              case "bottom":{
-                addToTop = false;
-              }break;
+            if(destination.modifier != null) {
+              switch (destination.modifier.value) {
+                case "top": {
+                  addToTop = true;
+                }
+                break;
+                case "bottom": {
+                  addToTop = false;
+                }
+                break;
+              }
             }
             switch(destination.target.value){
               case "discard":{
