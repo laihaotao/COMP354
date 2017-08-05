@@ -207,8 +207,10 @@ public class LanguageTokenizer {
                     
                     
                 case '-':
+                    Token testToken = null;
                     if(tokens.size() > 0) {
-                        Token testToken = tokens.get(tokens.size() - 1);
+                        testToken = tokens.get(tokens.size() - 1);
+                    }
                         //create a new token if necessary
                         if (currentTokenString.length() > 0) {
                             testToken = createTokenFromString(location, currentTokenString);
@@ -223,9 +225,7 @@ public class LanguageTokenizer {
                         } else {
                             currentTokenString += "-";
                         }
-                    }else{
-                        currentTokenString += "-";
-                    }
+                    
                     break;
                      
                     
