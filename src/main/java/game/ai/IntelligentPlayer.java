@@ -359,4 +359,8 @@ public class IntelligentPlayer extends Player {
     public Card selectCardToDiscardFromHand(){
         return hand.get(hand.size()-1);
     }
+    public boolean shouldDrawMulCard(){
+        return true;
+    }
+
 }
