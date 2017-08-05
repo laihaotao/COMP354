@@ -205,18 +205,29 @@ public class LanguageTokenizer {
                     
                     //NOTE: subtration messes up due to the use of - when declarining things. Ask the teacher to change - to _? 
                     
-                    /**
+                    
                 case '-':
-                    //create a new token if necessary
-                    if (currentTokenString.length() > 0)
-                        addToken(tokens, createTokenFromString(location, currentTokenString),
-                            lastArithmeticTokenType);
+                    if(tokens.size() > 0) {
+                        Token testToken = tokens.get(tokens.size() - 1);
+                        //create a new token if necessary
+                        if (currentTokenString.length() > 0) {
+                            testToken = createTokenFromString(location, currentTokenString);
+                        }
+                        if (testToken instanceof TokenInteger || testToken instanceof TokenScope) {
+                            addToken(tokens, createTokenFromString(location, currentTokenString),
+                                lastArithmeticTokenType);
 
-                    //remember that the operator was there
-                    lastArithmeticTokenType = OperatorType.SUBTRATION;
-                    currentTokenString = "";
+                            //remember that the operator was there
+                            lastArithmeticTokenType = OperatorType.SUBTRATION;
+                            currentTokenString = "";
+                        } else {
+                            currentTokenString += "-";
+                        }
+                    }else{
+                        currentTokenString += "-";
+                    }
                     break;
-                     **/
+                     
                     
             
                 case '>':
