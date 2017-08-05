@@ -1,11 +1,11 @@
-package parser.abilities;
+package parser.abilities.parts;
 
 import card.Card;
 import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
-import parser.commons.TargetProperty;
-import parser.commons.TokenProperty;
+import parser.abilities.properties.TargetProperty;
+import parser.abilities.properties.TokenProperty;
 import parser.tokenizer.Token;
 
 /**
@@ -26,13 +26,17 @@ public class AbilityPartDam extends AbilityPart{
   }
 
   @Override
-  public boolean use(GameBoard targetBoard, Player owner) {
-    Card targetCard = owner.getTarget(targetBoard, target);
+  public boolean use(GameBoard targetBoard, Player owner, Card callingCard) {
+    Card targetCard = owner.getTarget(targetBoard,callingCard,  target);
     if(targetCard != null) {
       if (targetCard instanceof PokemonCard) {
         PokemonCard pokemonCard = (PokemonCard) targetCard;
-        targetBoard.applyDamageToCard(owner, pokemonCard, ammount.evaluateAsExpression());
-        return true;
+        int intAmmount = ammount.evaluateAsExpression(targetBoard, owner);
+        if(intAmmount > 0) {
+          targetBoard.applyDamageToCard(pokemonCard, intAmmount);
+          return true;
+        }
+        
       }
     }
     //damage target card
@@ -43,6 +47,10 @@ public class AbilityPartDam extends AbilityPart{
   @Override
   public String getDescriptionString() {
     return "Damages "+ target + " for "+ammount.getDisplayString();
+  }
+
+  public String getCurrentDescription(GameBoard targetBoard, Player callingPlayer){
+    return "Damages " + target + "for " + ammount.evaluateAsExpression(targetBoard, callingPlayer) + " ["+ ammount.getDisplayString() +"]";
   }
   
   public Token getAmmount(){

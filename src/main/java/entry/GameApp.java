@@ -40,8 +40,10 @@ public class GameApp extends Application {
 
     private static final String WINDOW_TITLE = "Pokemon Go Back";
     private static String deckPath = GameApp.class.getClassLoader().getResource("decks/").getPath();
+    private static GameBoard gameBoard = null;
 
     public static void main(String[] args) throws IOException {
+
         logger.info("Starting pokemon game!");
         logger.info(deckPath);
         launch(args);
@@ -77,13 +79,15 @@ public class GameApp extends Application {
 
         CheckBox aiBox = new CheckBox("AI vs AI");
 
+        CheckBox debugBox = new CheckBox("Debug");
+
         Button startBtn = new Button();
         startBtn.setText("Start Game");
         startBtn.setOnAction(event -> {
             try {
                 logger.debug(comboBox1.getValue());
                 logger.debug(comboBox2.getValue());
-
+                Config.DEBUG = debugBox.isSelected();
                 startGame(primaryStage, comboBox1.getValue(), comboBox2.getValue(), aiBox.isSelected());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -99,7 +103,7 @@ public class GameApp extends Application {
         root.add(comboBox2, 2, 2);
 
         root.add(startBtn, 2, 3);
-
+        root.add(debugBox, 1, 4);
         primaryStage.setResizable(true);
         primaryStage.setScene(new Scene(root, 400, 300));
         primaryStage.setTitle("Select Deck File ");
@@ -112,8 +116,13 @@ public class GameApp extends Application {
         StartPane root = new StartPane();
 
         GameBoard gameBoard = getGameBoard(fileNm1, fileNm2, allAI);
+        
+        gameBoard.getPlayer1().chooseActivePokemon(gameBoard);
+        gameBoard.getPlayer2().chooseActivePokemon(gameBoard);
+        
+        
+        
 
-        //TODO board and players here and pass that to BoardView
         BoardView boardView = new BoardView(gameBoard);
         root.setCurrentView(boardView);
         primaryStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -122,17 +131,9 @@ public class GameApp extends Application {
         //TODO add support for resizing
         primaryStage.setResizable(true);
 
-        //This needs to be called since primaryStage.show() changes dimensions of panes
-        //This means that any transformatons need to be re-applied to the views
         boardView.refreshView();
 
-        //AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
-        //AbilityTemplate[] abilities = abilitiesParser.parse();
-
-//        CardDebugParser cardDebugParser = new CardDebugParser("cards.txt");
-//        cardDebugParser.parse();
-        
-        if(gameBoard.getPlayer1() instanceof IntelligentPlayer && gameBoard.getPlayer2() instanceof IntelligentPlayer){
+        if (gameBoard.getPlayer1() instanceof IntelligentPlayer && gameBoard.getPlayer2() instanceof IntelligentPlayer) {
             new Thread(() -> gameBoard.onEndTurnButtonClicked()).start();
         }
     }
@@ -147,12 +148,13 @@ public class GameApp extends Application {
         List<Card> player1Deck = deck1Parser.getDeck();
         List<Card> player2Deck = deck2Parser.getDeck();
 
-        Player player1 = allAI?new IntelligentPlayer(player1Deck):new Player(player1Deck);
+        Player player1 = allAI ? new IntelligentPlayer(player1Deck) : new Player(player1Deck);
         Player player2 = new IntelligentPlayer(player2Deck);
 
         player1.setName("human player");
         player2.setName("AI player");
 
-        return new GameBoard(player1, player2);
+        gameBoard = new GameBoard(player1, player2);
+        return gameBoard;
     }
 }

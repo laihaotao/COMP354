@@ -1,18 +1,16 @@
 package game;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by frede on 2017-07-03.
  */
 public class TurnInfo {
 
-    int turnNum = 1;
+    int turnNum = 0;
 
     private TurnTrigger attackTrigger = new TurnTrigger();
     private TurnTrigger energyTrigger = new TurnTrigger();
     private TurnTrigger trainerTrigger = new TurnTrigger();
+
 
     public void reset(){
         attackTrigger.reset();
@@ -43,7 +41,7 @@ public class TurnInfo {
             status = false;
         }
 
-        public boolean getStatus(){
+        public boolean already(){
             return status;
         }
     }

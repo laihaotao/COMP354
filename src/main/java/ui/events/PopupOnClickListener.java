@@ -5,7 +5,7 @@ import card.Card;
 /**
  * Created by ERIC_LAI on 2017-06-04.
  */
-public interface DiscardPileOnClickListener {
+public interface PopupOnClickListener {
 
-    void onClickDiscardCard(Card card);
+    void onClick(Card card);
 }

@@ -26,7 +26,8 @@ public class OutOfBoundTest {
         DeckParser deckParser2 = new DeckParser(Config.FILE_PATH_DECK2_TXT, cardParser);
         ArrayList<Card> deck1 = (ArrayList<Card>) deckParser1.getDeck();
         ArrayList<Card> deck2 = (ArrayList<Card>) deckParser2.getDeck();
-		
+		System.out.print(deck1.size());
+		System.out.print(deck2.size());
         int deckLength = 60;
 
         assertEquals(deck1.size(), deckLength);

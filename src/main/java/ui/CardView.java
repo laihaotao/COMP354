@@ -11,6 +11,7 @@ import card.Card;
 import card.EnergyCard;
 import card.PokemonCard;
 import card.TrainerCard;
+import game.GameBoard;
 import game.Player;
 
 import java.util.ArrayList;
@@ -38,9 +39,10 @@ public class CardView extends BorderPane {
     private List<PlayerViewListener> registeredListeners;
 
     private Card card;
-
-    //TODO A Card instance should be passed to this once it is properly implemented
-    public CardView(Player player, Card card) {
+    
+    boolean smallView;
+    
+    public CardView(GameBoard targetBoard, Player player, Card card, boolean smallView) {
         this.card = card;
         this.player = player;
         this.getStyleClass().add("Card");
@@ -51,17 +53,27 @@ public class CardView extends BorderPane {
 
         topInfo = new HBox();
         topHealthInfo = new VBox();
+        
+        this.smallView = smallView;
 
         //TODO displayGameResult actual card info
 
 
         topInfo.getChildren().addAll(new Label(card.getCardName()), topHealthInfo);
-
+        topInfo.getChildren().add(new Label("  "+card.getCardType().toString()+"  "));
         //Display abilities
         abilitiesInfo = new VBox();
 
         if (card instanceof PokemonCard) {
             PokemonCard pokemonCard = (PokemonCard) card;
+            topInfo.getChildren().add(new Label(pokemonCard.getPokemonType()+ "  "));
+            
+            StringBuilder effectString = new StringBuilder();
+            pokemonCard.getEffects().forEach(e->{
+                effectString.append(e.getClass().getSimpleName());
+            });
+            
+            topInfo.getChildren().add(new Label(effectString.toString()));
             abilitiesInfo.getChildren().add(new Label(pokemonCard.getEnergyAttached()
                     .toCondensedString()));
             //displays health and damage values
@@ -77,18 +89,20 @@ public class CardView extends BorderPane {
                 listener.onActiveCardClicked(player, card);
             })));
 
-            pokemonCard.getAbilities().forEach((ability -> {
-                AbilityView abilityView = new AbilityView(ability);
-                abilityView.setOnMouseClicked((event -> {
-                    registeredListeners.forEach((listener -> {
-                        listener.onActiveAbilityClicked(player, card, ability);
+            if(!smallView) {
+                pokemonCard.getAbilities().forEach((ability -> {
+                    AbilityView abilityView = new AbilityView(targetBoard, player, ability);
+                    abilityView.setOnMouseClicked((event -> {
+                        registeredListeners.forEach((listener -> {
+                            listener.onActiveAbilityClicked(player, card, ability);
+                        }));
                     }));
+                    abilitiesInfo.getChildren().add(abilityView);
                 }));
-                abilitiesInfo.getChildren().add(abilityView);
-            }));
+            }
         } else if (card instanceof TrainerCard) {
             TrainerCard trainerCard = (TrainerCard) card;
-            AbilityView abilityView = new AbilityView(trainerCard.getAbility());
+            AbilityView abilityView = new AbilityView(targetBoard, player, trainerCard.getAbility());
             abilitiesInfo.getChildren().add(abilityView);
 
         } else if (card instanceof EnergyCard) {
@@ -97,7 +111,6 @@ public class CardView extends BorderPane {
 
         setTop(topInfo);
         setCenter(abilitiesInfo);
-        setBottom(new Label(card.getCardType().toString()));
         registeredListeners = new ArrayList<>();
     }
 

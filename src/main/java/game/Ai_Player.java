@@ -27,7 +27,7 @@ public class Ai_Player extends Player {
     /*
      * this is done only at the begining
      */
-    @Override
+ 
     public void chooseActivePokemon() {
 
         if (pokemonCards.size() > 0) {

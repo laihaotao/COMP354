@@ -84,6 +84,15 @@ public class TokenStream {
       return null;
   }
   
+  public TokenScope validateTokenScope(){
+      Token token = getNextToken();
+      if(token instanceof TokenScope){
+          return (TokenScope) token;
+      }
+      backtrack();
+      return null;
+  }
+  
   public void backtrack(){
       currentToken--;
   }

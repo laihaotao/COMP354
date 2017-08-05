@@ -1,5 +1,8 @@
 package parser.tokenizer;
 
+import game.GameBoard;
+import game.Player;
+
 /**
  * Used to delimit arithmetics
  */
@@ -20,6 +23,21 @@ public class TokenArithmetic extends Token{
     return super.toString() + "Arithmetic -> "+ leftValue + " " + type + " " + rightValue;
   }
 
+  public int evaluateAsExpression(GameBoard targetBoard, Player callingPlayer){
+    switch(type){
+      case MULTIPLICATION:
+        return leftValue.evaluateAsExpression(targetBoard, callingPlayer) * rightValue.evaluateAsExpression(targetBoard, callingPlayer);
+      case DIVISION:
+        return leftValue.evaluateAsExpression(targetBoard, callingPlayer) / rightValue.evaluateAsExpression(targetBoard, callingPlayer);
+      case ADDITION:
+        return leftValue.evaluateAsExpression(targetBoard, callingPlayer) + rightValue.evaluateAsExpression(targetBoard, callingPlayer);
+      case SUBTRATION:
+        return leftValue.evaluateAsExpression(targetBoard, callingPlayer) - rightValue.evaluateAsExpression(targetBoard, callingPlayer);
+      default:
+        return 0;
+    }
+  }
+  
   @Override
   public String getDisplayString() {
     String string = leftValue.getDisplayString();

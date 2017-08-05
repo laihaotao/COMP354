@@ -7,7 +7,9 @@
 
 package parser.cards;
 
+import card.EnergyCard.EnergyType;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by frede on 2017-05-30.
@@ -174,5 +176,32 @@ public class EnergyCost {
 
     public int[] getAsArray(){
         return new int[]{colorless, water, lightning, psychic, fight};
+    }
+
+    public EnergyCost deenergy(int amount) {
+        EnergyCost result = new EnergyCost();
+        
+        while (amount > 0) {
+            if (water != 0) {
+                water -= 1;
+                result.water++;
+            }
+            if (lightning != 0) {
+                lightning -= 1;
+                result.lightning++;
+            }
+            if (psychic != 0) {
+                psychic -= 1;
+                result.psychic++;
+            }
+            if (fight != 0) {
+                fight -= 1;
+                result.fight++;
+            }
+            amount -= 1;
+        }
+        
+        return result;
+        
     }
 }

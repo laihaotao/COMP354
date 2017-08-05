@@ -37,11 +37,15 @@
 .Ability{
     -fx-border-color:grey;
     -fx-border-width:  1 0 0 0;
+    -fx-font-size: 10;
 }
 .Ability .Name {
     -fx-font-weight: bold;
 }
-
+Ability TextArea{
+    -fx-max-width: 100;
+    -fx-max-height: 100;
+}
 .CardArea {
     -fx-spacing: 10;
 }

@@ -39,8 +39,8 @@ public class BoardView extends BorderPane implements PlayerViewListener {
 
         //Initialzie player views
         //TODO Once we get a player class, we pass that to PlayerView
-        playerViews[0] = new PlayerView(gameBoard.getPlayer1(), true);
-        playerViews[1] = new PlayerView(gameBoard.getPlayer2(), false);
+        playerViews[0] = new PlayerView(gameBoard, gameBoard.getPlayer1(), true);
+        playerViews[1] = new PlayerView(gameBoard, gameBoard.getPlayer2(), false);
 
         for (PlayerView playerView : playerViews) {
             playerView.registerListener(this);
@@ -55,6 +55,7 @@ public class BoardView extends BorderPane implements PlayerViewListener {
 
         //Put end game button on the center, with players on top / bottom
         this.setCenter(endTurnBtn);
+        
         this.setTop(playerViews[1]);
         this.setBottom(playerViews[0]);
 

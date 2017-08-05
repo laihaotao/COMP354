@@ -9,7 +9,7 @@ package card;
 
 public class TrainerCard extends Card {
 
-    private enum TrainerType {ITEM, SUPPORTER, STADIUM,}
+    public enum TrainerType {ITEM, SUPPORTER, STADIUM,}
     private Ability ability;
     private TrainerType trainerType;
 
@@ -28,5 +28,9 @@ public class TrainerCard extends Card {
 
     public Ability getAbility(){
         return ability;
+    }
+
+    public TrainerType getTrainerType() {
+        return trainerType;
     }
 }

@@ -1,5 +1,6 @@
-package parser.commons;
+package parser.abilities.properties;
 
+import parser.commons.Formatting;
 import parser.tokenizer.Token;
 import parser.tokenizer.TokenStream;
 import parser.tokenizer.TokenString;
@@ -30,7 +31,7 @@ public class DestinationProperty extends Property {
   }
 
   public String toString(){
-    return "Destination: "+Formatting.toSafeString(destination) + " " + modifier;
+    return "Destination: "+ Formatting.toSafeString(destination) + " " + modifier;
   }
   
 

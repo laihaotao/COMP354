@@ -1,4 +1,4 @@
-package parser.commons;
+package parser.abilities.properties;
 
 import parser.tokenizer.Token;
 

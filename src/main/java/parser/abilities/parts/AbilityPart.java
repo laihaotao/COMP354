@@ -1,10 +1,11 @@
-package parser.abilities;
+package parser.abilities.parts;
 
+import card.Card;
 import game.GameBoard;
 import game.Player;
 import java.util.ArrayList;
 import java.util.List;
-import parser.commons.Property;
+import parser.abilities.properties.Property;
 
 /**
  * AbilityPart defines behavior for an an ability
@@ -27,7 +28,11 @@ public abstract class AbilityPart {
    * @param targetBoard GameBoard to use ability on
    * @param owner The player owner of the ability
    */
-  public abstract boolean use(GameBoard targetBoard, Player owner);
+  public abstract boolean use(GameBoard targetBoard, Player owner, Card callingCard);
   
   public abstract String getDescriptionString();
+
+    public String getCurrentDescription(GameBoard targetBoard, Player callingPlayer){
+        return getDescriptionString();
+    }
 }

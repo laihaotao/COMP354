@@ -10,13 +10,26 @@ package game;
 
 import card.Card;
 import card.PokemonCard;
-import parser.commons.TargetProperty;
+import entry.GameApp;
+import game.events.PlayerEndTurnEvent;
+import java.util.Optional;
+import java.util.Stack;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import parser.abilities.parts.AbilityPart;
+import parser.abilities.parts.AbilityPartDam;
+import parser.abilities.parts.AbilityPartDeck;
+import parser.abilities.properties.TargetProperty;
+import ui.popup.GamePopup;
 import ui.selections.RewardSelector;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+
+import ui.selections.TargetSelectorUI;
 
 public class Player {
 
@@ -32,84 +45,88 @@ public class Player {
     private Scanner kb = new Scanner(System.in);
     Random rand = new Random();
     private String name;
+
+    private Stack<PlayerEndTurnEvent> onEndTurnEvents;
     
     private game.TargetSelector targetSelector;
 
     public Player(List<Card> playerDeck) {
         //Each player gets 7 cards drawn randomly at the beginning of the game
         deck = playerDeck;
-
-        putPrizes();  //lack of better name
-        //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
-
-        put7CardInHand();
-
-        //chooseActivePokemon();
-        
+        putPrizes();
+        draw7Cards();
         targetSelector = createTargetSelector();
+
+        onEndTurnEvents = new Stack<>();
+    }
+
+    public void addEndTurnEvent(PlayerEndTurnEvent event) {
+        onEndTurnEvents.add(event);
     }
     
-    public TargetSelector createTargetSelector(){
-        return new game.TargetSelector();
-    }
-
-    public void put7CardInHand() {
-
-        for (int i = 0; i < 7; i++) {
-            putCardInHand();
+    public void onEndTurn(int turnNum) {
+        while(!onEndTurnEvents.empty()) {
+            onEndTurnEvents.pop().onEndTurn(this);
         }
-        checkForPokemon();
+    }
+    
+    public TargetSelector createTargetSelector() {
+        return new TargetSelectorUI();
     }
 
-    public void checkForPokemon() {
+    public void draw7Cards() {
+        for (int i = 0; i < 7; i++) {
+            drawOneCard();
+        }
+        checkMulligans();
+    }
 
+    public void checkMulligans() {
+        // pokemonCards is used to trace the pokemon cards in the hand
         if (pokemonCards.size() == 0) {
             int handSize = hand.size();
             while (handSize > 0) {
+                // put the current hand card at the end of the deck
                 deck.add(hand.remove(0));
                 handSize--;
             }
 
-            put7CardInHand(); // this takes care of Mulligans // change when deck is updated
+            draw7Cards();
         }
     }
 
     //Each player gets 7 cards drawn randomly at the beginning of the game
     public void putPrizes() {
         for (int i = 0; i < 6; i++) {
-            int n = rand.nextInt(deck.size());
-            prizes.add(deck.remove(deck.size()-i-1));
+            prizes.add(deck.remove(deck.size() - i - 1));
         }
     }
 
     //Each player draws 7 cards at the beginning of the game and keeps their own hand hidden.
-    public void putCardInHand() {
+    public void drawOneCard() {
         hand.add(deck.remove(0));
-        if (hand.get(hand.size() - 1) instanceof PokemonCard)//  .getType().canSupport("POKEMON"))
+        if (hand.get(hand.size() - 1) instanceof PokemonCard) {//  .getType().canSupport("POKEMON"))
             pokemonCards.add((PokemonCard) hand.get(hand.size() - 1));
-
+        }
     }
 
     /*
      * this is done only at the begining
      */
-    public void chooseActivePokemon() {
-        printPokemonCards();
-        if (pokemonCards.size() > 0) {
-            //System.out.println("chose which card you want to use ");
-            int pokNum;
-            do {
-                System.out.println("chose which card you want to use as your active pokemon ");
-                System.out.println("Enter the number");
-                pokNum = kb.nextInt();
-            } while (pokNum < 1 || pokNum > pokemonCards.size());
-            activePokemon = pokemonCards.get(pokNum - 1);
-            System.out.println(" your active pokemon is: " + activePokemon.getCardName());
-        }
-
+    public void chooseActivePokemon(GameBoard gameBoard) {
+        GamePopup.displayPokemonsInHand(gameBoard, this,
+            this.getPokemonCards(), (card)-> {
+                this.activePokemon = (PokemonCard)card;
+                this.hand.remove(activePokemon);
+                gameBoard.view.refreshView();
+        });
+            
     }
-
-
+    
+    public Card getLastTarget(int rollback){
+        return targetSelector.getLastCardTarget(rollback);
+    }
+    
     public void putCardOnBench() {
         printCardInHand();
         if (hand.size() > 0) {
@@ -150,7 +167,7 @@ public class Player {
 
     public void drawTopSixCard() {
         for (int i = 0; i < 6; i++) {
-            putCardInHand();
+            drawOneCard();
         }
 
     }
@@ -237,12 +254,14 @@ public class Player {
     }
 
 
+    public void attackOpponent(Card opponent) {
+    }
 
-    public void attackOpponent(Card opponent) { }
+    public void attachEnergyCard() {
+    }
 
-    public void attachEnergyCard() {}
-
-    public void attachEnergyCardToActivePokemon() {}
+    public void attachEnergyCardToActivePokemon() {
+    }
 
     public List<Card> getDeck() {
         return deck;
@@ -288,7 +307,59 @@ public class Player {
         this.name = name;
     }
 
-    public Card getTarget(GameBoard gameBoard, TargetProperty target) {
-        return targetSelector.getCard(gameBoard, this, target);
+    public Card getTarget(GameBoard gameBoard, Card callingCard, TargetProperty target) {
+        return targetSelector.getCard(gameBoard, this,callingCard, target);
+    }
+
+    public Player getTargetPlayer(GameBoard gameBoard, TargetProperty target) {
+        return targetSelector.getPlayer(gameBoard, this, target);
+    }
+
+    public List<PokemonCard> getPokemonCards() {
+        return pokemonCards;
+    }
+    
+    public boolean ShouldDoAbility(GameBoard board, AbilityPart ability){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Ability choice");
+        alert.setHeaderText("Do you want to use: "+ability.getCurrentDescription(board, this));
+        
+        ButtonType buttonTypeOne = new ButtonType("Yes");
+        ButtonType buttonTypeTwo = new ButtonType("No");
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne){
+            return true;
+        } else if (result.get() == buttonTypeTwo) {
+            return false;
+        }
+        
+        return false;
+    }
+    
+    public Card selectCardToDiscardFromHand(){
+        return TargetSelectorUI.selectCard(hand);
+    }
+    
+    public boolean shouldDoDeckAbility(GameBoard board, AbilityPartDeck abilityPartDeck){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Deck choice");
+        alert.setHeaderText("Do you want to use: "+abilityPartDeck.getCurrentDescription(board, this));
+
+        ButtonType buttonTypeOne = new ButtonType("Yes");
+        ButtonType buttonTypeTwo = new ButtonType("No");
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne){
+            return true;
+        } else if (result.get() == buttonTypeTwo) {
+            return false;
+        }
+
+        return false;
     }
 }

@@ -1,5 +1,4 @@
-Spike Cannon:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30
-Act Cute:deck:target:opponent:destination:deck:bottom:choice:them:target:1
+Act Cute:deck:target:opponent:destination:deck:bottom:choice:them:1
 Scratch:dam:target:opponent-active:20
 Quick Attack:dam:target:opponent-active:10,cond:flip:dam:target:opponent-active:30
 Flying Elekick:dam:target:opponent-active:50
@@ -14,6 +13,7 @@ Reckless Charge:dam:target:opponent-active:20,dam:target:your-active:10
 Cut:dam:target:opponent-active:30
 Pound:dam:target:opponent-active:10
 Clamp Crush:dam:target:opponent-active:30,cond:flip:deenergize:target:opponent-active:1,applystat:status:paralyzed:opponent-active
+Spike Cannon:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30,cond:flip:dam:target:opponent-active:30
 Spiral Drain:dam:target:opponent-active:20,heal:target:your-active:20
 Aurora Beam:dam:target:opponent-active:80
 Wing Attack:dam:target:opponent-active:20
@@ -67,8 +67,8 @@ Ambush:dam:target:opponent-active:40,cond:flip:dam:target:opponent-active:30
 Floral Crown:add:target:your:trigger:opponent:turn-end:(heal:target:self:20)
 PokÃ© Ball:cond:flip:search:target:your:source:deck:filter:pokemon:1
 Shauna:deck:target:your:destination:deck:count(your-hand),shuffle:target:your,draw:5
-PokÃ©mon Fan Club:search:target:your:source:deck:filter:pokemon:cat:basic:2,shuffle:target:you
+PokÃ©mon Fan Club:search:target:your:source:deck:filter:pokemon:cat:basic:2,shuffle:target:your
 Switch:swap:source:your-active:destination:choice:your-bench
 Energy Switch:reenergize:target:choice:your:1:target:choice:your:1
 Red Card:deck:target:opponent:destination:deck:count(opponent-hand),shuffle:target:opponent,draw:opponent:4
-Wally:search:target:choice:your-pokemon:cat:basic:source:deck:filter:evolves-from:target:last:1,shuffle:target:you
+Wally:search:target:choice:your-pokemon:cat:basic:source:deck:filter:evolves-from:target:last:1,shuffle:target:your

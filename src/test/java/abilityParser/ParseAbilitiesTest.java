@@ -23,23 +23,21 @@ public class ParseAbilitiesTest {
 		
 		/*
 		 * 
-		 * Spike Cannon:dam:target:opponent-active:30,
-		 * cond:flip:dam:target:opponent-active:30,
-		 * cond:flip:dam:target:opponent-active:30,
-		 * cond:flip:dam:target:opponent-active:30,
-		 * cond:flip:dam:target:opponent-active:30,
-		 * cond:flip:dam:target:opponent-active:30
+			first ability is:
+			"Act Cute:deck:target:opponent:destination:deck:bottom:choice:them:1"
+			
 		 */
 		
         AbilitiesParser abilitiesParser = new AbilitiesParser("abilities.txt");
         AbilityTemplate[] abilities = abilitiesParser.parse();
 
-        assertEquals("Damages Target: opponent-active:_ for 30", abilities[0].parts.get(0).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(1).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(2).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(3).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(4).getDescriptionString());
-        assertEquals("Condition: Damages Target: opponent-active:_ for 30", abilities[0].parts.get(5).getDescriptionString());
+        assertEquals("Act Cute", abilities[0].name);
+        assertEquals("Target: opponent:_ and filters nothing", abilities[0].parts.get(0).properties.get(0).toString());
+        assertEquals("Target: deck:bottom and filters nothing", abilities[0].parts.get(0).properties.get(1).toString());
+        assertEquals("Choice: @65 token:String -> them", abilities[0].parts.get(0).properties.get(2).toString());
+        assertEquals("Amount: @67 token:Integer -> 1", abilities[0].parts.get(0).properties.get(3).toString());
+        
+  
         
 	}
 

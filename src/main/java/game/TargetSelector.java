@@ -1,38 +1,93 @@
 package game;
 
 import card.Card;
-import parser.commons.TargetProperty;
-import ui.selections.TargetSelectorUI;
+import java.util.ArrayList;
+import java.util.List;
+import parser.abilities.filters.Filter;
+import parser.abilities.properties.TargetProperty;
 
 /**
  * Created by frede on 2017-06-08.
  */
-public class TargetSelector {
+public  abstract class TargetSelector {
     public TargetSelector(){
       
     }
     
-    public Card getCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-      switch(targetProperty.target.value){
-        case "choice":{
-            return getChoiceCard(gameBoard, callingPlayer, targetProperty);
-        }
+    private List<Card> targetBuffer = new ArrayList<>();
 
-        case "opponent-active":{
-            return getOpponentActive(gameBoard, callingPlayer);
+    private Player lastPlayerTarget;
+    
+    public Player getPlayer(GameBoard gameBoard, Player callingPlayer, TargetProperty target){
+        switch(target.target.value){
+            case "opponent":
+                return gameBoard.getOtherPlayer(callingPlayer);
+            case "your":
+                return callingPlayer;
+            case "last":
+                return lastPlayerTarget;
         }
-
-        default: {
-          return null;
-        }
-      }
+        return null;
     }
     
-    public Card getChoiceCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-        return TargetSelectorUI.getTarget(gameBoard, callingPlayer, targetProperty);
+    public Card getCard(GameBoard gameBoard, Player callingPlayer, Card callingCard, TargetProperty targetProperty) {
+        switch (targetProperty.target.value) {
+            case "your":
+                return storeAndReturn(choseYourCard(gameBoard, callingPlayer, targetProperty.filter));
+            case "last":
+                return targetBuffer.get(targetBuffer.size()-1);
+            case "choice": {
+                switch(targetProperty.modifier.value){
+                    case "opponent":
+                        return storeAndReturn(choseOpponentCard(gameBoard, callingPlayer, targetProperty.filter));
+                    case "your":
+                        return storeAndReturn(choseYourCard(gameBoard, callingPlayer, targetProperty.filter));
+                    case "opponent-bench":
+                        return storeAndReturn(choseOpponentBench(gameBoard, callingPlayer,targetProperty.filter));
+                    case "your-bench":
+                        return storeAndReturn(choseYourBench(gameBoard, callingPlayer,targetProperty.filter));
+                }
+            }
+            case "your-active": {
+                return storeAndReturn(callingPlayer.getActivePokemon());
+            }
+            case "opponent-active": {
+                return storeAndReturn(gameBoard.getOtherPlayer(callingPlayer).getActivePokemon());
+            }
+            case "opponent":
+                return storeAndReturn(choseOpponentCard(gameBoard, callingPlayer,targetProperty.filter ));
+            case "self":
+                return callingCard;
+            default: {
+                return null;
+            }
+        }
     }
     
-    public Card getOpponentActive(GameBoard gameBoard, Player callingPlayery){
-        return gameBoard.getOtherPlayer(callingPlayery).getActivePokemon();
+    private Card storeAndReturn(Card card){
+        targetBuffer.add(card);
+        return card;
     }
+    
+    private Player storeAndReturn(Player player){
+        lastPlayerTarget = player;
+        return player;
+    }
+    
+    public Player getLastPlayerTarget(){
+        return lastPlayerTarget;
+    }
+    
+    public Card getLastCardTarget(int rollback){
+        return targetBuffer.get(targetBuffer.size()-1-rollback);
+    }
+    
+    public abstract Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer, Filter filter);
+    
+    public abstract Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer, Filter filter);
+    
+    public abstract Card choseYourCard(GameBoard gameBoard, Player callingPlayer, Filter filter);
+    
+    public abstract Card choseYourBench(GameBoard gameBoard, Player callingPlayer, Filter filter);
+    
 }

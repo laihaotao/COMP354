@@ -10,11 +10,11 @@ import game.TargetSelector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import parser.abilities.AbilityPart;
-import parser.abilities.AbilityPartDam;
+import parser.abilities.filters.Filter;
+import parser.abilities.parts.AbilityPart;
+import parser.abilities.parts.AbilityPartDam;
+import parser.abilities.parts.AbilityPartDeck;
 import parser.cards.EnergyCost;
-import parser.commons.TargetProperty;
-import ui.selections.RewardSelector;
 import ui.selections.TargetSelectorUI;
 
 /**
@@ -29,7 +29,7 @@ public class IntelligentPlayer extends Player {
     
     public void doTurn(GameBoard gameBoard){
         if(activePokemon == null){
-            PokemonCard optimalActive = firstTurn?findOptimalPokemon(hand):findOptimalPokemon(bench);
+            PokemonCard optimalActive = firstTurn?findOptimalPokemon(gameBoard, hand):findOptimalPokemon(gameBoard, bench);
             if(optimalActive != null) {
                 if(firstTurn) {
                     gameBoard.onHandCardClicked(this, optimalActive);
@@ -40,24 +40,32 @@ public class IntelligentPlayer extends Player {
                 gameBoard.onActiveCardClicked(this, null);
             }
         }else{
-            boolean putOnBench = true;
-            if(activePokemon.getEnergyAttached().canSupport(activePokemon.getRetreatEnergyCost())) {
-                List<Card> fullList = new ArrayList<>();
-                fullList.addAll(bench);
-                fullList.add(activePokemon);
-                PokemonCard optimal = findOptimalPokemon(fullList);
-                if (optimal != null && optimal != activePokemon) {
-                    gameBoard.onRetreatButtonClicked(this);
-                    gameBoard.onBenchCardClicked(this, optimal);
-                    gameBoard.onActiveCardClicked(this, null);
-                    putOnBench = false;
+            PokemonCard matching = getHandEvolution(activePokemon);
+            if(matching != null){
+                gameBoard.onHandCardClicked(this, matching);
+                gameBoard.onActiveCardClicked(this, activePokemon);
+            }else {
+
+                boolean putOnBench = true;
+                if (activePokemon.getEnergyAttached()
+                    .canSupport(activePokemon.getRetreatEnergyCost())) {
+                    List<Card> fullList = new ArrayList<>();
+                    fullList.addAll(bench);
+                    fullList.add(activePokemon);
+                    PokemonCard optimal = findOptimalPokemon(gameBoard, fullList);
+                    if (optimal != null && optimal != activePokemon) {
+                        gameBoard.onRetreatButtonClicked(this);
+                        gameBoard.onBenchCardClicked(this, optimal);
+                        gameBoard.onActiveCardClicked(this, null);
+                        putOnBench = false;
+                    }
                 }
-            }
-            if(putOnBench) {
-                PokemonCard optimalBench = findOptimalPokemon(hand);
-                if (optimalBench != null) {
-                    gameBoard.onHandCardClicked(this, optimalBench);
-                    gameBoard.onBenchCardClicked(this, null);
+                if (putOnBench) {
+                    PokemonCard optimalBench = findOptimalPokemon(gameBoard, hand);
+                    if (optimalBench != null) {
+                        gameBoard.onHandCardClicked(this, optimalBench);
+                        gameBoard.onBenchCardClicked(this, null);
+                    }
                 }
             }
         }
@@ -66,7 +74,7 @@ public class IntelligentPlayer extends Player {
         tryAttack(gameBoard);
     }
     
-    private PokemonCard findOptimalPokemon(List<Card> cards){
+    private PokemonCard findOptimalPokemon(GameBoard gameBoard, List<Card> cards){
         int bestScore = -1;
         
         PokemonCard bestCard = null;
@@ -105,7 +113,7 @@ public class IntelligentPlayer extends Player {
                     for(AbilityPart part: ability.getTemplate().parts){
                         if(part instanceof AbilityPartDam){
                             AbilityPartDam abilityPartDam = (AbilityPartDam)part;
-                            score += abilityPartDam .getAmmount().evaluateAsExpression();
+                            score += abilityPartDam .getAmmount().evaluateAsExpression(gameBoard, this);
                         }
                     }
                 }
@@ -118,6 +126,10 @@ public class IntelligentPlayer extends Player {
                     if(pokemonEnergy > 0 && handEnergy > 0){
                         matchingEnergy++;
                     }
+                }
+
+                if(getHandEvolution(pokemonCard) != null){
+                    score += 50;
                 }
                 
                 score *= ((double)matchingEnergy)/5+0.2;
@@ -147,7 +159,7 @@ public class IntelligentPlayer extends Player {
                     gameBoard.onActiveCardClicked(this, activePokemon);
                 }
             }else{
-                PokemonCard target = findOptimalPokemon(bench);
+                PokemonCard target = findOptimalPokemon(gameBoard, bench);
                 if(target != null){
                     EnergyCard energyToPlay = findOptimalEnergy(target);
 
@@ -243,7 +255,9 @@ public class IntelligentPlayer extends Player {
             for(Ability ability : activePokemon.getAbilities()){
                 if(ability.getTemplate().appliesDamage()){
                     gameBoard.onActiveAbilityClicked(this, activePokemon, ability);
-                    return;
+                    if(gameBoard.getTurnInfo().getAttackTrigger().already()){
+                        return;
+                    }
                 }
             }
         }
@@ -258,40 +272,91 @@ public class IntelligentPlayer extends Player {
     public TargetSelector createTargetSelector(){
         return new AiTargetSelector();
     }
-    
-    public class AiTargetSelector extends TargetSelector{
-        
-        public Card getCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-            return getAiCard(gameBoard, callingPlayer, targetProperty);
-        }
 
-        public Card getChoiceCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-            return getAiCard(gameBoard, callingPlayer, targetProperty);
+    public PokemonCard getHandEvolution(Card baseCard){
+        if(baseCard == null){
+            return null;
         }
-        
-        private Card getAiCard(GameBoard gameBoard, Player callingPlayer, TargetProperty targetProperty){
-            switch(targetProperty.target.value){
-                case "choice":{
-                    switch(targetProperty.modifier.value){
-                        case "opponent-bench":{
-                            Player otherPlayer = gameBoard.getOtherPlayer(callingPlayer);
-                            if(otherPlayer.getBench().size() > 0) {
-                                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
-                                    otherPlayer.getBench().size());
-                                return otherPlayer.getBench().get(cardToSelect);
-                            }
-                        }
+        for (Card card : hand) {
+            if (card instanceof PokemonCard) {
+                PokemonCard pokemonCard = (PokemonCard) card;
+                if(pokemonCard.getEvolvesFrom() != null) {
+                    if (pokemonCard.getEvolvesFrom().equalsIgnoreCase(baseCard.getCardName())) {
+                        return pokemonCard;
                     }
-                }
-
-                case "opponent-active":{
-                    return getOpponentActive(gameBoard, callingPlayer);
-                }
-
-                default: {
-                    return null;
                 }
             }
         }
+        return null;
+    }
+    
+    public void chooseActivePokemon(GameBoard gameBoard){
+        PokemonCard optimalActive = firstTurn?findOptimalPokemon(gameBoard, hand):findOptimalPokemon(gameBoard, bench);
+        if(optimalActive != null) {
+            
+            hand.remove(optimalActive);
+            firstTurn = false;
+            activePokemon = optimalActive;
+        }
+    }
+    public boolean ShouldDoAbility(GameBoard board, AbilityPart ability){
+        return true;
+    }
+    public class AiTargetSelector extends TargetSelector {
+
+        @Override
+        public Card choseOpponentCard(GameBoard gameBoard, Player callingPlayer, Filter filter) {
+            Player otherPlayer = gameBoard.getOtherPlayer(callingPlayer);
+            if (otherPlayer.getBench().size() > 0 || otherPlayer.getActivePokemon() != null) {
+                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
+                    otherPlayer.getBench().size() + 1);
+                if (cardToSelect == 0) {
+                    return otherPlayer.getActivePokemon();
+                }
+                return otherPlayer.getBench().get(cardToSelect - 1);
+            }
+
+            return null;
+        }
+
+        @Override
+        public Card choseOpponentBench(GameBoard gameBoard, Player callingPlayer, Filter filter) {
+            Player otherPlayer = gameBoard.getOtherPlayer(callingPlayer);
+            if (otherPlayer.getBench().size() > 0) {
+                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
+                    otherPlayer.getBench().size());
+                return otherPlayer.getBench().get(cardToSelect);
+            }
+
+            return null;
+        }
+
+        @Override
+        public Card choseYourCard(GameBoard gameBoard, Player callingPlayer, Filter filter) {
+            if (callingPlayer.getBench().size() > 0) {
+                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
+                    callingPlayer.getBench().size());
+                return callingPlayer.getBench().get(cardToSelect);
+            }
+
+            return null;
+        }
+
+        @Override
+        public Card choseYourBench(GameBoard gameBoard, Player callingPlayer, Filter filter) {
+            if (callingPlayer.getBench().size() > 0) {
+                int cardToSelect = new Random(System.currentTimeMillis()).nextInt(
+                    callingPlayer.getBench().size());
+                return callingPlayer.getBench().get(cardToSelect);
+            }
+
+            return null;
+        }
+    }
+    public boolean shouldDoDeckAbility(GameBoard board, AbilityPartDeck abilityPartDeck){
+        return true;
+    }
+    public Card selectCardToDiscardFromHand(){
+        return hand.get(hand.size()-1);
     }
 }

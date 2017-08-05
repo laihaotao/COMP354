@@ -10,10 +10,11 @@ package card;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.effectstatus.Effect;
+import game.effectstatus.Normal;
 import parser.cards.EnergyCost;
 
 public class PokemonCard extends Card {
-
 
     //basic, Stage One, Stage Two
     private String pokemonStage;
@@ -31,9 +32,11 @@ public class PokemonCard extends Card {
     private String status;
     private String evolvesFrom;
 
+    private boolean hasBeenHealed = false;
+    
+    private List<Effect> effects = new ArrayList<>();
 
-    public PokemonCard() {
-
+    public PokemonCard() {;
     }
 
 
@@ -243,5 +246,33 @@ public class PokemonCard extends Card {
 
     public ArrayList<EnergyCard> getAttachedEnergyCard() {
         return this.attachedEnergyCard;
+    }
+
+    public List<Effect> getEffects() {
+        return effects;
+    }
+
+    public void addEffect(Effect effect) {
+        effects.add(effect);
+    }
+
+    public void heal(int amount){
+        damage -= amount;
+        if(damage < 0) {
+            damage = 0;
+        }
+        hasBeenHealed = true;
+    }
+    
+    public boolean hasBeenHealed() {
+        return hasBeenHealed;
+    }
+
+    public void setHasBeenHealed(boolean hasBeenHealed) {
+        this.hasBeenHealed = hasBeenHealed;
+    }
+
+    public void deenergy(int amount) {
+        this.energyAttached.deenergy(amount);
     }
 }
