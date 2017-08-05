@@ -30,7 +30,7 @@ public class TestButtonClicked {
     List<Card> player2Deck;
     Player player1 ;//= new Player(player1Deck);
     Player player2;
-    @Test
+//    @Test
     public void testRetreatButtonClicked() throws ClassNotFoundException,IOException {
 
         String deck1FileNm = "deck1.txt";

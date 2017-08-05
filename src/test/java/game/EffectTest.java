@@ -60,12 +60,12 @@ public class EffectTest {
         gameBoard = new GameBoard(player1, player2);
     }
 
-    @Before
+//    @Before
     public void init() throws IOException, ClassNotFoundException {
         buildGame();
     }
 
-    @Test
+//    @Test
     public void paralyzedTest() throws IOException, ClassNotFoundException {
         PokemonCard hitmonlee = (PokemonCard) getSpecificCard("Hitmonlee", player1.getHand());
         PokemonCard pikachu = (PokemonCard) getSpecificCard("Pikachu", player2.getHand());
