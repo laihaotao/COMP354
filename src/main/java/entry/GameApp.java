@@ -1,6 +1,7 @@
 package entry;
 
 import card.Card;
+import card.PokemonCard;
 import game.GameBoard;
 import game.Player;
 import selectdeck.DeckReader;
@@ -111,12 +112,54 @@ public class GameApp extends Application {
         primaryStage.show();
     }
 
+    private boolean containsPokemon(List<Card> cards){
+        for (Card card : cards) {
+            if(card instanceof PokemonCard){
+                if(((PokemonCard)card).getEvolvesFrom() == null){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+    private void checkMulligans(Player player1, Player player2){
+        boolean player1HasPokemon = containsPokemon(player1.getHand());
+        boolean player2HasPokemon = containsPokemon(player2.getHand());
+
+        if(!player1HasPokemon){
+            player1.drawNewCards();
+            if(player2HasPokemon){
+                if(player2.shouldDrawMulCard()){
+                    player2.drawOneCard();
+                }
+            }
+        }
+
+        if(!player2HasPokemon){
+            player2.drawNewCards();
+            if(player1HasPokemon){
+                if(player1.shouldDrawMulCard()){
+                    player1.drawOneCard();
+                }
+            }
+        }
+
+        if(!player1HasPokemon || !player2HasPokemon){
+            checkMulligans(player1, player2);
+        }
+    }
+
     private void startGame(Stage primaryStage, String fileNm1, String fileNm2, boolean allAI) throws Exception {
         primaryStage.setTitle(WINDOW_TITLE);
         StartPane root = new StartPane();
 
         GameBoard gameBoard = getGameBoard(fileNm1, fileNm2, allAI);
-        
+
+        checkMulligans(gameBoard.getPlayer1(), gameBoard.getPlayer2());
+
         gameBoard.getPlayer1().chooseActivePokemon(gameBoard);
         gameBoard.getPlayer2().chooseActivePokemon(gameBoard);
         

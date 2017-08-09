@@ -78,7 +78,7 @@ public class Player {
         for (int i = 0; i < 7; i++) {
             drawOneCard();
         }
-        checkMulligans();
+        //checkMulligans();
     }
 
     public void checkMulligans() {
@@ -93,6 +93,17 @@ public class Player {
 
             draw7Cards();
         }
+    }
+
+    public void drawNewCards(){
+        int handSize = hand.size();
+        while (handSize > 0) {
+            // put the current hand card at the end of the deck
+            deck.add(hand.remove(0));
+            handSize--;
+        }
+
+        draw7Cards();
     }
 
     //Each player gets 7 cards drawn randomly at the beginning of the game
@@ -347,6 +358,26 @@ public class Player {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Deck choice");
         alert.setHeaderText("Do you want to use: "+abilityPartDeck.getCurrentDescription(board, this));
+
+        ButtonType buttonTypeOne = new ButtonType("Yes");
+        ButtonType buttonTypeTwo = new ButtonType("No");
+
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne){
+            return true;
+        } else if (result.get() == buttonTypeTwo) {
+            return false;
+        }
+
+        return false;
+    }
+
+    public boolean shouldDrawMulCard(){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Draw card choice");
+        alert.setHeaderText("The other player had a mulligan, do you want to draw a card");
 
         ButtonType buttonTypeOne = new ButtonType("Yes");
         ButtonType buttonTypeTwo = new ButtonType("No");
